@@ -53,7 +53,7 @@
   },
   "scripts": {
     "build": "tsc && tsc-alias",
-    "dev": "nodemon src/index.ts",
+    "dev": "nodemon src/index.ts -w .env",
     "format": "prettier --write src/**/*.ts",
     "lint": "eslint src/**/*.ts --config .eslintrc",
     "postversion": "git push && git push --tags",
