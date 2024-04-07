@@ -1,0 +1,22 @@
+# JS Files
+# -----------------------------------
+node_modules
+*.eslintcache
+dist
+coverage
+
+# Config files
+# -----------------------------------
+*.env
+
+# Miscellanenous
+# -----------------------------------
+.DS_Store
+.log
+.zip
+.csv
+.tmp
+
+# Excluded files
+# -----------------------------------
+!examples/*

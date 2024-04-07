@@ -1,0 +1,70 @@
+{
+  "author": "",
+  "bugs": "",
+  "description": "",
+  "devDependencies": {
+    "@commitlint/cli": "19.0.3",
+    "@commitlint/config-conventional": "18.6.0",
+    "@types/node": "20.11.25"
+    "@typescript-eslint/eslint-plugin": "7.0.0",
+    "@typescript-eslint/parser": "7.1.1",
+    "@vitest/coverage-v8": "1.2.2",
+    "eslint": "8.56.0",
+    "eslint-config-prettier": "9.1.0",
+    "eslint-import-resolver-alias": "1.1.2",
+    "eslint-import-resolver-custom-alias": "1.3.2",
+    "eslint-import-resolver-typescript": "3.6.1",
+    "eslint-plugin-eslint-comments": "3.2.0",
+    "eslint-plugin-import": "2.29.1",
+    "eslint-plugin-jsdoc": "48.1.0",
+    "eslint-plugin-prefer-arrow": "1.2.3",
+    "eslint-plugin-prettier": "5.1.3",
+    "eslint-plugin-promise": "6.1.1",
+    "eslint-plugin-sonarjs": "0.24.0",
+    "eslint-plugin-tsdoc": "0.2.17",
+    "eslint-plugin-unicorn": "51.0.1",
+    "eslint-plugin-vitest": "0.3.22",
+    "husky": "8.0.3",
+    "nodemon": "3.1.0",
+    "pm-exec": "1.0.0",
+    "prettier": "3.2.5",
+    "ts-node": "10.9.2",
+    "tsc-alias": "1.8.8",
+    "typescript": "5.3.3",
+    "vitest": "1.2.2"
+  },
+  "engines": {
+    "node": "20.11.0"
+  },
+  "files": [
+    "dist/**/*"
+  ],
+  "homepage": "",
+  "imports": {
+    "#src/*": "./src/*",
+  },
+  "license": "MIT",
+  "keywords": [],
+  "main": "dist/index.js",
+  "name": "placeholder",
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "scripts": {
+    "build": "tsc && tsc-alias",
+    "dev": "nodemon src/index.ts",
+    "format": "prettier --write src/**/*.ts",
+    "lint": "eslint src/**/*.ts --config .eslintrc",
+    "postversion": "git push && git push --tags",
+    "prepare": "pm-exec run build && pm-exec husky install",
+    "prepublishOnly": "pm-exec run test && pm-exec run lint",
+    "preversion": "pm-exec run lint",
+    "start": "pm-exec run build && node dist/src/index.js",
+    "test": "vitest",
+    "version": "pm-exec run format && git add -A src"
+  },
+  "type": "module",
+  "types": "dist/index.d.ts",
+  "version": "0.0.1"
+}
