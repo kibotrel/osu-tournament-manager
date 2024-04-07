@@ -8,12 +8,12 @@
 </template>
 
 <script setup lang="ts">
-import { usePlaceholderStore } from '#src/stores/placeholder.js';
-import { ref } from 'vue';
+import { usePlaceholderStore } from "#src/stores/placeholder.js";
+import { ref } from "vue";
 
 const placeholderStore = usePlaceholderStore();
 
-const name = ref('');
+const name = ref("");
 </script>
 
 <style scoped></style>
