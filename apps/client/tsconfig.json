@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "allowJs": true,
+    "moduleResolution": "NodeNext",
+    "outDir": "./dist",
+    "paths": {
+      "#src/*": ["./src/*"]
+    },
+    "types": ["vite/client"]
+  },
+  "extends": "../tsconfig.json",
+  "include": ["./src/**/*.ts", "./src/**/*.vue"]
+}
