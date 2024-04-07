@@ -5,6 +5,7 @@
   "devDependencies": {
     "@commitlint/cli": "19.0.3",
     "@commitlint/config-conventional": "18.6.0",
+    "@rushstack/eslint-patch": "^1.10.1",
     "@types/node": "20.11.25",
     "@typescript-eslint/eslint-plugin": "7.0.0",
     "@typescript-eslint/parser": "7.1.1",
@@ -52,19 +53,13 @@
     "url": ""
   },
   "scripts": {
-    "build": "tsc && tsc-alias",
-    "dev": "nodemon src/index.ts -w .env",
-    "format": "prettier --write src/**/*.ts",
-    "lint": "eslint src/**/*.ts --config .eslintrc",
-    "postversion": "git push && git push --tags",
-    "prepare": "pm-exec run build && pm-exec husky install",
-    "prepublishOnly": "pm-exec run test && pm-exec run lint",
-    "preversion": "pm-exec run lint",
-    "start": "pm-exec run build && node dist/src/index.js",
-    "test": "vitest",
-    "version": "pm-exec run format && git add -A src"
+    "format": "prettier --write apps/**/*.ts",
+    "lint": "eslint apps/**/*.ts --config .eslintrc",
+    "prepare": "pm-exec husky install"
   },
   "type": "module",
-  "types": "dist/index.d.ts",
-  "version": "0.0.1"
+  "version": "0.0.1",
+  "workspaces": [
+    "apps/*"
+  ]
 }
