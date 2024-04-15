@@ -1,0 +1,22 @@
+version: '3.9'
+
+networks:
+  backend:
+    driver: bridge
+
+volumes:
+  mariadb:
+
+services:
+  mariadb:
+    container_name: mariadb
+    env_file:
+      - ./apps/server/.env
+    image: mariadb:11.3.2
+    networks:
+      - backend
+    ports:
+      - '3307:3306'
+    volumes:
+      - mariadb:/var/lib/mysql
+      - ./dev/mariadb:/docker-entrypoint-initdb.d
