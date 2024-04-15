@@ -10,6 +10,7 @@ coverage
 # Config files
 # -----------------------------------
 *.env
+!**/example.env
 
 # Miscellanenous
 # -----------------------------------
@@ -34,6 +35,7 @@ pnpm-debug.log*
 lerna-debug.log*
 
 # Editor directories and files
+# -----------------------------------
 .vscode/*
 .idea
 .DS_Store
@@ -42,3 +44,7 @@ lerna-debug.log*
 *.njsproj
 *.sln
 *.sw?
+
+# Development files
+# -----------------------------------
+dev
