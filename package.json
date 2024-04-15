@@ -3,7 +3,7 @@
   "bugs": "",
   "description": "",
   "devDependencies": {
-    "@commitlint/cli": "19.0.3",
+    "@commitlint/cli": "19.2.2",
     "@commitlint/config-conventional": "18.6.0",
     "@rushstack/eslint-patch": "^1.10.1",
     "@types/node": "20.12.7",
