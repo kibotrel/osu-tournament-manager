@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "allowJs": true,
+    "baseUrl": ".",
+    "moduleResolution": "NodeNext",
+    "paths": {
+      "#src/*": ["./src/*"]
+    },
+    "outDir": "./dist",
+    "types": ["pg"]
+  },
+  "extends": "../tsconfig.json",
+  "include": [
+    "./src/**/*.ts",
+    "./migrations/meta/_journal.json",
+    "tournamentsSchema.ts",
+    "../client/tournamentsSchema.ts"
+  ]
+}

@@ -36,7 +36,6 @@
     "target": "ESNext"
   },
   "exclude": ["**/node_modules/**", "**/*/lib", "**/*/dist"],
-  "references": [{ "path": "./apps/client/tsconfig.json" }],
   "ts-node": {
     "esm": true
   }
