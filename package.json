@@ -1,7 +1,4 @@
 {
-  "author": "",
-  "bugs": "",
-  "description": "",
   "devDependencies": {
     "@commitlint/cli": "19.2.2",
     "@commitlint/config-conventional": "18.6.0",
@@ -37,17 +34,10 @@
   "engines": {
     "node": "20.12.2"
   },
-  "files": [
-    "dist/**/*"
-  ],
-  "homepage": "",
-  "imports": {
-    "#src/*": "./src/*"
-  },
+  "homepage": "placeholder",
   "license": "MIT",
   "keywords": [],
-  "main": "dist/index.js",
-  "name": "placeholder",
+  "name": "osu-tournament-manager",
   "repository": {
     "type": "git",
     "url": ""
@@ -58,7 +48,7 @@
     "prepare": "pm-exec husky install"
   },
   "type": "module",
-  "version": "0.0.1",
+  "version": "0.0.0",
   "workspaces": [
     "apps/*"
   ]
