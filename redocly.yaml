@@ -1,0 +1,86 @@
+apis:
+  internal@latest:
+    root: ./sample.yaml
+  public@latest:
+    root: ./sample.yaml
+    decorators:
+      remove-x-internal: on
+
+rules:
+  boolean-parameter-prefixes:
+    severity: error
+    prefixes: ['can', 'has', 'is', 'must', 'should']
+  component-name-unique:
+    severity: error
+    schemas: error
+    parameters: error
+    responses: error
+    requestBodies: error
+  info-contact: error
+  info-license: error
+  info-license-url: error
+  no-ambiguous-paths: error
+  no-empty-servers: error
+  no-enum-type-mismatch: error
+  no-example-value-and-externalValue: error
+  no-http-verbs-in-paths:
+    severity: error
+    splitIntoWords: true
+  no-identical-paths: error
+  no-invalid-media-type-examples:
+    severity: error
+    allowAdditionalProperties: false
+  no-invalid-parameter-examples:
+    severity: error
+    allowAdditionalProperties: false
+  no-invalid-schema-examples:
+    severity: error
+    allowAdditionalProperties: false
+  no-path-trailing-slash: error
+  no-required-schema-properties-undefined: error
+  no-server-example.com: error
+  no-server-trailing-slash: error
+  no-server-variables-empty-enum: error
+  no-undefined-server-variable: error
+  no-unresolved-refs: error
+  no-unused-components: error
+  operation-2xx-response: error
+  operation-4xx-problem-details-rfc7807: error
+  operation-4xx-response: error
+  operation-description: error
+  operation-operationId: error
+  operation-operationId-unique: error
+  operation-operationId-url-safe: error
+  operation-parameters-unique: error
+  operation-singular-tag: error
+  operation-summary: error
+  operation-tag-defined: error
+  parameter-description: error
+  path-declaration-must-exist: error
+  path-excludes-patterns: off
+  path-not-include-query: error
+  path-parameters-defined: error
+  path-segment-plural:
+    severity: error
+    ignoreLastPathSegment: false
+    exceptions:
+      - v1
+  paths-kebab-case: error
+  request-mime-type:
+    severity: error
+    allowedValues:
+      - application/json
+  required-string-property-missing-min-length: error
+  response-contains-header: off
+  response-contains-property: off
+  response-mime-type:
+    severity: error
+    allowedValues:
+      - application/json
+  scalar-property-missing-example: error
+  security-defined: error
+  spec-components-invalid-map-name: error
+  spec: error
+  spec-strict-refs: error
+  tag-description: error
+  tags-alphabetical: error
