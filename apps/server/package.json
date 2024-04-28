@@ -14,7 +14,10 @@
   "name": "osu-tournament-manager/server",
   "private": true,
   "scripts": {
-    "dev": "nodemon src/index.ts"
+    "dev": "nodemon src/index.ts",
+    "db:migrate": "node --loader ts-node/esm --no-warnings --env-file=.env --import=./logTypescriptErrorLoader.js ./src/scripts/applyDatabaseMigrationsScript.ts",
+    "db:migration:create": "NODE_OPTIONS='--import tsx' drizzle-kit generate:pg && node --loader ts-node/esm --no-warnings --env-file=.env ./src/scripts/renameMigrationFileScript.ts",
+    "db:migration:drop": "drizzle-kit drop"
   },
   "type": "module",
   "version": "0.0.0"
