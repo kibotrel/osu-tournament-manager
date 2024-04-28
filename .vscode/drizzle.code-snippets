@@ -1,0 +1,38 @@
+{
+  "Schema declaration": {
+    "body": [
+      "import { pgSchema } from 'drizzle-orm/pg-core';",
+      "",
+      "export const ${1:schemaName}Schema = pgSchema('${1:schemaName}')",
+    ],
+    "description": "Create a drizzle flavored database schema declaration for postgresSQL",
+    "prefix": ["schema"],
+  },
+
+  "Table declaration": {
+    "body": [
+      "import type { InferInsertModel, InferSelectModel } from 'drizzle-orm';",
+      "import { serial, timestamp } from 'drizzle-orm/pg-core';",
+      "import { ${1:schemaName}Schema } from '#src/schemas/${1:schemaName}/${1:schemaName}Schema.js';",
+
+      "export const ${2:tableName}Table = ${1:schemaName}Schema.table('${2:tableName}', {",
+      "  createdAt: timestamp('createdAt').notNull().defaultNow(),",
+      "  id: serial('id').primaryKey(),$0",
+      "  updatedAt: timestamp('updatedAt').notNull().defaultNow().\\$onUpdate(() => { return new Date(); }),",
+      "});",
+      "",
+      "export type Select${2/(.*)s/${1:/capitalize}/} = InferSelectModel<typeof ${2:tableName}Table>;",
+      "export type Insert${2/(.*)s/${1:/capitalize}/} = InferInsertModel<typeof ${2:tableName}Table>;",
+    ],
+    "description": "Create a drizzle flavored database table declaration for postgresSQL",
+    "prefix": ["table"],
+  },
+
+  "Enum declaration": {
+    "body": [
+      "export const ${1:enumName}Enum = ${2:schemaName}Schema.enum('${1:enumName}', [$0]);",
+    ],
+    "description": "Create a drizzle flavored database enum declaration for postgresSQL",
+    "prefix": ["enum"],
+  },
+}
