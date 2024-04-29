@@ -1,0 +1,59 @@
+openapi: "3.1"
+info:
+  version: 0.0.0
+  title: Placeholder API
+  contact:
+    url: 'http://example.com/contact'
+  license:
+    name: MIT
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+  description: >
+    This is an **example** API to demonstrate features of OpenAPI specification.
+
+externalDocs:
+  description: Find out how to create a GitHub repo for your OpenAPI definition.
+  url: 'https://github.com/Rebilly/generator-openapi-repo'
+tags:
+  - name: Echo
+    description: Example echo operations
+
+paths:
+  /echos:
+    get:
+      security: []
+      description: Echo back a message
+      tags:
+        - Echo
+      summary: Echo back a message
+      operationId: echo
+      parameters:
+        - name: message
+          description: Message to echo
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: 'Hello, world!'
+        '400':
+          description: Bad Request
+          content:
+            application/problem+json:
+              schema:
+                type: object
+                properties:
+                  type:
+                    type: string
+                    example: 'Invalid message'
+                  title:
+                    type: string
+                    example: 'Bad Request'

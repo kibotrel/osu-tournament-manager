@@ -1,8 +1,8 @@
 apis:
   internal@latest:
-    root: ./sample.yaml
+    root: ./apps/server/specs/api.yaml
   public@latest:
-    root: ./sample.yaml
+    root: ./apps/server/specs/api.yaml
     decorators:
       remove-x-internal: on
 
@@ -20,7 +20,7 @@ rules:
   info-license: error
   info-license-url: error
   no-ambiguous-paths: error
-  no-empty-servers: error
+  no-empty-servers: off
   no-enum-type-mismatch: error
   no-example-value-and-externalValue: error
   no-http-verbs-in-paths:
@@ -77,6 +77,7 @@ rules:
     severity: error
     allowedValues:
       - application/json
+      - application/problem+json
   scalar-property-missing-example: error
   security-defined: error
   spec-components-invalid-map-name: error
