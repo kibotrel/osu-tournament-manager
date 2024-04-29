@@ -1,18 +1,28 @@
-openapi: "3.1"
 info:
-  version: 0.0.0
-  title: Placeholder API
-  contact:
-    url: 'http://example.com/contact'
   license:
-    name: MIT
-    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
-  description: >
-    This is an **example** API to demonstrate features of OpenAPI specification.
+    name: GNU General Public License v3.0
+    url: https://github.com/kibotrel/osu-tournament-manager/blob/main/LICENSE
+  summary: >
+    This document is defining the API contracts for the osu! tournament manager webapp.
+  title: osu! tournament manager API
+  version: 0.0.0
 
-externalDocs:
-  description: Find out how to create a GitHub repo for your OpenAPI definition.
-  url: 'https://github.com/Rebilly/generator-openapi-repo'
+openapi: 3.1.0
+
+servers:
+  - url: https://{environment}.osu-tournament-manager.app/{version}
+    variables:
+      environment:
+        default: api.staging
+        enum:
+          - api
+          - api.dev
+          - api.staging
+      version:
+        default: v1
+        enum:
+          - v1
+
 tags:
   - name: Echo
     description: Example echo operations

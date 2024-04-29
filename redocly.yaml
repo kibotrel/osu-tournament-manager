@@ -16,7 +16,7 @@ rules:
     parameters: error
     responses: error
     requestBodies: error
-  info-contact: error
+  info-contact: off
   info-license: error
   info-license-url: error
   no-ambiguous-paths: error
