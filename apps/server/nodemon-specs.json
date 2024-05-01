@@ -1,0 +1,5 @@
+{
+  "exec": "pnpm specs:bundle",
+  "ext": "yaml",
+  "watch": ["specs/*.yaml"]
+}
