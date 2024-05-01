@@ -7,11 +7,12 @@
       "#src/*": ["./src/*"]
     },
     "outDir": "./dist",
-    "types": ["pg"]
+    "types": ["pg", "express", "swagger-ui-express"]
   },
   "extends": "../tsconfig.json",
   "include": [
     "./src/**/*.ts",
+    "./src/**/*.json",
     "./migrations/meta/_journal.json",
     "tournamentsSchema.ts",
     "../client/tournamentsSchema.ts"
