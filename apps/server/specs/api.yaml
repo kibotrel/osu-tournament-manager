@@ -13,11 +13,11 @@ servers:
   - url: https://{environment}.osu-tournament-manager.app/{version}
     variables:
       environment:
-        default: api.staging
+        default: dev.api
         enum:
           - api
-          - api.dev
-          - api.staging
+          - dev.api
+          - staging.api
       version:
         default: v1
         enum:
@@ -36,6 +36,46 @@ paths:
         - Echo
       summary: Echo back a message
       operationId: echo
+      parameters:
+        - name: message
+          description: Message to echo
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: 'Hello, world!'
+        '400':
+          description: Bad Request
+          content:
+            application/problem+json:
+              schema:
+                type: object
+                properties:
+                  type:
+                    type: string
+                    example: 'Invalid message'
+                  title:
+                    type: string
+                    example: 'Bad Request'
+  /pings:
+    get:
+      x-internal: true
+      security: []
+      description: Echo back a message
+      tags:
+        - Echo
+      summary: Echo back a message
+      operationId: ping
       parameters:
         - name: message
           description: Message to echo
