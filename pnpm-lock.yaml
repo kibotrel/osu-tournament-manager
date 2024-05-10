@@ -149,7 +149,7 @@ importers:
     dependencies:
       drizzle-orm:
         specifier: 0.30.9
-        version: 0.30.9(@types/pg@8.11.5)(pg@8.11.5)(react@18.3.1)
+        version: 0.30.9(@types/pg@8.11.6)(pg@8.11.5)(react@18.3.1)
       express:
         specifier: 4.19.2
         version: 4.19.2
@@ -173,8 +173,8 @@ importers:
         specifier: 4.17.21
         version: 4.17.21
       '@types/pg':
-        specifier: 8.11.5
-        version: 8.11.5
+        specifier: 8.11.6
+        version: 8.11.6
       '@types/swagger-ui-express':
         specifier: 4.1.6
         version: 4.1.6
@@ -1577,8 +1577,8 @@ packages:
     resolution: {integrity: sha512-37i+OaWTh9qeK4LSHPsyRC7NahnGotNuZvjLSgcPzblpHB3rrCJxAOgI5gCdKm7coonsaX1Of0ILiTcnZjbfxA==}
     dev: true
 
-  /@types/pg@8.11.5:
-    resolution: {integrity: sha512-2xMjVviMxneZHDHX5p5S6tsRRs7TpDHeeK7kTTMe/kAC/mRRNjWHjZg0rkiY+e17jXSZV3zJYDxXV8Cy72/Vuw==}
+  /@types/pg@8.11.6:
+    resolution: {integrity: sha512-/2WmmBXHLsfRqzfHW7BNZ8SbYzE8OSk7i3WjFYvfgRHj7S1xj+16Je5fUKv3lVdVzk/zn9TXOqf+avFCFIE0yQ==}
     dependencies:
       '@types/node': 20.12.11
       pg-protocol: 1.6.1
@@ -2924,7 +2924,7 @@ packages:
       - supports-color
     dev: true
 
-  /drizzle-orm@0.30.9(@types/pg@8.11.5)(pg@8.11.5)(react@18.3.1):
+  /drizzle-orm@0.30.9(@types/pg@8.11.6)(pg@8.11.5)(react@18.3.1):
     resolution: {integrity: sha512-VOiCFsexErmgqvNCOmbzmqDCZzZsHoz6SkWAjTFxsTr1AllKDbDJ2+GgedLXsXMDgpg/ljDG1zItIFeZtiO2LA==}
     peerDependencies:
       '@aws-sdk/client-rds-data': '>=3'
@@ -3004,7 +3004,7 @@ packages:
       sqlite3:
         optional: true
     dependencies:
-      '@types/pg': 8.11.5
+      '@types/pg': 8.11.6
       pg: 8.11.5
       react: 18.3.1
     dev: false
