@@ -1,13 +1,4 @@
 {
-  "name": "client",
-  "private": true,
-  "version": "0.0.0",
-  "type": "module",
-  "scripts": {
-    "dev": "vite --host",
-    "build": "vite build",
-    "preview": "vite preview"
-  },
   "dependencies": {
     "autoprefixer": "10.4.19",
     "pinia": "2.1.7",
@@ -25,5 +16,17 @@
     "eslint-plugin-vue": "9.25.0",
     "prettier-plugin-tailwindcss": "0.5.13",
     "vite": "5.2.0"
-  }
+  },
+  "imports": {
+    "#src/*": "./src/*"
+  },
+  "name": "client",
+  "private": true,
+  "scripts": {
+    "dev": "vite --host",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "type": "module",
+  "version": "0.0.0"
 }
