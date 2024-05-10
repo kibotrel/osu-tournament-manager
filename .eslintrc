@@ -322,6 +322,7 @@
     "unicorn/no-object-as-default-parameter": "off",
     "unicorn/number-literal-case": "off",
     "unicorn/prefer-logical-operator-over-ternary": "off",
+    "unicorn/prefer-node-protocol": "error",
     "unicorn/prevent-abbreviations": [
       "warn",
       {
