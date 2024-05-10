@@ -1,10 +1,8 @@
 {
-  "id": "3b646552-ab70-48ac-b1b7-c79574b647f1",
-  "prevId": "ed9ca2b3-7385-4a53-965d-1cf31e727711",
-  "version": "5",
-  "dialect": "pg",
+  "version": "6",
+  "dialect": "postgresql",
   "tables": {
-    "tournaments": {
+    "tournaments.tournaments": {
       "name": "tournaments",
       "schema": "tournaments",
       "columns": {
@@ -76,7 +74,7 @@
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },
-    "users": {
+    "users.users": {
       "name": "users",
       "schema": "users",
       "columns": {
@@ -119,32 +117,34 @@
       "uniqueConstraints": {
         "users_gameUserId_unique": {
           "name": "users_gameUserId_unique",
-          "nullsNotDistinct": false,
           "columns": [
             "gameUserId"
-          ]
+          ],
+          "nullsNotDistinct": false
         }
       }
     }
   },
   "enums": {
-    "scoreMode": {
+    "public.scoreMode": {
       "name": "scoreMode",
-      "values": {
-        "accuracy": "accuracy",
-        "combo": "combo",
-        "score": "score",
-        "scoreV2": "scoreV2"
-      }
+      "schema": "public",
+      "values": [
+        "accuracy",
+        "combo",
+        "score",
+        "scoreV2"
+      ]
     },
-    "teamMode": {
+    "public.teamMode": {
       "name": "teamMode",
-      "values": {
-        "headToHead": "headToHead",
-        "tagCoOp": "tagCoOp",
-        "tagTeamVs": "tagTeamVs",
-        "teamVs": "teamVs"
-      }
+      "schema": "public",
+      "values": [
+        "headToHead",
+        "tagCoOp",
+        "tagTeamVs",
+        "teamVs"
+      ]
     }
   },
   "schemas": {
@@ -152,8 +152,10 @@
     "users": "users"
   },
   "_meta": {
-    "columns": {},
     "schemas": {},
-    "tables": {}
-  }
+    "tables": {},
+    "columns": {}
+  },
+  "id": "3b646552-ab70-48ac-b1b7-c79574b647f1",
+  "prevId": "ed9ca2b3-7385-4a53-965d-1cf31e727711"
 }

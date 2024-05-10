@@ -1,6 +1,21 @@
-import type { Config } from 'drizzle-kit';
+import dotenv from 'dotenv';
+import { defineConfig } from 'drizzle-kit';
 
-export default {
-  schema: './src/schemas/*',
+dotenv.config();
+
+export default defineConfig({
+  dbCredentials: {
+    database: process.env.POSTGRES_DB || '',
+    host: process.env.POSTGRES_HOST || '',
+    password: process.env.POSTGRES_PASSWORD || '',
+    port: Number(process.env.POSTGRES_PORT) || Number.NaN,
+    user: process.env.POSTGRES_USER || '',
+  },
+  dialect: 'postgresql',
+  migrations: {
+    schema: 'drizzle',
+    table: 'migrations',
+  },
   out: './migrations',
-} satisfies Config;
+  schema: './src/schemas/*',
+});

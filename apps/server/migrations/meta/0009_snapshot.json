@@ -1,10 +1,8 @@
 {
-  "id": "0f748bb4-9d8c-4b41-97e3-17edb0967a1b",
-  "prevId": "ba7af595-fbea-41bb-8e26-484f95081bba",
-  "version": "5",
-  "dialect": "pg",
+  "version": "6",
+  "dialect": "postgresql",
   "tables": {
-    "mappools": {
+    "mappools.mappools": {
       "name": "mappools",
       "schema": "mappools",
       "columns": {
@@ -46,18 +44,22 @@
         "mappools_tournamentId_tournaments_id_fk": {
           "name": "mappools_tournamentId_tournaments_id_fk",
           "tableFrom": "mappools",
+          "columnsFrom": [
+            "tournamentId"
+          ],
           "tableTo": "tournaments",
           "schemaTo": "tournaments",
-          "columnsFrom": ["tournamentId"],
-          "columnsTo": ["id"],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
+          "columnsTo": [
+            "id"
+          ],
+          "onUpdate": "no action",
+          "onDelete": "cascade"
         }
       },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },
-    "picks": {
+    "mappools.picks": {
       "name": "picks",
       "schema": "mappools",
       "columns": {
@@ -148,28 +150,36 @@
         "picks_mappoolId_mappools_id_fk": {
           "name": "picks_mappoolId_mappools_id_fk",
           "tableFrom": "picks",
+          "columnsFrom": [
+            "mappoolId"
+          ],
           "tableTo": "mappools",
           "schemaTo": "mappools",
-          "columnsFrom": ["mappoolId"],
-          "columnsTo": ["id"],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
+          "columnsTo": [
+            "id"
+          ],
+          "onUpdate": "no action",
+          "onDelete": "cascade"
         },
         "picks_tournamentId_tournaments_id_fk": {
           "name": "picks_tournamentId_tournaments_id_fk",
           "tableFrom": "picks",
+          "columnsFrom": [
+            "tournamentId"
+          ],
           "tableTo": "tournaments",
           "schemaTo": "tournaments",
-          "columnsFrom": ["tournamentId"],
-          "columnsTo": ["id"],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
+          "columnsTo": [
+            "id"
+          ],
+          "onUpdate": "no action",
+          "onDelete": "cascade"
         }
       },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },
-    "events": {
+    "matches.events": {
       "name": "events",
       "schema": "matches",
       "columns": {
@@ -223,38 +233,50 @@
         "events_mappoolPickId_picks_id_fk": {
           "name": "events_mappoolPickId_picks_id_fk",
           "tableFrom": "events",
+          "columnsFrom": [
+            "mappoolPickId"
+          ],
           "tableTo": "picks",
           "schemaTo": "mappools",
-          "columnsFrom": ["mappoolPickId"],
-          "columnsTo": ["id"],
-          "onDelete": "restrict",
-          "onUpdate": "no action"
+          "columnsTo": [
+            "id"
+          ],
+          "onUpdate": "no action",
+          "onDelete": "restrict"
         },
         "events_matchId_matches_id_fk": {
           "name": "events_matchId_matches_id_fk",
           "tableFrom": "events",
+          "columnsFrom": [
+            "matchId"
+          ],
           "tableTo": "matches",
           "schemaTo": "matches",
-          "columnsFrom": ["matchId"],
-          "columnsTo": ["id"],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
+          "columnsTo": [
+            "id"
+          ],
+          "onUpdate": "no action",
+          "onDelete": "cascade"
         },
         "events_tournamentsTeamId_teams_id_fk": {
           "name": "events_tournamentsTeamId_teams_id_fk",
           "tableFrom": "events",
+          "columnsFrom": [
+            "tournamentsTeamId"
+          ],
           "tableTo": "teams",
           "schemaTo": "tournaments",
-          "columnsFrom": ["tournamentsTeamId"],
-          "columnsTo": ["id"],
-          "onDelete": "restrict",
-          "onUpdate": "no action"
+          "columnsTo": [
+            "id"
+          ],
+          "onUpdate": "no action",
+          "onDelete": "restrict"
         }
       },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },
-    "matches": {
+    "matches.matches": {
       "name": "matches",
       "schema": "matches",
       "columns": {
@@ -350,44 +372,58 @@
         "matches_mappoolId_mappools_id_fk": {
           "name": "matches_mappoolId_mappools_id_fk",
           "tableFrom": "matches",
+          "columnsFrom": [
+            "mappoolId"
+          ],
           "tableTo": "mappools",
           "schemaTo": "mappools",
-          "columnsFrom": ["mappoolId"],
-          "columnsTo": ["id"],
-          "onDelete": "restrict",
-          "onUpdate": "no action"
+          "columnsTo": [
+            "id"
+          ],
+          "onUpdate": "no action",
+          "onDelete": "restrict"
         },
         "matches_tournamentId_tournaments_id_fk": {
           "name": "matches_tournamentId_tournaments_id_fk",
           "tableFrom": "matches",
+          "columnsFrom": [
+            "tournamentId"
+          ],
           "tableTo": "tournaments",
           "schemaTo": "tournaments",
-          "columnsFrom": ["tournamentId"],
-          "columnsTo": ["id"],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
+          "columnsTo": [
+            "id"
+          ],
+          "onUpdate": "no action",
+          "onDelete": "cascade"
         },
         "matches_winnerTournamentTeamId_teams_id_fk": {
           "name": "matches_winnerTournamentTeamId_teams_id_fk",
           "tableFrom": "matches",
+          "columnsFrom": [
+            "winnerTournamentTeamId"
+          ],
           "tableTo": "teams",
           "schemaTo": "tournaments",
-          "columnsFrom": ["winnerTournamentTeamId"],
-          "columnsTo": ["id"],
-          "onDelete": "restrict",
-          "onUpdate": "no action"
+          "columnsTo": [
+            "id"
+          ],
+          "onUpdate": "no action",
+          "onDelete": "restrict"
         }
       },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {
         "matches_gameMatchId_unique": {
           "name": "matches_gameMatchId_unique",
-          "nullsNotDistinct": false,
-          "columns": ["gameMatchId"]
+          "columns": [
+            "gameMatchId"
+          ],
+          "nullsNotDistinct": false
         }
       }
     },
-    "rolls": {
+    "matches.rolls": {
       "name": "rolls",
       "schema": "matches",
       "columns": {
@@ -441,38 +477,50 @@
         "rolls_matchId_matches_id_fk": {
           "name": "rolls_matchId_matches_id_fk",
           "tableFrom": "rolls",
+          "columnsFrom": [
+            "matchId"
+          ],
           "tableTo": "matches",
           "schemaTo": "matches",
-          "columnsFrom": ["matchId"],
-          "columnsTo": ["id"],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
+          "columnsTo": [
+            "id"
+          ],
+          "onUpdate": "no action",
+          "onDelete": "cascade"
         },
         "rolls_tournamentId_tournaments_id_fk": {
           "name": "rolls_tournamentId_tournaments_id_fk",
           "tableFrom": "rolls",
+          "columnsFrom": [
+            "tournamentId"
+          ],
           "tableTo": "tournaments",
           "schemaTo": "tournaments",
-          "columnsFrom": ["tournamentId"],
-          "columnsTo": ["id"],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
+          "columnsTo": [
+            "id"
+          ],
+          "onUpdate": "no action",
+          "onDelete": "cascade"
         },
         "rolls_tournamentsTeamId_teams_id_fk": {
           "name": "rolls_tournamentsTeamId_teams_id_fk",
           "tableFrom": "rolls",
+          "columnsFrom": [
+            "tournamentsTeamId"
+          ],
           "tableTo": "teams",
           "schemaTo": "tournaments",
-          "columnsFrom": ["tournamentsTeamId"],
-          "columnsTo": ["id"],
-          "onDelete": "restrict",
-          "onUpdate": "no action"
+          "columnsTo": [
+            "id"
+          ],
+          "onUpdate": "no action",
+          "onDelete": "restrict"
         }
       },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },
-    "players": {
+    "tournaments.players": {
       "name": "players",
       "schema": "tournaments",
       "columns": {
@@ -520,38 +568,50 @@
         "players_tournamentId_tournaments_id_fk": {
           "name": "players_tournamentId_tournaments_id_fk",
           "tableFrom": "players",
+          "columnsFrom": [
+            "tournamentId"
+          ],
           "tableTo": "tournaments",
           "schemaTo": "tournaments",
-          "columnsFrom": ["tournamentId"],
-          "columnsTo": ["id"],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
+          "columnsTo": [
+            "id"
+          ],
+          "onUpdate": "no action",
+          "onDelete": "cascade"
         },
         "players_tournamentTeamId_teams_id_fk": {
           "name": "players_tournamentTeamId_teams_id_fk",
           "tableFrom": "players",
+          "columnsFrom": [
+            "tournamentTeamId"
+          ],
           "tableTo": "teams",
           "schemaTo": "tournaments",
-          "columnsFrom": ["tournamentTeamId"],
-          "columnsTo": ["id"],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
+          "columnsTo": [
+            "id"
+          ],
+          "onUpdate": "no action",
+          "onDelete": "cascade"
         },
         "players_userId_users_id_fk": {
           "name": "players_userId_users_id_fk",
           "tableFrom": "players",
+          "columnsFrom": [
+            "userId"
+          ],
           "tableTo": "users",
           "schemaTo": "users",
-          "columnsFrom": ["userId"],
-          "columnsTo": ["id"],
-          "onDelete": "restrict",
-          "onUpdate": "no action"
+          "columnsTo": [
+            "id"
+          ],
+          "onUpdate": "no action",
+          "onDelete": "restrict"
         }
       },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },
-    "staffs": {
+    "tournaments.staffs": {
       "name": "staffs",
       "schema": "tournaments",
       "columns": {
@@ -599,28 +659,36 @@
         "staffs_tournamentId_tournaments_id_fk": {
           "name": "staffs_tournamentId_tournaments_id_fk",
           "tableFrom": "staffs",
+          "columnsFrom": [
+            "tournamentId"
+          ],
           "tableTo": "tournaments",
           "schemaTo": "tournaments",
-          "columnsFrom": ["tournamentId"],
-          "columnsTo": ["id"],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
+          "columnsTo": [
+            "id"
+          ],
+          "onUpdate": "no action",
+          "onDelete": "cascade"
         },
         "staffs_userId_users_id_fk": {
           "name": "staffs_userId_users_id_fk",
           "tableFrom": "staffs",
+          "columnsFrom": [
+            "userId"
+          ],
           "tableTo": "users",
           "schemaTo": "users",
-          "columnsFrom": ["userId"],
-          "columnsTo": ["id"],
-          "onDelete": "restrict",
-          "onUpdate": "no action"
+          "columnsTo": [
+            "id"
+          ],
+          "onUpdate": "no action",
+          "onDelete": "restrict"
         }
       },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },
-    "teams": {
+    "tournaments.teams": {
       "name": "teams",
       "schema": "tournaments",
       "columns": {
@@ -662,18 +730,22 @@
         "teams_tournamentId_tournaments_id_fk": {
           "name": "teams_tournamentId_tournaments_id_fk",
           "tableFrom": "teams",
+          "columnsFrom": [
+            "tournamentId"
+          ],
           "tableTo": "tournaments",
           "schemaTo": "tournaments",
-          "columnsFrom": ["tournamentId"],
-          "columnsTo": ["id"],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
+          "columnsTo": [
+            "id"
+          ],
+          "onUpdate": "no action",
+          "onDelete": "cascade"
         }
       },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },
-    "tournaments": {
+    "tournaments.tournaments": {
       "name": "tournaments",
       "schema": "tournaments",
       "columns": {
@@ -745,7 +817,7 @@
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },
-    "users": {
+    "users.users": {
       "name": "users",
       "schema": "users",
       "columns": {
@@ -788,47 +860,53 @@
       "uniqueConstraints": {
         "users_gameUserId_unique": {
           "name": "users_gameUserId_unique",
-          "nullsNotDistinct": false,
-          "columns": ["gameUserId"]
+          "columns": [
+            "gameUserId"
+          ],
+          "nullsNotDistinct": false
         }
       }
     }
   },
   "enums": {
-    "gameMode": {
+    "public.gameMode": {
       "name": "gameMode",
-      "values": {
-        "catch": "catch",
-        "mania": "mania",
-        "standard": "standard",
-        "taiko": "taiko"
-      }
+      "schema": "public",
+      "values": [
+        "catch",
+        "mania",
+        "standard",
+        "taiko"
+      ]
     },
-    "draftType": {
+    "public.draftType": {
       "name": "draftType",
-      "values": {
-        "ban": "ban",
-        "pick": "pick",
-        "protect": "protect"
-      }
+      "schema": "public",
+      "values": [
+        "ban",
+        "pick",
+        "protect"
+      ]
     },
-    "scoreMode": {
+    "public.scoreMode": {
       "name": "scoreMode",
-      "values": {
-        "accuracy": "accuracy",
-        "combo": "combo",
-        "score": "score",
-        "scoreV2": "scoreV2"
-      }
+      "schema": "public",
+      "values": [
+        "accuracy",
+        "combo",
+        "score",
+        "scoreV2"
+      ]
     },
-    "teamMode": {
+    "public.teamMode": {
       "name": "teamMode",
-      "values": {
-        "headToHead": "headToHead",
-        "tagCoOp": "tagCoOp",
-        "tagTeamVs": "tagTeamVs",
-        "teamVs": "teamVs"
-      }
+      "schema": "public",
+      "values": [
+        "headToHead",
+        "tagCoOp",
+        "tagTeamVs",
+        "teamVs"
+      ]
     }
   },
   "schemas": {
@@ -838,8 +916,10 @@
     "users": "users"
   },
   "_meta": {
-    "columns": {},
     "schemas": {},
-    "tables": {}
-  }
+    "tables": {},
+    "columns": {}
+  },
+  "id": "0f748bb4-9d8c-4b41-97e3-17edb0967a1b",
+  "prevId": "ba7af595-fbea-41bb-8e26-484f95081bba"
 }

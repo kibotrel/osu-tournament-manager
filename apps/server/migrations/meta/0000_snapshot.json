@@ -1,10 +1,8 @@
 {
-  "id": "ed9ca2b3-7385-4a53-965d-1cf31e727711",
-  "prevId": "00000000-0000-0000-0000-000000000000",
-  "version": "5",
-  "dialect": "pg",
+  "version": "6",
+  "dialect": "postgresql",
   "tables": {
-    "users": {
+    "users.users": {
       "name": "users",
       "schema": "users",
       "columns": {
@@ -47,10 +45,10 @@
       "uniqueConstraints": {
         "users_gameUserId_unique": {
           "name": "users_gameUserId_unique",
-          "nullsNotDistinct": false,
           "columns": [
             "gameUserId"
-          ]
+          ],
+          "nullsNotDistinct": false
         }
       }
     }
@@ -60,8 +58,10 @@
     "users": "users"
   },
   "_meta": {
-    "columns": {},
     "schemas": {},
-    "tables": {}
-  }
+    "tables": {},
+    "columns": {}
+  },
+  "id": "ed9ca2b3-7385-4a53-965d-1cf31e727711",
+  "prevId": "00000000-0000-0000-0000-000000000000"
 }
