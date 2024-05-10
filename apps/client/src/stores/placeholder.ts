@@ -5,9 +5,11 @@ export interface PlaceholderState {
 }
 
 export const usePlaceholderStore = defineStore('placeholder', {
-  state: (): PlaceholderState => ({
-    name: 'unknown',
-  }),
+  state: (): PlaceholderState => {
+    return {
+      name: 'unknown',
+    };
+  },
 
   actions: {
     setName(value: string) {
@@ -15,7 +17,9 @@ export const usePlaceholderStore = defineStore('placeholder', {
     },
   },
 
-  // If you want to persist the state between page reloads,
-  // sessions, etc. you can set this to true.
+  /*
+   * If you want to persist the state between page reloads,
+   * sessions, etc. you can set this to true.
+   */
   persist: false,
 });

@@ -1,7 +1,8 @@
-import router from '#src/router/index.js';
-
 import type { PiniaPluginContext } from 'pinia';
-import { markRaw, type App } from 'vue';
+import type { App } from 'vue';
+import { markRaw } from 'vue';
+
+import router from '#src/router/index.js';
 
 export const vuePluginRouter = {
   install: (app: App) => {
@@ -10,5 +11,6 @@ export const vuePluginRouter = {
 };
 
 export const piniaPluginRouter = (context: PiniaPluginContext) => {
+  /* eslint-disable-next-line no-param-reassign */
   context.store.$router = markRaw(router);
 };
