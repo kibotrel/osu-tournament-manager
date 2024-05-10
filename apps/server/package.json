@@ -24,8 +24,8 @@
     "db:migrate": "drizzle-kit migrate",
     "db:migration:create": "NODE_OPTIONS='--import tsx' drizzle-kit generate:pg && node --loader ts-node/esm --no-warnings --env-file=.env ./src/scripts/renameMigrationFileScript.ts",
     "db:migration:drop": "drizzle-kit drop",
-    "dev:specs": "nodemon --config nodemon-specs.json",
     "dev": "nodemon --config nodemon-server.json src/index.ts",
+    "dev:specs": "nodemon --config nodemon-specs.json",
     "specs:bundle:internal": "redocly bundle internal@latest --output src/assets/internal.json",
     "specs:bundle:public": "redocly bundle public@latest --output src/assets/public.json"
   },
