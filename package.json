@@ -22,7 +22,7 @@
     "eslint-plugin-tsdoc": "0.2.17",
     "eslint-plugin-unicorn": "52.0.0",
     "eslint-plugin-vitest": "0.4.1",
-    "husky": "8.0.3",
+    "husky": "9.0.11",
     "nodemon": "3.1.0",
     "pm-exec": "1.0.0",
     "prettier": "3.2.5",
@@ -45,7 +45,7 @@
   "scripts": {
     "format": "prettier --write apps/**/*.ts",
     "lint": "eslint apps/**/*.ts --config .eslintrc",
-    "prepare": "pm-exec husky install"
+    "prepare": "pm-exec husky"
   },
   "type": "module",
   "version": "0.0.0",
