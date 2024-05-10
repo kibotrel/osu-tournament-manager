@@ -27,8 +27,8 @@ importers:
         specifier: 7.8.0
         version: 7.8.0(eslint@8.57.0)(typescript@5.3.3)
       '@vitest/coverage-v8':
-        specifier: 1.2.2
-        version: 1.2.2(vitest@1.6.0)
+        specifier: 1.6.0
+        version: 1.6.0(vitest@1.6.0)
       eslint:
         specifier: 8.57.0
         version: 8.57.0
@@ -1838,24 +1838,24 @@ packages:
       vue: 3.4.26(typescript@5.3.3)
     dev: true
 
-  /@vitest/coverage-v8@1.2.2(vitest@1.6.0):
-    resolution: {integrity: sha512-IHyKnDz18SFclIEEAHb9Y4Uxx0sPKC2VO1kdDCs1BF6Ip4S8rQprs971zIsooLUn7Afs71GRxWMWpkCGZpRMhw==}
+  /@vitest/coverage-v8@1.6.0(vitest@1.6.0):
+    resolution: {integrity: sha512-KvapcbMY/8GYIG0rlwwOKCVNRc0OL20rrhFkg/CHNzncV03TE2XWvO5w9uZYoxNiMEBacAJt3unSOiZ7svePew==}
     peerDependencies:
-      vitest: ^1.0.0
+      vitest: 1.6.0
     dependencies:
       '@ampproject/remapping': 2.3.0
       '@bcoe/v8-coverage': 0.2.3
       debug: 4.3.4(supports-color@5.5.0)
       istanbul-lib-coverage: 3.2.2
       istanbul-lib-report: 3.0.1
-      istanbul-lib-source-maps: 4.0.1
+      istanbul-lib-source-maps: 5.0.4
       istanbul-reports: 3.1.7
-      magic-string: 0.30.9
+      magic-string: 0.30.10
       magicast: 0.3.3
       picocolors: 1.0.0
       std-env: 3.7.0
+      strip-literal: 2.1.0
       test-exclude: 6.0.0
-      v8-to-istanbul: 9.2.0
       vitest: 1.6.0(@types/node@20.12.11)
     transitivePeerDependencies:
       - supports-color
@@ -2573,10 +2573,6 @@ packages:
       is-text-path: 2.0.0
       meow: 12.1.1
       split2: 4.2.0
-    dev: true
-
-  /convert-source-map@2.0.0:
-    resolution: {integrity: sha512-Kvp459HrV2FEJ1CAsi1Ku+MY3kasH19TFykTz2xWmMeq6bk2NU3XXvfJ+Q61m0xktWwt+1HSYf3JZsTms3aRJg==}
     dev: true
 
   /cookie-signature@1.0.6:
@@ -4511,13 +4507,13 @@ packages:
       supports-color: 7.2.0
     dev: true
 
-  /istanbul-lib-source-maps@4.0.1:
-    resolution: {integrity: sha512-n3s8EwkdFIJCG3BPKBYvskgXGoy88ARzvegkitk60NxRdwltLOTaH7CUiMRXvwYorl0Q712iEjcWB+fK/MrWVw==}
+  /istanbul-lib-source-maps@5.0.4:
+    resolution: {integrity: sha512-wHOoEsNJTVltaJp8eVkm8w+GVkVNHT2YDYo53YdzQEL2gWm1hBX5cGFR9hQJtuGLebidVX7et3+dmDZrmclduw==}
     engines: {node: '>=10'}
     dependencies:
+      '@jridgewell/trace-mapping': 0.3.25
       debug: 4.3.4(supports-color@5.5.0)
       istanbul-lib-coverage: 3.2.2
-      source-map: 0.6.1
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -4875,13 +4871,6 @@ packages:
     resolution: {integrity: sha512-iIRwTIf0QKV3UAnYK4PU8uiEc4SRh5jX0mwpIwETPpHdhVM4f53RSwS/vXvN1JhGX+Cs7B8qIq3d6AH49O5fAQ==}
     dependencies:
       '@jridgewell/sourcemap-codec': 1.4.15
-
-  /magic-string@0.30.9:
-    resolution: {integrity: sha512-S1+hd+dIrC8EZqKyT9DstTH/0Z+f76kmmvZnkfQVmOpDEF9iVgdYif3Q/pIWHmCoo59bQVGW0kVL3e2nl+9+Sw==}
-    engines: {node: '>=12'}
-    dependencies:
-      '@jridgewell/sourcemap-codec': 1.4.15
-    dev: true
 
   /magicast@0.3.3:
     resolution: {integrity: sha512-ZbrP1Qxnpoes8sz47AM0z08U+jW6TyRgZzcWy3Ma3vDhJttwMwAFDMMQFobwdBxByBD46JYmxRzeF7w2+wJEuw==}
@@ -7036,15 +7025,6 @@ packages:
 
   /v8-compile-cache-lib@3.0.1:
     resolution: {integrity: sha512-wa7YjyUGfNZngI/vtK0UHAN+lgDCxBPCylVXGp0zu59Fz5aiGtNXaq3DhIov063MorB+VfufLh3JlF2KdTK3xg==}
-
-  /v8-to-istanbul@9.2.0:
-    resolution: {integrity: sha512-/EH/sDgxU2eGxajKdwLCDmQ4FWq+kpi3uCmBGpw1xJtnAxEjlD8j8PEiGWpCIMIs3ciNAgH0d3TTJiUkYzyZjA==}
-    engines: {node: '>=10.12.0'}
-    dependencies:
-      '@jridgewell/trace-mapping': 0.3.25
-      '@types/istanbul-lib-coverage': 2.0.6
-      convert-source-map: 2.0.0
-    dev: true
 
   /validate-npm-package-license@3.0.4:
     resolution: {integrity: sha512-DpKm2Ui/xN7/HQKCtpZxoRWBhZ9Z0kqtygG8XCgNQ8ZlDnxuQmWhj566j8fN4Cu3/JmbhsDo7fcAJq4s9h27Ew==}
