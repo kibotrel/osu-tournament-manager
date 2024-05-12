@@ -1,13 +1,26 @@
 import express from 'express';
-import * as swaggerUi from 'swagger-ui-express';
+import swaggerUi from 'swagger-ui-express';
 
 import { environmentConfig } from '#src/configs/environmentConfig.js';
-import { documentation } from '#src/dependencies/documentationDependency.js';
+import { documentation } from '#src/middlewares/documentationMiddleware.js';
+import { errorHandler } from '#src/middlewares/errorHandlerMiddleware.js';
+import { ressourceNotFoundHandler } from '#src/middlewares/ressourceNotFoundMiddleware.js';
+import { specificationValidator } from '#src/middlewares/specificationValidatorMiddleware.js';
+import { apiRouter } from '#src/routes/apiRouter.js';
 
-const app = express();
+const server = express();
 
-app.use('/documentation', swaggerUi.serve, documentation);
+server.set('trust proxy', 1);
+server.disable('x-powered-by');
+server.use(express.json());
 
-app.listen(environmentConfig.expressPort, () => {
+server.use(specificationValidator);
+
+server.use('/documentation', swaggerUi.serve, documentation);
+server.use('/api', apiRouter);
+server.use(ressourceNotFoundHandler);
+server.use(errorHandler);
+
+server.listen(environmentConfig.expressPort, () => {
   console.log(`Server is running on port ${environmentConfig.expressPort}`);
 });
