@@ -27,8 +27,6 @@ services:
       dockerfile: Dockerfile
     depends_on:
       - postgres
-    env_file:
-      - ./apps/server/.env
     networks:
       - backend
     ports:
