@@ -37,6 +37,22 @@ services:
         source: ./apps/server
         target: /osu-tournanament-manager/apps/server
 
+  spec-builder:
+    command: [run, dev:specs]
+    container_name: spec-builder
+    build:
+      context: .
+      args:
+        - APP=apps/server
+      dockerfile: Dockerfile
+    networks:
+      - backend
+    restart: always
+    volumes:
+      - type: bind
+        source: ./apps/server
+        target: /osu-tournanament-manager/apps/server
+
 version: '3.9'
 
 volumes:
