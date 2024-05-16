@@ -3,6 +3,7 @@
     "dotenv": "16.4.5",
     "drizzle-orm": "0.30.10",
     "express": "4.19.2",
+    "express-openapi-validator": "5.1.6",
     "pg": "8.11.5",
     "swagger-themes": "1.4.3",
     "swagger-ui-express": "5.0.0",
