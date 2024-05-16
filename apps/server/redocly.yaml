@@ -1,10 +1,10 @@
 apis:
   internal@latest:
-    root: ./specs/api.yaml
+    root: ./specs/api.openapi.yaml
   public@latest:
     decorators:
       remove-x-internal: on
-    root: ./specs/api.yaml
+    root: ./specs/api.openapi.yaml
 
 rules:
   boolean-parameter-prefixes:
