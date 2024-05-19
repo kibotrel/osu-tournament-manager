@@ -1,0 +1,10 @@
+dev.osu-tournament-manager.app {
+	tls internal
+	encode gzip
+
+  reverse_proxy client:8080
+
+  handle /api/* {
+    reverse_proxy server:3000
+  }
+}
