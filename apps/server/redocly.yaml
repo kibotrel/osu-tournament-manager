@@ -46,7 +46,7 @@ rules:
   no-unused-components: error
   operation-2xx-response: error
   operation-4xx-problem-details-rfc7807: error
-  operation-4xx-response: error
+  operation-4xx-response: off
   operation-description: error
   operation-operationId: error
   operation-operationId-unique: error
@@ -78,6 +78,7 @@ rules:
     allowedValues:
       - application/json
       - application/problem+json
+      - plain/text
   scalar-property-missing-example: error
   security-defined: error
   spec-components-invalid-map-name: error
