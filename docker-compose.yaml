@@ -1,17 +1,58 @@
 name: osu-tournament-manager
 
 networks:
-  backend:
+  web:
     driver: bridge
 
 services:
+  caddy:
+    command:
+      [
+        'caddy',
+        'run',
+        '--watch',
+        '--config',
+        '/etc/caddy/Caddyfile',
+        '--adapter',
+        'caddyfile',
+      ]
+    container_name: caddy
+    depends_on:
+      - client
+      - server
+    image: caddy:2-alpine
+    networks:
+      - web
+    ports:
+      - 80:80
+      - 443:443
+    restart: unless-stopped
+    volumes:
+      - ./caddy/Caddyfile:/etc/caddy/Caddyfile
+      - caddy:/data/caddy
+
+  client:
+    container_name: client
+    build:
+      context: .
+      args:
+        - APP=apps/client
+      dockerfile: Dockerfile
+    networks:
+      - web
+    ports:
+      - ${CLIENT_PORT_SOURCE}:${CLIENT_PORT_TARGET}
+    restart: always
+    volumes:
+      - ./apps/client:/osu-tournanament-manager/apps/client
+
   postgres:
     container_name: postgres
     env_file:
       - ./apps/server/.env
     image: postgres:16.2
     networks:
-      - backend
+      - web
     ports:
       - ${DATABASE_PORT_SOURCE}:${DATABASE_PORT_TARGET}
     restart: always
@@ -28,14 +69,12 @@ services:
     depends_on:
       - postgres
     networks:
-      - backend
+      - web
     ports:
       - ${SERVER_PORT_SOURCE}:${SERVER_PORT_TARGET}
     restart: always
     volumes:
-      - type: bind
-        source: ./apps/server
-        target: /osu-tournanament-manager/apps/server
+      - ./apps/server:/osu-tournanament-manager/apps/server
 
   spec-builder:
     command: [run, dev:specs]
@@ -45,15 +84,12 @@ services:
       args:
         - APP=apps/server
       dockerfile: Dockerfile
-    networks:
-      - backend
     restart: always
     volumes:
-      - type: bind
-        source: ./apps/server
-        target: /osu-tournanament-manager/apps/server
+      - ./apps/server:/osu-tournanament-manager/apps/server
 
 version: '3.9'
 
 volumes:
+  caddy:
   postgres:
