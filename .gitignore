@@ -47,3 +47,11 @@ lerna-debug.log*
 # Development files
 # -----------------------------------
 dev
+
+# Keys and certificates
+# -----------------------------------
+*.key
+*.pem
+*.pub
+*.crt
+/certificates
