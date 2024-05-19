@@ -1,8 +1,6 @@
 import express from 'express';
-import swaggerUi from 'swagger-ui-express';
 
 import { environmentConfig } from '#src/configs/environmentConfig.js';
-import { documentation } from '#src/middlewares/documentationMiddleware.js';
 import { errorHandler } from '#src/middlewares/errorHandlerMiddleware.js';
 import { ressourceNotFoundHandler } from '#src/middlewares/ressourceNotFoundMiddleware.js';
 import { specificationValidator } from '#src/middlewares/specificationValidatorMiddleware.js';
@@ -16,7 +14,6 @@ server.use(express.json());
 
 server.use(specificationValidator);
 
-server.use('/documentation', swaggerUi.serve, documentation);
 server.use('/api', apiRouter);
 server.use(ressourceNotFoundHandler);
 server.use(errorHandler);
