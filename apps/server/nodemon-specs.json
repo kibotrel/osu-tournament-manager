@@ -1,5 +1,5 @@
 {
   "exec": "pnpm specs:bundle:internal",
   "ext": "yaml",
-  "watch": ["specs/*.yaml"]
+  "watch": ["specs/**/*.yaml"]
 }
