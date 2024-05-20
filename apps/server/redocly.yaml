@@ -1,7 +1,7 @@
 apis:
-  internal@latest:
+  internal:
     root: ./specs/api.openapi.yaml
-  public@latest:
+  public:
     decorators:
       remove-x-internal: on
     root: ./specs/api.openapi.yaml
