@@ -1,0 +1,16 @@
+get:
+  operationId: getHealth
+
+  responses:
+    200:
+      content:
+        plain/text:
+          schema:
+            example: "OK"
+            type: string
+      description: For now, it only tells that the API is up and running.
+
+  security: []
+  summary: Check server systems status
+  tags:
+    -  Public

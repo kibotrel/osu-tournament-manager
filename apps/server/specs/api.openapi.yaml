@@ -3,94 +3,13 @@ info:
     name: GNU General Public License v3.0
     url: https://github.com/kibotrel/osu-tournament-manager/blob/main/LICENSE
   title: osu! tournament manager API
-  version: 0.0.0
+  version: 0.0.1
 
 openapi: 3.0.0
 
 paths:
-  /users/{gameUserId}:
-    get:
-      security: []
-      description: |
-        Retrieve information on a spectific user based on their osu! user ID.
-      tags:
-        - Users
-      operationId: getUserByGameUserId
-      parameters:
-        - description: osu! account ID
-          in: path
-          name: gameUserId
-          required: true
-          schema:
-            example: 3909293
-            minimum: 1
-            minLength: 1
-            type: number
-      responses:
-        200:
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  id:
-                    type: number
-                    example: 1
-          description: User was found and its internal ID is returned.
-
-        400:
-          content:
-            application/problem+json:
-              schema:
-                properties:
-                  errors:
-                    items:
-                      properties:
-                        errorCode:
-                          example: 'type.openapi.validation'
-                          type: string
-                        message:
-                          example: 'must be number'
-                          type: string
-                        path:
-                          example: '/params/gameUserId'
-                          type: string
-                      type: object
-                    type: array
-                  detail:
-                    example: 'request/params/gameUserId must be number'
-                    type: string
-                  instance:
-                    example: '/api/v1/users/test'
-                    type: string
-                  status:
-                    example: 400
-                    type: integer
-                  title:
-                    example: 'Bad Request'
-                    type: string
-                type: object
-          description: Requested osu! account ID is misformatted.
-
-        404:
-          description: |
-            Requested osu! account ID is valid but this user isn't registered
-            in the system.
-          content:
-            application/problem+json:
-              schema:
-                properties:
-                  instance:
-                    example: '/api/v1/users/123456'
-                    type: string
-                  status:
-                    example: 404
-                    type: integer
-                  title:
-                    example: 'Not Found'
-                    type: string
-                type: object
-      summary: Get user information.
+  /public/health:
+    $ref: paths/v1/public/health.openapi.yaml
 
 servers:
   - url: https://{environment}.osu-tournament-manager.app/api/{version}
@@ -107,7 +26,6 @@ servers:
           - v1
 
 tags:
-  - name: Users
+  - name: Public
     description: |
-      Users are osu! accounts representing either players or tournament staff
-      members such as referees, commentators and streamers.
+      Publicly available ressources, no authentication required.
