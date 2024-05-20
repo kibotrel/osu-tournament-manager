@@ -34,21 +34,13 @@
   "engines": {
     "node": "20.13.1"
   },
-  "homepage": "placeholder",
-  "license": "MIT",
-  "keywords": [],
   "name": "osu-tournament-manager",
-  "repository": {
-    "type": "git",
-    "url": ""
-  },
   "scripts": {
     "format": "prettier --write apps/**/*.ts",
     "lint": "eslint apps/**/*.ts --config .eslintrc",
     "prepare": "pm-exec husky"
   },
   "type": "module",
-  "version": "0.0.0",
   "workspaces": [
     "apps/*"
   ]
