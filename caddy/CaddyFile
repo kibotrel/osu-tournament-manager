@@ -2,9 +2,9 @@ dev.osu-tournament-manager.app {
 	tls internal
 	encode gzip
 
-  reverse_proxy client:8080
+  reverse_proxy client:{$CLIENT_PORT_TARGET}
 
   handle /api/* {
-    reverse_proxy server:3000
+    reverse_proxy server:{$SERVER_PORT_TARGET}
   }
 }

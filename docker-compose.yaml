@@ -20,6 +20,8 @@ services:
     depends_on:
       - client
       - server
+    env_file:
+      - ./.env
     image: caddy:2-alpine
     networks:
       - web
