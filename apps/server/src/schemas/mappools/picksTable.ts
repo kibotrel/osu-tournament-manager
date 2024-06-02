@@ -17,7 +17,7 @@ export const picksTable = mappoolsSchema.table('picks', {
   gameMode: gameModeEnum('gameMode').notNull(),
   id: serial('id').primaryKey(),
   mods: varchar('mods', { length: 256 }).notNull().default(''),
-  mapperName: varchar('mapperName', { length: 16 }).notNull(),
+  mapperName: varchar('mapperName').notNull(),
   mappoolId: integer('mappoolId')
     .notNull()
     .references(
