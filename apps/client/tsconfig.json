@@ -1,13 +1,18 @@
 {
   "compilerOptions": {
     "allowJs": true,
-    "moduleResolution": "NodeNext",
+    "declarationMap": true,
+    "lib": ["DOM", "ESNext", "DOM.Iterable"],
+    "module": "ESNext",
+    "moduleResolution": "bundler",
     "outDir": "./dist",
     "paths": {
       "#src/*": ["./src/*"]
     },
+    "sourceMap": true,
     "types": ["vite/client"]
   },
+  "exclude": ["**/node_modules/**", "**/*/dist"],
   "extends": "../tsconfig.json",
-  "include": ["./src/**/*.ts", "./src/**/*.vue"]
+  "include": ["./src/**/*.ts", "./src/**/*.vue", "vite-env.d.ts"]
 }
