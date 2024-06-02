@@ -3,18 +3,16 @@
     "allowJs": true,
     "baseUrl": ".",
     "moduleResolution": "NodeNext",
+    "outDir": "./dist",
     "paths": {
       "#src/*": ["./src/*"]
     },
-    "outDir": "./dist",
-    "types": ["pg", "express", "swagger-ui-express"]
+    "types": ["express", "express-session", "pg", "swagger-ui-express"]
   },
   "extends": "../tsconfig.json",
   "include": [
     "./src/**/*.ts",
     "./src/**/*.json",
-    "./migrations/meta/_journal.json",
-    "tournamentsSchema.ts",
-    "../client/tournamentsSchema.ts"
+    "./migrations/meta/_journal.json"
   ]
 }
