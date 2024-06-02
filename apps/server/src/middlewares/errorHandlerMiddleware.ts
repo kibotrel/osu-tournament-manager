@@ -1,16 +1,16 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
-import type { ErrorRequestHandler } from 'express';
-
-import type { HttpError } from '#src/classes/httpErrorClass.js';
-import { HttpInternalServerError } from '#src/classes/httpErrorClass.js';
-import { HttpErrorReport } from '#src/classes/httpErrorReportClass.js';
+import type { HttpError } from '@packages/shared';
 import {
   HttpContentTypes,
   HttpHeaders,
+  HttpInternalServerError,
   HttpStatusCodes,
   HttpStatusMessages,
-} from '#src/constants/httpConstants.js';
+} from '@packages/shared';
+import type { ErrorRequestHandler } from 'express';
+
+import { HttpErrorReport } from '#src/classes/httpErrorReportClass.js';
 
 /**
  * Type guard to check if the input looks like an `HttpError` for further

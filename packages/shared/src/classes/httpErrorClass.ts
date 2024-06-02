@@ -1,4 +1,4 @@
-import { HttpStatusCodes } from '#src/constants/httpConstants.js';
+import { HttpStatusCodes } from '../constants/httpConstants.js';
 
 export interface HttpErrorOptions {
   cause?: Error | undefined;

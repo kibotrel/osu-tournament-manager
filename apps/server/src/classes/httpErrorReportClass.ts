@@ -1,11 +1,11 @@
-import type { Request } from 'express';
-
-import type { HttpError } from '#src/classes/httpErrorClass.js';
+import type { HttpError } from '@packages/shared';
 import {
-  AllowedHttpMethodsOnRessource,
   HttpStatusCodes,
   HttpStatusCodesToMessagesMapping,
-} from '#src/constants/httpConstants.js';
+} from '@packages/shared';
+import type { Request } from 'express';
+
+import { AllowedHttpMethodsOnRessource } from '#src/constants/apiConstants.js';
 
 /**
  * {@link https://datatracker.ietf.org/doc/rfc9457/ | RFC 9457} compliant error

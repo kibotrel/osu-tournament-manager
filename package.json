@@ -34,14 +34,15 @@
   "engines": {
     "node": "20.13.1"
   },
-  "name": "osu-tournament-manager",
+  "name": "@osu-tournament-manager",
   "scripts": {
     "format": "prettier --write apps/**/*.ts",
     "lint": "eslint apps/**/*.ts --config .eslintrc",
-    "prepare": "pm-exec husky"
+    "prepare": "pm-exec husky && pnpm --filter=@packages/* build"
   },
   "type": "module",
   "workspaces": [
-    "apps/*"
+    "apps/*",
+    "packages/*"
   ]
 }
