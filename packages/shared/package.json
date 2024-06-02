@@ -1,0 +1,18 @@
+{
+  "dependencies": "",
+  "devDependencies": "",
+  "imports": {
+    "#src": "./src/*"
+  },
+  "main": "dist/src/index.js",
+  "name": "@packages/shared",
+  "private": true,
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc -w",
+    "format": "prettier --write src/**/*.ts",
+    "lint": "eslint src/**/*.ts --config .eslintrc"
+  },
+  "type": "module",
+  "types": "dist/src/index.d.ts"
+}
