@@ -4,10 +4,11 @@ import { integer, serial, timestamp, varchar } from 'drizzle-orm/pg-core';
 import { usersSchema } from '#src/schemas/users/usersSchema.js';
 
 export const usersTable = usersSchema.table('users', {
+  avatarUrl: varchar('avatarUrl').notNull(),
+  createdAt: timestamp('createdAt').notNull().defaultNow(),
+  gameUserId: integer('gameUserId').notNull().unique(),
   id: serial('id').primaryKey(),
   name: varchar('name').notNull(),
-  gameUserId: integer('gameUserId').notNull().unique(),
-  createdAt: timestamp('createdAt').notNull().defaultNow(),
   updatedAt: timestamp('updatedAt')
     .notNull()
     .defaultNow()
