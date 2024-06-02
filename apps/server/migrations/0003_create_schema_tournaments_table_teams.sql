@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS "tournaments"."teams" (
 );
 --> statement-breakpoint
 DO $$ BEGIN
-  ALTER TABLE "tournaments"."teams" ADD CONSTRAINT "teams_tournamentId_tournaments_id_fk" FOREIGN KEY ("tournamentId") REFERENCES "tournaments"."tournaments"("id") ON DELETE cascade ON UPDATE no action;
+ ALTER TABLE "tournaments"."teams" ADD CONSTRAINT "teams_tournamentId_tournaments_id_fk" FOREIGN KEY ("tournamentId") REFERENCES "tournaments"."tournaments"("id") ON DELETE cascade ON UPDATE no action;
 EXCEPTION
-  WHEN duplicate_object THEN null;
+ WHEN duplicate_object THEN null;
 END $$;

@@ -1,9 +1,9 @@
 CREATE SCHEMA "matches";
 --> statement-breakpoint
 DO $$ BEGIN
-  CREATE TYPE "matches"."draftType" AS ENUM('ban', 'pick', 'protect');
+ CREATE TYPE "matches"."draftType" AS ENUM('ban', 'pick', 'protect');
 EXCEPTION
-  WHEN duplicate_object THEN null;
+ WHEN duplicate_object THEN null;
 END $$;
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "matches"."matches" (
@@ -25,25 +25,19 @@ CREATE TABLE IF NOT EXISTS "matches"."matches" (
 );
 --> statement-breakpoint
 DO $$ BEGIN
-  ALTER TABLE "matches"."matches" ADD CONSTRAINT "matches_mappoolId_mappools_id_fk" FOREIGN KEY ("mappoolId") REFERENCES "mappools"."mappools"("id") ON DELETE restrict ON UPDATE no action;
+ ALTER TABLE "matches"."matches" ADD CONSTRAINT "matches_mappoolId_mappools_id_fk" FOREIGN KEY ("mappoolId") REFERENCES "mappools"."mappools"("id") ON DELETE restrict ON UPDATE no action;
 EXCEPTION
-  WHEN duplicate_object THEN null;
+ WHEN duplicate_object THEN null;
 END $$;
 --> statement-breakpoint
 DO $$ BEGIN
-  ALTER TABLE "matches"."matches" ADD CONSTRAINT "matches_tournamentId_tournaments_id_fk" FOREIGN KEY ("tournamentId") REFERENCES "tournaments"."tournaments"("id") ON DELETE cascade ON UPDATE no action;
+ ALTER TABLE "matches"."matches" ADD CONSTRAINT "matches_tournamentId_tournaments_id_fk" FOREIGN KEY ("tournamentId") REFERENCES "tournaments"."tournaments"("id") ON DELETE cascade ON UPDATE no action;
 EXCEPTION
-  WHEN duplicate_object THEN null;
+ WHEN duplicate_object THEN null;
 END $$;
 --> statement-breakpoint
 DO $$ BEGIN
-  ALTER TABLE "matches"."matches" ADD CONSTRAINT "matches_winnerTournamentTeamId_teams_id_fk" FOREIGN KEY ("winnerTournamentTeamId") REFERENCES "tournaments"."teams"("id") ON DELETE restrict ON UPDATE no action;
+ ALTER TABLE "matches"."matches" ADD CONSTRAINT "matches_winnerTournamentTeamId_teams_id_fk" FOREIGN KEY ("winnerTournamentTeamId") REFERENCES "tournaments"."teams"("id") ON DELETE restrict ON UPDATE no action;
 EXCEPTION
-  WHEN duplicate_object THEN null;
-END $$;
---> statement-breakpoint
-DO $$ BEGIN
-  ALTER TABLE "matches"."matches" ADD CONSTRAINT "endsAt_date_check" CHECK ("endsAt" > "startsAt");
-EXCEPTION
-  WHEN duplicate_object THEN null;
+ WHEN duplicate_object THEN null;
 END $$;

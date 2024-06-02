@@ -1,5 +1,5 @@
 {
-  "version": "6",
+  "version": "7",
   "dialect": "postgresql",
   "tables": {
     "mappools.mappools": {
@@ -328,6 +328,7 @@
         "scoreMode": {
           "name": "scoreMode",
           "type": "scoreMode",
+          "typeSchema": "tournaments",
           "primaryKey": false,
           "notNull": true
         },
@@ -340,6 +341,7 @@
         "teamMode": {
           "name": "teamMode",
           "type": "teamMode",
+          "typeSchema": "tournaments",
           "primaryKey": false,
           "notNull": true
         },
@@ -360,6 +362,25 @@
       "name": "users",
       "schema": "users",
       "columns": {
+        "avatarUrl": {
+          "name": "avatarUrl",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "createdAt": {
+          "name": "createdAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "gameUserId": {
+          "name": "gameUserId",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
         "id": {
           "name": "id",
           "type": "serial",
@@ -371,19 +392,6 @@
           "type": "varchar",
           "primaryKey": false,
           "notNull": true
-        },
-        "gameUserId": {
-          "name": "gameUserId",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "createdAt": {
-          "name": "createdAt",
-          "type": "timestamp",
-          "primaryKey": false,
-          "notNull": true,
-          "default": "now()"
         },
         "updatedAt": {
           "name": "updatedAt",
@@ -408,9 +416,9 @@
     }
   },
   "enums": {
-    "public.gameMode": {
+    "mappools.gameMode": {
       "name": "gameMode",
-      "schema": "public",
+      "schema": "mappools",
       "values": [
         "catch",
         "mania",
@@ -418,9 +426,9 @@
         "taiko"
       ]
     },
-    "public.scoreMode": {
+    "tournaments.scoreMode": {
       "name": "scoreMode",
-      "schema": "public",
+      "schema": "tournaments",
       "values": [
         "accuracy",
         "combo",
@@ -428,9 +436,9 @@
         "scoreV2"
       ]
     },
-    "public.teamMode": {
+    "tournaments.teamMode": {
       "name": "teamMode",
-      "schema": "public",
+      "schema": "tournaments",
       "values": [
         "headToHead",
         "tagCoOp",
@@ -449,6 +457,6 @@
     "tables": {},
     "columns": {}
   },
-  "id": "202fe2d6-864e-4117-9027-13f6b2a22494",
-  "prevId": "3f4a42fa-c4ed-4f2d-a4b8-bd9c3f7ba5be"
+  "id": "20108e5a-e9ba-4bfe-bda9-1f55e0d761af",
+  "prevId": "a5e18881-3b26-4762-a312-5b2fc9e1aa06"
 }

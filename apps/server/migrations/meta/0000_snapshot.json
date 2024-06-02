@@ -1,11 +1,30 @@
 {
-  "version": "6",
+  "version": "7",
   "dialect": "postgresql",
   "tables": {
     "users.users": {
       "name": "users",
       "schema": "users",
       "columns": {
+        "avatarUrl": {
+          "name": "avatarUrl",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "createdAt": {
+          "name": "createdAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "gameUserId": {
+          "name": "gameUserId",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
         "id": {
           "name": "id",
           "type": "serial",
@@ -17,19 +36,6 @@
           "type": "varchar",
           "primaryKey": false,
           "notNull": true
-        },
-        "gameUserId": {
-          "name": "gameUserId",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "createdAt": {
-          "name": "createdAt",
-          "type": "timestamp",
-          "primaryKey": false,
-          "notNull": true,
-          "default": "now()"
         },
         "updatedAt": {
           "name": "updatedAt",
@@ -62,6 +68,6 @@
     "tables": {},
     "columns": {}
   },
-  "id": "ed9ca2b3-7385-4a53-965d-1cf31e727711",
+  "id": "4aed17e7-7494-4369-9af9-88cf7baea426",
   "prevId": "00000000-0000-0000-0000-000000000000"
 }

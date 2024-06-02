@@ -1,9 +1,9 @@
 CREATE SCHEMA "mappools";
 --> statement-breakpoint
 DO $$ BEGIN
-  CREATE TYPE "mappools"."gameMode" AS ENUM('catch', 'mania', 'standard', 'taiko');
+ CREATE TYPE "mappools"."gameMode" AS ENUM('catch', 'mania', 'standard', 'taiko');
 EXCEPTION
-  WHEN duplicate_object THEN null;
+ WHEN duplicate_object THEN null;
 END $$;
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "mappools"."mappools" (
@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS "mappools"."mappools" (
 );
 --> statement-breakpoint
 DO $$ BEGIN
-  ALTER TABLE "mappools"."mappools" ADD CONSTRAINT "mappools_tournamentId_tournaments_id_fk" FOREIGN KEY ("tournamentId") REFERENCES "tournaments"."tournaments"("id") ON DELETE cascade ON UPDATE no action;
+ ALTER TABLE "mappools"."mappools" ADD CONSTRAINT "mappools_tournamentId_tournaments_id_fk" FOREIGN KEY ("tournamentId") REFERENCES "tournaments"."tournaments"("id") ON DELETE cascade ON UPDATE no action;
 EXCEPTION
-  WHEN duplicate_object THEN null;
+ WHEN duplicate_object THEN null;
 END $$;

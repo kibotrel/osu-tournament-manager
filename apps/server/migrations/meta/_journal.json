@@ -1,89 +1,89 @@
 {
-  "version": "5",
-  "dialect": "pg",
+  "version": "6",
+  "dialect": "postgresql",
   "entries": [
     {
       "idx": 0,
-      "version": "5",
-      "when": 1714326779950,
+      "version": "6",
+      "when": 1717340916336,
       "tag": "0000_create_schema_and_table_users",
       "breakpoints": true
     },
     {
       "idx": 1,
-      "version": "5",
-      "when": 1714326874830,
+      "version": "6",
+      "when": 1717341560791,
       "tag": "0001_create_schema_and_table_tournaments",
       "breakpoints": true
     },
     {
       "idx": 2,
-      "version": "5",
-      "when": 1714326979203,
-      "tag": "0002_create_schema_tournament_table_staffs",
+      "version": "6",
+      "when": 1717341719954,
+      "tag": "0002_create_schema_tournaments_table_staffs",
       "breakpoints": true
     },
     {
       "idx": 3,
-      "version": "5",
-      "when": 1714327005783,
-      "tag": "0003_create_schema_tournament_table_teams",
+      "version": "6",
+      "when": 1717341804992,
+      "tag": "0003_create_schema_tournaments_table_teams",
       "breakpoints": true
     },
     {
       "idx": 4,
-      "version": "5",
-      "when": 1714327034608,
-      "tag": "0004_create_schema_tournament_table_players",
+      "version": "6",
+      "when": 1717341862093,
+      "tag": "0004_create_schema_tournaments_table_players",
       "breakpoints": true
     },
     {
       "idx": 5,
-      "version": "5",
-      "when": 1714327109358,
+      "version": "6",
+      "when": 1717341989228,
       "tag": "0005_create_schema_and_table_mappools",
       "breakpoints": true
     },
     {
       "idx": 6,
-      "version": "5",
-      "when": 1714327183054,
+      "version": "6",
+      "when": 1717342262884,
       "tag": "0006_create_schema_mappools_table_picks",
       "breakpoints": true
     },
     {
       "idx": 7,
-      "version": "5",
-      "when": 1714327353709,
+      "version": "6",
+      "when": 1717342377682,
       "tag": "0007_create_schema_and_table_matches",
       "breakpoints": true
     },
     {
       "idx": 8,
-      "version": "5",
-      "when": 1714327500692,
-      "tag": "0008_create_schema_matches_table_events",
+      "version": "7",
+      "when": 1717343902742,
+      "tag": "0008_create_schema_matches_table_participants",
       "breakpoints": true
     },
     {
       "idx": 9,
-      "version": "5",
-      "when": 1714327908869,
-      "tag": "0009_create_schema_matches_table_rolls",
+      "version": "7",
+      "when": 1717343981861,
+      "tag": "0009_create_schema_matches_table_events",
       "breakpoints": true
     },
     {
       "idx": 10,
-      "version": "5",
-      "when": 1714327920148,
-      "tag": "0010_create_schema_matches_table_participants",
+      "version": "7",
+      "when": 1717344095622,
+      "tag": "0010_create_schema_matches_table_scores",
       "breakpoints": true
     },
     {
       "idx": 11,
-      "version": "5",
-      "when": 1714327932194,
-      "tag": "0011_create_schema_matches_table_scores",
+      "version": "7",
+      "when": 1717344280387,
+      "tag": "0011_create_schema_matches_table_rolls",
       "breakpoints": true
     }
   ]
