@@ -1,0 +1,56 @@
+post:
+  description: |
+    This is where all osu! OAuth successful authentication requests are redirected to.
+    It creates a session to keep user logged-in for subsequent requests
+    and a token to interact with osu! API. <b>This endpoint shouldn't be used directly.</b>
+  operationId: getOauth
+
+  requestBody:
+    content:
+      application/json:
+        schema:
+          properties:
+            code:
+              type: string
+          required:
+            - code
+          type: object
+
+  responses:
+    200:
+      content:
+        application/json:
+          schema:
+            properties:
+              avatarUrl:
+                example: https://a.ppy.sh/3909293?1555203556.jpeg
+                type: string
+              gameUserId:
+                example: 3909293
+                type: integer
+              name:
+                example: DemonWaves
+                type: string
+            type: object
+      description: New session created, user already exists in database.
+    201:
+      content:
+        application/json:
+          schema:
+            properties:
+              avatarUrl:
+                example: https://a.ppy.sh/3909293?1555203556.jpeg
+                type: string
+              gameUserId:
+                example: 3909293
+                type: integer
+              name:
+                example: DemonWaves
+                type: string
+            type: object
+      description: New session created and user added to database.
+
+  security: []
+  summary: Authentication callback from osu!
+  tags:
+    -  Public

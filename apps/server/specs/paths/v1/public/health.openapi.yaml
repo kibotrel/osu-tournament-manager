@@ -1,4 +1,7 @@
 get:
+  description: |
+    This allows to check if the server is up and running.
+    Helpful if you want to check API status before making any request.
   operationId: getHealth
 
   responses:
