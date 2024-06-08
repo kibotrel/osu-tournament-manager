@@ -1,6 +1,6 @@
 /* eslint-disable unicorn/no-process-exit */
 import { readdir, rename, writeFile } from 'node:fs/promises';
-import { join } from 'node:path';
+import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 import journal from '../../migrations/meta/_journal.json' assert { type: 'json' };
@@ -33,10 +33,10 @@ if (!targetEntry) {
 targetEntry.tag = `${id}_${fileName}`;
 
 await writeFile(
-  join(migrationsDirectory, `meta/_journal.json`),
+  path.join(migrationsDirectory, `meta/_journal.json`),
   JSON.stringify(journal, undefined, 2),
 );
 await rename(
-  join(migrationsDirectory, lastMigrationFilename),
-  join(migrationsDirectory, `${targetEntry.tag}.sql`),
+  path.join(migrationsDirectory, lastMigrationFilename),
+  path.join(migrationsDirectory, `${targetEntry.tag}.sql`),
 );
