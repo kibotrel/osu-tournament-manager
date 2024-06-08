@@ -14,5 +14,10 @@
   },
   "exclude": ["**/node_modules/**", "**/*/dist"],
   "extends": "../tsconfig.json",
-  "include": ["./src/**/*.ts", "./src/**/*.vue", "vite-env.d.ts"]
+  "include": [
+    "./src/**/*.ts",
+    "./src/**/*.vue",
+    "vite-env.d.ts",
+    "./src/assets/styles/tailwind.theme.js"
+  ]
 }

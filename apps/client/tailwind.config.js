@@ -1,3 +1,5 @@
+import { customTheme } from './src/assets/styles/tailwind.theme.js';
+
 /** @type {import('tailwindcss').Config} */
 export default {
   content: [
@@ -6,7 +8,7 @@ export default {
     './index.html',
   ],
   theme: {
-    extend: {},
+    extend: customTheme,
   },
   plugins: [],
 };
