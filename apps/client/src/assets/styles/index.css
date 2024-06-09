@@ -1,3 +1,20 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+* {
+  @apply box-border;
+}
+
+html {
+  font-family: 'Geist Sans', sans-serif;
+  --webkit-font-smoothing: antialiased;
+  --moz-osx-font-smoothing: grayscale;
+}
+
+html,
+body,
+#app {
+  @apply m-0 h-full p-0;
+  @apply bg-primary-4 text-primary-1;
+}
