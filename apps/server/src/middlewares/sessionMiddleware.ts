@@ -1,10 +1,12 @@
 import { randomUUID } from 'node:crypto';
 
 import { Times } from '@packages/shared';
+import RedisStore from 'connect-redis';
 import type { RequestHandler } from 'express';
 import expressSession from 'express-session';
 
 import { environmentConfig } from '#src/configs/environmentConfig.js';
+import { cache } from '#src/dependencies/cacheDependency.js';
 
 export const session: RequestHandler = expressSession({
   cookie: { maxAge: Times.Week, secure: true },
@@ -15,5 +17,5 @@ export const session: RequestHandler = expressSession({
   resave: false,
   saveUninitialized: false,
   secret: environmentConfig.sessionSecret,
-  store: new expressSession.MemoryStore(),
+  store: new RedisStore({ client: cache }),
 });
