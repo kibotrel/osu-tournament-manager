@@ -7,14 +7,12 @@
       <p class="text-primary-2">
         To get access to this webapp, please login with your osu! account.
       </p>
-      <a :href="authUrl">
-        <ui-button class="m-auto mt-8 w-32">
-          <template #default> Login </template>
-          <template #icon>
-            <ui-icon name="identification" />
-          </template>
-        </ui-button>
-      </a>
+      <ui-button @mousedown="redirectToOsuAuthPage()" class="m-auto mt-8 w-32">
+        <template #default> Login </template>
+        <template #icon>
+          <ui-icon name="identification" />
+        </template>
+      </ui-button>
     </div>
   </div>
 </template>
@@ -23,10 +21,16 @@
 import uiButton from '#src/components/ui/uiButton.vue';
 import uiIcon from '#src/components/ui/uiIcon.vue';
 
+// TODO: Try to apply @mousedown event to the button to quicken the redirect process
+
 const baseUrl = import.meta.env.VITE_BASE_APP_URL;
 const callbackUrl = encodeURIComponent(`${baseUrl}/oauth/callback`);
 const clientId = import.meta.env.VITE_OSU_APPLICATION_CLIENT_ID;
 const authUrl = `https://osu.ppy.sh/oauth/authorize?client_id=${clientId}&response_type=code&redirect_uri=${callbackUrl}&scope=identify+public`;
+
+const redirectToOsuAuthPage = () => {
+  window.open(authUrl, '_blank');
+};
 </script>
 
 <style scoped></style>
