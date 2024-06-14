@@ -21,8 +21,6 @@
 import uiButton from '#src/components/ui/uiButton.vue';
 import uiIcon from '#src/components/ui/uiIcon.vue';
 
-// TODO: Try to apply @mousedown event to the button to quicken the redirect process
-
 const baseUrl = import.meta.env.VITE_BASE_APP_URL;
 const callbackUrl = encodeURIComponent(`${baseUrl}/oauth/callback`);
 const clientId = import.meta.env.VITE_OSU_APPLICATION_CLIENT_ID;
