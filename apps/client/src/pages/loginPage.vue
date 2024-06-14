@@ -27,7 +27,7 @@ const clientId = import.meta.env.VITE_OSU_APPLICATION_CLIENT_ID;
 const authUrl = `https://osu.ppy.sh/oauth/authorize?client_id=${clientId}&response_type=code&redirect_uri=${callbackUrl}&scope=identify+public`;
 
 const redirectToOsuAuthPage = () => {
-  window.open(authUrl, '_blank');
+  window.open(authUrl, '_self');
 };
 </script>
 
