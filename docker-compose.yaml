@@ -17,9 +17,6 @@ services:
         'caddyfile',
       ]
     container_name: caddy
-    depends_on:
-      - client
-      - server
     env_file:
       - ./.env
     image: caddy:2-alpine
@@ -34,12 +31,14 @@ services:
       - caddy:/data/caddy
 
   client:
-    container_name: client
     build:
       context: .
       args:
         - APP=apps/client
       dockerfile: Dockerfile
+    container_name: client
+    depends_on:
+      - server
     networks:
       - web
     ports:
@@ -54,8 +53,8 @@ services:
       - ./apps/server/.env
     healthcheck:
       test: ['CMD-SHELL', 'pg_isready', '-d', 'osu-tournament-manager']
-      interval: 0.25s
-      timeout: 0.25s
+      interval: 250ms
+      timeout: 250ms
       retries: 10
     image: postgres:16.2
     networks:
@@ -81,8 +80,8 @@ services:
       - REDIS_PASSWORD=${REDIS_PASSWORD}
     healthcheck:
       test: ['CMD-SHELL', 'redis-cli ping | grep PONG']
-      interval: 0.25s
-      timeout: 0.25s
+      interval: 250ms
+      timeout: 250ms
       retries: 10
     image: redis:7.2.5
     networks:
@@ -94,17 +93,22 @@ services:
       - redis:/data
 
   server:
-    container_name: server
     build:
       context: .
       args:
         - APP=apps/server
       dockerfile: Dockerfile
+    container_name: server
     depends_on:
       postgres:
         condition: service_healthy
       redis:
         condition: service_healthy
+    healthcheck:
+      test: ['CMD-SHELL', 'pnpm', 'run', 'healthcheck']
+      interval: 250ms
+      timeout: 250ms
+      retries: 10
     networks:
       - web
     ports:
