@@ -27,7 +27,7 @@
     "pm-exec": "1.0.0",
     "prettier": "3.2.5",
     "ts-node": "10.9.2",
-    "tsc-alias": "1.8.8",
+    "tsc-alias": "1.8.10",
     "typescript": "5.5.3",
     "vitest": "1.6.0"
   },
