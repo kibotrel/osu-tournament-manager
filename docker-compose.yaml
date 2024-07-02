@@ -38,7 +38,8 @@ services:
       dockerfile: Dockerfile
     container_name: client
     depends_on:
-      - server
+      server:
+        condition: service_healthy
     networks:
       - web
     ports:
@@ -104,10 +105,12 @@ services:
         condition: service_healthy
       redis:
         condition: service_healthy
+      spec-builder:
+        condition: service_started
     healthcheck:
-      test: ['CMD-SHELL', 'pnpm', 'run', 'healthcheck']
+      test: ['CMD', 'pnpm', 'healthcheck']
       interval: 250ms
-      timeout: 250ms
+      timeout: 500ms
       retries: 10
     networks:
       - web
