@@ -15,7 +15,7 @@ export interface RequestConfiguration {
 export const getRequest = <T = Record<string, unknown>>(
   configuration: RequestConfiguration,
 ) => {
-  const { endpoint, payload, version = 'v1' } = configuration;
+  const { endpoint, payload = {}, version = 'v1' } = configuration;
   const request = new HttpRequest()
     .setBaseUrl(`${baseUrl}/api/${version}`)
     .setPayload(payload);
@@ -30,7 +30,7 @@ export const getRequest = <T = Record<string, unknown>>(
 export const postRequest = <T = Record<string, unknown>>(
   configuration: RequestConfiguration,
 ) => {
-  const { endpoint, payload, version = 'v1' } = configuration;
+  const { endpoint, payload = {}, version = 'v1' } = configuration;
   const request = new HttpRequest()
     .setBaseUrl(`${baseUrl}/api/${version}`)
     .setPayload(payload);
