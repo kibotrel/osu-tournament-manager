@@ -1,0 +1,17 @@
+name: 'Pull Request Sizing'
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+
+jobs:
+  label_pull_request:
+    name: 'Set Pull Request Size Label'
+    permissions:
+      pull-requests: write
+    runs-on: ubuntu-latest
+    steps:
+      - run: ./.github/scripts/pull_request_size_label.sh ${{ github.event.pull_request.number }}
+        env:
+          GH_REPO: ${{ github.repository }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
