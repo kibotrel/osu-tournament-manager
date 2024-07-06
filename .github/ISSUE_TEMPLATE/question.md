@@ -1,5 +1,5 @@
 ---
-name: "\U0001F914 Questions"
+name: "\U0001F914 Question"
 about: Ask a question or request help
 title: ''
 labels: 'Type: Question, Need: Triage'
