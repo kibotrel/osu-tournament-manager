@@ -3,7 +3,7 @@ post:
     This is where all osu! OAuth successful authentication requests are redirected to.
     It creates a session to keep user logged-in for subsequent requests
     and a token to interact with osu! API. <b>This endpoint shouldn't be used directly.</b>
-  operationId: getOauth
+  operationId: postOauth
 
   requestBody:
     content:

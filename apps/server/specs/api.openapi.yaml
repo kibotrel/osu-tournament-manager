@@ -10,6 +10,8 @@ openapi: 3.0.0
 paths:
   /public/health:
     $ref: paths/v1/public/health.openapi.yaml
+  /public/logout:
+    $ref: paths/v1/public/logout.openapi.yaml
   /public/oauth:
     $ref: paths/v1/public/oauth.openapi.yaml
 

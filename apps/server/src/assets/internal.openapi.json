@@ -60,10 +60,26 @@
         ]
       }
     },
+    "/public/logout": {
+      "get": {
+        "description": "This endpoint destroy any session associated with the request and effectively logs out the user.\n",
+        "operationId": "getLogout",
+        "responses": {
+          "204": {
+            "description": "Any session associated with the request has been destroyed."
+          }
+        },
+        "security": [],
+        "summary": "Destroy session and log out",
+        "tags": [
+          "Public"
+        ]
+      }
+    },
     "/public/oauth": {
       "post": {
         "description": "This is where all osu! OAuth successful authentication requests are redirected to.\nIt creates a session to keep user logged-in for subsequent requests\nand a token to interact with osu! API. <b>This endpoint shouldn't be used directly.</b>\n",
-        "operationId": "getOauth",
+        "operationId": "postOauth",
         "requestBody": {
           "content": {
             "application/json": {
