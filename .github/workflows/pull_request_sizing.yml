@@ -11,7 +11,11 @@ jobs:
       pull-requests: write
     runs-on: ubuntu-latest
     steps:
-      - run: ls -lR
-        env:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - env:
           GH_REPO: ${{ github.repository }}
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        name: Execute labeling script
+        run: ./.github/scripts/pull_request_size_label.sh ${{ github.event.pull_request.number }}
