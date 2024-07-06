@@ -11,7 +11,7 @@ jobs:
       pull-requests: write
     runs-on: ubuntu-latest
     steps:
-      - run: ./.github/scripts/pull_request_size_label.sh ${{ github.event.pull_request.number }}
+      - run: ls -lR
         env:
           GH_REPO: ${{ github.repository }}
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
