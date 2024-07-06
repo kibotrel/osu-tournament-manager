@@ -36,18 +36,12 @@ export class HttpRequest {
   public async delete<T = Record<string, unknown>>(
     endpoint: string,
   ): Promise<HttpResponse<T>> {
-    const options: RequestInit = {
+    const url = this.setRequestQueryParams(endpoint);
+    const response = await fetch(url, {
       headers: this.httpHeaders,
       method: HttpMethods.Delete,
-    };
-    const url = new URL(`${this.baseUrl}${endpoint}`);
-
-    for (const key in this.payload) {
-      url.searchParams.append(key, String(this.payload[key]));
-    }
-
-    const response = await fetch(url, options);
-    const data = await response.json();
+    });
+    const data = await this.readResponse<T>(response);
 
     return { data, isOk: response.ok, status: response.status };
   }
@@ -55,18 +49,12 @@ export class HttpRequest {
   public async get<T = Record<string, unknown>>(
     endpoint: string,
   ): Promise<HttpResponse<T>> {
-    const options: RequestInit = {
+    const url = this.setRequestQueryParams(endpoint);
+    const response = await fetch(url, {
       headers: this.httpHeaders,
       method: HttpMethods.Get,
-    };
-    const url = new URL(`${this.baseUrl}${endpoint}`);
-
-    for (const key in this.payload) {
-      url.searchParams.append(key, String(this.payload[key]));
-    }
-
-    const response = await fetch(url, options);
-    const data = await response.json();
+    });
+    const data = await this.readResponse<T>(response);
 
     return { data, isOk: response.ok, status: response.status };
   }
@@ -74,18 +62,15 @@ export class HttpRequest {
   public async patch<T = Record<string, unknown>>(
     endpoint: string,
   ): Promise<HttpResponse<T>> {
-    const options: RequestInit = {
+    this.setHttpHeader(HttpHeaders.ContentType, 'application/json');
+
+    const url = new URL(`${this.baseUrl}${endpoint}`);
+    const response = await fetch(url, {
+      body: this.setRequestBody(),
       headers: this.httpHeaders,
       method: HttpMethods.Patch,
-    };
-    const url = new URL(`${this.baseUrl}${endpoint}`);
-
-    if (Object.keys(this.payload).length > 0) {
-      options.body = JSON.stringify(this.payload);
-    }
-
-    const response = await fetch(url, options);
-    const data = await response.json();
+    });
+    const data = await this.readResponse<T>(response);
 
     return { data, isOk: response.ok, status: response.status };
   }
@@ -93,18 +78,15 @@ export class HttpRequest {
   public async post<T = Record<string, unknown>>(
     endpoint: string,
   ): Promise<HttpResponse<T>> {
-    const options: RequestInit = {
+    this.setHttpHeader(HttpHeaders.ContentType, 'application/json');
+
+    const url = new URL(`${this.baseUrl}${endpoint}`);
+    const response = await fetch(url, {
+      body: this.setRequestBody(),
       headers: this.httpHeaders,
       method: HttpMethods.Post,
-    };
-    const url = new URL(`${this.baseUrl}${endpoint}`);
-
-    if (Object.keys(this.payload).length > 0) {
-      options.body = JSON.stringify(this.payload);
-    }
-
-    const response = await fetch(url, options);
-    const data = await response.json();
+    });
+    const data = await this.readResponse<T>(response);
 
     return { data, isOk: response.ok, status: response.status };
   }
@@ -112,28 +94,42 @@ export class HttpRequest {
   public async put<T = Record<string, unknown>>(
     endpoint: string,
   ): Promise<HttpResponse<T>> {
-    const options: RequestInit = {
+    this.setHttpHeader(HttpHeaders.ContentType, 'application/json');
+
+    const url = new URL(`${this.baseUrl}${endpoint}`);
+    const response = await fetch(url, {
+      body: this.setRequestBody(),
       headers: this.httpHeaders,
       method: HttpMethods.Put,
-    };
-    const url = new URL(`${this.baseUrl}${endpoint}`);
-
-    if (Object.keys(this.payload).length > 0) {
-      options.body = JSON.stringify(this.payload);
-    }
-
-    const response = await fetch(url, options);
-    const data = await response.json();
+    });
+    const data = await this.readResponse<T>(response);
 
     return { data, isOk: response.ok, status: response.status };
   }
 
+  /**
+   * Internal method to safely parse the response from the fetch API.
+   */
+  private readResponse<T = Record<string, unknown>>(
+    response: Response,
+  ): Promise<T> {
+    return response.json().catch(() => {
+      return {} as T;
+    });
+  }
+
+  /**
+   * Will be prepended to the specified endpoint when invoking {@link HttpRequest.get}, {@link HttpRequest.post}, etc.
+   */
   public setBaseUrl(baseUrl: string) {
     this.baseUrl = baseUrl;
 
     return this;
   }
 
+  /**
+   * Adds a header to the request. See {@link HttpHeaders} for a list of available headers.
+   */
   public setHttpHeader(name: HttpHeaders, value: string) {
     this.httpHeaders.set(name, value);
 
@@ -147,5 +143,29 @@ export class HttpRequest {
     this.payload = payload ?? {};
 
     return this;
+  }
+
+  /**
+   * Internal method to set the body of the request.
+   */
+  private setRequestBody() {
+    if (Object.keys(this.payload).length > 0) {
+      return JSON.stringify(this.payload);
+    }
+
+    return null;
+  }
+
+  /**
+   * Internal method to set the query parameters of the request.
+   */
+  private setRequestQueryParams(endpoint: string) {
+    const url = new URL(`${this.baseUrl}${endpoint}`);
+
+    for (const key in this.payload) {
+      url.searchParams.append(key, String(this.payload[key]));
+    }
+
+    return url;
   }
 }
