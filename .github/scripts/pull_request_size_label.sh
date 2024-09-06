@@ -8,18 +8,24 @@ if [ -z "$1" ]; then
 fi
 
 pullRequestNumber=$1
-rawData=$(gh pr view $pullRequestNumber --json additions,deletions --template '{{.additions }} {{.deletions }}')
+rawData=$(gh pr view $pullRequestNumber --json additions,deletions,labels --template '{{.additions }} {{.deletions }} {{.labels}}')
 
 read -a rawData <<< $rawData
 
 additions=${rawData[0]}
 deletions=${rawData[1]}
+labels=${rawData[@]:2}
+current_size_label=$(echo $labels | grep -o 'Size: [^] ]*')
 pullRequestSize=$(((additions + deletions) / 2))
 
 if [ $pullRequestSize -lt 25 ]; then
-  gh pr edit $pullRequestNumber --remove-label 'Size: Small','Size: Medium','Size: Large' --add-label 'Size: Small' > /dev/null
+  expected_label='Size: Small'
 elif [ $pullRequestSize -lt 100 ]; then
-  gh pr edit $pullRequestNumber --remove-label 'Size: Small','Size: Medium','Size: Large' --add-label 'Size: Medium' > /dev/null
+  expected_label='Size: Medium'
 else
-  gh pr edit $pullRequestNumber --remove-label 'Size: Small','Size: Medium','Size: Large' --add-label 'Size: Large' > /dev/null
+  expected_label='Size: Large'
+fi
+
+if [ "$current_size_label" != "$expected_label" ]; then
+  gh pr edit $pullRequestNumber --remove-label 'Size: Small','Size: Medium','Size: Large' --add-label "$expected_label" > /dev/null
 fi
