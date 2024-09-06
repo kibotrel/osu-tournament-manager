@@ -20,4 +20,4 @@ jobs:
           GH_REPO: ${{ github.repository }}
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         name: Execute labeling script
-        run: ./scripts/pull_request_size_label.sh ${{ github.event.pull_request.number }}
+        run: ./.github/scripts/pull_request_size_label.sh ${{ github.event.pull_request.number }}
