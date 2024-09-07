@@ -23,7 +23,6 @@ To be merged, your Pull Request must pass all the following checks.
 - [ ] I have performed a self-review of my code
 - [ ] If needed, I updated the documentation accordingly
 - [ ] For bug fixes or features, I added some tests
-- [ ] All existing and new tests pass successfully
 
 ## :camera_flash: Screenshots
 
