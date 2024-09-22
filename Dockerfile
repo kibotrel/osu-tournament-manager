@@ -1,4 +1,4 @@
-FROM node:20.13.1-slim AS base
+FROM node:20.17.0-slim AS base
 ARG PNPM_VERSION=9.11.0
 RUN npm --global install pnpm@${PNPM_VERSION}
 
