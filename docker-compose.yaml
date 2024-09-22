@@ -53,8 +53,8 @@ services:
     env_file:
       - ./apps/server/.env
     healthcheck:
-      test: ['CMD-SHELL', 'pg_isready', '-d', 'osu-tournament-manager']
-      interval: 250ms
+      test: ['CMD-SHELL', 'pg_isready -U dev -d osu_tournament_manager']
+      interval: 1s
       timeout: 250ms
       retries: 10
     image: postgres:16.2
@@ -108,10 +108,10 @@ services:
       spec-builder:
         condition: service_started
     healthcheck:
-      test: ['CMD', 'pnpm', 'healthcheck']
       interval: 250ms
-      timeout: 500ms
       retries: 10
+      test: ['CMD', 'pnpm', 'healthcheck']
+      timeout: 1s
     networks:
       - web
     ports:
