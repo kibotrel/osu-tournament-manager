@@ -14,9 +14,15 @@ read -a rawData <<< $rawData
 
 additions=${rawData[0]}
 deletions=${rawData[1]}
-labels=${rawData[@]:2}
-current_size_label=$(echo $labels | grep -o 'Size: [^] ]*')
 pullRequestSize=$(((additions + deletions) / 2))
+
+labels=${rawData[@]:2}
+current_size_label=""
+
+if [ "$labels" != "[]" ]; then
+  current_size_label=$(echo $labels | grep -o 'Size: [^] ]*')
+fi
+
 if [ $pullRequestSize -lt 25 ]; then
   expected_label='Size: Small'
 elif [ $pullRequestSize -lt 100 ]; then
