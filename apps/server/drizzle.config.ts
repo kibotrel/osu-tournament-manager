@@ -3,10 +3,12 @@ import { defineConfig } from 'drizzle-kit';
 
 dotenv.config();
 
+const isLocalEnvironment = Boolean(process.argv.at(3) === 'local');
+
 export default defineConfig({
   dbCredentials: {
     database: process.env.POSTGRES_DB || '',
-    host: process.env.POSTGRES_HOST || '',
+    host: isLocalEnvironment ? '127.0.0.1' : process.env.POSTGRES_HOST || '',
     password: process.env.POSTGRES_PASSWORD || '',
     port: Number(process.env.POSTGRES_PORT) || Number.NaN,
     ssl: false,
@@ -18,5 +20,5 @@ export default defineConfig({
     table: 'migrations',
   },
   out: './migrations',
-  schema: './src/schemas/*',
+  schema: './dist/src/schemas/*',
 });

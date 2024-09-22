@@ -2,6 +2,7 @@
   "dependencies": {
     "@packages/shared": "workspace:*",
     "connect-redis": "7.1.1",
+    "dotenv": "16.4.5",
     "drizzle-orm": "0.31.0",
     "express": "4.19.2",
     "express-openapi-validator": "5.1.6",
@@ -29,7 +30,9 @@
     "db:migrate": "drizzle-kit migrate",
     "db:migration:create": "drizzle-kit generate && tsx --env-file=.env ./src/scripts/renameMigrationFileScript.ts",
     "db:migration:drop": "drizzle-kit drop",
+    "db:studio": "drizzle-kit studio local",
     "dev": "nodemon --config nodemon-server.json src/server.ts",
+    "build": "tsc --build && tsc-alias",
     "dev:specs": "nodemon --config nodemon-specs.json",
     "healthcheck": "tsx --env-file=.env ./src/scripts/healthCheckScript.ts",
     "specs:bundle:internal": "redocly bundle internal --output src/assets/internal.openapi.json",
