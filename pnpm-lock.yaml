@@ -80,9 +80,6 @@ importers:
       nodemon:
         specifier: 3.1.0
         version: 3.1.0
-      pm-exec:
-        specifier: 1.0.0
-        version: 1.0.0
       prettier:
         specifier: 3.2.5
         version: 3.2.5
@@ -3420,11 +3417,6 @@ packages:
   pluralize@8.0.0:
     resolution: {integrity: sha512-Nc3IT5yHzflTfbjgqWcCPpo7DaKy4FnpB0l/zCAW0Tc7jxAiuqSxHasntB3D7887LSrA93kDJ9IXovxJYxyLCA==}
     engines: {node: '>=4'}
-
-  pm-exec@1.0.0:
-    resolution: {integrity: sha512-tBnkT//qHxT4Rd5BfF29ZOVAE1vwUUGv7PRBM7cCSWfjJTmp3t60v1+peCrIQSMRNHS7SNYD0ndEaXhIWmurcg==}
-    engines: {node: '>=10.0.0'}
-    hasBin: true
 
   polished@4.3.1:
     resolution: {integrity: sha512-OBatVyC/N7SCW/FaDHrSd+vn0o5cS855TOmYi4OkdWUMSJCET/xip//ch8xGUvtr3i44X9LVyWwQlRMTN3pwSA==}
@@ -7751,8 +7743,6 @@ snapshots:
       queue-lit: 1.5.2
 
   pluralize@8.0.0: {}
-
-  pm-exec@1.0.0: {}
 
   polished@4.3.1:
     dependencies:

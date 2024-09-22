@@ -24,7 +24,6 @@
     "eslint-plugin-vitest": "0.5.4",
     "husky": "9.0.11",
     "nodemon": "3.1.0",
-    "pm-exec": "1.0.0",
     "prettier": "3.2.5",
     "tsc-alias": "1.8.10",
     "typescript": "5.5.3",
@@ -34,7 +33,7 @@
   "scripts": {
     "format": "prettier --write apps/**/*.ts",
     "lint": "eslint apps/**/*.ts --config .eslintrc",
-    "prepare": "pm-exec husky && pnpm --filter=@packages/* build"
+    "prepare": "pnpm husky && pnpm --filter=@packages/* build"
   },
   "type": "module",
   "workspaces": [

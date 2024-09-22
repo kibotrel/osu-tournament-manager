@@ -23,5 +23,3 @@ Once cloned, you can run the following commands:
 - `pnpm install` installs all the dependencies, setup husky and commitlint git hooks.
 - `nvm use` sets the node version to the one specified in `.nvmrc` (if you use [nvm](https://github.com/nvm-sh/nvm))
 - `pnpm dev` starts a `nodemon` process and gets you ready to develop.
-
-> :information_source: [pnpm](https://pnpm.io/) is taken as an example here. You can use any package manager thanks to [pm-exec](https://github.com/slune-org/pm-exec).
