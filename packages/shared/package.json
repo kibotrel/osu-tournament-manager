@@ -1,5 +1,7 @@
 {
-  "devDependencies": {},
+  "devDependencies": {
+    "@packages/prettier-config": "workspace:*"
+  },
   "imports": {
     "#src": "./src/*"
   },
