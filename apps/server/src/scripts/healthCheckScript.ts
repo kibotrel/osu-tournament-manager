@@ -1,4 +1,3 @@
-/* eslint-disable unicorn/no-process-exit */
 import { environmentConfig } from '#src/configs/environmentConfig.js';
 
 const response = await fetch(
