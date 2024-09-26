@@ -1,6 +1,5 @@
 {
-  "dependencies": "",
-  "devDependencies": "",
+  "devDependencies": {},
   "imports": {
     "#src": "./src/*"
   },

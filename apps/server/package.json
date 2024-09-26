@@ -3,23 +3,23 @@
     "@packages/shared": "workspace:*",
     "connect-redis": "7.1.1",
     "dotenv": "16.4.5",
-    "drizzle-orm": "0.31.0",
-    "express": "4.19.2",
-    "express-openapi-validator": "5.1.6",
+    "drizzle-orm": "0.33.0",
+    "express": "4.21.0",
+    "express-openapi-validator": "5.3.7",
     "express-session": "1.18.0",
-    "pg": "8.11.5",
-    "redis": "4.6.14",
+    "pg": "8.13.0",
+    "redis": "4.7.0",
     "swagger-themes": "1.4.3",
-    "swagger-ui-express": "5.0.0"
+    "swagger-ui-express": "5.0.1"
   },
   "devDependencies": {
-    "@redocly/cli": "1.12.2",
+    "@redocly/cli": "1.25.3",
     "@types/express": "4.17.21",
     "@types/express-session": "1.18.0",
-    "@types/pg": "8.11.6",
+    "@types/pg": "8.11.10",
     "@types/swagger-ui-express": "4.1.6",
-    "drizzle-kit": "0.22.8",
-    "tsx": "4.16.0"
+    "drizzle-kit": "0.24.2",
+    "tsx": "4.19.1"
   },
   "imports": {
     "#src/*": "./src/*"
@@ -27,14 +27,16 @@
   "name": "@apps/server",
   "private": true,
   "scripts": {
+    "build": "tsc --build && tsc-alias",
     "db:migrate": "drizzle-kit migrate",
     "db:migration:create": "drizzle-kit generate && tsx --env-file=.env ./src/scripts/renameMigrationFileScript.ts",
     "db:migration:drop": "drizzle-kit drop",
     "db:studio": "drizzle-kit studio local",
     "dev": "nodemon --config nodemon-server.json src/server.ts",
-    "build": "tsc --build && tsc-alias",
     "dev:specs": "nodemon --config nodemon-specs.json",
+    "format": "prettier --write src/**/*.ts",
     "healthcheck": "tsx --env-file=.env ./src/scripts/healthCheckScript.ts",
+    "lint": "eslint src/**/*.ts --config .eslintrc",
     "specs:bundle:internal": "redocly bundle internal --output src/assets/internal.openapi.json",
     "specs:bundle:public": "redocly bundle public --output src/assets/public.openapi.json"
   },
