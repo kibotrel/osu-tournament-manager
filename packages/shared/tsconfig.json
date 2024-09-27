@@ -6,7 +6,9 @@
     "outDir": "./dist",
     "paths": {
       "#src/*": ["./src/*"]
-    }
+    },
+    "removeComments": false,
+    "types": ["express"]
   },
   "extends": "../tsconfig.json",
   "include": ["./src/**/*.ts"]

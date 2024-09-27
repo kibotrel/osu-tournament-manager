@@ -1,8 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
-import type { HttpError } from '@packages/shared';
+import type { ErrorReport, HttpError } from '@packages/shared';
 import {
   HttpContentTypes,
+  HttpErrorReport,
   HttpHeaders,
   HttpInternalServerError,
   HttpStatusCodes,
@@ -10,10 +11,10 @@ import {
 } from '@packages/shared';
 import type { ErrorRequestHandler } from 'express';
 
-import { HttpErrorReport } from '#src/classes/httpErrorReportClass.js';
+import { AllowedHttpMethodsOnRessource } from '#src/constants/apiConstants.js';
 
 /**
- * Type guard to check if the input looks like an `HttpError` for further
+ * Type predicate to check if the input looks like an `HttpError` for further
  * processing.
  */
 export const isHttpError = (input: unknown): input is HttpError => {
@@ -34,7 +35,7 @@ export const isHttpError = (input: unknown): input is HttpError => {
  * Middleware to communicate errors to the client in a consistent way conforming
  * to {@link https://datatracker.ietf.org/doc/rfc9457/ | RFC 9457}.
  */
-export const errorHandler: ErrorRequestHandler = (
+export const errorHandler: ErrorRequestHandler<never, ErrorReport> = (
   rawError,
   request,
   response,
@@ -52,11 +53,16 @@ export const errorHandler: ErrorRequestHandler = (
         cause: rawError,
         message: HttpStatusMessages.InternalServerError,
       });
-  const errorReport = new HttpErrorReport(request, error);
+  const errorReport = new HttpErrorReport(
+    request,
+    AllowedHttpMethodsOnRessource,
+    error,
+  );
+  const { allowedHttpMethodsOnRessource, ...rest } = errorReport;
 
   if (errorReport.status === HttpStatusCodes.MethodNotAllowed) {
     response.setHeader(HttpHeaders.Allow, errorReport.getAllowedMethods());
   }
 
-  return response.status(errorReport.status).json(errorReport);
+  return response.status(errorReport.status).json({ ...rest });
 };

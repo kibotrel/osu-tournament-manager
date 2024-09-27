@@ -1,15 +1,16 @@
 {
   "devDependencies": {
-    "@packages/prettier-config": "workspace:*"
+    "@packages/prettier-config": "workspace:*",
+    "@types/express": "4.17.21"
   },
   "imports": {
-    "#src": "./src/*"
+    "#src/*": "./src/*"
   },
   "main": "dist/src/index.js",
   "name": "@packages/shared",
   "private": true,
   "scripts": {
-    "build": "tsc",
+    "build": "tsc && tsc-alias",
     "dev": "tsc -w",
     "format": "prettier --write src/**/*.ts",
     "lint": "eslint src/**/*.ts --config .eslintrc"

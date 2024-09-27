@@ -1,3 +1,5 @@
+import type { ErrorReport } from '#src/classes/httpErrorReportClass.js';
+
 // GET /public/logout
 export interface GetPublicLogoutResponseBody {
   [key: string]: never;
@@ -8,8 +10,10 @@ export interface PostPublicOauthRequestBody {
   code: string;
 }
 
-export interface PostPublicOauthResponseBody {
+interface SmallUser {
   avatarUrl: string;
   gameUserId: number;
   name: string;
 }
+
+export type PostPublicOauthResponseBody = SmallUser | ErrorReport;
