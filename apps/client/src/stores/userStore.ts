@@ -1,12 +1,9 @@
-import type {
-  GetPublicLogoutResponseBody,
-  PostPublicOauthResponseBody,
-} from '@packages/shared';
+import { isErrorReport } from '@packages/shared';
 import { defineStore } from 'pinia';
 import { inject, ref } from 'vue';
 import type { Router } from 'vue-router';
 
-import { getRequest, postRequest } from '#src/api/api.js';
+import { getPublicLogout, postPublicLogin } from '#src/api/publicApi.js';
 
 export const useUserStore = defineStore(
   'user',
@@ -17,10 +14,11 @@ export const useUserStore = defineStore(
     const username = ref('');
 
     const login = async (code: string) => {
-      const response = await postRequest<PostPublicOauthResponseBody>({
-        endpoint: '/public/oauth',
-        payload: { code },
-      });
+      const response = await postPublicLogin(code);
+
+      if (isErrorReport(response.data)) {
+        return router?.push('/login');
+      }
 
       gameUserId.value = response.data.gameUserId;
       isLoggedIn.value = true;
@@ -34,9 +32,7 @@ export const useUserStore = defineStore(
       isLoggedIn.value = false;
       username.value = '';
 
-      await getRequest<GetPublicLogoutResponseBody>({
-        endpoint: '/public/logout',
-      });
+      await getPublicLogout();
 
       await router?.push('/login');
     };

@@ -1,3 +1,4 @@
+export * from './api/apiMethods.js';
 export * from './classes/httpErrorClass.js';
 export * from './classes/httpErrorReportClass.js';
 export * from './classes/httpRequestClass.js';
