@@ -1,20 +1,10 @@
-import type { HttpStatusCodes } from '../constants/httpConstants.js';
-import { HttpHeaders, HttpMethods } from '../constants/httpConstants.js';
-
-export enum HandledDomains {
-  Internal = 'internal',
-  Osu = 'osu',
-}
+import type { HttpStatusCodes } from '#src/constants/httpConstants.js';
+import { HttpHeaders, HttpMethods } from '#src/constants/httpConstants.js';
 
 export interface HttpResponse<T> {
   data: T;
   isOk: boolean;
   status: HttpStatusCodes;
-}
-
-export interface HttpRequestOptions {
-  domain?: 'internal' | 'osu';
-  token?: string;
 }
 
 /**
