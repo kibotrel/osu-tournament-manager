@@ -1,0 +1,20 @@
+{
+  "devDependencies": {
+    "@packages/prettier-config": "workspace:*",
+    "@packages/shared": "workspace:*"
+  },
+  "imports": {
+    "#src/*": "./src/*"
+  },
+  "main": "dist/src/index.js",
+  "name": "@packages/osu-sdk",
+  "private": true,
+  "scripts": {
+    "build": "tsc && tsc-alias",
+    "dev": "tsc -w",
+    "format": "prettier --write src/**/*.ts",
+    "lint": "eslint src/**/*.ts --config .eslintrc"
+  },
+  "type": "module",
+  "types": "dist/src/index.d.ts"
+}

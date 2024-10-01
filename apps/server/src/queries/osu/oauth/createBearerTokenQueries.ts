@@ -1,8 +1,4 @@
-import {
-  HttpError,
-  HttpRequest,
-  HttpStatusCodesToMessagesMapping,
-} from '@packages/shared';
+import { osuPostOauthToken } from '@packages/osu-sdk';
 
 import { environmentConfig } from '#src/configs/environmentConfig.js';
 import { OsuGrantTypes } from '#src/constants/osuConstants.js';
@@ -14,7 +10,6 @@ export interface CreateOsuApitBearerTokenResponse {
 
 export interface OsuBearerToken {
   token: string;
-  refreshToken: string;
 }
 
 /**
@@ -23,27 +18,13 @@ export interface OsuBearerToken {
 export const createOsuApiBearerToken = async (
   code: string,
 ): Promise<OsuBearerToken> => {
-  const request = new HttpRequest()
-    .setBaseUrl(environmentConfig.osuBaseUrl)
-    .setPayload({
-      client_id: environmentConfig.osuClientId,
-      client_secret: environmentConfig.osuClientSecret,
-      code,
-      grant_type: OsuGrantTypes.AuthorizationCode,
-      redirect_uri: `${environmentConfig.baseUrl}/oauth/callback`,
-    });
-  const response =
-    await request.post<CreateOsuApitBearerTokenResponse>('/oauth/token');
+  const { token } = await osuPostOauthToken({
+    clientId: environmentConfig.osuClientId,
+    clientSecret: environmentConfig.osuClientSecret,
+    code,
+    grantType: OsuGrantTypes.AuthorizationCode,
+    redirectUri: `${environmentConfig.baseUrl}/oauth/callback`,
+  });
 
-  if (!response.isOk) {
-    throw new HttpError({
-      status: response.status,
-      message: HttpStatusCodesToMessagesMapping[response.status],
-    });
-  }
-
-  return {
-    token: response.data.access_token,
-    refreshToken: response.data.refresh_token,
-  };
+  return { token };
 };
