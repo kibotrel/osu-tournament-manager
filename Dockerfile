@@ -7,8 +7,7 @@ ARG APP
 WORKDIR /osu-tournanament-manager
 COPY package.json pnpm-workspace.yaml pnpm-lock.yaml tsconfig.json ./
 COPY apps/tsconfig.json ./apps/
-COPY packages/tsconfig.json ./packages/
-COPY packages/shared /osu-tournanament-manager/packages/shared
+COPY packages/ /osu-tournanament-manager/packages/
 COPY $APP ./$APP
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
 
