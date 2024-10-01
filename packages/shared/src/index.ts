@@ -6,3 +6,4 @@ export * from './constants/databaseConstants.js';
 export * from './constants/httpConstants.js';
 export * from './constants/timeConstants.js';
 export * from './types/apiTypes.js';
+export * from './types/utilityTypes.js';

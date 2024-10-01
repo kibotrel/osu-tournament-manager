@@ -1,11 +1,8 @@
 import type { ErrorReport } from '#src/classes/httpErrorReportClass.js';
+import type { Nothing } from '#src/types/utilityTypes.js';
 
-// GET /public/logout
-export interface GetPublicLogoutResponseBody {
-  [key: string]: never;
-}
+export type GetPublicLogoutResponseBody = Nothing | ErrorReport;
 
-// POST /public/oauth
 export interface PostPublicOauthRequestBody {
   code: string;
 }
