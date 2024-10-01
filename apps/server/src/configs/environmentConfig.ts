@@ -4,7 +4,6 @@ export const environmentConfig = {
   isDevelopmentMode: process.env.NODE_ENV === 'development',
   isProductionMode: process.env.NODE_ENV === 'production',
   isTestMode: process.env.NODE_ENV === 'test',
-  osuBaseUrl: process.env.OSU_BASE_URL || '',
   osuClientId: Number(process.env.OSU_CLIENT_ID) || Number.NaN,
   osuClientSecret: process.env.OSU_CLIENT_SECRET || '',
   sessionSecret: process.env.SESSION_SECRET || '',
