@@ -1,8 +1,9 @@
 import type { HttpStatusCodes } from '#src/constants/httpConstants.js';
 import { HttpHeaders, HttpMethods } from '#src/constants/httpConstants.js';
+import type { Nothing, Unknown } from '#src/types/utilityTypes.js';
 
-export interface HttpResponse<T> {
-  data: T;
+export interface HttpResponse<ResponseType> {
+  data: ResponseType;
   isOk: boolean;
   status: HttpStatusCodes;
 }
@@ -10,89 +11,97 @@ export interface HttpResponse<T> {
 /**
  * Simple wrapper around the fetch API to make it easier to use.
  */
-export class HttpRequest {
+export class HttpRequest<PayloadType extends object = Nothing> {
+  public baseApiEndpoint: string;
   public baseUrl: string;
   public httpHeaders: Headers;
-  public payload: Record<string, unknown>;
+  public payload: PayloadType | Nothing;
+  public apiVersion: string;
 
   constructor() {
+    this.baseApiEndpoint = '';
     this.baseUrl = '';
     this.httpHeaders = new Headers();
     this.payload = {};
+    this.apiVersion = '';
 
     this.setHttpHeader(HttpHeaders.ContentType, 'application/json');
   }
 
-  public async delete<T = Record<string, unknown>>(
+  public async delete<ResponseType = Unknown>(
     endpoint: string,
-  ): Promise<HttpResponse<T>> {
+  ): Promise<HttpResponse<ResponseType>> {
     const url = this.setRequestQueryParams(endpoint);
     const response = await fetch(url, {
       headers: this.httpHeaders,
       method: HttpMethods.Delete,
     });
-    const data = await this.readResponse<T>(response);
+    const data = await this.readResponse<ResponseType>(response);
 
     return { data, isOk: response.ok, status: response.status };
   }
 
-  public async get<T = Record<string, unknown>>(
+  public async get<ResponseType = Unknown>(
     endpoint: string,
-  ): Promise<HttpResponse<T>> {
+  ): Promise<HttpResponse<ResponseType>> {
     const url = this.setRequestQueryParams(endpoint);
     const response = await fetch(url, {
       headers: this.httpHeaders,
       method: HttpMethods.Get,
     });
-    const data = await this.readResponse<T>(response);
+    const data = await this.readResponse<ResponseType>(response);
 
     return { data, isOk: response.ok, status: response.status };
   }
 
-  public async patch<T = Record<string, unknown>>(
+  public isPayloadEmpty(payload: PayloadType | Nothing): payload is Nothing {
+    return Object.keys(payload).length === 0;
+  }
+
+  public async patch<ResponseType = Unknown>(
     endpoint: string,
-  ): Promise<HttpResponse<T>> {
+  ): Promise<HttpResponse<ResponseType>> {
     this.setHttpHeader(HttpHeaders.ContentType, 'application/json');
 
-    const url = new URL(`${this.baseUrl}${endpoint}`);
+    const url = this.sanitizeUrl(endpoint);
     const response = await fetch(url, {
       body: this.setRequestBody(),
       headers: this.httpHeaders,
       method: HttpMethods.Patch,
     });
-    const data = await this.readResponse<T>(response);
+    const data = await this.readResponse<ResponseType>(response);
 
     return { data, isOk: response.ok, status: response.status };
   }
 
-  public async post<T = Record<string, unknown>>(
+  public async post<ResponseType = Unknown>(
     endpoint: string,
-  ): Promise<HttpResponse<T>> {
+  ): Promise<HttpResponse<ResponseType>> {
     this.setHttpHeader(HttpHeaders.ContentType, 'application/json');
 
-    const url = new URL(`${this.baseUrl}${endpoint}`);
+    const url = this.sanitizeUrl(endpoint);
     const response = await fetch(url, {
       body: this.setRequestBody(),
       headers: this.httpHeaders,
       method: HttpMethods.Post,
     });
-    const data = await this.readResponse<T>(response);
+    const data = await this.readResponse<ResponseType>(response);
 
     return { data, isOk: response.ok, status: response.status };
   }
 
-  public async put<T = Record<string, unknown>>(
+  public async put<ResponseType = Unknown>(
     endpoint: string,
-  ): Promise<HttpResponse<T>> {
+  ): Promise<HttpResponse<ResponseType>> {
     this.setHttpHeader(HttpHeaders.ContentType, 'application/json');
 
-    const url = new URL(`${this.baseUrl}${endpoint}`);
+    const url = this.sanitizeUrl(endpoint);
     const response = await fetch(url, {
       body: this.setRequestBody(),
       headers: this.httpHeaders,
       method: HttpMethods.Put,
     });
-    const data = await this.readResponse<T>(response);
+    const data = await this.readResponse<ResponseType>(response);
 
     return { data, isOk: response.ok, status: response.status };
   }
@@ -100,16 +109,44 @@ export class HttpRequest {
   /**
    * Internal method to safely parse the response from the fetch API.
    */
-  private readResponse<T = Record<string, unknown>>(
+  private readResponse<ResponseType = Unknown>(
     response: Response,
-  ): Promise<T> {
+  ): Promise<ResponseType> {
     return response.json().catch(() => {
-      return {} as T;
+      return {} as ResponseType;
     });
   }
 
   /**
-   * Will be prepended to the specified endpoint when invoking {@link HttpRequest.get}, {@link HttpRequest.post}, etc.
+   * Internal method to sanitize the URL before making the request. This will remove any double slashes
+   * induced by non-set values for `baseUrl`, `baseApiEndpoint`, or `apiVersion`.
+   */
+  private sanitizeUrl(endpoint: string) {
+    const url = `${this.baseUrl}/${this.baseApiEndpoint}/${this.apiVersion}/${endpoint}`;
+
+    return new URL(url.replaceAll(/\/+/g, '/'));
+  }
+
+  /**
+   * Will be prepended to the specified `endpoint` when invoking {@link HttpRequest.get}, {@link HttpRequest.post}, etc.
+   */
+  public setApiVersion(version: string) {
+    this.apiVersion = version;
+
+    return this;
+  }
+
+  /**
+   * Will be appended to specified `baseUrl` when invoking {@link HttpRequest.get}, {@link HttpRequest.post}, etc.
+   */
+  public setBaseApiEndpoint(baseApiEndpoint: string) {
+    this.baseApiEndpoint = baseApiEndpoint;
+
+    return this;
+  }
+
+  /**
+   * Will be prepended to the specified `endpoint` when invoking {@link HttpRequest.get}, {@link HttpRequest.post}, etc.
    */
   public setBaseUrl(baseUrl: string) {
     this.baseUrl = baseUrl;
@@ -129,8 +166,10 @@ export class HttpRequest {
   /**
    * This will be used to set either the query parameters or the body of the request.
    */
-  public setPayload(payload?: Record<string, unknown>) {
-    this.payload = payload ?? {};
+  public setPayload(payload: PayloadType | Nothing) {
+    if (!this.isPayloadEmpty(payload)) {
+      this.payload = payload;
+    }
 
     return this;
   }
@@ -139,21 +178,23 @@ export class HttpRequest {
    * Internal method to set the body of the request.
    */
   private setRequestBody() {
-    if (Object.keys(this.payload).length > 0) {
-      return JSON.stringify(this.payload);
+    if (this.isPayloadEmpty(this.payload)) {
+      return null;
     }
 
-    return null;
+    return JSON.stringify(this.payload);
   }
 
   /**
    * Internal method to set the query parameters of the request.
    */
   private setRequestQueryParams(endpoint: string) {
-    const url = new URL(`${this.baseUrl}${endpoint}`);
+    const url = this.sanitizeUrl(endpoint);
 
-    for (const key in this.payload) {
-      url.searchParams.append(key, String(this.payload[key]));
+    if (!this.isPayloadEmpty(this.payload)) {
+      for (const key in this.payload) {
+        url.searchParams.append(key, String(this.payload[key]));
+      }
     }
 
     return url;

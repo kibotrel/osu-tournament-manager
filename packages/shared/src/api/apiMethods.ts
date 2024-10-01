@@ -1,66 +1,102 @@
 import type { ErrorReport } from '#src/classes/httpErrorReportClass.js';
 import { HttpRequest } from '#src/classes/httpRequestClass.js';
+import { HttpHeaders } from '#src/constants/httpConstants.js';
+import type { Nothing } from '#src/types/utilityTypes.js';
 
-export interface RequestConfiguration {
+export interface RequestConfiguration<PayloadType> {
   baseUrl: string;
   endpoint: string;
-  payload?: Record<string, unknown>;
-  version?: string;
+  baseApiEndpoint?: string;
+  payload: PayloadType extends Nothing ? Nothing : PayloadType;
+  token?: string;
+  apiVersion?: string;
 }
 
-export const deleteRequest = <T = Record<string, unknown>>(
-  configuration: RequestConfiguration,
+const createGenericRequest = <PayloadType extends object = Nothing>(
+  configuration: RequestConfiguration<PayloadType>,
 ) => {
-  const { baseUrl, endpoint, payload = {}, version = 'v1' } = configuration;
-  const request = new HttpRequest()
-    .setBaseUrl(`${baseUrl}/api/${version}`)
+  const {
+    baseApiEndpoint = 'api',
+    baseUrl,
+    payload,
+    token,
+    apiVersion = 'v1',
+  } = configuration;
+  const request = new HttpRequest<PayloadType>()
+    .setBaseUrl(baseUrl)
+    .setBaseApiEndpoint(baseApiEndpoint)
+    .setApiVersion(apiVersion)
     .setPayload(payload);
 
-  return request.delete<T>(endpoint);
+  if (token) {
+    request.setHttpHeader(HttpHeaders.Authorization, `Bearer ${token}`);
+  }
+
+  return request;
 };
 
-export const getRequest = <T = Record<string, unknown>>(
-  configuration: RequestConfiguration,
+export const deleteRequest = <
+  PayloadType extends object = Nothing,
+  ResponseType = Nothing,
+>(
+  configuration: RequestConfiguration<PayloadType>,
 ) => {
-  const { baseUrl, endpoint, payload = {}, version = 'v1' } = configuration;
-  const request = new HttpRequest()
-    .setBaseUrl(`${baseUrl}/api/${version}`)
-    .setPayload(payload);
+  const { endpoint } = configuration;
+  const request = createGenericRequest<PayloadType>(configuration);
 
-  return request.get<T>(endpoint);
+  return request.delete<ResponseType>(endpoint);
 };
 
-export const patchRequest = <T = Record<string, unknown>>(
-  configuration: RequestConfiguration,
+export const getRequest = <
+  PayloadType extends object = Nothing,
+  ResponseType = Nothing,
+>(
+  configuration: RequestConfiguration<PayloadType>,
 ) => {
-  const { baseUrl, endpoint, payload = {}, version = 'v1' } = configuration;
-  const request = new HttpRequest()
-    .setBaseUrl(`${baseUrl}/api/${version}`)
-    .setPayload(payload);
+  const { endpoint } = configuration;
+  const request = createGenericRequest<PayloadType>(configuration);
 
-  return request.patch<T>(endpoint);
+  console.log('GET', request);
+
+  return request.get<ResponseType>(endpoint);
 };
 
-export const postRequest = <T = Record<string, unknown>>(
-  configuration: RequestConfiguration,
+export const patchRequest = <
+  PayloadType extends object = Nothing,
+  ResponseType = Nothing,
+>(
+  configuration: RequestConfiguration<PayloadType>,
 ) => {
-  const { baseUrl, endpoint, payload = {}, version = 'v1' } = configuration;
-  const request = new HttpRequest()
-    .setBaseUrl(`${baseUrl}/api/${version}`)
-    .setPayload(payload);
+  const { endpoint } = configuration;
+  const request = createGenericRequest<PayloadType>(configuration);
 
-  return request.post<T>(endpoint);
+  return request.patch<ResponseType>(endpoint);
 };
 
-export const putRequest = <T = Record<string, unknown>>(
-  configuration: RequestConfiguration,
+export const postRequest = <
+  PayloadType extends object = Nothing,
+  ResponseType = Nothing,
+>(
+  configuration: RequestConfiguration<PayloadType>,
 ) => {
-  const { baseUrl, endpoint, payload = {}, version = 'v1' } = configuration;
-  const request = new HttpRequest()
-    .setBaseUrl(`${baseUrl}/api/${version}`)
-    .setPayload(payload);
+  const { endpoint } = configuration;
+  const request = createGenericRequest<PayloadType>(configuration);
 
-  return request.put<T>(endpoint);
+  console.log('POST', request);
+
+  return request.post<ResponseType>(endpoint);
+};
+
+export const putRequest = <
+  PayloadType extends object = Nothing,
+  ResponseType = Nothing,
+>(
+  configuration: RequestConfiguration<PayloadType>,
+) => {
+  const { endpoint } = configuration;
+  const request = createGenericRequest<PayloadType>(configuration);
+
+  return request.put<ResponseType>(endpoint);
 };
 
 export const isErrorReport = (input: unknown): input is ErrorReport => {
