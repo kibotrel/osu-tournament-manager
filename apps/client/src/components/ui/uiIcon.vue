@@ -3,7 +3,7 @@
 </template>
 
 <script setup lang="ts">
-import { defineAsyncComponent, defineProps } from 'vue';
+import { defineAsyncComponent } from 'vue';
 
 export type IconNames = 'identification' | 'loading' | 'transparentCube';
 

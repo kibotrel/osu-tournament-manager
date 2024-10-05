@@ -19,7 +19,7 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps, useSlots, withDefaults } from 'vue';
+import { useSlots } from 'vue';
 
 import loadingIcon from '#src/components/icons/loadingIcon.vue';
 
