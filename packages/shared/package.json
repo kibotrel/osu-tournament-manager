@@ -11,7 +11,7 @@
   "private": true,
   "scripts": {
     "build": "tsc && tsc-alias",
-    "dev": "tsc -w",
+    "dev": "nodemon --config nodemon.json",
     "format": "prettier --write src/**/*.ts",
     "lint": "eslint src/**/*.ts --config .eslintrc"
   },

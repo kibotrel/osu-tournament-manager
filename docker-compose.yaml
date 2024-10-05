@@ -33,9 +33,7 @@ services:
   client:
     build:
       context: .
-      args:
-        - APP=apps/client
-      dockerfile: Dockerfile
+      dockerfile: ./docker/client/Dockerfile.dev
     container_name: client
     depends_on:
       server:
@@ -65,6 +63,40 @@ services:
     restart: always
     volumes:
       - postgres:/var/lib/postgresql/data
+
+  package-api-specification-builder:
+    container_name: package-api-specification-builder
+    build:
+      args:
+        PACKAGE: packages/api-specification
+      context: .
+      dockerfile: ./docker/packages-builder/Dockerfile.dev
+    restart: always
+    volumes:
+      - ./packages/api-specification:/osu-tournanament-manager/packages/api-specification
+
+  package-osu-sdk-builder:
+    container_name: package-osu-sdk-builder
+    build:
+      args:
+        PACKAGE: packages/osu-sdk
+      context: .
+      dockerfile: ./docker/packages-builder/Dockerfile.dev
+    restart: always
+    volumes:
+      - ./packages/osu-sdk:/osu-tournanament-manager/packages/osu-sdk
+      - ./packages/shared/dist:/osu-tournanament-manager/packages/osu-sdk/node_modules/@packages/shared/dist
+
+  package-shared-builder:
+    container_name: package-shared-builder
+    build:
+      args:
+        PACKAGE: packages/shared
+      context: .
+      dockerfile: ./docker/packages-builder/Dockerfile.dev
+    restart: always
+    volumes:
+      - ./packages/shared:/osu-tournanament-manager/packages/shared
 
   redis:
     command:
@@ -96,17 +128,13 @@ services:
   server:
     build:
       context: .
-      args:
-        - APP=apps/server
-      dockerfile: Dockerfile
+      dockerfile: ./docker/server/Dockerfile.dev
     container_name: server
     depends_on:
       postgres:
         condition: service_healthy
       redis:
         condition: service_healthy
-      spec-builder:
-        condition: service_started
     healthcheck:
       interval: 250ms
       retries: 10
@@ -119,18 +147,9 @@ services:
     restart: always
     volumes:
       - ./apps/server:/osu-tournanament-manager/apps/server
-
-  spec-builder:
-    command: [run, dev:specs]
-    container_name: spec-builder
-    build:
-      context: .
-      args:
-        - APP=apps/server
-      dockerfile: Dockerfile
-    restart: always
-    volumes:
-      - ./apps/server:/osu-tournanament-manager/apps/server
+      - ./packages/api-specification/dist:/osu-tournanament-manager/apps/server/node_modules/@packages/api-specification/dist
+      - ./packages/osu-sdk/dist:/osu-tournanament-manager/apps/server/node_modules/@packages/osu-sdk/dist
+      - ./packages/shared/dist:/osu-tournanament-manager/apps/server/node_modules/@packages/shared/dist
 
 version: '3.9'
 
