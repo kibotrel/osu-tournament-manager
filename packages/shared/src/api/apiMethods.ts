@@ -56,8 +56,6 @@ export const getRequest = <
   const { endpoint } = configuration;
   const request = createGenericRequest<PayloadType>(configuration);
 
-  console.log('GET', request);
-
   return request.get<ResponseType>(endpoint);
 };
 
@@ -81,8 +79,6 @@ export const postRequest = <
 ) => {
   const { endpoint } = configuration;
   const request = createGenericRequest<PayloadType>(configuration);
-
-  console.log('POST', request);
 
   return request.post<ResponseType>(endpoint);
 };
