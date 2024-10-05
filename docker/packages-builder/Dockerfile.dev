@@ -1,0 +1,28 @@
+FROM node:20.17.0-slim AS base-image
+ARG PNPM_VERSION=9.11.0
+RUN npm --global install pnpm@${PNPM_VERSION}
+
+FROM base-image AS install-dependencies
+WORKDIR /osu-tournanament-manager
+COPY package.json pnpm-workspace.yaml pnpm-lock.yaml tsconfig.json ./
+RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
+
+FROM install-dependencies AS install-local-packages
+WORKDIR /osu-tournanament-manager/
+COPY packages/tsconfig.json ./packages/
+COPY packages/prettier-config ./packages/prettier-config/
+COPY packages/shared ./packages/shared/
+RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
+
+FROM install-local-packages AS install-app
+ARG PACKAGE
+WORKDIR /osu-tournanament-manager
+COPY $PACKAGE ./$PACKAGE
+RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
+
+FROM install-app AS dev
+ARG PACKAGE
+WORKDIR /osu-tournanament-manager/${PACKAGE}
+USER node
+ENTRYPOINT ["/usr/local/bin/pnpm"]
+CMD ["run", "dev"]
