@@ -45,6 +45,7 @@ services:
     restart: always
     volumes:
       - ./apps/client:/osu-tournanament-manager/apps/client
+      - ./packages/shared/dist:/osu-tournanament-manager/apps/client/node_modules/@packages/shared/dist
 
   postgres:
     container_name: postgres

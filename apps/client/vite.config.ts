@@ -6,11 +6,6 @@ import { defineConfig } from 'vite';
 
 export default defineConfig({
   plugins: [vue()],
-  server: {
-    port: 8080,
-    host: 'localhost',
-    strictPort: true,
-  },
   preview: {
     port: 8080,
     host: '192.168.1.100',
@@ -19,6 +14,17 @@ export default defineConfig({
   resolve: {
     alias: {
       '#src': path.resolve(fileURLToPath(new URL('src/', import.meta.url))),
+    },
+  },
+
+  server: {
+    port: 8080,
+    host: 'localhost',
+    strictPort: true,
+    watch: {
+      usePolling: true,
+      interval: 100,
+      ignored: ['!**/node_modules/@packages/**'],
     },
   },
 });
