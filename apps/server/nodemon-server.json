@@ -1,8 +1,0 @@
-{
-  "execMap": {
-    "ts": "tsx --env-file=.env"
-  },
-  "ext": "json,ts",
-  "ignore": ["node_modules", "src/assets"],
-  "watch": ["src", ".env"]
-}

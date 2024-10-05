@@ -1,0 +1,25 @@
+{
+  "devDependencies": {
+    "@packages/prettier-config": "workspace:*",
+    "@redocly/cli": "1.25.3"
+  },
+  "files": [
+    "dist/",
+    "src/internal.openapi.json",
+    "src/public.openapi.json"
+  ],
+  "imports": {
+    "#src/*": "./src/*"
+  },
+  "main": "dist/src/index.js",
+  "name": "@packages/api-specification",
+  "private": true,
+  "scripts": {
+    "build": "tsc && tsc-alias",
+    "dev": "nodemon --config nodemon.json",
+    "specs:bundle:internal": "redocly bundle internal --output src/internal.openapi.json",
+    "specs:bundle:public": "redocly bundle public --output src/public.openapi.json"
+  },
+  "type": "module",
+  "types": "dist/src/index.d.ts"
+}

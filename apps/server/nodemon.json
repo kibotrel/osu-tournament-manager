@@ -1,0 +1,8 @@
+{
+  "execMap": {
+    "ts": "tsx --env-file=.env"
+  },
+  "ext": "json,ts,js",
+  "ignoreRoot": [".git"],
+  "watch": [".env", "node_modules/@packages", "src"]
+}
