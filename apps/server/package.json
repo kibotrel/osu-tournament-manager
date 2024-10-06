@@ -31,7 +31,7 @@
   "scripts": {
     "build": "tsc --build && tsc-alias",
     "db:migrate": "drizzle-kit migrate",
-    "db:migration:create": "drizzle-kit generate && tsx --env-file=.env ./src/scripts/renameMigrationFileScript.ts",
+    "db:migration:create": "pnpm build && drizzle-kit generate && tsx --env-file=.env ./src/scripts/renameMigrationFileScript.ts",
     "db:migration:drop": "drizzle-kit drop",
     "db:studio": "drizzle-kit studio local",
     "dev": "nodemon --config nodemon.json src/server.ts",
