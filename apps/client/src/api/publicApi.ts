@@ -1,8 +1,8 @@
 import type {
   GetPublicLogoutResponseBody,
   Nothing,
-  PostPublicOauthRequestBody,
-  PostPublicOauthResponseBody,
+  PostPublicLoginRequestBody,
+  PostPublicLoginResponseBody,
 } from '@packages/shared';
 import { getRequest, postRequest } from '@packages/shared';
 
@@ -23,9 +23,9 @@ export const getPublicLogout = () => {
  * Exchange an authentication code from osu! Oauth for a user bearer token + init a session.
  */
 export const postPublicLogin = (authenticationCode: string) => {
-  return postRequest<PostPublicOauthRequestBody, PostPublicOauthResponseBody>({
+  return postRequest<PostPublicLoginRequestBody, PostPublicLoginResponseBody>({
     baseUrl,
-    endpoint: '/public/oauth',
+    endpoint: '/public/login',
     payload: { code: authenticationCode },
   });
 };

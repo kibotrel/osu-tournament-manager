@@ -1,16 +1,16 @@
 import type {
-  PostPublicOauthRequestBody,
-  PostPublicOauthResponseBody,
+  PostPublicLoginRequestBody,
+  PostPublicLoginResponseBody,
 } from '@packages/shared';
 import { HttpHeaders, HttpStatusCodes } from '@packages/shared';
 import type { RequestHandler } from 'express';
 
 import { loginWithOsu } from '#src/services/login/loginWithOsuService.js';
 
-export const postOauthController: RequestHandler<
+export const postLoginController: RequestHandler<
   never,
-  PostPublicOauthResponseBody,
-  PostPublicOauthRequestBody,
+  PostPublicLoginResponseBody,
+  PostPublicLoginRequestBody,
   never
 > = async (request, response, next) => {
   const { session } = request;

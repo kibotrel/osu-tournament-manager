@@ -3,7 +3,7 @@ import type { Nothing } from '#src/types/utilityTypes.js';
 
 export type GetPublicLogoutResponseBody = Nothing | ErrorReport;
 
-export interface PostPublicOauthRequestBody {
+export interface PostPublicLoginRequestBody {
   code: string;
 }
 
@@ -13,4 +13,4 @@ interface SmallUser {
   name: string;
 }
 
-export type PostPublicOauthResponseBody = SmallUser | ErrorReport;
+export type PostPublicLoginResponseBody = SmallUser | ErrorReport;
