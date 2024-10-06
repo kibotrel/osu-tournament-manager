@@ -13,9 +13,13 @@ import { postgresClient } from './dependencies/databaseDependency.js';
 declare module 'express-session' {
   interface SessionData {
     user: {
+      gameApiBearer: {
+        expiryTimestamp: number;
+        refreshToken: string;
+        token: string;
+      };
       gameUserId: number;
       id: number;
-      osuApiToken: string;
     };
   }
 }
