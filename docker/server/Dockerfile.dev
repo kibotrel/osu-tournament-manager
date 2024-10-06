@@ -23,7 +23,6 @@ COPY apps/server ./apps/server/
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
 
 FROM install-app AS dev
-USER node
 WORKDIR /osu-tournanament-manager/apps/server
 ENTRYPOINT ["/usr/local/bin/pnpm"]
 CMD ["run", "dev"]

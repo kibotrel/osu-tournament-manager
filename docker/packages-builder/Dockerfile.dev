@@ -23,6 +23,5 @@ RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
 FROM install-app AS dev
 ARG PACKAGE
 WORKDIR /osu-tournanament-manager/${PACKAGE}
-USER node
 ENTRYPOINT ["/usr/local/bin/pnpm"]
 CMD ["run", "dev"]
