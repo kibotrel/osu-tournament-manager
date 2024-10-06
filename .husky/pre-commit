@@ -1,9 +1,9 @@
 git diff --staged --name-only | grep apps/server/specs > /dev/null 2>&1 && (
   echo "Building OpenAPI specs..."
-  pnpm -C apps/server specs:bundle:public > /dev/null 2>&1;
-  pnpm -C apps/server specs:bundle:internal > /dev/null 2>&1;
+  pnpm -C packages/api-specification specs:bundle:public > /dev/null 2>&1;
+  pnpm -C packages/api-specification specs:bundle:internal > /dev/null 2>&1;
   echo "Adding generated files to current commit..."
-  git add apps/server/specs/**/*.openapi.yaml apps/server/src/assets/*.openapi.json
+  git add packages/api-specification/src/specs/**/*.openapi.yaml packages/api-specification/src/*.openapi.json
 ) || (
   echo "No OpenAPI specs were modified. Skipping..."
 )
