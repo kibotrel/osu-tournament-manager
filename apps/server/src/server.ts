@@ -11,20 +11,6 @@ import { apiRouter } from '#src/routes/apiRouter.js';
 import { cache } from './dependencies/cacheDependency.js';
 import { postgresClient } from './dependencies/databaseDependency.js';
 
-declare module 'express-session' {
-  interface SessionData {
-    user: {
-      gameApiBearer: {
-        expiryTimestamp: number;
-        refreshToken: string;
-        token: string;
-      };
-      gameUserId: number;
-      id: number;
-    };
-  }
-}
-
 const app = express();
 
 app.use(helmet());
