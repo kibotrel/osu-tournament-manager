@@ -1,6 +1,6 @@
 import type {
+  GetPublicLogoutRequestBody,
   GetPublicLogoutResponseBody,
-  Nothing,
   PostPublicLoginRequestBody,
   PostPublicLoginResponseBody,
 } from '@packages/shared';
@@ -12,7 +12,7 @@ import { baseUrl } from '#src/api/apiConstants.js';
  * Log out the user and destroy its session.
  */
 export const getPublicLogout = () => {
-  return getRequest<Nothing, GetPublicLogoutResponseBody>({
+  return getRequest<GetPublicLogoutRequestBody, GetPublicLogoutResponseBody>({
     baseUrl,
     endpoint: '/public/logout',
     payload: {},
