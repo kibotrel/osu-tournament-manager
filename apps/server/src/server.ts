@@ -7,30 +7,47 @@ import { session } from '#src/middlewares/sessionMiddleware.js';
 import { specificationValidator } from '#src/middlewares/specificationValidatorMiddleware.js';
 import { apiRouter } from '#src/routes/apiRouter.js';
 
+import { cache } from './dependencies/cacheDependency.js';
+import { postgresClient } from './dependencies/databaseDependency.js';
+
 declare module 'express-session' {
   interface SessionData {
     user: {
-      id: number;
       gameUserId: number;
+      id: number;
       osuApiToken: string;
     };
   }
 }
 
-const server = express();
+const app = express();
 
-server.set('trust proxy', 1);
-server.disable('x-powered-by');
+app.set('trust proxy', 1);
+app.disable('x-powered-by');
 
-server.use(express.json());
-server.use(session);
+app.use(express.json());
+app.use(session);
 
-server.use(specificationValidator);
+app.use(specificationValidator);
 
-server.use('/api', apiRouter);
-server.use(ressourceNotFoundHandler);
-server.use(errorHandler);
+app.use('/api', apiRouter);
+app.use(ressourceNotFoundHandler);
+app.use(errorHandler);
 
-server.listen(environmentConfig.expressPort, () => {
+const server = app.listen(environmentConfig.expressPort, () => {
   console.log(`Server is running on port ${environmentConfig.expressPort}`);
 });
+
+const cleanup = () => {
+  server.close(async (error) => {
+    if (error) {
+      return;
+    }
+
+    await cache.quit();
+    await postgresClient.end();
+  });
+};
+
+process.on('SIGINT', cleanup);
+process.on('SIGTERM', cleanup);
