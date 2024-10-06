@@ -2,7 +2,7 @@ import type {
   PostPublicOauthRequestBody,
   PostPublicOauthResponseBody,
 } from '@packages/shared';
-import { HttpStatusCodes } from '@packages/shared';
+import { HttpHeaders, HttpStatusCodes } from '@packages/shared';
 import type { RequestHandler } from 'express';
 
 import { loginWithOsu } from '#src/services/login/loginWithOsuService.js';
@@ -17,7 +17,7 @@ export const postOauthController: RequestHandler<
   const { code } = request.body;
 
   try {
-    const { bearer, isNew, user } = await loginWithOsu(code);
+    const { bearer, isNew, metrics, user } = await loginWithOsu(code);
     const statusCode = isNew ? HttpStatusCodes.Created : HttpStatusCodes.Ok;
 
     session.user = {
@@ -25,6 +25,8 @@ export const postOauthController: RequestHandler<
       gameUserId: user.gameUserId,
       id: user.id,
     };
+
+    response.setHeader(HttpHeaders.ServerTiming, metrics);
 
     return response.status(statusCode).json({
       avatarUrl: user.avatarUrl,
