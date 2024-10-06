@@ -1,7 +1,7 @@
 import type { Nothing } from '@packages/shared';
 import { getRequest } from '@packages/shared';
 
-import { baseUrl } from '#src/constants/index.js';
+import { baseUrl } from '#src/constants/osuConstants.js';
 
 export interface OsuGetMeRequestQuery {
   token: string;
@@ -24,7 +24,9 @@ interface InternalOsuGetMeResponseBody {
 /**
  * Get self user information from the osu! API.
  */
-export const osuGetMe = async (options: OsuGetMeRequestQuery) => {
+export const osuGetMe = async (
+  options: OsuGetMeRequestQuery,
+): Promise<OsuGetMeResponseBody> => {
   const { token } = options;
   const response = await getRequest<
     InternalOsuGetMeRequestQuery,
@@ -38,10 +40,10 @@ export const osuGetMe = async (options: OsuGetMeRequestQuery) => {
   });
 
   if (!response.isOk) {
-    throw new Error(
-      '[osu!api]: Failed to get self user information from the osu! API.',
-    );
+    throw new Error('[osu!api]: Failed to get self user information');
   }
+
+  console.log(response.data);
 
   return {
     avatarUrl: response.data.avatar_url,
