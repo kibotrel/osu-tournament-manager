@@ -1,0 +1,1 @@
+ALTER TABLE "users"."users" ADD COLUMN "country" varchar(2) DEFAULT '__' NOT NULL;

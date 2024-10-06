@@ -85,6 +85,13 @@
       "when": 1717344280387,
       "tag": "0011_create_schema_matches_table_rolls",
       "breakpoints": true
+    },
+    {
+      "idx": 12,
+      "version": "7",
+      "when": 1728234535439,
+      "tag": "0012_alter-schema-users-table-users-add-column-country",
+      "breakpoints": true
     }
   ]
 }

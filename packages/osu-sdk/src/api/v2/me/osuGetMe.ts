@@ -9,7 +9,8 @@ export interface OsuGetMeRequestQuery {
 
 export interface OsuGetMeResponseBody {
   avatarUrl: string;
-  gameUserId: number;
+  country: string;
+  id: number;
   name: string;
 }
 
@@ -17,6 +18,7 @@ type InternalOsuGetMeRequestQuery = Nothing;
 
 interface InternalOsuGetMeResponseBody {
   avatar_url: string;
+  country_code: string;
   id: number;
   username: string;
 }
@@ -47,7 +49,8 @@ export const osuGetMe = async (
 
   return {
     avatarUrl: response.data.avatar_url,
-    gameUserId: response.data.id,
+    country: response.data.country_code,
+    id: response.data.id,
     name: response.data.username,
   };
 };

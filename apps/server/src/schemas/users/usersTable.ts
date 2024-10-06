@@ -5,6 +5,7 @@ import { usersSchema } from '#src/schemas/users/usersSchema.js';
 
 export const usersTable = usersSchema.table('users', {
   avatarUrl: varchar('avatarUrl').notNull(),
+  country: varchar('country', { length: 2 }).notNull().default('__'),
   createdAt: timestamp('createdAt').notNull().defaultNow(),
   gameUserId: integer('gameUserId').notNull().unique(),
   id: serial('id').primaryKey(),
