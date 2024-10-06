@@ -11,7 +11,7 @@ export interface OsuPostOauthTokenRequestBody {
 }
 
 export interface OsuPostOauthTokenResponseBody {
-  expiresIn: number;
+  expiryTimestamp: number;
   refreshToken: string;
   token: string;
 }
@@ -64,8 +64,10 @@ export const osuPostOauthToken = async (
     );
   }
 
+  const remainingTime = response.data.expires_in * 1000;
+
   return {
-    expiresIn: response.data.expires_in,
+    expiryTimestamp: Date.now() + remainingTime,
     refreshToken: response.data.refresh_token,
     token: response.data.access_token,
   };
@@ -120,8 +122,10 @@ export const osuPostOauthTokenRefresh = async (
     throw new Error('[osu!api]: Failed to refresh bearer token');
   }
 
+  const remainingTime = response.data.expires_in * 1000;
+
   return {
-    expiresIn: response.data.expires_in,
+    expiryTimestamp: Date.now() + remainingTime,
     refreshToken: response.data.refresh_token,
     token: response.data.access_token,
   };
