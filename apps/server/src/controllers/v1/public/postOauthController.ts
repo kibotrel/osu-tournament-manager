@@ -5,9 +5,7 @@ import type {
 import { HttpStatusCodes } from '@packages/shared';
 import type { RequestHandler } from 'express';
 
-import { createOsuApiBearerToken } from '#src/queries/osu/oauth/createBearerTokenQueries.js';
-import { getOsuOwnUser } from '#src/queries/osu/users/getUserQueries.js';
-import { getOrCreateUser } from '#src/services/users/getOrCreateUserService.js';
+import { loginWithOsu } from '#src/services/login/loginWithOsuService.js';
 
 export const postOauthController: RequestHandler<
   never,
@@ -19,15 +17,13 @@ export const postOauthController: RequestHandler<
   const { code } = request.body;
 
   try {
-    const { token } = await createOsuApiBearerToken(code);
-    const osuUser = await getOsuOwnUser(token);
-    const { isNew, user } = await getOrCreateUser(osuUser);
+    const { bearer, isNew, user } = await loginWithOsu(code);
     const statusCode = isNew ? HttpStatusCodes.Created : HttpStatusCodes.Ok;
 
     session.user = {
+      gameApiBearer: bearer,
       gameUserId: user.gameUserId,
       id: user.id,
-      osuApiToken: token,
     };
 
     return response.status(statusCode).json({
