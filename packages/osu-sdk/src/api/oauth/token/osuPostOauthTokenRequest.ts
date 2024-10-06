@@ -70,3 +70,59 @@ export const osuPostOauthToken = async (
     token: response.data.access_token,
   };
 };
+
+export interface OsuPostOauthTokenRefreshRequestBody {
+  clientId: number;
+  clientSecret: string;
+  refreshToken: string;
+}
+
+export type OsuPostOauthTokenRefreshResponseBody =
+  OsuPostOauthTokenResponseBody;
+
+interface InternalOsuPostOauthTokenRefreshRequestBody {
+  client_id: number;
+  client_secret: string;
+  grant_type: OsuOauthGrantTypes.RefreshToken;
+  refresh_token: string;
+}
+
+type InternalOsuPostOauthTokenRefreshResponseBody =
+  InternalOsuPostOauthTokenResponseBody;
+
+/**
+ * Refresh Oauth token based on a previously issued refresh token.
+ *
+ * See {@link https://osu.ppy.sh/docs/index.html#client-credentials-grant | Client Credentials Grant}
+ * for more information.
+ */
+export const osuPostOauthTokenRefresh = async (
+  options: OsuPostOauthTokenRefreshRequestBody,
+): Promise<OsuPostOauthTokenRefreshResponseBody> => {
+  const { clientId, clientSecret, refreshToken } = options;
+  const response = await postRequest<
+    InternalOsuPostOauthTokenRefreshRequestBody,
+    InternalOsuPostOauthTokenRefreshResponseBody
+  >({
+    baseApiEndpoint: '',
+    baseUrl,
+    apiVersion: '',
+    endpoint: '/oauth/token',
+    payload: {
+      client_id: clientId,
+      client_secret: clientSecret,
+      grant_type: OsuOauthGrantTypes.RefreshToken,
+      refresh_token: refreshToken,
+    },
+  });
+
+  if (!response.isOk) {
+    throw new Error('[osu!api]: Failed to refresh bearer token');
+  }
+
+  return {
+    expiresIn: response.data.expires_in,
+    refreshToken: response.data.refresh_token,
+    token: response.data.access_token,
+  };
+};
