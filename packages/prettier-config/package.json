@@ -1,5 +1,5 @@
 {
-  "main": "src/config.js",
+  "main": "src/prettierConfigExport.js",
   "name": "@packages/prettier-config",
   "private": true,
   "scripts": {},

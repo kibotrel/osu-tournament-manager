@@ -6,7 +6,7 @@
   "imports": {
     "#src/*": "./src/*"
   },
-  "main": "dist/src/index.js",
+  "main": "dist/src/sharedExport.js",
   "name": "@packages/shared",
   "private": true,
   "scripts": {
@@ -16,5 +16,5 @@
     "lint": "eslint src/**/*.ts --config .eslintrc"
   },
   "type": "module",
-  "types": "dist/src/index.d.ts"
+  "types": "dist/src/sharedExport.d.ts"
 }
