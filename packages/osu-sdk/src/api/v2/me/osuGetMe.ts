@@ -45,8 +45,6 @@ export const osuGetMe = async (
     throw new Error('[osu!api]: Failed to get self user information');
   }
 
-  console.log(response.data);
-
   return {
     avatarUrl: response.data.avatar_url,
     country: response.data.country_code,
