@@ -5,7 +5,7 @@ import {
 } from '@packages/shared';
 import type { Request } from 'express';
 
-import { AllowedHttpMethodsOnRessource } from '#src/constants/apiConstants.js';
+import { AllowedHttpMethodsOnRessource } from '#src/constants/serverConstants.js';
 
 /**
  * {@link https://datatracker.ietf.org/doc/rfc9457/ | RFC 9457} compliant error

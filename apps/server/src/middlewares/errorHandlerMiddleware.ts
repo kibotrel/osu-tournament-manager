@@ -11,7 +11,7 @@ import {
 } from '@packages/shared';
 import type { ErrorRequestHandler } from 'express';
 
-import { AllowedHttpMethodsOnRessource } from '#src/constants/apiConstants.js';
+import { AllowedHttpMethodsOnRessource } from '#src/constants/serverConstants.js';
 
 /**
  * Type predicate to check if the input looks like an `HttpError` for further
