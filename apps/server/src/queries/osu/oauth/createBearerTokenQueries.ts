@@ -1,12 +1,6 @@
-import { osuPostOauthToken } from '@packages/osu-sdk';
+import { OsuOauthGrantTypes, osuPostOauthToken } from '@packages/osu-sdk';
 
 import { environmentConfig } from '#src/configs/environmentConfig.js';
-import { OsuGrantTypes } from '#src/constants/osuConstants.js';
-
-export interface CreateOsuApitBearerTokenResponse {
-  access_token: string;
-  refresh_token: string;
-}
 
 export interface OsuBearerToken {
   token: string;
@@ -22,7 +16,7 @@ export const createOsuApiBearerToken = async (
     clientId: environmentConfig.osuClientId,
     clientSecret: environmentConfig.osuClientSecret,
     code,
-    grantType: OsuGrantTypes.AuthorizationCode,
+    grantType: OsuOauthGrantTypes.AuthorizationCode,
     redirectUri: `${environmentConfig.baseUrl}/oauth/callback`,
   });
 
