@@ -1,4 +1,5 @@
 import express from 'express';
+import helmet from 'helmet';
 
 import { environmentConfig } from '#src/configs/environmentConfig.js';
 import { errorHandler } from '#src/middlewares/errorHandlerMiddleware.js';
@@ -26,8 +27,8 @@ declare module 'express-session' {
 
 const app = express();
 
+app.use(helmet());
 app.set('trust proxy', 1);
-app.disable('x-powered-by');
 
 app.use(express.json());
 app.use(session);
