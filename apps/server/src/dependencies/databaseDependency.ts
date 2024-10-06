@@ -5,8 +5,8 @@ import { databaseConfig } from '#src/configs/databaseConfig.js';
 
 const { Client } = pg;
 
-export const client = new Client(databaseConfig);
+export const postgresClient = new Client(databaseConfig);
 
-await client.connect();
+await postgresClient.connect();
 
-export const database = drizzle(client);
+export const database = drizzle(postgresClient);
