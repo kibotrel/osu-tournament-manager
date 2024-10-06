@@ -10,12 +10,14 @@ import { apiRouter } from '#src/routes/apiRouter.js';
 
 import { cache } from './dependencies/cacheDependency.js';
 import { postgresClient } from './dependencies/databaseDependency.js';
+import { setRequestId } from './middlewares/requestIdentityMiddleware.js';
 
 const app = express();
 
 app.use(helmet());
 app.set('trust proxy', 1);
 
+app.use(setRequestId);
 app.use(express.json());
 app.use(session);
 
