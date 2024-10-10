@@ -5,6 +5,8 @@ import type {
 import { HttpHeader, HttpStatusCode } from '@packages/shared';
 import type { RequestHandler } from 'express';
 
+import { CacheTopic } from '#src/constants/cacheConstants.js';
+import { popCacheArrayByKey } from '#src/queries/cache/deleteCacheQueries.js';
 import { loginWithOsu } from '#src/services/login/loginWithOsuService.js';
 
 export const postLoginController: RequestHandler<
@@ -17,7 +19,7 @@ export const postLoginController: RequestHandler<
   const { code } = request.body;
 
   try {
-    const { bearer, isNew, metrics, user } = await loginWithOsu(code);
+    const { bearer, isNew, user } = await loginWithOsu(code);
     const statusCode = isNew ? HttpStatusCode.Created : HttpStatusCode.Ok;
 
     session.user = {
@@ -26,7 +28,11 @@ export const postLoginController: RequestHandler<
       id: user.id,
     };
 
-    response.setHeader(HttpHeader.ServerTiming, metrics);
+    const metrics = await popCacheArrayByKey(
+      `${CacheTopic.ServerMetrics}:${request.id}`,
+    );
+
+    response.setHeader(HttpHeader.ServerTiming, metrics.join(', '));
 
     return response.status(statusCode).json({
       avatarUrl: user.avatarUrl,

@@ -11,7 +11,9 @@ import {
 } from '@packages/shared';
 import type { ErrorRequestHandler } from 'express';
 
+import { CacheTopic } from '#src/constants/cacheConstants.js';
 import { AllowedHttpMethodsOnRessource } from '#src/constants/serverConstants.js';
+import { popCacheArrayByKey } from '#src/queries/cache/deleteCacheQueries.js';
 
 /**
  * Type predicate to check if the input looks like an `HttpError` for further
@@ -35,7 +37,7 @@ export const isHttpError = (input: unknown): input is HttpError => {
  * Middleware to communicate errors to the client in a consistent way conforming
  * to {@link https://datatracker.ietf.org/doc/rfc9457/ | RFC 9457}.
  */
-export const errorHandler: ErrorRequestHandler<never, ErrorReport> = (
+export const errorHandler: ErrorRequestHandler<never, ErrorReport> = async (
   rawError,
   request,
   response,
@@ -63,6 +65,12 @@ export const errorHandler: ErrorRequestHandler<never, ErrorReport> = (
   if (errorReport.status === HttpStatusCode.MethodNotAllowed) {
     response.setHeader(HttpHeader.Allow, errorReport.getAllowedMethods());
   }
+
+  const metrics = await popCacheArrayByKey(
+    `${CacheTopic.ServerMetrics}:${request.id}`,
+  );
+
+  response.setHeader(HttpHeader.ServerTiming, metrics.join(', '));
 
   return response.status(errorReport.status).json({ ...rest });
 };
