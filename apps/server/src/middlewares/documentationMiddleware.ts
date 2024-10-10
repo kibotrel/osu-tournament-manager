@@ -11,6 +11,12 @@ import { environmentConfig } from '#src/configs/environmentConfig.js';
 const apiSpecification = environmentConfig.isDevelopmentMode
   ? internalApiSpecification
   : publicApiSpecification;
+const server = apiSpecification.servers.at(0)!;
+
+if (environmentConfig.isStagingMode || environmentConfig.isProductionMode) {
+  server.variables.environment.default = environmentConfig.nodeEnv;
+  server.variables.environment.enum.shift();
+}
 
 export const documentation: RequestHandler = swaggerUi.setup(apiSpecification, {
   customCss: new SwaggerTheme().getBuffer(SwaggerThemeNameEnum.DARK),
