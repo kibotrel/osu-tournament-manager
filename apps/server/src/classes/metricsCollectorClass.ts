@@ -1,8 +1,15 @@
+import { CacheTopic } from '#src/constants/cacheConstants.js';
+import { pushCacheArrayElementByKey } from '#src/queries/cache/updateCacheQueries.js';
+
 export interface ServerMetric {
   description?: string | null;
   endTime: number;
   name: string;
   startTime: number;
+}
+
+export interface MetricsCollectorOptions {
+  requestId: string;
 }
 
 /**
@@ -12,9 +19,11 @@ export interface ServerMetric {
 export class MetricsCollector {
   /** Endpoint where the error occurred. */
   public readonly metrics: Map<string, ServerMetric>;
+  public readonly requestId: string;
 
-  constructor() {
+  constructor(options: MetricsCollectorOptions) {
     this.metrics = new Map();
+    this.requestId = options.requestId;
   }
 
   public startTracking(options: { description?: string; name: string }) {
@@ -28,27 +37,29 @@ export class MetricsCollector {
     });
   }
 
-  public stopTracking(name: string) {
+  public async stopTracking(name: string) {
     const metric = this.metrics.get(name);
 
     if (metric) {
       metric.endTime = performance.now();
+      await this.serialize(metric);
     }
   }
 
   /**
    * Format the metrics data to be used in the {@link https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Server-Timing/ | Server-Timing} HTTP header.
    */
-  public serialize() {
-    const now = performance.now();
+  private async serialize(metric: ServerMetric) {
+    const { description, endTime, name, startTime } = metric;
+    const duration = endTime - startTime;
+    const baseData = `${name}; dur=${duration}`;
+    const serializedData = description
+      ? `${baseData}; desc="${description}"`
+      : baseData;
 
-    return [...this.metrics.values()]
-      .map(({ description, endTime, name, startTime }) => {
-        const duration = (endTime || now) - startTime;
-        const baseData = `${name}; dur=${duration}`;
-
-        return description ? `${baseData}; desc="${description}"` : baseData;
-      })
-      .join(', ');
+    await pushCacheArrayElementByKey({
+      key: `${CacheTopic.ServerMetrics}:${this.requestId}`,
+      value: serializedData,
+    });
   }
 }
