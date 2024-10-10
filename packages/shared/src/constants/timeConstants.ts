@@ -1,10 +1,10 @@
 /**
  * Provides constants for time values (in milliseconds).
  */
-export enum Times {
+export enum Time {
   Second = 1000,
-  Minute = Times.Second * 60,
-  Hour = Times.Minute * 60,
-  Day = Times.Hour * 24,
-  Week = Times.Day * 7,
+  Minute = Time.Second * 60,
+  Hour = Time.Minute * 60,
+  Day = Time.Hour * 24,
+  Week = Time.Day * 7,
 }

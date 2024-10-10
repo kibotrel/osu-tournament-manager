@@ -1,17 +1,17 @@
-import { HttpStatusCodes } from '../constants/httpConstants.js';
+import { HttpStatusCode } from '../constants/httpConstants.js';
 
 export interface HttpErrorOptions {
   cause?: Error | undefined;
   errors?: Array<Record<string, string>> | undefined;
   message: string;
-  status: HttpStatusCodes;
+  status: HttpStatusCode;
 }
 
 export class HttpError extends Error {
   public override readonly cause?: Error | undefined;
   public readonly errors?: Array<Record<string, string>> | undefined;
   public override readonly message: string;
-  public readonly status: HttpStatusCodes;
+  public readonly status: HttpStatusCode;
 
   constructor(options: HttpErrorOptions) {
     const { cause, errors, message, status } = options;
@@ -33,7 +33,7 @@ export class HttpBadRequest extends HttpError {
       cause,
       errors,
       message,
-      status: HttpStatusCodes.BadRequest,
+      status: HttpStatusCode.BadRequest,
     });
   }
 }
@@ -46,7 +46,7 @@ export class HttpForbidden extends HttpError {
       cause,
       errors,
       message,
-      status: HttpStatusCodes.Forbidden,
+      status: HttpStatusCode.Forbidden,
     });
   }
 }
@@ -59,7 +59,7 @@ export class HttpInternalServerError extends HttpError {
       cause,
       errors,
       message,
-      status: HttpStatusCodes.InternalServerError,
+      status: HttpStatusCode.InternalServerError,
     });
   }
 }
@@ -72,7 +72,7 @@ export class HttpLockedError extends HttpError {
       cause,
       errors,
       message,
-      status: HttpStatusCodes.Locked,
+      status: HttpStatusCode.Locked,
     });
   }
 }
@@ -85,7 +85,7 @@ export class HttpNotFoundError extends HttpError {
       cause,
       errors,
       message,
-      status: HttpStatusCodes.NotFound,
+      status: HttpStatusCode.NotFound,
     });
   }
 }
@@ -98,7 +98,7 @@ export class HttpRangeNotSatisfiableError extends HttpError {
       cause,
       errors,
       message,
-      status: HttpStatusCodes.RangeNotSatisfiable,
+      status: HttpStatusCode.RangeNotSatisfiable,
     });
   }
 }
@@ -111,7 +111,7 @@ export class HttpServiceUnavailableError extends HttpError {
       cause,
       errors,
       message,
-      status: HttpStatusCodes.ServiceUnavailable,
+      status: HttpStatusCode.ServiceUnavailable,
     });
   }
 }
@@ -124,7 +124,7 @@ export class HttpTooManyRequestsError extends HttpError {
       cause,
       errors,
       message,
-      status: HttpStatusCodes.TooManyRequests,
+      status: HttpStatusCode.TooManyRequests,
     });
   }
 }
@@ -137,7 +137,7 @@ export class HttpUnauthorizedError extends HttpError {
       cause,
       errors,
       message,
-      status: HttpStatusCodes.Unauthorized,
+      status: HttpStatusCode.Unauthorized,
     });
   }
 }
@@ -150,7 +150,7 @@ export class HttpUnavailableForLegalReasonsError extends HttpError {
       cause,
       errors,
       message,
-      status: HttpStatusCodes.UnavailableForLegalReasons,
+      status: HttpStatusCode.UnavailableForLegalReasons,
     });
   }
 }
@@ -163,7 +163,7 @@ export class HttpUnprocessableContentError extends HttpError {
       cause,
       errors,
       message,
-      status: HttpStatusCodes.UnprocessableContent,
+      status: HttpStatusCode.UnprocessableContent,
     });
   }
 }

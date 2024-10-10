@@ -1,11 +1,11 @@
-import type { HttpStatusCodes } from '#src/constants/httpConstants.js';
-import { HttpHeaders, HttpMethods } from '#src/constants/httpConstants.js';
+import type { HttpStatusCode } from '#src/constants/httpConstants.js';
+import { HttpHeader, HttpMethod } from '#src/constants/httpConstants.js';
 import type { Nothing, Unknown } from '#src/types/utilityTypes.js';
 
 export interface HttpResponse<ResponseType> {
   data: ResponseType;
   isOk: boolean;
-  status: HttpStatusCodes;
+  status: HttpStatusCode;
 }
 
 /**
@@ -25,7 +25,7 @@ export class HttpRequest<PayloadType extends object = Nothing> {
     this.payload = {};
     this.apiVersion = '';
 
-    this.setHttpHeader(HttpHeaders.ContentType, 'application/json');
+    this.setHttpHeader(HttpHeader.ContentType, 'application/json');
   }
 
   public async delete<ResponseType = Unknown>(
@@ -34,7 +34,7 @@ export class HttpRequest<PayloadType extends object = Nothing> {
     const url = this.setRequestQueryParams(endpoint);
     const response = await fetch(url, {
       headers: this.httpHeaders,
-      method: HttpMethods.Delete,
+      method: HttpMethod.Delete,
     });
     const data = await this.readResponse<ResponseType>(response);
 
@@ -47,7 +47,7 @@ export class HttpRequest<PayloadType extends object = Nothing> {
     const url = this.setRequestQueryParams(endpoint);
     const response = await fetch(url, {
       headers: this.httpHeaders,
-      method: HttpMethods.Get,
+      method: HttpMethod.Get,
     });
     const data = await this.readResponse<ResponseType>(response);
 
@@ -61,13 +61,13 @@ export class HttpRequest<PayloadType extends object = Nothing> {
   public async patch<ResponseType = Unknown>(
     endpoint: string,
   ): Promise<HttpResponse<ResponseType>> {
-    this.setHttpHeader(HttpHeaders.ContentType, 'application/json');
+    this.setHttpHeader(HttpHeader.ContentType, 'application/json');
 
     const url = this.sanitizeUrl(endpoint);
     const response = await fetch(url, {
       body: this.setRequestBody(),
       headers: this.httpHeaders,
-      method: HttpMethods.Patch,
+      method: HttpMethod.Patch,
     });
     const data = await this.readResponse<ResponseType>(response);
 
@@ -77,13 +77,13 @@ export class HttpRequest<PayloadType extends object = Nothing> {
   public async post<ResponseType = Unknown>(
     endpoint: string,
   ): Promise<HttpResponse<ResponseType>> {
-    this.setHttpHeader(HttpHeaders.ContentType, 'application/json');
+    this.setHttpHeader(HttpHeader.ContentType, 'application/json');
 
     const url = this.sanitizeUrl(endpoint);
     const response = await fetch(url, {
       body: this.setRequestBody(),
       headers: this.httpHeaders,
-      method: HttpMethods.Post,
+      method: HttpMethod.Post,
     });
     const data = await this.readResponse<ResponseType>(response);
 
@@ -93,13 +93,13 @@ export class HttpRequest<PayloadType extends object = Nothing> {
   public async put<ResponseType = Unknown>(
     endpoint: string,
   ): Promise<HttpResponse<ResponseType>> {
-    this.setHttpHeader(HttpHeaders.ContentType, 'application/json');
+    this.setHttpHeader(HttpHeader.ContentType, 'application/json');
 
     const url = this.sanitizeUrl(endpoint);
     const response = await fetch(url, {
       body: this.setRequestBody(),
       headers: this.httpHeaders,
-      method: HttpMethods.Put,
+      method: HttpMethod.Put,
     });
     const data = await this.readResponse<ResponseType>(response);
 
@@ -155,9 +155,9 @@ export class HttpRequest<PayloadType extends object = Nothing> {
   }
 
   /**
-   * Adds a header to the request. See {@link HttpHeaders} for a list of available headers.
+   * Adds a header to the request. See {@link HttpHeader} for a list of available headers.
    */
-  public setHttpHeader(name: HttpHeaders, value: string) {
+  public setHttpHeader(name: HttpHeader, value: string) {
     this.httpHeaders.set(name, value);
 
     return this;

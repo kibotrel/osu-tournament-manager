@@ -1,18 +1,18 @@
-import { TournamentScoreModes, TournamentTeamModes } from '@packages/shared';
+import { TournamentScoreMode, TournamentTeamMode } from '@packages/shared';
 import { pgSchema } from 'drizzle-orm/pg-core';
 
 export const tournamentsSchema = pgSchema('tournaments');
 
 export const scoreModeEnum = tournamentsSchema.enum('scoreMode', [
-  TournamentScoreModes.Accuracy,
-  TournamentScoreModes.Combo,
-  TournamentScoreModes.Score,
-  TournamentScoreModes.ScoreV2,
+  TournamentScoreMode.Accuracy,
+  TournamentScoreMode.Combo,
+  TournamentScoreMode.Score,
+  TournamentScoreMode.ScoreV2,
 ]);
 
 export const teamModeEnum = tournamentsSchema.enum('teamMode', [
-  TournamentTeamModes.HeadToHead,
-  TournamentTeamModes.TagCoOp,
-  TournamentTeamModes.TagTeamVs,
-  TournamentTeamModes.TeamVs,
+  TournamentTeamMode.HeadToHead,
+  TournamentTeamMode.TagCoOp,
+  TournamentTeamMode.TagTeamVs,
+  TournamentTeamMode.TeamVs,
 ]);

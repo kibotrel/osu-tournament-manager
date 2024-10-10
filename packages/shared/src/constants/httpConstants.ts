@@ -2,14 +2,14 @@
  * List of common HTTP content types and when to use them.
  * see {@link https://www.iana.org/assignments/media-types/media-types.xhtml | IANA Content-Type}.
  */
-export enum HttpContentTypes {
+export enum HttpContentType {
   /** JSON encoded as UTF-8. */
   ApplicationJson = 'application/json; charset=utf-8',
   /** Error message in JSON encoded as UTF-8. */
   ApplicationProblemJson = 'application/problem+json; charset=utf-8',
 }
 
-export enum HttpMethods {
+export enum HttpMethod {
   /** Remove an entity from the server. */
   Delete = 'DELETE',
   /** Retrieve data from a specified resource. */
@@ -26,7 +26,7 @@ export enum HttpMethods {
  * List of common HTTP headers and when to use them.
  * see {@link https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers | MDN HTTP Headers}.
  */
-export enum HttpHeaders {
+export enum HttpHeader {
   /** Contains the media type client is expecting in the response. */
   Accept = 'Accept',
   /** List of allowed methods on the corresponding ressource. */
@@ -39,7 +39,7 @@ export enum HttpHeaders {
   ContentType = 'Content-Type',
   /**
    * Holds the cookie data sent previously by server
-   * with {@link HttpHeaders.SetCookie | SetCookie}
+   * with {@link HttpHeader.SetCookie | SetCookie}
    */
   Cookie = 'Cookie',
   /** Date and time at which the message was sent. */
@@ -71,7 +71,7 @@ export enum HttpHeaders {
  * List of common HTTP status codes and when to use them.
  * see {@link https://developer.mozilla.org/en-US/docs/Web/HTTP/Status | MDN HTTP Status Codes}.
  */
-export enum HttpStatusCodes {
+export enum HttpStatusCode {
   /** Request has been accepted for later processing. */
   Accepted = 202,
   /**
@@ -136,7 +136,7 @@ export enum HttpStatusCodes {
    */
   PartialContent = 206,
   /**
-   * Same as {@link HttpStatusCodes.NoContent | NoContent} but the same verb
+   * Same as {@link HttpStatusCode.NoContent | NoContent} but the same verb
    * is used for the secondary request.
    */
   PermanentRedirect = 308,
@@ -182,7 +182,7 @@ export enum HttpStatusCodes {
  * List of common HTTP status messages and when to use them.
  * see {@link https://developer.mozilla.org/en-US/docs/Web/HTTP/Status | MDN HTTP Status Codes}.
  */
-export enum HttpStatusMessages {
+export enum HttpStatusMessage {
   /** Request has been accepted for later processing. */
   Accepted = 'Accepted',
   /**
@@ -247,7 +247,7 @@ export enum HttpStatusMessages {
    */
   PartialContent = 'Partial Content',
   /**
-   * Same as {@link HttpStatusCodes.NoContent | NoContent} but the same verb
+   * Same as {@link HttpStatusCode.NoContent | NoContent} but the same verb
    * is used for the secondary request.
    */
   PermanentRedirect = 'Permanent Redirect',
@@ -290,32 +290,31 @@ export enum HttpStatusMessages {
 }
 
 /**
- * Mapping between {@link HttpStatusCodes | HTTP status codes} and
- * {@link HttpStatusMessages | HTTP status messages}.
+ * Mapping between {@link HttpStatusCode | HTTP status codes} and
+ * {@link HttpStatusMessage | HTTP status messages}.
  */
 export const HttpStatusCodesToMessagesMapping: {
-  [key in HttpStatusCodes]: HttpStatusMessages;
+  [key in HttpStatusCode]: HttpStatusMessage;
 } = {
-  [HttpStatusCodes.Accepted]: HttpStatusMessages.Accepted,
-  [HttpStatusCodes.BadRequest]: HttpStatusMessages.BadRequest,
-  [HttpStatusCodes.Created]: HttpStatusMessages.Created,
-  [HttpStatusCodes.Forbidden]: HttpStatusMessages.Forbidden,
-  [HttpStatusCodes.InternalServerError]: HttpStatusMessages.InternalServerError,
-  [HttpStatusCodes.Locked]: HttpStatusMessages.Locked,
-  [HttpStatusCodes.MethodNotAllowed]: HttpStatusMessages.MethodNotAllowed,
-  [HttpStatusCodes.MovedPermanently]: HttpStatusMessages.MovedPermanently,
-  [HttpStatusCodes.NoContent]: HttpStatusMessages.NoContent,
-  [HttpStatusCodes.NotFound]: HttpStatusMessages.NotFound,
-  [HttpStatusCodes.Ok]: HttpStatusMessages.Ok,
-  [HttpStatusCodes.PartialContent]: HttpStatusMessages.PartialContent,
-  [HttpStatusCodes.PermanentRedirect]: HttpStatusMessages.PermanentRedirect,
-  [HttpStatusCodes.RangeNotSatisfiable]: HttpStatusMessages.RangeNotSatisfiable,
-  [HttpStatusCodes.SeeOther]: HttpStatusMessages.SeeOther,
-  [HttpStatusCodes.ServiceUnavailable]: HttpStatusMessages.ServiceUnavailable,
-  [HttpStatusCodes.TooManyRequests]: HttpStatusMessages.TooManyRequests,
-  [HttpStatusCodes.Unauthorized]: HttpStatusMessages.Unauthorized,
-  [HttpStatusCodes.UnavailableForLegalReasons]:
-    HttpStatusMessages.UnavailableForLegalReasons,
-  [HttpStatusCodes.UnprocessableContent]:
-    HttpStatusMessages.UnprocessableContent,
+  [HttpStatusCode.Accepted]: HttpStatusMessage.Accepted,
+  [HttpStatusCode.BadRequest]: HttpStatusMessage.BadRequest,
+  [HttpStatusCode.Created]: HttpStatusMessage.Created,
+  [HttpStatusCode.Forbidden]: HttpStatusMessage.Forbidden,
+  [HttpStatusCode.InternalServerError]: HttpStatusMessage.InternalServerError,
+  [HttpStatusCode.Locked]: HttpStatusMessage.Locked,
+  [HttpStatusCode.MethodNotAllowed]: HttpStatusMessage.MethodNotAllowed,
+  [HttpStatusCode.MovedPermanently]: HttpStatusMessage.MovedPermanently,
+  [HttpStatusCode.NoContent]: HttpStatusMessage.NoContent,
+  [HttpStatusCode.NotFound]: HttpStatusMessage.NotFound,
+  [HttpStatusCode.Ok]: HttpStatusMessage.Ok,
+  [HttpStatusCode.PartialContent]: HttpStatusMessage.PartialContent,
+  [HttpStatusCode.PermanentRedirect]: HttpStatusMessage.PermanentRedirect,
+  [HttpStatusCode.RangeNotSatisfiable]: HttpStatusMessage.RangeNotSatisfiable,
+  [HttpStatusCode.SeeOther]: HttpStatusMessage.SeeOther,
+  [HttpStatusCode.ServiceUnavailable]: HttpStatusMessage.ServiceUnavailable,
+  [HttpStatusCode.TooManyRequests]: HttpStatusMessage.TooManyRequests,
+  [HttpStatusCode.Unauthorized]: HttpStatusMessage.Unauthorized,
+  [HttpStatusCode.UnavailableForLegalReasons]:
+    HttpStatusMessage.UnavailableForLegalReasons,
+  [HttpStatusCode.UnprocessableContent]: HttpStatusMessage.UnprocessableContent,
 };

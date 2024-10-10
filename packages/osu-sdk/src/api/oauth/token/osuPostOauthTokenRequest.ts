@@ -1,7 +1,7 @@
 import { postRequest } from '@packages/shared';
 
 import { baseUrl } from '#src/constants/osuConstants.js';
-import { OsuOauthGrantTypes } from '#src/types/osuTypes.js';
+import { OsuOauthGrantType } from '#src/types/osuTypes.js';
 
 export interface OsuPostOauthTokenRequestBody {
   clientId: number;
@@ -20,7 +20,7 @@ interface InternalOsuPostOauthTokenRequestBody {
   client_id: number;
   client_secret: string;
   code: string;
-  grant_type: OsuOauthGrantTypes.AuthorizationCode;
+  grant_type: OsuOauthGrantType.AuthorizationCode;
   redirect_uri: string;
 }
 
@@ -53,7 +53,7 @@ export const osuPostOauthToken = async (
       client_id: clientId,
       client_secret: clientSecret,
       code,
-      grant_type: OsuOauthGrantTypes.AuthorizationCode,
+      grant_type: OsuOauthGrantType.AuthorizationCode,
       redirect_uri: redirectUri,
     },
   });
@@ -85,7 +85,7 @@ export type OsuPostOauthTokenRefreshResponseBody =
 interface InternalOsuPostOauthTokenRefreshRequestBody {
   client_id: number;
   client_secret: string;
-  grant_type: OsuOauthGrantTypes.RefreshToken;
+  grant_type: OsuOauthGrantType.RefreshToken;
   refresh_token: string;
 }
 
@@ -113,7 +113,7 @@ export const osuPostOauthTokenRefresh = async (
     payload: {
       client_id: clientId,
       client_secret: clientSecret,
-      grant_type: OsuOauthGrantTypes.RefreshToken,
+      grant_type: OsuOauthGrantType.RefreshToken,
       refresh_token: refreshToken,
     },
   });

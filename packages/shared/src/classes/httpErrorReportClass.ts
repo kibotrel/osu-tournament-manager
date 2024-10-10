@@ -2,7 +2,7 @@ import type { Request } from 'express';
 
 import type { HttpError } from '#src/classes/httpErrorClass.js';
 import {
-  HttpStatusCodes,
+  HttpStatusCode,
   HttpStatusCodesToMessagesMapping,
 } from '#src/constants/httpConstants.js';
 
@@ -18,7 +18,7 @@ export class HttpErrorReport {
   /** Endpoint where the error occurred. */
   public readonly instance: string;
   /** HTTP status code. */
-  public readonly status: HttpStatusCodes;
+  public readonly status: HttpStatusCode;
   /** HTTP status message. */
   public readonly title: string;
   /**
@@ -39,14 +39,14 @@ export class HttpErrorReport {
   ) {
     this.allowedHttpMethodsOnRessource = allowedHttpMethodsOnRessource;
     this.instance = request.path;
-    this.status = error.status ?? HttpStatusCodes.BadRequest;
+    this.status = error.status ?? HttpStatusCode.BadRequest;
     this.title = HttpStatusCodesToMessagesMapping[this.status];
 
     if (
       ![
-        HttpStatusCodes.InternalServerError,
-        HttpStatusCodes.NotFound,
-        HttpStatusCodes.MethodNotAllowed,
+        HttpStatusCode.InternalServerError,
+        HttpStatusCode.NotFound,
+        HttpStatusCode.MethodNotAllowed,
       ].includes(this.status)
     ) {
       this.errors = error.errors;

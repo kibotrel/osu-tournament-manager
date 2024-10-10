@@ -1,24 +1,24 @@
-export enum MappoolGameModes {
+export enum MappoolGameMode {
   Catch = 'catch',
   Mania = 'mania',
   Standard = 'standard',
   Taiko = 'taiko',
 }
 
-export enum MatchDraftTypes {
+export enum MatchDraftType {
   Ban = 'ban',
   Pick = 'pick',
   Protect = 'protect',
 }
 
-export enum TournamentScoreModes {
+export enum TournamentScoreMode {
   Accuracy = 'accuracy',
   Combo = 'combo',
   Score = 'score',
   ScoreV2 = 'scoreV2',
 }
 
-export enum TournamentTeamModes {
+export enum TournamentTeamMode {
   HeadToHead = 'headToHead',
   TagCoOp = 'tagCoOp',
   TagTeamVs = 'tagTeamVs',

@@ -2,12 +2,12 @@
 
 import type { ErrorReport, HttpError } from '@packages/shared';
 import {
-  HttpContentTypes,
+  HttpContentType,
   HttpErrorReport,
-  HttpHeaders,
+  HttpHeader,
   HttpInternalServerError,
-  HttpStatusCodes,
-  HttpStatusMessages,
+  HttpStatusCode,
+  HttpStatusMessage,
 } from '@packages/shared';
 import type { ErrorRequestHandler } from 'express';
 
@@ -43,15 +43,15 @@ export const errorHandler: ErrorRequestHandler<never, ErrorReport> = (
   next,
 ) => {
   response.setHeader(
-    HttpHeaders.ContentType,
-    HttpContentTypes.ApplicationProblemJson,
+    HttpHeader.ContentType,
+    HttpContentType.ApplicationProblemJson,
   );
 
   const error = isHttpError(rawError)
     ? rawError
     : new HttpInternalServerError({
         cause: rawError,
-        message: HttpStatusMessages.InternalServerError,
+        message: HttpStatusMessage.InternalServerError,
       });
   const errorReport = new HttpErrorReport(
     request,
@@ -60,8 +60,8 @@ export const errorHandler: ErrorRequestHandler<never, ErrorReport> = (
   );
   const { allowedHttpMethodsOnRessource, ...rest } = errorReport;
 
-  if (errorReport.status === HttpStatusCodes.MethodNotAllowed) {
-    response.setHeader(HttpHeaders.Allow, errorReport.getAllowedMethods());
+  if (errorReport.status === HttpStatusCode.MethodNotAllowed) {
+    response.setHeader(HttpHeader.Allow, errorReport.getAllowedMethods());
   }
 
   return response.status(errorReport.status).json({ ...rest });

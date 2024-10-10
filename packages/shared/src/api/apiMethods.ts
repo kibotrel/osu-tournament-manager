@@ -1,6 +1,6 @@
 import type { ErrorReport } from '#src/classes/httpErrorReportClass.js';
 import { HttpRequest } from '#src/classes/httpRequestClass.js';
-import { HttpHeaders } from '#src/constants/httpConstants.js';
+import { HttpHeader } from '#src/constants/httpConstants.js';
 import type { Nothing } from '#src/types/utilityTypes.js';
 
 export interface RequestConfiguration<PayloadType> {
@@ -29,7 +29,7 @@ const createGenericRequest = <PayloadType extends object = Nothing>(
     .setPayload(payload);
 
   if (token) {
-    request.setHttpHeader(HttpHeaders.Authorization, `Bearer ${token}`);
+    request.setHttpHeader(HttpHeader.Authorization, `Bearer ${token}`);
   }
 
   return request;

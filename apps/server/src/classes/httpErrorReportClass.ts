@@ -1,6 +1,6 @@
 import type { HttpError } from '@packages/shared';
 import {
-  HttpStatusCodes,
+  HttpStatusCode,
   HttpStatusCodesToMessagesMapping,
 } from '@packages/shared';
 import type { Request } from 'express';
@@ -15,7 +15,7 @@ export class HttpErrorReport {
   /** Endpoint where the error occurred. */
   public readonly instance: string;
   /** HTTP status code. */
-  public readonly status: HttpStatusCodes;
+  public readonly status: HttpStatusCode;
   /** HTTP status message. */
   public readonly title: string;
   /**
@@ -28,14 +28,14 @@ export class HttpErrorReport {
 
   constructor(request: Request, error: HttpError) {
     this.instance = request.path;
-    this.status = error.status ?? HttpStatusCodes.BadRequest;
+    this.status = error.status ?? HttpStatusCode.BadRequest;
     this.title = HttpStatusCodesToMessagesMapping[this.status];
 
     if (
       ![
-        HttpStatusCodes.InternalServerError,
-        HttpStatusCodes.NotFound,
-        HttpStatusCodes.MethodNotAllowed,
+        HttpStatusCode.InternalServerError,
+        HttpStatusCode.NotFound,
+        HttpStatusCode.MethodNotAllowed,
       ].includes(this.status)
     ) {
       this.errors = error.errors;
