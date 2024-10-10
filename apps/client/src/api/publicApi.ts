@@ -26,6 +26,6 @@ export const postPublicLogin = (authenticationCode: string) => {
   return postRequest<PostPublicLoginRequestBody, PostPublicLoginResponseBody>({
     baseUrl,
     endpoint: '/public/login',
-    payload: { code: authenticationCode },
+    payload: { authenticationCode },
   });
 };

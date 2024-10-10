@@ -1,7 +1,7 @@
 import type { ErrorReport } from '#src/classes/httpErrorReportClass.js';
 
 export interface PostPublicLoginRequestBody {
-  code: string;
+  authenticationCode: string;
 }
 
 export type PostPublicLoginResponseBody =

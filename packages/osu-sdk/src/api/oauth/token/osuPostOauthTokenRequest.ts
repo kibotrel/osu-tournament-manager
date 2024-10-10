@@ -6,7 +6,7 @@ import { OsuOauthGrantType } from '#src/types/osuTypes.js';
 export interface OsuPostOauthTokenRequestBody {
   clientId: number;
   clientSecret: string;
-  code: string;
+  authenticationCode: string;
   redirectUri: string;
 }
 
@@ -40,7 +40,7 @@ interface InternalOsuPostOauthTokenResponseBody {
 export const osuPostOauthToken = async (
   options: OsuPostOauthTokenRequestBody,
 ): Promise<OsuPostOauthTokenResponseBody> => {
-  const { clientId, clientSecret, code, redirectUri } = options;
+  const { clientId, clientSecret, authenticationCode, redirectUri } = options;
   const response = await postRequest<
     InternalOsuPostOauthTokenRequestBody,
     InternalOsuPostOauthTokenResponseBody
@@ -52,7 +52,7 @@ export const osuPostOauthToken = async (
     payload: {
       client_id: clientId,
       client_secret: clientSecret,
-      code,
+      code: authenticationCode,
       grant_type: OsuOauthGrantType.AuthorizationCode,
       redirect_uri: redirectUri,
     },

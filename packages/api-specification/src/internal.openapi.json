@@ -69,12 +69,12 @@
             "application/json": {
               "schema": {
                 "properties": {
-                  "code": {
+                  "authenticationCode": {
                     "type": "string"
                   }
                 },
                 "required": [
-                  "code"
+                  "authenticationCode"
                 ],
                 "type": "object"
               }

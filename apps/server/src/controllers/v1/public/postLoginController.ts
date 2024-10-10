@@ -16,10 +16,13 @@ export const postLoginController: RequestHandler<
   never
 > = async (request, response, next) => {
   const { session } = request;
-  const { code } = request.body;
+  const { authenticationCode } = request.body;
 
   try {
-    const { bearer, isNew, user } = await loginWithOsu(code, request.id);
+    const { bearer, isNew, user } = await loginWithOsu(
+      authenticationCode,
+      request.id,
+    );
     const statusCode = isNew ? HttpStatusCode.Created : HttpStatusCode.Ok;
 
     session.user = {
