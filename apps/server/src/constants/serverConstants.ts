@@ -4,5 +4,5 @@ export const AllowedHttpMethodsOnRessource: Record<
 > = {
   '/api/v1/public/health': ['GET'],
   '/api/v1/public/logout': ['GET'],
-  '/api/v1/public/oauth': ['POST'],
+  '/api/v1/public/login': ['POST'],
 };
