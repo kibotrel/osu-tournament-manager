@@ -19,7 +19,7 @@ export const postLoginController: RequestHandler<
   const { code } = request.body;
 
   try {
-    const { bearer, isNew, user } = await loginWithOsu(code);
+    const { bearer, isNew, user } = await loginWithOsu(code, request.id);
     const statusCode = isNew ? HttpStatusCode.Created : HttpStatusCode.Ok;
 
     session.user = {

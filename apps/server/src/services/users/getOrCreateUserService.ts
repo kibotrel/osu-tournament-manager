@@ -4,8 +4,11 @@ import { MetricsCollector } from '#src/classes/metricsCollectorClass.js';
 import { createUser } from '#src/queries/users/createUserQueries.js';
 import { getUserByGameUserId } from '#src/queries/users/getUserQueries.js';
 
-export const getOrCreateUser = async (gameUser: OsuGetMeResponseBody) => {
-  const metricsCollector = new MetricsCollector();
+export const getOrCreateUser = async (
+  gameUser: OsuGetMeResponseBody,
+  requestId: string,
+) => {
+  const metricsCollector = new MetricsCollector({ requestId });
 
   metricsCollector.startTracking({
     name: 'getUserByGameUserId',
@@ -16,7 +19,7 @@ export const getOrCreateUser = async (gameUser: OsuGetMeResponseBody) => {
   metricsCollector.stopTracking('getUserByGameUserId');
 
   if (user) {
-    return { isNew: false, user, metrics: metricsCollector.serialize() };
+    return { isNew: false, user };
   }
 
   const { id, ...properties } = gameUser;
@@ -29,5 +32,5 @@ export const getOrCreateUser = async (gameUser: OsuGetMeResponseBody) => {
 
   metricsCollector.stopTracking('createUser');
 
-  return { isNew: true, user: newUser, metrics: metricsCollector.serialize() };
+  return { isNew: true, user: newUser };
 };

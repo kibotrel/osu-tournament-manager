@@ -8,8 +8,8 @@ import { getOrCreateUser } from '#src/services/users/getOrCreateUserService.js';
  * Use code given by osu! Oauth, exchange it for an access token, and get game user's information.
  * If user doesn't exist in the database yet create it.
  */
-export const loginWithOsu = async (code: string) => {
-  const metricsCollector = new MetricsCollector();
+export const loginWithOsu = async (code: string, requestId: string) => {
+  const metricsCollector = new MetricsCollector({ requestId });
 
   metricsCollector.startTracking({
     name: 'osuPostOauthToken',
@@ -31,16 +31,11 @@ export const loginWithOsu = async (code: string) => {
 
   metricsCollector.stopTracking('osuGetMe');
 
-  const {
-    isNew,
-    user,
-    metrics: getOrCreateUserMetrics,
-  } = await getOrCreateUser(gameUser);
+  const { isNew, user } = await getOrCreateUser(gameUser, requestId);
 
   return {
     bearer,
     isNew,
-    metrics: [metricsCollector.serialize(), getOrCreateUserMetrics].join(', '),
     user,
   };
 };
