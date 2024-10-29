@@ -1,6 +1,7 @@
 {
   "dependencies": {
     "@packages/api-specification": "workspace:*",
+    "@packages/logger": "workspace:*",
     "@packages/osu-sdk": "workspace:*",
     "@packages/shared": "workspace:*",
     "connect-redis": "7.1.1",
