@@ -6,6 +6,7 @@ import { cache } from '#src/dependencies/cacheDependency.js';
 import { postgresClient } from '#src/dependencies/databaseDependency.js';
 import { logger } from '#src/dependencies/loggerDependency.js';
 import { errorHandler } from '#src/middlewares/errorHandlerMiddleware.js';
+import { logHttpRequest } from '#src/middlewares/logHttpRequestMiddleware.js';
 import { setRequestId } from '#src/middlewares/requestIdentityMiddleware.js';
 import { ressourceNotFoundHandler } from '#src/middlewares/ressourceNotFoundMiddleware.js';
 import { session } from '#src/middlewares/sessionMiddleware.js';
@@ -19,6 +20,7 @@ app.set('trust proxy', 1);
 
 app.use(setRequestId);
 app.use(express.json());
+app.use(logHttpRequest);
 app.use(session);
 
 app.use(specificationValidator);
