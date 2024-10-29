@@ -1,5 +1,5 @@
 import type { Nothing } from '@packages/shared';
-import { getRequest } from '@packages/shared';
+import { HttpError, getRequest } from '@packages/shared';
 
 import { baseUrl } from '#src/constants/osuConstants.js';
 
@@ -42,7 +42,11 @@ export const osuGetMe = async (
   });
 
   if (!response.isOk) {
-    throw new Error('[osu!api]: Failed to get self user information');
+    throw new HttpError({
+      message: '[osu!api] Failed to get self user information',
+      status: response.status,
+      metadata: response.data as unknown as Record<string, unknown>,
+    });
   }
 
   return {

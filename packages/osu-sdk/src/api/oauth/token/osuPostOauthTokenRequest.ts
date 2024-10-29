@@ -1,4 +1,4 @@
-import { postRequest } from '@packages/shared';
+import { HttpError, postRequest } from '@packages/shared';
 
 import { baseUrl } from '#src/constants/osuConstants.js';
 import { OsuOauthGrantType } from '#src/types/osuTypes.js';
@@ -59,9 +59,12 @@ export const osuPostOauthToken = async (
   });
 
   if (!response.isOk) {
-    throw new Error(
-      '[osu!api]: Failed to exchange authentication code for bearer token',
-    );
+    throw new HttpError({
+      message:
+        '[osu!api] Failed to exchange authentication code for bearer token',
+      status: response.status,
+      metadata: response.data as unknown as Record<string, unknown>,
+    });
   }
 
   const remainingTime = response.data.expires_in * 1000;
