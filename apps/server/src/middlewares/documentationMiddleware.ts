@@ -13,7 +13,7 @@ const apiSpecification = environmentConfig.isDevelopmentMode
   : publicApiSpecification;
 const server = apiSpecification.servers.at(0)!;
 
-if (environmentConfig.isStagingMode || environmentConfig.isProductionMode) {
+if (!environmentConfig.isDevelopmentMode) {
   server.variables.environment.default = environmentConfig.nodeEnv;
   server.variables.environment.enum.shift();
 }
