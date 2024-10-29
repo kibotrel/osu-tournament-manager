@@ -77,6 +77,19 @@ export class HttpLockedError extends HttpError {
   }
 }
 
+export class HttpMethodNotAllowedError extends HttpError {
+  constructor(options: Omit<HttpErrorOptions, 'status'>) {
+    const { cause, errors, message } = options;
+
+    super({
+      cause,
+      errors,
+      message,
+      status: HttpStatusCode.MethodNotAllowed,
+    });
+  }
+}
+
 export class HttpNotFoundError extends HttpError {
   constructor(options: Omit<HttpErrorOptions, 'status'>) {
     const { cause, errors, message } = options;
