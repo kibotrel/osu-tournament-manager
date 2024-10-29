@@ -25,7 +25,7 @@ export class HttpError extends Error {
   }
 }
 
-export class HttpBadRequest extends HttpError {
+export class HttpBadRequestError extends HttpError {
   constructor(options: Omit<HttpErrorOptions, 'status'>) {
     const { cause, errors, message } = options;
 
@@ -38,7 +38,7 @@ export class HttpBadRequest extends HttpError {
   }
 }
 
-export class HttpForbidden extends HttpError {
+export class HttpForbiddenError extends HttpError {
   constructor(options: Omit<HttpErrorOptions, 'status'>) {
     const { cause, errors, message } = options;
 
