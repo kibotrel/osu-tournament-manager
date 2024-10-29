@@ -1,4 +1,4 @@
-export const AllowedHttpMethodsOnRessource: Record<
+export const allowedHttpMethodsOnRessource: Record<
   string,
   Array<'DELETE' | 'GET' | 'PATCH' | 'POST' | 'PUT'>
 > = {

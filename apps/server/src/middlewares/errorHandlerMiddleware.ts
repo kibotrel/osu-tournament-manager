@@ -6,21 +6,63 @@ import {
   HttpErrorReport,
   HttpHeader,
   HttpInternalServerError,
+  HttpMethodNotAllowedError,
+  HttpNotFoundError,
   HttpStatusCode,
   HttpStatusMessage,
 } from '@packages/shared';
 import type { ErrorRequestHandler } from 'express';
+import { error } from 'express-openapi-validator';
 
 import { CacheTopic } from '#src/constants/cacheConstants.js';
-import { AllowedHttpMethodsOnRessource } from '#src/constants/serverConstants.js';
+import { allowedHttpMethodsOnRessource } from '#src/constants/serverConstants.js';
 import { popCacheArrayByKey } from '#src/queries/cache/deleteCacheQueries.js';
 
-/**
- * Type predicate to check if the input looks like an `HttpError` for further
- * processing.
- */
+const { NotFound, MethodNotAllowed } = error;
+
 export const isHttpError = (input: unknown): input is HttpError => {
-  return input instanceof Error && 'status' in input;
+  return input instanceof Error;
+};
+
+export const isExpressOpenApiValidatorMethodNotAllowedError = (
+  input: unknown,
+) => {
+  return input instanceof MethodNotAllowed;
+};
+
+export const isExpressOpenApiValidatorNotFoundError = (input: unknown) => {
+  return input instanceof NotFound;
+};
+
+interface ParseErrorOptions {
+  error: unknown;
+  method: string;
+  url: string;
+}
+
+export const normalizeError = (options: ParseErrorOptions) => {
+  const { error, method, url } = options;
+
+  if (isExpressOpenApiValidatorMethodNotAllowedError(error)) {
+    return new HttpMethodNotAllowedError({
+      message: `Method ${method} not allowed on ressource at ${url}`,
+    });
+  }
+
+  if (isExpressOpenApiValidatorNotFoundError(error)) {
+    return new HttpNotFoundError({
+      message: `Ressource at ${url} could not be found`,
+    });
+  }
+
+  if (isHttpError(error)) {
+    return error;
+  }
+
+  return new HttpInternalServerError({
+    cause: error as Error,
+    message: HttpStatusMessage.InternalServerError,
+  });
 };
 
 /*
@@ -49,18 +91,16 @@ export const errorHandler: ErrorRequestHandler<never, ErrorReport> = async (
     HttpContentType.ApplicationProblemJson,
   );
 
-  const error = isHttpError(rawError)
-    ? rawError
-    : new HttpInternalServerError({
-        cause: rawError,
-        message: HttpStatusMessage.InternalServerError,
-      });
-  const errorReport = new HttpErrorReport(
+  const error = normalizeError({
+    error: rawError,
+    method: request.method,
+    url: request.url,
+  });
+  const errorReport = new HttpErrorReport({
     request,
-    AllowedHttpMethodsOnRessource,
+    allowedHttpMethodsOnRessource,
     error,
-  );
-  const { allowedHttpMethodsOnRessource, ...rest } = errorReport;
+  });
 
   if (errorReport.status === HttpStatusCode.MethodNotAllowed) {
     response.setHeader(HttpHeader.Allow, errorReport.getAllowedMethods());
@@ -72,5 +112,5 @@ export const errorHandler: ErrorRequestHandler<never, ErrorReport> = async (
 
   response.setHeader(HttpHeader.ServerTiming, metrics.join(', '));
 
-  return response.status(errorReport.status).json({ ...rest });
+  return response.status(errorReport.status).json(errorReport.serialize());
 };
