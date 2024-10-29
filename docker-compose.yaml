@@ -76,6 +76,18 @@ services:
     volumes:
       - ./packages/api-specification:/osu-tournanament-manager/packages/api-specification
 
+  package-logger-builder:
+    container_name: package-logger-builder
+    build:
+      args:
+        PACKAGE: packages/logger
+      context: .
+      dockerfile: ./docker/packages-builder/Dockerfile.dev
+    restart: always
+    volumes:
+      - ./packages/logger:/osu-tournanament-manager/packages/logger
+      - ./packages/shared/dist:/osu-tournanament-manager/packages/logger/node_modules/@packages/shared/dist
+
   package-osu-sdk-builder:
     container_name: package-osu-sdk-builder
     build:
@@ -149,6 +161,7 @@ services:
     volumes:
       - ./apps/server:/osu-tournanament-manager/apps/server
       - ./packages/api-specification/dist:/osu-tournanament-manager/apps/server/node_modules/@packages/api-specification/dist
+      - ./packages/logger/dist:/osu-tournanament-manager/apps/server/node_modules/@packages/logger/dist
       - ./packages/osu-sdk/dist:/osu-tournanament-manager/apps/server/node_modules/@packages/osu-sdk/dist
       - ./packages/shared/dist:/osu-tournanament-manager/apps/server/node_modules/@packages/shared/dist
 
