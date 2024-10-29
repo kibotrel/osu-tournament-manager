@@ -17,7 +17,6 @@ export class HttpErrorReport {
   >;
   /** Endpoint where the error occurred. */
   public readonly instance: string;
-  /** HTTP status code. */
   public readonly status: HttpStatusCode;
   /** HTTP status message. */
   public readonly title: string;
@@ -26,7 +25,6 @@ export class HttpErrorReport {
    * This isn't not included in {@link https://datatracker.ietf.org/doc/rfc9457/ | RFC 9457}.
    */
   public readonly errors?: Array<Record<string, string>> | undefined;
-  /** Additional details about the error. */
   public readonly detail?: string | undefined;
 
   constructor(

@@ -17,7 +17,6 @@ export interface MetricsCollectorOptions {
  * related data.
  */
 export class MetricsCollector {
-  /** Endpoint where the error occurred. */
   public readonly metrics: Map<string, ServerMetric>;
   public readonly requestId: string;
 
