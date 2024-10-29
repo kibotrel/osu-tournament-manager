@@ -14,6 +14,7 @@ COPY packages/osu-sdk ./packages/osu-sdk/
 COPY packages/prettier-config ./packages/prettier-config/
 COPY packages/shared ./packages/shared/
 COPY packages/api-specification ./packages/api-specification/
+COPY packages/logger ./packages/logger/
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
 
 FROM install-local-packages AS install-app
@@ -23,6 +24,7 @@ COPY apps/server ./apps/server/
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
 
 FROM install-app AS dev
+ENV FORCE_COLOR=1
 WORKDIR /osu-tournanament-manager/apps/server
 ENTRYPOINT ["/usr/local/bin/pnpm"]
 CMD ["run", "dev"]
