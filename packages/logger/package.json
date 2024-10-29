@@ -1,0 +1,24 @@
+{
+  "dependencies": {
+    "@packages/shared": "workspace:*",
+    "chalk": "5.3.0",
+    "winston": "3.15.0"
+  },
+  "devDependencies": {
+    "@packages/prettier-config": "workspace:*"
+  },
+  "imports": {
+    "#src/*": "./src/*"
+  },
+  "main": "dist/src/loggerExport.js",
+  "name": "@packages/logger",
+  "private": true,
+  "scripts": {
+    "build": "tsc && tsc-alias",
+    "dev": "nodemon --config nodemon.json",
+    "format": "prettier --write src/**/*.ts",
+    "lint": "eslint src/**/*.ts --config .eslintrc"
+  },
+  "type": "module",
+  "types": "dist/src/loggerExport.d.ts"
+}

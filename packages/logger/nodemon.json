@@ -1,0 +1,6 @@
+{
+  "exec": "pnpm build",
+  "ext": "ts,js",
+  "ignoreRoot": [".git"],
+  "watch": ["node_modules/@packages", "src/**/*.ts"]
+}
