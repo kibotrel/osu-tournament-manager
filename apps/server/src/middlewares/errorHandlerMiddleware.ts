@@ -14,8 +14,10 @@ import {
 import type { ErrorRequestHandler } from 'express';
 import { error } from 'express-openapi-validator';
 
+import { environmentConfig } from '#src/configs/environmentConfig.js';
 import { CacheTopic } from '#src/constants/cacheConstants.js';
 import { allowedHttpMethodsOnRessource } from '#src/constants/serverConstants.js';
+import { logger } from '#src/dependencies/loggerDependency.js';
 import { popCacheArrayByKey } from '#src/queries/cache/deleteCacheQueries.js';
 
 const { NotFound, MethodNotAllowed } = error;
@@ -40,29 +42,43 @@ interface ParseErrorOptions {
   url: string;
 }
 
-export const normalizeError = (options: ParseErrorOptions) => {
+interface NormalizedError {
+  error: HttpError;
+  mustLog: boolean;
+}
+
+export const normalizeError = (options: ParseErrorOptions): NormalizedError => {
   const { error, method, url } = options;
 
   if (isExpressOpenApiValidatorMethodNotAllowedError(error)) {
-    return new HttpMethodNotAllowedError({
-      message: `Method ${method} not allowed on ressource at ${url}`,
-    });
+    return {
+      error: new HttpMethodNotAllowedError({
+        message: `Method ${method} not allowed on ressource at ${url}`,
+      }),
+      mustLog: false,
+    };
   }
 
   if (isExpressOpenApiValidatorNotFoundError(error)) {
-    return new HttpNotFoundError({
-      message: `Ressource at ${url} could not be found`,
-    });
+    return {
+      error: new HttpNotFoundError({
+        message: `Ressource at ${url} could not be found`,
+      }),
+      mustLog: false,
+    };
   }
 
   if (isHttpError(error)) {
-    return error;
+    return { error, mustLog: true };
   }
 
-  return new HttpInternalServerError({
-    cause: error as Error,
-    message: HttpStatusMessage.InternalServerError,
-  });
+  return {
+    error: new HttpInternalServerError({
+      cause: error as Error,
+      message: HttpStatusMessage.InternalServerError,
+    }),
+    mustLog: true,
+  };
 };
 
 /*
@@ -91,11 +107,20 @@ export const errorHandler: ErrorRequestHandler<never, ErrorReport> = async (
     HttpContentType.ApplicationProblemJson,
   );
 
-  const error = normalizeError({
+  const { error, mustLog } = normalizeError({
     error: rawError,
     method: request.method,
     url: request.url,
   });
+
+  if (mustLog || !environmentConfig.isProductionMode) {
+    logger.error(error.message, {
+      requestId: request.id,
+      errorMetadata: { ...error.metadata },
+      error,
+    });
+  }
+
   const errorReport = new HttpErrorReport({
     request,
     allowedHttpMethodsOnRessource,

@@ -3,14 +3,18 @@ import { createClient } from 'redis';
 
 import { cacheConfig } from '#src/configs/cacheConfig.js';
 
+import { logger } from './loggerDependency.js';
+
 const cache: RedisClientType = createClient({
   url: `redis://default:${cacheConfig.password}@${cacheConfig.host}:${cacheConfig.port}`,
 });
 
 cache.on('error', (error) => {
-  console.error(error);
+  logger.error('[Redis] Something went wrong!', { error });
 });
 
 await cache.connect();
+
+logger.debug('Redis client connected!');
 
 export { cache };
