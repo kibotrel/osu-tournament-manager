@@ -4,6 +4,7 @@ import type {
 } from '@packages/shared';
 import { HttpHeader, HttpStatusCode } from '@packages/shared';
 import type { RequestHandler } from 'express';
+import { matchedData } from 'express-validator';
 
 import { CacheTopic } from '#src/constants/cacheConstants.js';
 import { popCacheArrayByKey } from '#src/queries/cache/deleteCacheQueries.js';
@@ -16,7 +17,8 @@ export const postLoginController: RequestHandler<
   never
 > = async (request, response, next) => {
   const { session } = request;
-  const { authenticationCode } = request.body;
+  const { authenticationCode } =
+    matchedData<PostPublicLoginRequestBody>(request);
 
   try {
     const { bearer, isNew, user } = await loginWithOsu(
