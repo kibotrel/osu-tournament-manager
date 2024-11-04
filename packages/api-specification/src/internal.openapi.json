@@ -129,6 +129,52 @@
               }
             },
             "description": "New session created and user added to database."
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "instance": {
+                      "example": "/api/v1/public/login",
+                      "type": "string"
+                    },
+                    "status": {
+                      "example": 400,
+                      "type": "integer"
+                    },
+                    "title": {
+                      "example": "Bad Request",
+                      "type": "string"
+                    },
+                    "detail": {
+                      "example": "Input validation failed",
+                      "type": "string"
+                    },
+                    "errors": {
+                      "items": {
+                        "properties": {
+                          "path": {
+                            "example": "/body/authenticationCode",
+                            "type": "string"
+                          },
+                          "message": {
+                            "example": "Authentication code cannot be empty",
+                            "type": "string"
+                          },
+                          "errorCode": {
+                            "example": "validator.postLoginBodyValidator.authenticationCode.empty",
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Missing or invalid authentication code."
           }
         },
         "security": [],
