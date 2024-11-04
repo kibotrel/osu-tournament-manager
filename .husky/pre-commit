@@ -1,4 +1,4 @@
-git diff --staged --name-only | grep apps/server/specs > /dev/null 2>&1 && (
+git diff --staged --name-only | grep packages/api-specification/src/specs > /dev/null 2>&1 && (
   echo "Building OpenAPI specs..."
   pnpm -C packages/api-specification specs:bundle:public > /dev/null 2>&1;
   pnpm -C packages/api-specification specs:bundle:internal > /dev/null 2>&1;
