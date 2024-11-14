@@ -7,7 +7,9 @@ import { logger } from '#src/dependencies/loggerDependency.js';
 const { isProductionMode } = environmentConfig;
 
 export const logHttpRequest: RequestHandler = (request, _, next) => {
-  if (isProductionMode && silentEndpoints.has(request.url)) {
+  const isHealthCheck = request.url === '/api/v1/public/health';
+
+  if (isHealthCheck || (isProductionMode && silentEndpoints.has(request.url))) {
     return next();
   }
 
