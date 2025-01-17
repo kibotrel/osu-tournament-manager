@@ -14,6 +14,4 @@ cache.on('error', (error) => {
 
 await cache.connect();
 
-logger.debug('Redis client connected!');
-
 export { cache };
