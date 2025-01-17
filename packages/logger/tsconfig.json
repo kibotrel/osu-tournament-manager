@@ -7,7 +7,8 @@
     "paths": {
       "#src/*": ["./src/*"]
     },
-    "removeComments": false
+    "removeComments": false,
+    "types": ["pg"]
   },
   "extends": "../tsconfig.json",
   "include": ["./src/**/*.ts"]

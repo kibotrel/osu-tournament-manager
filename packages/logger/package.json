@@ -2,10 +2,12 @@
   "dependencies": {
     "@packages/shared": "workspace:*",
     "chalk": "5.3.0",
-    "winston": "3.15.0"
+    "winston": "3.15.0",
+    "winston-transport": "4.9.0"
   },
   "devDependencies": {
-    "@packages/prettier-config": "workspace:*"
+    "@packages/prettier-config": "workspace:*",
+    "@types/pg": "8.11.10"
   },
   "imports": {
     "#src/*": "./src/*"
