@@ -9,8 +9,8 @@ const { combine } = format;
 
 export const consoleTransport = () => {
   return new transports.Console({
-    handleRejections: true,
-    handleExceptions: true,
     format: combine(...baseConsoleFormat, consoleSerializeAndPrint),
+    handleExceptions: true,
+    handleRejections: true,
   });
 };
