@@ -13,5 +13,6 @@ CREATE TABLE IF NOT EXISTS "analytics"."serverLogs" (
 	"message" text NOT NULL,
 	"metadata" json,
 	"requestId" uuid NOT NULL,
+	"timestamp" timestamp NOT NULL,
 	"updatedAt" timestamp DEFAULT now() NOT NULL
 );

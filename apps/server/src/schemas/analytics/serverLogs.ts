@@ -15,6 +15,7 @@ export const serverLogsTable = analyticsSchema.table('serverLogs', {
   message: text('message').notNull(),
   metadata: json('metadata'),
   requestId: uuid('requestId').notNull(),
+  timestamp: timestamp('timestamp').notNull(),
   updatedAt: timestamp('updatedAt')
     .notNull()
     .defaultNow()

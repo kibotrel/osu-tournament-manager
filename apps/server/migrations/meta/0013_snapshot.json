@@ -1,5 +1,5 @@
 {
-  "id": "d4d334ff-4ff4-44c2-aa5a-621e30eeb742",
+  "id": "bae067bb-0a3c-47d8-9faf-2ca7fa0c3a3d",
   "prevId": "fbfbf9ac-c67e-48f6-9481-58ebdc744cc6",
   "version": "7",
   "dialect": "postgresql",
@@ -43,6 +43,12 @@
         "requestId": {
           "name": "requestId",
           "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "timestamp": {
+          "name": "timestamp",
+          "type": "timestamp",
           "primaryKey": false,
           "notNull": true
         },
