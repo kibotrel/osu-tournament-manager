@@ -3,7 +3,7 @@ import { readdir, rename, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-import journal from '../../migrations/meta/_journal.json' assert { type: 'json' };
+import journal from '../../migrations/meta/_journal.json' with { type: 'json' };
 
 const fileName = process.argv.at(2);
 const migrationsDirectory = fileURLToPath(
