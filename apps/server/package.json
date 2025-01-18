@@ -37,7 +37,7 @@
     "db:migration:create": "pnpm build && drizzle-kit generate && tsx --env-file=.env ./src/scripts/renameMigrationFileScript.ts",
     "db:migration:drop": "drizzle-kit drop",
     "db:studio": "drizzle-kit studio local",
-    "dev": "nodemon --signal SIGTERM --config nodemon.json src/server.ts",
+    "dev": "nodemon --signal SIGTERM --config nodemon.json src/entrypoint.ts",
     "format": "prettier --write src/**/*.ts",
     "healthcheck": "tsx --env-file=.env ./src/scripts/healthCheckScript.ts",
     "lint": "eslint src/**/*.ts --config .eslintrc"
