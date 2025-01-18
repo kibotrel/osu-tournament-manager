@@ -28,8 +28,11 @@ export class DatabaseTransport extends Transport {
 
   override async log(data: Logform.TransformableInfo, next: () => void) {
     const { level, message, timestamp } = data;
-    const { error, requestId, ...metadata }: LogMetadata =
-      data[Symbol.for('splat')]?.at(0) || {};
+    const splat = Array.isArray(data[Symbol.for('splat')])
+      ? data[Symbol.for('splat')]
+      : [];
+    const metadata: LogMetadata = splat.at(0) || {};
+    const { error, requestId, ...restMetadata } = metadata;
     const stackTrace: string[] = [];
 
     if (error) {
@@ -56,7 +59,7 @@ export class DatabaseTransport extends Transport {
         [
           level,
           message,
-          JSON.stringify(metadata),
+          JSON.stringify(restMetadata),
           requestId ?? randomUUID(),
           timestamp,
         ],
