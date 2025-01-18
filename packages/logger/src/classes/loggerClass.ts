@@ -6,6 +6,10 @@ import { consoleTransport } from '#src/transports/consoleTransport.js';
 import { databaseTransport } from '#src/transports/databaseTransport.js';
 import type { LogLevel, LogMetadata } from '#src/types/loggerTypes.js';
 
+const enum Events {
+  FINISH = 'finish',
+}
+
 export interface LoggerOptions {
   databaseClient?: Client;
   isProductionMode: boolean;
@@ -40,6 +44,26 @@ export class Logger {
   public debug(message: string, metadata?: LogMetadata) {
     return this.winston.debug(message, metadata);
   }
+
+  /**
+   * Gracefully ends the logger, waits for all transports to finish writing logs.
+   */
+  public async end() {
+    await new Promise((resolve) => {
+      this.winston.on(Events.FINISH, resolve);
+      this.winston.end();
+    });
+
+    await Promise.all(
+      this.winston.transports.map((transport) => {
+        return new Promise((resolve) => {
+          transport.on(Events.FINISH, resolve);
+          transport.end();
+        });
+      }),
+    );
+  }
+
   public error(message: string, metadata?: LogMetadata) {
     return this.winston.error(message, metadata);
   }
