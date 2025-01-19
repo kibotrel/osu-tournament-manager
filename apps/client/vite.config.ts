@@ -7,8 +7,8 @@ import { defineConfig } from 'vite';
 export default defineConfig({
   plugins: [vue()],
   preview: {
-    port: 8080,
     host: '192.168.1.100',
+    port: 8080,
     strictPort: true,
   },
   resolve: {
@@ -18,8 +18,13 @@ export default defineConfig({
   },
 
   server: {
+    hmr: {
+      clientPort: 443,
+      host: 'dev.osu-tournament-manager.app',
+      protocol: 'wss',
+    },
+    host: '0.0.0.0',
     port: 8080,
-    host: 'localhost',
     strictPort: true,
     watch: {
       usePolling: true,

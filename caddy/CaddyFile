@@ -1,8 +1,20 @@
 dev.osu-tournament-manager.app {
+	@viteWebSockets {
+		path /@vite/*
+		header Connection *Upgrade*
+		header Upgrade *websocket*
+	}
+
 	encode gzip
+
   handle /api/* {
     reverse_proxy server:{$SERVER_PORT_TARGET}
   }
+
+	handle @viteWebSockets {
+		reverse_proxy client:{$CLIENT_PORT_TARGET}
+	}
+
 	header -Server
   reverse_proxy client:{$CLIENT_PORT_TARGET}
 	tls internal
