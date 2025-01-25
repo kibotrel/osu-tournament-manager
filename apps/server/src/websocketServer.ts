@@ -8,7 +8,7 @@ import { HttpEvent } from '#src/constants/httpConstants.js';
 import {
   WebSocketEvent,
   WebSocketState,
-} from '#src/constants/websocketConstants.js';
+} from '#src/constants/webSocketConstants.js';
 import { logger } from '#src/dependencies/loggerDependency.js';
 
 const logSocketPreUpgradeError = (error: Error) => {

@@ -1,6 +1,6 @@
 import { Signal } from '#src/constants/signalConstants.js';
 import { createHttpServer, gracefulShutdown } from '#src/httpServer.js';
-import { createWebsocketServer } from '#src/websocketServer.js';
+import { createWebsocketServer } from '#src/webSocketServer.js';
 
 const httpServer = createHttpServer();
 
