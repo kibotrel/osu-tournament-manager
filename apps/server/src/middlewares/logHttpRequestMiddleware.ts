@@ -1,7 +1,7 @@
 import type { RequestHandler } from 'express';
 
 import { environmentConfig } from '#src/configs/environmentConfig.js';
-import { silentEndpoints } from '#src/constants/serverConstants.js';
+import { silentHttpEndpoints } from '#src/constants/httpConstants.js';
 import { logger } from '#src/dependencies/loggerDependency.js';
 
 const { isProductionMode } = environmentConfig;
@@ -9,7 +9,10 @@ const { isProductionMode } = environmentConfig;
 export const logHttpRequest: RequestHandler = (request, _, next) => {
   const isHealthCheck = request.url === '/api/v1/public/health';
 
-  if (isHealthCheck || (isProductionMode && silentEndpoints.has(request.url))) {
+  if (
+    isHealthCheck ||
+    (isProductionMode && silentHttpEndpoints.has(request.url))
+  ) {
     return next();
   }
 

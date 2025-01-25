@@ -16,7 +16,7 @@ import { error } from 'express-openapi-validator';
 
 import { environmentConfig } from '#src/configs/environmentConfig.js';
 import { CacheTopic } from '#src/constants/cacheConstants.js';
-import { allowedHttpMethodsOnRessource } from '#src/constants/serverConstants.js';
+import { allowedHttpMethodsOnRessource } from '#src/constants/httpConstants.js';
 import { logger } from '#src/dependencies/loggerDependency.js';
 import { popCacheArrayByKey } from '#src/queries/cache/deleteCacheQueries.js';
 

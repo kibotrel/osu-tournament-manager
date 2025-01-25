@@ -19,8 +19,13 @@ export const allowedHttpMethodsOnRessource: Record<
  * This list contains all the endpoints that should not be logged.
  * Reason can be that they are too noisy or contain sensitive information.
  */
-export const silentEndpoints = new Set([
+export const silentHttpEndpoints = new Set([
   '/api/v1/public/health',
   '/api/v1/public/login',
   '/api/v1/public/logout',
 ]);
+
+export enum HttpEvent {
+  Connexion = 'connection',
+  Upgrade = 'upgrade',
+}
