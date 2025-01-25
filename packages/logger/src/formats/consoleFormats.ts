@@ -74,7 +74,7 @@ const formatAdditionalData = (options: FormatAdditionalDataParameters) => {
 export const consoleSerializeAndPrint = printf((data) => {
   const { timestamp, level, message } = data;
   const splat = Array.isArray(data[Symbol.for('splat')])
-    ? data[Symbol.for('splat')]
+    ? (data[Symbol.for('splat')] as LogMetadata[])
     : [];
   const metadata = splat.at(0) || {};
   const { error, ...rest }: LogMetadata = metadata;
@@ -82,7 +82,12 @@ export const consoleSerializeAndPrint = printf((data) => {
   const logParts: string[] = [`${formattedTimestamp} ${level}: ${message}`];
 
   if (error) {
-    formatError({ error, logParts, logMessage: message, nestingLevel: 1 });
+    formatError({
+      error,
+      logParts,
+      logMessage: message as string,
+      nestingLevel: 1,
+    });
   }
 
   if (Object.keys(rest).length > 0) {

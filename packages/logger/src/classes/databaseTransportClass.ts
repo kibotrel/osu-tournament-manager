@@ -29,7 +29,7 @@ export class DatabaseTransport extends Transport {
   override async log(data: Logform.TransformableInfo, next: () => void) {
     const { level, message, timestamp } = data;
     const splat = Array.isArray(data[Symbol.for('splat')])
-      ? data[Symbol.for('splat')]
+      ? (data[Symbol.for('splat')] as LogMetadata[])
       : [];
     const metadata: LogMetadata = splat.at(0) || {};
     const { error, requestId, ...restMetadata } = metadata;
@@ -38,7 +38,7 @@ export class DatabaseTransport extends Transport {
     if (error) {
       this.formatError({
         error,
-        logMessage: message,
+        logMessage: message as string,
         stackTrace,
         nestingLevel: 1,
       });
