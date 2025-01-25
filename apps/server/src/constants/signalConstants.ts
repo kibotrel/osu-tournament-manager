@@ -1,4 +1,4 @@
-export enum Signals {
-  SIGINT = 'SIGINT',
-  SIGTERM = 'SIGTERM',
+export enum Signal {
+  Interrupt = 'SIGINT',
+  Terminate = 'SIGTERM',
 }

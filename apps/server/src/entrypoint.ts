@@ -1,11 +1,14 @@
-import { Signals } from '#src/constants/signalConstants.js';
-import { createHttpServer, gracefulShutdown } from '#src/server.js';
+import { Signal } from '#src/constants/signalConstants.js';
+import { createHttpServer, gracefulShutdown } from '#src/httpServer.js';
+import { createWebsocketServer } from '#src/websocketServer.js';
 
-const server = createHttpServer();
+const httpServer = createHttpServer();
 
-process.on(Signals.SIGINT, () => {
-  return gracefulShutdown(server);
+createWebsocketServer(httpServer);
+
+process.on(Signal.Interrupt, () => {
+  return gracefulShutdown(httpServer);
 });
-process.on(Signals.SIGTERM, () => {
-  return gracefulShutdown(server);
+process.on(Signal.Terminate, () => {
+  return gracefulShutdown(httpServer);
 });

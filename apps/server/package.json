@@ -15,7 +15,8 @@
     "pg": "8.13.0",
     "redis": "4.7.0",
     "swagger-themes": "1.4.3",
-    "swagger-ui-express": "5.0.1"
+    "swagger-ui-express": "5.0.1",
+    "ws": "8.18.0"
   },
   "devDependencies": {
     "@packages/prettier-config": "workspace:*",
@@ -24,7 +25,8 @@
     "@types/pg": "8.11.10",
     "@types/swagger-ui-express": "4.1.6",
     "drizzle-kit": "0.24.2",
-    "tsx": "4.19.1"
+    "tsx": "4.19.1",
+    "@types/ws": "8.5.13"
   },
   "imports": {
     "#src/*": "./src/*"
