@@ -3,12 +3,11 @@ import { createHttpServer, gracefulShutdown } from '#src/httpServer.js';
 import { createWebsocketServer } from '#src/webSocketServer.js';
 
 const httpServer = createHttpServer();
-
-createWebsocketServer(httpServer);
+const webSocketServer = createWebsocketServer(httpServer);
 
 process.on(Signal.Interrupt, () => {
-  return gracefulShutdown(httpServer);
+  return gracefulShutdown(httpServer, webSocketServer);
 });
 process.on(Signal.Terminate, () => {
-  return gracefulShutdown(httpServer);
+  return gracefulShutdown(httpServer, webSocketServer);
 });
