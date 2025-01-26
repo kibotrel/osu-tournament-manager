@@ -3,8 +3,8 @@
  */
 export enum Time {
   Second = 1000,
-  Minute = Time.Second * 60,
-  Hour = Time.Minute * 60,
-  Day = Time.Hour * 24,
-  Week = Time.Day * 7,
+  Minute = 60 * Time.Second,
+  Hour = 60 * Time.Minute,
+  Day = 24 * Time.Hour,
+  Week = 7 * Time.Day,
 }
