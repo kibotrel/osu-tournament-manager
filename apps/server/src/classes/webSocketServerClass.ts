@@ -6,6 +6,8 @@ import {
   HttpInternalServerError,
   HttpStatusCode,
   HttpStatusMessage,
+  WebSocketClosureCode,
+  WebSocketClosureReason,
 } from '@packages/shared';
 import type { Request, Response } from 'express';
 import type { RawData, WebSocket } from 'ws';
@@ -66,11 +68,14 @@ export class WebSocketServer {
   public async close() {
     await this.logger.debug('closing websocket server...');
 
-    for (const client of this.webSocketServer.clients) {
-      client.close();
-    }
-
-    await this.webSocketServer.close();
+    await this.webSocketServer.close(() => {
+      for (const client of this.webSocketServer.clients) {
+        client.close(
+          WebSocketClosureCode.GoingAway,
+          WebSocketClosureReason.ServerShutdown,
+        );
+      }
+    });
   }
 
   /**
@@ -210,7 +215,10 @@ export class WebSocketServer {
         const extendedWebSocket = client as ExtendedWebSocket;
 
         if (!extendedWebSocket.isAlive) {
-          return client.terminate();
+          return client.close(
+            WebSocketClosureCode.GoingAway,
+            WebSocketClosureReason.NotResponding,
+          );
         }
 
         extendedWebSocket.isAlive = false;
