@@ -119,24 +119,17 @@ export class WebSocketServer {
     });
   }
 
-  private handleWebSocketServerCloseEvent() {
-    this.webSocketServer.on(WebSocketEvent.Close, () => {
-      clearInterval(this.pingIntervalId);
-    });
-  }
-
-  private async handleWebSocketMessageEvent(
+  private handleWebSocketMessageEvent(
     this: { webSocket: ExtendedWebSocket; webSocketServer: WebSocketServer },
     message: RawData,
     isBinary: boolean,
   ) {
     const {
       webSocket,
-      webSocketServer: { logger, pongPayload, webSocketServer },
+      webSocketServer: { pongPayload, webSocketServer },
     } = this;
 
     if (isBinary && (message as Buffer)[0] === pongPayload) {
-      await logger.debug(`Received pong from client ${this.webSocket.id}.`);
       webSocket.isAlive = true;
 
       return;
@@ -149,6 +142,12 @@ export class WebSocketServer {
         client.send(message, { binary: isBinary });
       }
     }
+  }
+
+  private handleWebSocketServerCloseEvent() {
+    this.webSocketServer.on(WebSocketEvent.Close, () => {
+      clearInterval(this.pingIntervalId);
+    });
   }
 
   private handleWebSocketServerConnectionEvent() {
