@@ -19,6 +19,7 @@ coverage
 .zip
 .csv
 .tmp
+.VSCodeCounter
 
 # Excluded files
 # -----------------------------------
