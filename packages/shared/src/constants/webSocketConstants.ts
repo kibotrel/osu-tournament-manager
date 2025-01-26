@@ -42,6 +42,7 @@ export enum WebSocketClosureCode {
 }
 
 export enum WebSocketClosureReason {
+  FinishedCommunicating = 'Finished communicating',
   NotResponding = 'Not responding',
   Reconnecting = 'Reconnecting',
   ServerShutdown = 'Server shutdown',
