@@ -6,6 +6,7 @@ export * from '#src/constants/databaseConstants.js';
 export * from '#src/constants/httpConstants.js';
 export * from '#src/constants/timeConstants.js';
 export * from '#src/constants/webSocketConstants.js';
+export * from '#src/methods/stringMethods.js';
 export * from '#src/types/api/v1/public/publicLoginTypes.js';
 export * from '#src/types/api/v1/public/publicLogoutTypes.js';
 export * from '#src/types/utilityTypes.js';
