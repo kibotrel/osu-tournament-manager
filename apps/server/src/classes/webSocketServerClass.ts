@@ -8,16 +8,14 @@ import {
   HttpStatusMessage,
   WebSocketClosureCode,
   WebSocketClosureReason,
+  WebSocketEvent,
+  WebSocketState,
 } from '@packages/shared';
 import type { Request, Response } from 'express';
 import type { RawData, WebSocket } from 'ws';
 import { WebSocketServer as WSS } from 'ws';
 
 import { HttpEvent } from '#src/constants/httpConstants.js';
-import {
-  WebSocketEvent,
-  WebSocketState,
-} from '#src/constants/webSocketConstants.js';
 import { session as sessionMiddleware } from '#src/middlewares/sessionMiddleware.js';
 
 /**

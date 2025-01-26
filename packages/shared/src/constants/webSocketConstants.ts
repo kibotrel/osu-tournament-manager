@@ -46,3 +46,18 @@ export enum WebSocketClosureReason {
   Reconnecting = 'Reconnecting',
   ServerShutdown = 'Server shutdown',
 }
+
+export enum WebSocketEvent {
+  Close = 'close',
+  Connection = 'connection',
+  Error = 'error',
+  Message = 'message',
+  Open = 'open',
+}
+
+export enum WebSocketState {
+  Closed = 3,
+  Closing = 2,
+  Connecting = 0,
+  Open = 1,
+}
