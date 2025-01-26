@@ -1,8 +1,7 @@
 import { LogLevel, Logger } from '@packages/logger';
 
 import { environmentConfig } from '#src/configs/environmentConfig.js';
-
-import { postgresClient } from './databaseDependency.js';
+import { postgresClient } from '#src/dependencies/databaseDependency.js';
 
 export const logger = new Logger({
   databaseClient: postgresClient,

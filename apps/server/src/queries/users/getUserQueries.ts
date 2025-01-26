@@ -1,9 +1,8 @@
 import { eq } from 'drizzle-orm';
 
 import { database } from '#src/dependencies/databaseDependency.js';
-
-import type { SelectUser } from '../../schemas/users/usersTable.js';
-import { usersTable } from '../../schemas/users/usersTable.js';
+import type { SelectUser } from '#src/schemas/users/usersTable.js';
+import { usersTable } from '#src/schemas/users/usersTable.js';
 
 export const getUserByGameUserId = async (
   gameUserId: number,

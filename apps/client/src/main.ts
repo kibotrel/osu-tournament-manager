@@ -12,10 +12,10 @@ import '@fontsource/geist-sans/700.css';
 import '@fontsource/geist-sans/800.css';
 import '@fontsource/geist-sans/900.css';
 
-import App from './app.vue';
-import './assets/styles/index.css';
-import { piniaPluginRouter, vuePluginRouter } from './plugins/index.js';
-import router from './router/index.js';
+import App from '#src/app.vue';
+import '#src/assets/styles/index.css';
+import { piniaPluginRouter, vuePluginRouter } from '#src/plugins/index.js';
+import router from '#src/router/index.js';
 
 const app = createApp(App);
 const pinia = createPinia();

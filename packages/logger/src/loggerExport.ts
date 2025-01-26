@@ -1,2 +1,2 @@
-export * from './classes/loggerClass.js';
-export * from './types/loggerTypes.js';
+export * from '#src/classes/loggerClass.js';
+export * from '#src/types/loggerTypes.js';

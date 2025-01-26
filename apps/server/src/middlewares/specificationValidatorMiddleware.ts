@@ -3,7 +3,7 @@ import { fileURLToPath } from 'node:url';
 
 import OpenApiValidator from 'express-openapi-validator';
 
-import { environmentConfig } from '../configs/environmentConfig.js';
+import { environmentConfig } from '#src/configs/environmentConfig.js';
 
 const directoryName = path.dirname(fileURLToPath(import.meta.url));
 const apiSpecification = environmentConfig.isDevelopmentMode
