@@ -108,11 +108,11 @@ importers:
         specifier: 10.4.20
         version: 10.4.20(postcss@8.4.47)
       pinia:
-        specifier: 2.2.2
-        version: 2.2.2(typescript@5.5.4)(vue@3.5.8(typescript@5.5.4))
+        specifier: 2.3.1
+        version: 2.3.1(typescript@5.5.4)(vue@3.5.8(typescript@5.5.4))
       pinia-plugin-persistedstate:
         specifier: 4.0.2
-        version: 4.0.2(pinia@2.2.2(typescript@5.5.4)(vue@3.5.8(typescript@5.5.4)))(rollup@4.31.0)
+        version: 4.0.2(pinia@2.3.1(typescript@5.5.4)(vue@3.5.8(typescript@5.5.4)))(rollup@4.31.0)
       postcss:
         specifier: 8.4.47
         version: 8.4.47
@@ -3192,9 +3192,11 @@ packages:
 
   lodash.get@4.4.2:
     resolution: {integrity: sha512-z+Uw/vLuy6gQe8cfaFWD7p0wVv8fJl3mbzXh33RS+0oW2wvUqiRXiQ69gLWSLpgB5/6sU+r6BlQR0MBILadqTQ==}
+    deprecated: This package is deprecated. Use the optional chaining (?.) operator instead.
 
   lodash.isequal@4.5.0:
     resolution: {integrity: sha512-pDo3lu8Jhfjqls6GkMgpahsF9kCyayhgykjyLMNFTKWrpVdAQtYyB4muAMWozBB4ig/dtWAmsMxLEI8wuz+DYQ==}
+    deprecated: This package is deprecated. Use require('node:util').isDeepStrictEqual instead.
 
   lodash.isplainobject@4.0.6:
     resolution: {integrity: sha512-oSXzaWypCMHkPC3NvBEaPHf0KsA5mvPrOPgQWDsbg8n7orZ290M0BmC/jgRZ4vcJ6DTAhjrsSYgdsW/F+MFOBA==}
@@ -3747,15 +3749,12 @@ packages:
       pinia:
         optional: true
 
-  pinia@2.2.2:
-    resolution: {integrity: sha512-ja2XqFWZC36mupU4z1ZzxeTApV7DOw44cV4dhQ9sGwun+N89v/XP7+j7q6TanS1u1tdbK4r+1BUx7heMaIdagA==}
+  pinia@2.3.1:
+    resolution: {integrity: sha512-khUlZSwt9xXCaTbbxFYBKDc/bWAGWJjOgvxETwkTN7KRm66EeT1ZdZj6i2ceh9sP2Pzqsbc704r2yngBrxBVug==}
     peerDependencies:
-      '@vue/composition-api': ^1.4.0
       typescript: '>=4.4.4'
-      vue: ^2.6.14 || ^3.3.0
+      vue: ^2.7.0 || ^3.5.11
     peerDependenciesMeta:
-      '@vue/composition-api':
-        optional: true
       typescript:
         optional: true
 
@@ -8475,26 +8474,28 @@ snapshots:
 
   pify@2.3.0: {}
 
-  pinia-plugin-persistedstate@4.0.2(pinia@2.2.2(typescript@5.5.4)(vue@3.5.8(typescript@5.5.4)))(rollup@4.31.0):
+  pinia-plugin-persistedstate@4.0.2(pinia@2.3.1(typescript@5.5.4)(vue@3.5.8(typescript@5.5.4)))(rollup@4.31.0):
     dependencies:
       '@nuxt/kit': 3.15.2(rollup@4.31.0)
       deep-pick-omit: 1.2.1
       defu: 6.1.4
       destr: 2.0.3
     optionalDependencies:
-      pinia: 2.2.2(typescript@5.5.4)(vue@3.5.8(typescript@5.5.4))
+      pinia: 2.3.1(typescript@5.5.4)(vue@3.5.8(typescript@5.5.4))
     transitivePeerDependencies:
       - magicast
       - rollup
       - supports-color
 
-  pinia@2.2.2(typescript@5.5.4)(vue@3.5.8(typescript@5.5.4)):
+  pinia@2.3.1(typescript@5.5.4)(vue@3.5.8(typescript@5.5.4)):
     dependencies:
       '@vue/devtools-api': 6.6.4
       vue: 3.5.8(typescript@5.5.4)
       vue-demi: 0.14.10(vue@3.5.8(typescript@5.5.4))
     optionalDependencies:
       typescript: 5.5.4
+    transitivePeerDependencies:
+      - '@vue/composition-api'
 
   pirates@4.0.6: {}
 
