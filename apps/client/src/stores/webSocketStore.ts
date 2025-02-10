@@ -1,13 +1,18 @@
 /* eslint-disable unicorn/consistent-function-scoping */
 
+import type {
+  WebSocketChannel,
+  WebSocketChannelMatchesEvent,
+  WebSocketMessage,
+} from '@packages/shared';
 import {
   WEBSOCKET_PONG_PAYLOAD,
   WEBSOCKET_PONG_TIMEOUT,
   WebSocketClosureCode,
   WebSocketClosureReason,
   WebSocketEvent,
+  formatList,
   isBinaryObject,
-  normalizePath,
 } from '@packages/shared';
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
@@ -15,13 +20,40 @@ import { ref } from 'vue';
 import { baseWebSocketUrl } from '#src/api/apiConstants.js';
 import type { ExtendedWebSocket } from '#src/types/webSockets.js';
 
-export const useWebSocketStore = defineStore(
-  'webSocket',
-  () => {
-    const messages = ref<unknown[]>([]);
+type WebSocketStoreOptions = { threadId?: string } & {
+  channel: WebSocketChannel.Matches;
+  events: WebSocketChannelMatchesEvent[];
+};
+
+/**
+ * Reason behind this way of defining the store is that user could have
+ * multiple tabs opened on different pages that require a WebSocket connection
+ * to operate. This way, we can have a unique store for each of them
+ */
+export const defineWebsocketStore = <MessageType>(
+  options: WebSocketStoreOptions,
+) => {
+  const { channel, threadId, events } = options;
+  /**
+   * Since user could be in multiple threads at the same time, we need to create a unique store name
+   * for each thread to avoid conflicts.
+   */
+  const urnParts = ['websockets', channel];
+
+  if (threadId) {
+    urnParts.push(threadId);
+  }
+
+  const storeName = formatList(urnParts, {
+    removeEmpty: true,
+    separator: ':',
+  });
+
+  return defineStore(storeName, () => {
+    const history = ref<Array<WebSocketMessage<MessageType>>>([]);
     const socket = ref<ExtendedWebSocket | undefined>(undefined);
 
-    const connect = (options: { endpoint: string }) => {
+    const connect = () => {
       if (socket.value) {
         socket.value.close(
           WebSocketClosureCode.Normal,
@@ -29,16 +61,18 @@ export const useWebSocketStore = defineStore(
         );
 
         clearTimeout(socket.value.pongTimeout);
-        messages.value.splice(0, messages.value.length);
+        history.value.splice(0, history.value.length);
       }
 
-      const webSocketUrl = new URL(
-        normalizePath(`/websockets/${options.endpoint}`),
-        baseWebSocketUrl,
-      );
+      const endpoint = formatList(urnParts, {
+        removeEmpty: true,
+        separator: '/',
+      });
+      const webSocketUrl = new URL(endpoint, baseWebSocketUrl);
+
+      webSocketUrl.searchParams.append('events', events.join(','));
 
       socket.value = new WebSocket(webSocketUrl);
-
       socket.value.addEventListener(WebSocketEvent.Close, onCloseEvent);
       socket.value.addEventListener(WebSocketEvent.Error, onErrorEvent);
       socket.value.addEventListener(WebSocketEvent.Message, onMessageEvent);
@@ -56,7 +90,7 @@ export const useWebSocketStore = defineStore(
       );
 
       clearTimeout(socket.value.pongTimeout);
-      messages.value.splice(0, messages.value.length);
+      history.value.splice(0, history.value.length);
       socket.value = undefined;
     };
 
@@ -76,19 +110,24 @@ export const useWebSocketStore = defineStore(
         return sendPongMessageToServer();
       }
 
-      messages.value.push(JSON.parse(message.data));
+      history.value.push(JSON.parse(message.data));
     };
 
     const onOpenEvent = () => {
       // TODO: Fetch data from server to backfill the messages array.
     };
 
-    const sendMessage = (message: unknown) => {
+    const sendMessage = (message: MessageType) => {
       if (!socket.value) {
         return;
       }
 
-      socket.value.send(JSON.stringify(message));
+      const payload: WebSocketMessage<MessageType> = {
+        message,
+        timestamp: Date.now(),
+      };
+
+      socket.value.send(JSON.stringify(payload));
     };
 
     const sendPongMessageToServer = () => {
@@ -108,7 +147,6 @@ export const useWebSocketStore = defineStore(
       socket.value.send(new Uint8Array([WEBSOCKET_PONG_PAYLOAD]));
     };
 
-    return { connect, disconnect, messages, sendMessage, socket };
-  },
-  { persist: false },
-);
+    return { connect, disconnect, history, sendMessage, socket };
+  });
+};
