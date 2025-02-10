@@ -11,4 +11,5 @@ export * from '#src/methods/numberMethods.js';
 export * from '#src/types/api/v1/public/publicLoginTypes.js';
 export * from '#src/types/api/v1/public/publicLogoutTypes.js';
 export * from '#src/types/utilityTypes.js';
+export * from '#src/types/webSocketTypes.js';
 export * from '#src/validators/objectValidators.js';
