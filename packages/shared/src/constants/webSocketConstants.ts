@@ -56,6 +56,14 @@ export enum WebSocketEvent {
   Open = 'open',
 }
 
+export enum WebSocketChannel {
+  Matches = 'matches',
+}
+
+export enum WebSocketChannelMatchesEvent {
+  ChatMessages = 'chat-messages',
+}
+
 export enum WebSocketState {
   Closed = 3,
   Closing = 2,
