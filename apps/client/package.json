@@ -2,6 +2,7 @@
   "dependencies": {
     "@fontsource/geist-sans": "5.1.0",
     "@packages/shared": "workspace:*",
+    "@vueuse/core": "12.5.0",
     "autoprefixer": "10.4.20",
     "pinia": "2.2.2",
     "pinia-plugin-persistedstate": "4.0.2",
