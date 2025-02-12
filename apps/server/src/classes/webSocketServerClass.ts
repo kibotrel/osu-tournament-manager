@@ -1,7 +1,9 @@
+import type { UUID } from 'node:crypto';
 import { randomUUID } from 'node:crypto';
 import type { Server } from 'node:http';
 
 import type { Logger } from '@packages/logger';
+import type { WebSocketMessage } from '@packages/shared';
 import {
   HttpInternalServerError,
   HttpStatusCode,
@@ -9,12 +11,12 @@ import {
   WebSocketClosureCode,
   WebSocketClosureReason,
   WebSocketEvent,
-  WebSocketState,
 } from '@packages/shared';
 import type { Request, Response } from 'express';
 import type { RawData, WebSocket } from 'ws';
 import { WebSocketServer as WSS } from 'ws';
 
+import { environmentConfig } from '#src/configs/environmentConfig.js';
 import { HttpEvent } from '#src/constants/httpConstants.js';
 import { session as sessionMiddleware } from '#src/middlewares/sessionMiddleware.js';
 
@@ -24,8 +26,9 @@ import { session as sessionMiddleware } from '#src/middlewares/sessionMiddleware
  * for more information.
  */
 export interface ExtendedWebSocket extends WebSocket {
-  id: string;
+  id: UUID;
   isAlive: boolean;
+  subscriptions: Set<string>;
 }
 
 export interface WebSocketServerOptions {
@@ -35,6 +38,12 @@ export interface WebSocketServerOptions {
   logger: Logger;
 }
 
+export interface WebSocketTopicsSubscription {
+  channel: string;
+  threadId: string;
+  events: string[];
+}
+
 /**
  * WebSocket server with request authentication, heartbeat mechanism to detect dead connections, and message broadcasting.
  */
@@ -42,14 +51,21 @@ export class WebSocketServer {
   private readonly logger: Logger;
   private readonly pingIntervalId: NodeJS.Timeout;
   private readonly pongPayload: number;
+  /**
+   * Set members are UUIds of cached WebSocket clients.
+   */
+  private readonly topicsSubscribers: Map<string, Set<UUID>>;
   private readonly webSocketServer: WSS;
+  private readonly webSocketClients: Map<UUID, ExtendedWebSocket>;
 
   constructor(options: WebSocketServerOptions) {
     const { logger, pingIntervalTime, pingPayload, pongPayload } = options;
 
     this.logger = logger;
     this.pongPayload = pongPayload;
-    this.webSocketServer = new WSS({ noServer: true });
+    this.webSocketServer = new WSS({ noServer: true, clientTracking: false });
+    this.webSocketClients = new Map();
+    this.topicsSubscribers = new Map();
 
     this.pingIntervalId = this.schedulePingInterval({
       interval: pingIntervalTime,
@@ -60,6 +76,66 @@ export class WebSocketServer {
     this.handleWebSocketServerConnectionEvent();
   }
 
+  private addTopicsSubscription(
+    webSocket: ExtendedWebSocket,
+    subscription: WebSocketTopicsSubscription,
+  ) {
+    const { channel = '*', threadId = '*', events } = subscription;
+
+    for (const event of events) {
+      const topic = `${channel}:${threadId}:${event}`;
+
+      if (!this.topicsSubscribers.has(topic)) {
+        this.topicsSubscribers.set(topic, new Set());
+      }
+
+      this.topicsSubscribers.get(topic)!.add(webSocket.id);
+      webSocket.subscriptions.add(topic);
+    }
+  }
+
+  public broadcastMessageToSubscribers(message: RawData, isBinary: boolean) {
+    const { topic }: WebSocketMessage = JSON.parse(message.toString());
+    const [channel, threadId, event] = topic.split(':');
+    const isChannelWideMessage = threadId === '*';
+    const threadsToBroadcastTo: string[] = [];
+
+    if (isChannelWideMessage) {
+      const anyThreadInChannel = new RegExp(`^${channel}:.+:${event}$`);
+      const topics = [...this.topicsSubscribers.keys()].filter((topic) => {
+        return anyThreadInChannel.test(topic);
+      });
+
+      threadsToBroadcastTo.push(...topics);
+    } else {
+      threadsToBroadcastTo.push(topic, `${channel}:*:${event}`);
+    }
+
+    const allSubscriptions: UUID[] = [];
+
+    for (const thread of threadsToBroadcastTo) {
+      const subscribers = this.topicsSubscribers.get(thread);
+
+      if (!subscribers) {
+        continue;
+      }
+
+      allSubscriptions.push(...subscribers);
+    }
+
+    const uniqueWebSocketIds = new Set<UUID>(allSubscriptions);
+
+    for (const webSocketId of uniqueWebSocketIds) {
+      const webSocket = this.webSocketClients.get(webSocketId);
+
+      webSocket?.send(message, { binary: isBinary });
+    }
+  }
+
+  private cacheWebSocketClient(webSocket: ExtendedWebSocket) {
+    this.webSocketClients.set(webSocket.id, webSocket);
+  }
+
   /**
    * Gracefully close the WebSocket server and all the connection it holds.
    */
@@ -67,13 +143,25 @@ export class WebSocketServer {
     await this.logger.debug('closing websocket server...');
 
     await this.webSocketServer.close(() => {
-      for (const client of this.webSocketServer.clients) {
+      for (const client of this.webSocketClients.values()) {
         client.close(
           WebSocketClosureCode.GoingAway,
           WebSocketClosureReason.ServerShutdown,
         );
       }
     });
+  }
+
+  /**
+   * Parse URL used to establish the WebSocket connection to extract key information
+   * to help with message broadcasting.
+   */
+  private extractConnectionIntents(url: string) {
+    const { pathname, searchParams } = new URL(url, environmentConfig.baseUrl);
+    const [, channel, threadId] = pathname.split('/').filter(Boolean);
+    const events = searchParams.get('events')?.split(',') ?? [];
+
+    return { channel, threadId, events };
   }
 
   /**
@@ -119,29 +207,27 @@ export class WebSocketServer {
     });
   }
 
+  private handleWebSocketCloseEvent(webSocket: ExtendedWebSocket) {
+    this.webSocketClients.delete(webSocket.id);
+
+    for (const subscription of webSocket.subscriptions.values()) {
+      this.topicsSubscribers.get(subscription)?.delete(webSocket.id);
+    }
+  }
+
   private handleWebSocketMessageEvent(
-    this: { webSocket: ExtendedWebSocket; webSocketServer: WebSocketServer },
+    webSocket: ExtendedWebSocket,
     message: RawData,
     isBinary: boolean,
   ) {
-    const {
-      webSocket,
-      webSocketServer: { pongPayload, webSocketServer },
-    } = this;
-
-    if (isBinary && (message as Buffer)[0] === pongPayload) {
+    if (isBinary && (message as Buffer)[0] === this.pongPayload) {
+      /* eslint-disable-next-line no-param-reassign */
       webSocket.isAlive = true;
 
       return;
     }
 
-    // TODO: Implement a better message broadcasting mechanism taking with topics that clients can subscribe to based on URL path used to establish the websocket connection.
-
-    for (const client of webSocketServer.clients) {
-      if (client.readyState === WebSocketState.Open) {
-        client.send(message, { binary: isBinary });
-      }
-    }
+    this.broadcastMessageToSubscribers(message, isBinary);
   }
 
   private handleWebSocketServerCloseEvent() {
@@ -151,31 +237,45 @@ export class WebSocketServer {
   }
 
   private handleWebSocketServerConnectionEvent() {
-    this.webSocketServer.on(WebSocketEvent.Connection, (webSocket) => {
-      const extendedWebSocket = webSocket as ExtendedWebSocket;
+    this.webSocketServer.on(WebSocketEvent.Connection, (webSocket, request) => {
+      const subscription = this.extractConnectionIntents(request.url!);
+      const extendedWebSocket = this.injectCustomWebSocketProperties(webSocket);
 
-      extendedWebSocket.id = randomUUID();
-      extendedWebSocket.isAlive = true;
+      this.cacheWebSocketClient(extendedWebSocket);
+      this.addTopicsSubscription(extendedWebSocket, subscription);
 
-      extendedWebSocket.on(
-        WebSocketEvent.Error,
-        this.logWebSocketPostUpgradeError.bind({
-          webSocket: extendedWebSocket,
-          logger: this.logger,
-        }),
-      );
-      extendedWebSocket.on(
-        WebSocketEvent.Message,
-        this.handleWebSocketMessageEvent.bind({
-          webSocket: extendedWebSocket,
-          webSocketServer: this,
-        }),
-      );
+      extendedWebSocket.on(WebSocketEvent.Error, (error) => {
+        return this.logWebSocketPostUpgradeError(extendedWebSocket, error);
+      });
+      extendedWebSocket.on(WebSocketEvent.Message, (message, isBinary) => {
+        return this.handleWebSocketMessageEvent(
+          extendedWebSocket,
+          message,
+          isBinary,
+        );
+      });
+      extendedWebSocket.on(WebSocketEvent.Close, () => {
+        this.handleWebSocketCloseEvent(extendedWebSocket);
+      });
     });
   }
 
+  /**
+   * Overload the WebSocket instance with custom properties to help with message broadcasting
+   * and connection management.
+   */
+  private injectCustomWebSocketProperties(webSocket: WebSocket) {
+    const extendedWebSocket = webSocket as ExtendedWebSocket;
+
+    extendedWebSocket.id = randomUUID();
+    extendedWebSocket.isAlive = true;
+    extendedWebSocket.subscriptions = new Set();
+
+    return extendedWebSocket;
+  }
+
   private async logWebSocketPostUpgradeError(
-    this: { logger: Logger; webSocket: ExtendedWebSocket },
+    webSocket: ExtendedWebSocket,
     error: Error,
   ) {
     const internalServerError = new HttpInternalServerError({
@@ -185,7 +285,7 @@ export class WebSocketServer {
 
     await this.logger.error(internalServerError.message, {
       error: internalServerError,
-      webSocketId: this.webSocket.id,
+      webSocketId: webSocket.id,
     });
   }
 
@@ -208,18 +308,16 @@ export class WebSocketServer {
     const { interval, payload } = options;
 
     return setInterval(() => {
-      for (const client of this.webSocketServer.clients) {
-        const extendedWebSocket = client as ExtendedWebSocket;
-
-        if (!extendedWebSocket.isAlive) {
-          return client.close(
+      for (const websocket of this.webSocketClients.values()) {
+        if (!websocket.isAlive) {
+          return websocket.close(
             WebSocketClosureCode.GoingAway,
             WebSocketClosureReason.NotResponding,
           );
         }
 
-        extendedWebSocket.isAlive = false;
-        extendedWebSocket.send(payload, { binary: true });
+        websocket.isAlive = false;
+        websocket.send(payload, { binary: true });
       }
     }, interval);
   }
