@@ -1,0 +1,53 @@
+{
+  "$schema": "https://cdn.statically.io/gh/nguyenngoclongdev/cdn/main/schema/v10/terminal-keeper.json",
+  "active": "osu-tournament-manager",
+  "activateOnStartup": true,
+  "keepExistingTerminals": false,
+  "sessions": {
+    "osu-tournament-manager": [
+      [
+        {
+          "autoExecuteCommands": true,
+          "color": "terminal.ansiMagenta",
+          "commands": [
+            "docker logs -f server"
+          ],
+          "icon": "search",
+          "name": "server:logs"
+        },
+        {
+          "autoExecuteCommands": true,
+          "commands": [
+            "docker exec -it server /bin/sh"
+          ],
+          "icon": "keyboard",
+          "name": "server:shell"
+        }
+      ],
+      [
+        {
+          "autoExecuteCommands": true,
+          "color": "terminal.ansiMagenta",
+          "commands": [
+            "docker logs -f client"
+          ],
+          "icon": "search",
+          "name": "client:logs"
+        },
+        {
+          "autoExecuteCommands": true,
+          "commands": [
+            "docker exec -it client /bin/sh"
+          ],
+          "icon": "keyboard",
+          "name": "client:shell"
+        }
+      ],
+      {
+        "focus": true,
+        "icon": "keyboard",
+        "name": "host:shell"
+      }
+    ]
+  }
+}
