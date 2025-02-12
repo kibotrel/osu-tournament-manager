@@ -20,18 +20,28 @@ import { ref } from 'vue';
 import { baseWebSocketUrl } from '#src/api/apiConstants.js';
 import type { ExtendedWebSocket } from '#src/types/webSockets.js';
 
-type WebSocketStoreOptions = { threadId?: string } & {
-  channel: WebSocketChannel.Matches;
-  events: WebSocketChannelMatchesEvent[];
-};
+interface WebSocketChannelEventsMap {
+  [WebSocketChannel.Matches]: WebSocketChannelMatchesEvent;
+}
+
+interface WebSocketStoreOptions<
+  Channel extends keyof WebSocketChannelEventsMap,
+> {
+  channel: Channel;
+  events: Array<WebSocketChannelEventsMap[Channel]>;
+  threadId?: string;
+}
 
 /**
  * Reason behind this way of defining the store is that user could have
  * multiple tabs opened on different pages that require a WebSocket connection
  * to operate. This way, we can have a unique store for each of them
  */
-export const defineWebsocketStore = <MessageType>(
-  options: WebSocketStoreOptions,
+export const defineWebsocketStore = <
+  MessageType,
+  ChannelType extends keyof WebSocketChannelEventsMap,
+>(
+  options: WebSocketStoreOptions<ChannelType>,
 ) => {
   const { channel, threadId, events } = options;
   /**
@@ -117,13 +127,17 @@ export const defineWebsocketStore = <MessageType>(
       // TODO: Fetch data from server to backfill the messages array.
     };
 
-    const sendMessage = (message: MessageType) => {
+    const sendMessage = (
+      message: MessageType,
+      event: WebSocketChannelEventsMap[ChannelType],
+    ) => {
       if (!socket.value) {
         return;
       }
 
       const payload: WebSocketMessage<MessageType> = {
         message,
+        topic: `${channel}:${threadId ?? '*'}:${event}`,
         timestamp: Date.now(),
       };
 
@@ -138,7 +152,7 @@ export const defineWebsocketStore = <MessageType>(
       clearTimeout(socket.value.pongTimeout);
 
       socket.value.pongTimeout = setTimeout(() => {
-        socket.value!.close(
+        socket.value?.close(
           WebSocketClosureCode.ServerIssue,
           WebSocketClosureReason.NotResponding,
         );

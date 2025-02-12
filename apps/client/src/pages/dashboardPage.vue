@@ -9,7 +9,7 @@
       v-model="message.content"
       @keydown.enter="
         () => {
-          sendMessage(message);
+          sendMessage(message, WebSocketChannelMatchesEvent.ChatMessages);
           message.content = '';
         }
       "
@@ -21,7 +21,7 @@
       <ui-button
         @mousedown="
           () => {
-            sendMessage(message);
+            sendMessage(message, WebSocketChannelMatchesEvent.ChatMessages);
             message.content = '';
           }
         "
@@ -31,7 +31,8 @@
     <div class="my-2">
       <h1>Messages</h1>
       <p v-for="(entry, index) in history" :key="index">
-        [{{ formatTimestamp(entry.timestamp) }}] {{ entry.message.author }}:
+        [{{ formatTimestamp(entry.timestamp) }}] ({{ entry.topic }})
+        {{ entry.message.author }}:
         {{ entry.message.content }}
       </p>
     </div>
@@ -45,16 +46,21 @@ import {
   WebSocketChannelMatchesEvent,
   formatTimestamp,
 } from '@packages/shared';
-import { reactive } from 'vue';
+import { inject, reactive } from 'vue';
+import type { Router } from 'vue-router';
 
 import uiButton from '#src/components/ui/uiButton.vue';
 import { useUserStore } from '#src/stores/userStore.js';
 import { defineWebsocketStore } from '#src/stores/webSocketStore.js';
 
-const useWebSocketStore = defineWebsocketStore<WebSocketMessageMatch>({
+const $router = inject<Router>('$router');
+const useWebSocketStore = defineWebsocketStore<
+  WebSocketMessageMatch,
+  WebSocketChannel.Matches
+>({
   channel: WebSocketChannel.Matches,
   events: [WebSocketChannelMatchesEvent.ChatMessages],
-  threadId: '1',
+  threadId: $router?.currentRoute.value.query.id as string,
 });
 const { gameUserId, username, isLoggedIn, logout } = useUserStore();
 const { connect, disconnect, history, sendMessage } = useWebSocketStore();
