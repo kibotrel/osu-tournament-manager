@@ -5,5 +5,6 @@ export interface WebSocketMessageMatch {
 
 export interface WebSocketMessage<T = Record<string, unknown>> {
   message: T;
+  topic: string;
   timestamp: number;
 }
