@@ -39,6 +39,8 @@ export enum WebSocketClosureCode {
   PolicyViolation = 1008,
   /** Used when receiving unexpected data (e.g text when binary was expected or vice versa). */
   UnsupportedData = 1003,
+  /** Generic server issue. */
+  ServerIssue = 3001,
 }
 
 export enum WebSocketClosureReason {

@@ -139,7 +139,7 @@ export const defineWebsocketStore = <MessageType>(
 
       socket.value.pongTimeout = setTimeout(() => {
         socket.value!.close(
-          WebSocketClosureCode.GoingAway,
+          WebSocketClosureCode.ServerIssue,
           WebSocketClosureReason.NotResponding,
         );
       }, WEBSOCKET_PONG_TIMEOUT);
