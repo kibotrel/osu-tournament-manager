@@ -111,11 +111,11 @@ importers:
         specifier: 10.4.20
         version: 10.4.20(postcss@8.4.47)
       pinia:
-        specifier: 2.2.2
-        version: 2.2.2(typescript@5.5.4)(vue@3.5.8(typescript@5.5.4))
+        specifier: 2.3.1
+        version: 2.3.1(typescript@5.5.4)(vue@3.5.8(typescript@5.5.4))
       pinia-plugin-persistedstate:
         specifier: 4.0.2
-        version: 4.0.2(pinia@2.2.2(typescript@5.5.4)(vue@3.5.8(typescript@5.5.4)))(rollup@4.34.0)
+        version: 4.0.2(pinia@2.3.1(typescript@5.5.4)(vue@3.5.8(typescript@5.5.4)))(rollup@4.34.0)
       postcss:
         specifier: 8.4.47
         version: 8.4.47
@@ -2975,6 +2975,10 @@ packages:
     resolution: {integrity: sha512-l9qO6eFlUETHtuihLcYOaLKByJ1f+N4kthcU9YjHy3N+B3hWv0y/2Nd0mu/7lTFnRQHTrSdXF50HQ3bl5fEnng==}
     engines: {node: '>= 0.4'}
 
+  is-boolean-object@1.2.2:
+    resolution: {integrity: sha512-wa56o2/ElJMYqjCjGkXri7it5FbebW5usLw/nPmCMs5DeZ7eziSYZhSmPRn0txqeW4LnAmQQU7FgqLpsEFKM4A==}
+    engines: {node: '>= 0.4'}
+
   is-builtin-module@3.2.1:
     resolution: {integrity: sha512-BSLE3HnV2syZ0FK0iMA/yUGplUeMmNz4AW5fnTunbCIqZi4vG3WjJT9FHMy5D69xmAYBHXQhJdALdpwVxV501A==}
     engines: {node: '>=6'}
@@ -3517,6 +3521,10 @@ packages:
     resolution: {integrity: sha512-kDCGIbxkDSXE3euJZZXzc6to7fCrKHNI/hSRQnRuQ+BWjFNzZwiFF8fj/6o2t2G9/jTj8PSIYTfCLelLZEeRpA==}
     engines: {node: '>= 0.4'}
 
+  object-inspect@1.13.4:
+    resolution: {integrity: sha512-W67iLl4J2EXEGTbfeHCffrjDfitvLANg0UlX3wFUUSTx92KXRFegMHUVgSqE+wvhAbi4WqjGg9czysTV2Epbew==}
+    engines: {node: '>= 0.4'}
+
   object-is@1.1.6:
     resolution: {integrity: sha512-F8cZ+KfGlSGi09lJT7/Nd6KJZ9ygtvYC0/UYYLI9nmQKLMnydpB9yvbv9K1uSkEu7FU9vYPmVwLg328tX+ot3Q==}
     engines: {node: '>= 0.4'}
@@ -3759,15 +3767,12 @@ packages:
       pinia:
         optional: true
 
-  pinia@2.2.2:
-    resolution: {integrity: sha512-ja2XqFWZC36mupU4z1ZzxeTApV7DOw44cV4dhQ9sGwun+N89v/XP7+j7q6TanS1u1tdbK4r+1BUx7heMaIdagA==}
+  pinia@2.3.1:
+    resolution: {integrity: sha512-khUlZSwt9xXCaTbbxFYBKDc/bWAGWJjOgvxETwkTN7KRm66EeT1ZdZj6i2ceh9sP2Pzqsbc704r2yngBrxBVug==}
     peerDependencies:
-      '@vue/composition-api': ^1.4.0
       typescript: '>=4.4.4'
-      vue: ^2.6.14 || ^3.3.0
+      vue: ^2.7.0 || ^3.5.11
     peerDependenciesMeta:
-      '@vue/composition-api':
-        optional: true
       typescript:
         optional: true
 
@@ -6896,7 +6901,7 @@ snapshots:
       function.prototype.name: 1.1.8
       has: 1.0.4
       html-element-map: 1.3.1
-      is-boolean-object: 1.2.1
+      is-boolean-object: 1.2.2
       is-callable: 1.2.7
       is-number-object: 1.1.1
       is-regex: 1.2.1
@@ -6904,7 +6909,7 @@ snapshots:
       is-subset: 0.1.1
       lodash.escape: 4.0.1
       lodash.isequal: 4.5.0
-      object-inspect: 1.13.3
+      object-inspect: 1.13.4
       object-is: 1.1.6
       object.assign: 4.1.7
       object.entries: 1.1.8
@@ -7826,6 +7831,11 @@ snapshots:
       call-bound: 1.0.3
       has-tostringtag: 1.0.2
 
+  is-boolean-object@1.2.2:
+    dependencies:
+      call-bound: 1.0.3
+      has-tostringtag: 1.0.2
+
   is-builtin-module@3.2.1:
     dependencies:
       builtin-modules: 3.3.0
@@ -8297,6 +8307,8 @@ snapshots:
 
   object-inspect@1.13.3: {}
 
+  object-inspect@1.13.4: {}
+
   object-is@1.1.6:
     dependencies:
       call-bind: 1.0.8
@@ -8528,26 +8540,28 @@ snapshots:
 
   pify@2.3.0: {}
 
-  pinia-plugin-persistedstate@4.0.2(pinia@2.2.2(typescript@5.5.4)(vue@3.5.8(typescript@5.5.4)))(rollup@4.34.0):
+  pinia-plugin-persistedstate@4.0.2(pinia@2.3.1(typescript@5.5.4)(vue@3.5.8(typescript@5.5.4)))(rollup@4.34.0):
     dependencies:
       '@nuxt/kit': 3.15.4(rollup@4.34.0)
       deep-pick-omit: 1.2.1
       defu: 6.1.4
       destr: 2.0.3
     optionalDependencies:
-      pinia: 2.2.2(typescript@5.5.4)(vue@3.5.8(typescript@5.5.4))
+      pinia: 2.3.1(typescript@5.5.4)(vue@3.5.8(typescript@5.5.4))
     transitivePeerDependencies:
       - magicast
       - rollup
       - supports-color
 
-  pinia@2.2.2(typescript@5.5.4)(vue@3.5.8(typescript@5.5.4)):
+  pinia@2.3.1(typescript@5.5.4)(vue@3.5.8(typescript@5.5.4)):
     dependencies:
       '@vue/devtools-api': 6.6.4
       vue: 3.5.8(typescript@5.5.4)
       vue-demi: 0.14.10(vue@3.5.8(typescript@5.5.4))
     optionalDependencies:
       typescript: 5.5.4
+    transitivePeerDependencies:
+      - '@vue/composition-api'
 
   pirates@4.0.6: {}
 
