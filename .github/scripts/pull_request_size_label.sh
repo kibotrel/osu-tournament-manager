@@ -19,6 +19,11 @@ pullRequestSize=$(((additions + deletions) / 2))
 labels=${rawData[@]:2}
 current_size_label=""
 
+if [[ $labels == *"name:dependencies"* ]]; then
+  echo "PR opened by dependabot, skipping size label"
+  exit 0
+fi
+
 if [ "$labels" != "[]" ]; then
   current_size_label=$(echo $labels | grep -o 'Size: [^] ]*')
 fi
@@ -31,6 +36,8 @@ else
   expected_label='Size: Large'
 fi
 
+echo "Current size label: $current_size_label"
+
 if [ "$current_size_label" != "$expected_label" ]; then
-  gh pr edit $pullRequestNumber --remove-label 'Size: Small','Size: Medium','Size: Large' --add-label "$expected_label" > /dev/null
+  gh pr edit $pullRequestNumber --remove-label 'Size: Small','Size: Medium','Size: Large' --add-label "$expected_label"
 fi
