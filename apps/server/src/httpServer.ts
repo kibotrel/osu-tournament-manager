@@ -1,5 +1,7 @@
 import type { Server } from 'node:http';
 
+import type { BanchoClient } from '@packages/bancho-client';
+
 import { createExpressApplication } from '#src/application.js';
 import type { WebSocketServer } from '#src/classes/webSocketServerClass.js';
 import { environmentConfig } from '#src/configs/environmentConfig.js';
@@ -10,10 +12,12 @@ import { logger } from '#src/dependencies/loggerDependency.js';
 export const gracefulShutdown = async (
   httpServer: Server,
   webSocketServer: WebSocketServer,
+  banchoClient: BanchoClient,
 ) => {
   logger.debug('shutting down server...');
 
   await webSocketServer.close();
+  await banchoClient.disconnect();
 
   httpServer.close(async (error) => {
     if (error) {
