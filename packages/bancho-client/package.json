@@ -1,0 +1,20 @@
+{
+  "dependencies": {},
+  "devDependencies": {
+    "@packages/prettier-config": "workspace:*"
+  },
+  "imports": {
+    "#src/*": "./src/*"
+  },
+  "main": "dist/src/banchoClientExport.js",
+  "name": "@packages/bancho-client",
+  "private": true,
+  "scripts": {
+    "build": "tsc && tsc-alias",
+    "dev": "nodemon --config nodemon.json",
+    "format": "prettier --write src/**/*.ts",
+    "lint": "eslint src/**/*.ts --config .eslintrc"
+  },
+  "type": "module",
+  "types": "dist/src/banchoClientExport.d.ts"
+}

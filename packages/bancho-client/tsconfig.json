@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "lib": ["ESNext"],
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "outDir": "./dist",
+    "paths": {
+      "#src/*": ["./src/*"]
+    },
+    "removeComments": false,
+    "types": ["node"]
+  },
+  "extends": "../tsconfig.json",
+  "include": ["./src/**/*.ts"]
+}
