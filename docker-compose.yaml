@@ -76,6 +76,18 @@ services:
     volumes:
       - ./packages/api-specification:/osu-tournanament-manager/packages/api-specification
 
+  package-bancho-client-builder:
+    container_name: package-bancho-client-builder
+    build:
+      args:
+        PACKAGE: packages/bancho-client
+      context: .
+      dockerfile: ./docker/packages-builder/Dockerfile.dev
+    restart: always
+    volumes:
+      - ./packages/bancho-client:/osu-tournanament-manager/packages/bancho-client
+      - ./packages/shared/dist:/osu-tournanament-manager/packages/bancho-client/node_modules/@packages/shared/dist
+
   package-logger-builder:
     container_name: package-logger-builder
     build:
@@ -161,11 +173,10 @@ services:
     volumes:
       - ./apps/server:/osu-tournanament-manager/apps/server
       - ./packages/api-specification/dist:/osu-tournanament-manager/apps/server/node_modules/@packages/api-specification/dist
+      - ./packages/bancho-client/dist:/osu-tournanament-manager/apps/server/node_modules/@packages/bancho-client/dist
       - ./packages/logger/dist:/osu-tournanament-manager/apps/server/node_modules/@packages/logger/dist
       - ./packages/osu-sdk/dist:/osu-tournanament-manager/apps/server/node_modules/@packages/osu-sdk/dist
       - ./packages/shared/dist:/osu-tournanament-manager/apps/server/node_modules/@packages/shared/dist
-
-version: '3.9'
 
 volumes:
   caddy:

@@ -1,6 +1,7 @@
 {
   "dependencies": {
     "@packages/api-specification": "workspace:*",
+    "@packages/bancho-client": "workspace:*",
     "@packages/logger": "workspace:*",
     "@packages/osu-sdk": "workspace:*",
     "@packages/shared": "workspace:*",
