@@ -4,3 +4,10 @@ export enum IrcEvent {
   Data = 'data',
   Timeout = 'timeout',
 }
+
+export enum IrcClientState {
+  Disconnected = 'disconnected',
+  Disconnecting = 'disconnecting',
+  Connecting = 'connecting',
+  Connected = 'connected',
+}
