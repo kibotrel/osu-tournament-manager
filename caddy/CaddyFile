@@ -1,25 +1,26 @@
 dev.osu-tournament-manager.app {
   @appWebSockets {
-		path /websockets/*
+		path /api/websockets/*
 		header Connection *Upgrade*
-		header Upgrade *websocket*
+		header Upgrade websocket
 	}
 
 	@viteWebSockets {
 		path /@vite/*
 		header Connection *Upgrade*
-		header Upgrade *websocket*
+		header Upgrade websocket
 	}
 
 	encode gzip
 
+	handle @appWebSockets {
+		uri strip_prefix /api
+		reverse_proxy server:{$SERVER_PORT_TARGET}
+	}
+
   handle /api/* {
     reverse_proxy server:{$SERVER_PORT_TARGET}
   }
-
-	handle @appWebSockets {
-		reverse_proxy server:{$SERVER_PORT_TARGET}
-	}
 
 	handle @viteWebSockets {
 		uri strip_prefix /api

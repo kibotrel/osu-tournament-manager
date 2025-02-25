@@ -158,7 +158,7 @@ export class WebSocketServer {
    */
   private extractConnectionIntents(url: string) {
     const { pathname, searchParams } = new URL(url, environmentConfig.baseUrl);
-    const [, channel, threadId] = pathname.split('/').filter(Boolean);
+    const [channel, threadId] = pathname.split('/').filter(Boolean).slice(2);
     const events = searchParams.get('events')?.split(',') ?? [];
 
     return { channel, threadId, events };

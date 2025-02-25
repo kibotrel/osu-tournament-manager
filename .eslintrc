@@ -321,7 +321,9 @@
     "unicorn/no-nested-ternary": "off",
     "unicorn/no-object-as-default-parameter": "off",
     "unicorn/no-null": "off",
+    "unicorn/no-unreadable-array-destructuring": "off",
     "unicorn/number-literal-case": "off",
+    "unicorn/prefer-event-target": "off",
     "unicorn/prefer-logical-operator-over-ternary": "off",
     "unicorn/prefer-node-protocol": "error",
     "unicorn/prevent-abbreviations": [

@@ -48,7 +48,7 @@ export const defineWebsocketStore = <
    * Since user could be in multiple threads at the same time, we need to create a unique store name
    * for each thread to avoid conflicts.
    */
-  const urnParts = ['websockets', channel];
+  const urnParts = ['api', 'websockets', channel];
 
   if (threadId) {
     urnParts.push(threadId);
