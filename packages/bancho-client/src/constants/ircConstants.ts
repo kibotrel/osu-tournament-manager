@@ -32,3 +32,17 @@ export enum IrcKeyword {
   Username = 'USER',
   Welcome = '001',
 }
+
+export const clientStatesAllowingMessage = new Set<IrcClientState>([
+  IrcClientState.Connecting,
+  IrcClientState.Connected,
+]);
+
+export const ignoredIrcKeywords = new Set<IrcKeyword>([
+  IrcKeyword.ChannelTopicUpdatedAt,
+  IrcKeyword.EndOfNameList,
+  IrcKeyword.MessageOfTheDayBegin,
+  IrcKeyword.MessageOfTheDayBody,
+  IrcKeyword.MessageOfTheDayEnd,
+  IrcKeyword.Mode,
+]);
