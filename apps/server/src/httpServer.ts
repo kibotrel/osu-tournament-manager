@@ -17,6 +17,7 @@ export const gracefulShutdown = async (
   logger.debug('shutting down server...');
 
   await webSocketServer.close();
+  await banchoClient.removeAllListeners();
   await banchoClient.disconnect();
 
   httpServer.close(async (error) => {
