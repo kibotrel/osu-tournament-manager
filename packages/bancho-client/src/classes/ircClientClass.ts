@@ -85,7 +85,7 @@ export class BanchoClient extends EventEmitter {
   public disconnect() {
     this.connectionState = IrcClientState.Disconnecting;
 
-    this.sendMessage(IrcKeyword.Quit);
+    this.sendIrcMessage(IrcKeyword.Quit);
   }
 
   private handleCloseEvent() {
@@ -103,9 +103,9 @@ export class BanchoClient extends EventEmitter {
 
     this.connectionState = IrcClientState.Connecting;
 
-    this.sendMessage(`${IrcKeyword.Password} ${password}`);
-    this.sendMessage(`${IrcKeyword.Nickname} ${username}`);
-    this.sendMessage(`${IrcKeyword.Username} ${username} 0 * :${username}`);
+    this.sendIrcMessage(`${IrcKeyword.Password} ${password}`);
+    this.sendIrcMessage(`${IrcKeyword.Nickname} ${username}`);
+    this.sendIrcMessage(`${IrcKeyword.Username} ${username} 0 * :${username}`);
   }
 
   private async handleDataEvent(packet: string) {
@@ -130,7 +130,7 @@ export class BanchoClient extends EventEmitter {
    * [RFC 1459](https://datatracker.ietf.org/doc/html/rfc1459#section-2.3.1) compliant
    * method to send a message to an IRC server.
    */
-  public sendMessage(message: string) {
+  public sendIrcMessage(message: string) {
     if (!isSocketReady(this.socket, this.connectionState)) {
       return;
     }
