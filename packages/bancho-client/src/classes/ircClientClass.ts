@@ -26,7 +26,6 @@ export interface IrcServerInformation {
 }
 
 export class BanchoClient extends EventEmitter {
-  private banchoChannels: Map<string, Set<string>>;
   private readonly clientCredentials: IrcClientCredentials;
   public readonly serverInformation: IrcServerInformation;
   private connectionState: IrcClientState;
@@ -43,7 +42,6 @@ export class BanchoClient extends EventEmitter {
 
     const { clientCredentials, serverInformation } = options;
 
-    this.banchoChannels = new Map();
     this.clientCredentials = clientCredentials;
     this.connectionState = IrcClientState.Disconnected;
     this.serverInformation = serverInformation;
@@ -53,38 +51,12 @@ export class BanchoClient extends EventEmitter {
     this.on(BanchoClientEvent.Connected, () => {
       this.connectionState = IrcClientState.Connected;
     });
-
-    this.on(
-      BanchoClientEvent.AddChannelMembers,
-      (channelName: string, users: string[]) => {
-        const sanitizedUsers = users.map((user) => {
-          return user.replace(/^@\+/, '');
-        });
-        const currentUsers = this.banchoChannels.get(channelName) ?? '';
-
-        if (!currentUsers) {
-          this.banchoChannels.set(channelName, new Set(sanitizedUsers));
-
-          return;
-        }
-
-        for (const user of sanitizedUsers) {
-          currentUsers.add(user);
-        }
-      },
-    );
-
-    this.on(BanchoClientEvent.UserDisconnected, (user: string) => {
-      for (const [, users] of this.banchoChannels) {
-        if (users.has(user)) {
-          users.delete(user);
-
-          return;
-        }
-      }
-    });
   }
 
+  /**
+   * Connect to the given IRC server, configure event listeners and send the
+   * necessary messages to authenticate the user.
+   */
   public connect() {
     const { host, port } = this.serverInformation;
 
@@ -94,11 +66,12 @@ export class BanchoClient extends EventEmitter {
 
     this.socket = new Socket();
 
-    this.socket.on(IrcEvent.Data, (packet) => {
-      this.handleDataEvent(packet.toString().replaceAll('\r', ''));
-    });
     this.socket.on(IrcEvent.Close, () => {
       this.handleCloseEvent();
+    });
+
+    this.socket.on(IrcEvent.Data, (packet) => {
+      this.handleDataEvent(packet.toString().replaceAll('\r', ''));
     });
 
     this.socket.connect({ host, port }, () => {
@@ -106,9 +79,13 @@ export class BanchoClient extends EventEmitter {
     });
   }
 
+  /**
+   * Gracefully disconnect from the IRC server.
+   */
   public disconnect() {
-    this.sendMessage(IrcKeyword.Quit);
     this.connectionState = IrcClientState.Disconnecting;
+
+    this.sendMessage(IrcKeyword.Quit);
   }
 
   private handleCloseEvent() {
@@ -125,6 +102,7 @@ export class BanchoClient extends EventEmitter {
     const { username, password } = this.clientCredentials;
 
     this.connectionState = IrcClientState.Connecting;
+
     this.sendMessage(`${IrcKeyword.Password} ${password}`);
     this.sendMessage(`${IrcKeyword.Nickname} ${username}`);
     this.sendMessage(`${IrcKeyword.Username} ${username} 0 * :${username}`);
@@ -148,6 +126,10 @@ export class BanchoClient extends EventEmitter {
     }
   }
 
+  /**
+   * [RFC 1459](https://datatracker.ietf.org/doc/html/rfc1459#section-2.3.1) compliant
+   * method to send a message to an IRC server.
+   */
   public sendMessage(message: string) {
     if (!isSocketReady(this.socket, this.connectionState)) {
       return;
