@@ -1,6 +1,7 @@
+import { BanchoClientEvent } from '#src/banchoClientExport.js';
 import type { BanchoClient } from '#src/classes/ircClientClass.js';
 import type { IrcCommand } from '#src/classes/ircCommandClass.js';
-import { IrcKeyword } from '#src/constants/ircConstants.js';
+import { parseIrcUsername } from '#src/methods/parseMethods.js';
 
 export class IrcCommandJoin implements IrcCommand {
   public readonly banchoClient: BanchoClient;
@@ -12,8 +13,13 @@ export class IrcCommandJoin implements IrcCommand {
   }
 
   public handleCommand() {
-    this.banchoClient.sendMessage(
-      `${IrcKeyword.Pong} ${this.packetParts.join(' ')}`,
+    const channel = this.packetParts.at(1);
+    const user = this.packetParts.at(0)!.split('!').at(0)!;
+
+    this.banchoClient.emit(
+      BanchoClientEvent.UserJoinedChannel,
+      parseIrcUsername(user),
+      channel,
     );
   }
 }

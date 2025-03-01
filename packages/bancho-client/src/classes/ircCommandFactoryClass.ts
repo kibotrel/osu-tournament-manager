@@ -2,6 +2,7 @@ import { IrcKeyword } from '#src/constants/ircConstants.js';
 
 import type { BanchoClient } from './ircClientClass.js';
 import { IrcCommandChannelTopic } from './ircCommandChannelTopicClass.js';
+import { IrcCommandJoin } from './ircCommandJoinClass.js';
 import { IrcCommandNameListBody } from './ircCommandNameListBodyClass.js';
 import { IrcCommandNoop } from './ircCommandNoopClass.js';
 import { IrcCommandQuit } from './ircCommandQuitClass.js';
@@ -18,6 +19,10 @@ export class IrcCommandFactory {
     switch (command) {
       case IrcKeyword.ChannelTopic: {
         return new IrcCommandChannelTopic(this.banchoClient, packetParts);
+      }
+
+      case IrcKeyword.Join: {
+        return new IrcCommandJoin(this.banchoClient, packetParts);
       }
 
       case IrcKeyword.NameListBody: {

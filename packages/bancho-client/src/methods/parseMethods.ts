@@ -20,3 +20,12 @@ export const parseIrcMessage = (banchoClient: BanchoClient, packet: string) => {
 
   return ircCommandFactory.createCommandHandler(commandName, parts);
 };
+
+/**
+ * Removes the prefix from the username. As stated in [RFC 1459](https://datatracker.ietf.org/doc/html/rfc1459#section-6.2)
+ * Command response `RPL_NAMREPLY`, `'@'` is used to denote channel operator
+ * and `'+'` is used to denote channel voice status.
+ */
+export const parseIrcUsername = (username: string) => {
+  return username.replace(/^(\+|@)/, '');
+};

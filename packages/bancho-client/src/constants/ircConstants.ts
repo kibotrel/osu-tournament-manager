@@ -19,6 +19,7 @@ export enum IrcKeyword {
   ChannelTopic = '332',
   ChannelTopicUpdatedAt = '333',
   EndOfNameList = '366',
+  Join = 'JOIN',
   MessageOfTheDayBegin = '375',
   MessageOfTheDayBody = '372',
   MessageOfTheDayEnd = '376',

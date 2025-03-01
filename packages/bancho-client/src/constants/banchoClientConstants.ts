@@ -3,4 +3,5 @@ export enum BanchoClientEvent {
   BotJoinedChannel = 'bot_joined_channel',
   Connected = 'connected',
   UserDisconnected = 'user_disconnected',
+  UserJoinedChannel = 'user_joined_channel',
 }
