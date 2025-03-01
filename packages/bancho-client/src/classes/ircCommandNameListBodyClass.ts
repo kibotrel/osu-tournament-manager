@@ -1,6 +1,7 @@
 import type { BanchoClient } from '#src/classes/ircClientClass.js';
 import type { IrcCommand } from '#src/classes/ircCommandClass.js';
 import { BanchoClientEvent } from '#src/constants/banchoClientConstants.js';
+import { parseIrcUsername } from '#src/methods/parseMethods.js';
 
 export class IrcCommandNameListBody implements IrcCommand {
   public readonly banchoClient: BanchoClient;
@@ -13,8 +14,14 @@ export class IrcCommandNameListBody implements IrcCommand {
 
   public handleCommand() {
     const channel = this.packetParts.at(0)?.split('=')?.at(1)?.trim();
-    const users = this.packetParts.at(-1)?.split(' ').filter(Boolean);
+    const users = this.packetParts.at(-1)!.split(' ').filter(Boolean);
 
-    this.banchoClient.emit(BanchoClientEvent.AddChannelMembers, channel, users);
+    this.banchoClient.emit(
+      BanchoClientEvent.AddChannelMembers,
+      channel,
+      users.map((user) => {
+        return parseIrcUsername(user);
+      }),
+    );
   }
 }
