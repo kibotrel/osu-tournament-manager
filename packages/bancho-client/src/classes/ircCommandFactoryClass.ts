@@ -5,6 +5,7 @@ import { IrcCommandChannelTopic } from './ircCommandChannelTopicClass.js';
 import { IrcCommandJoin } from './ircCommandJoinClass.js';
 import { IrcCommandNameListBody } from './ircCommandNameListBodyClass.js';
 import { IrcCommandNoop } from './ircCommandNoopClass.js';
+import { IrcCommandPrivateMessage } from './ircCommandPrivateMessageClass.js';
 import { IrcCommandQuit } from './ircCommandQuitClass.js';
 import { IrcCommandWelcome } from './ircCommandWelcomeClass.js';
 
@@ -27,6 +28,10 @@ export class IrcCommandFactory {
 
       case IrcKeyword.NameListBody: {
         return new IrcCommandNameListBody(this.banchoClient, packetParts);
+      }
+
+      case IrcKeyword.PrivateMessage: {
+        return new IrcCommandPrivateMessage(this.banchoClient, packetParts);
       }
 
       case IrcKeyword.Quit: {
