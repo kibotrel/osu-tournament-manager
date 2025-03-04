@@ -6,8 +6,7 @@
     "winston-transport": "4.9.0"
   },
   "devDependencies": {
-    "@packages/prettier-config": "workspace:*",
-    "@types/pg": "8.11.10"
+    "@packages/prettier-config": "workspace:*"
   },
   "imports": {
     "#src/*": "./src/*"

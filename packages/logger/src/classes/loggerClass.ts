@@ -3,7 +3,6 @@ import type { transport as Transport, Logger as WinstonLogger } from 'winston';
 import { createLogger } from 'winston';
 
 import { consoleTransport } from '#src/transports/consoleTransport.js';
-import { databaseTransport } from '#src/transports/databaseTransport.js';
 import type { LogLevel, LogMetadata } from '#src/types/loggerTypes.js';
 
 const enum Events {
@@ -23,12 +22,8 @@ export class Logger {
   public readonly winston: WinstonLogger;
 
   constructor(options: LoggerOptions) {
-    const { databaseClient, isProductionMode, level } = options;
+    const { isProductionMode, level } = options;
     const transports: Transport[] = [];
-
-    if (databaseClient) {
-      transports.push(databaseTransport(databaseClient));
-    }
 
     if (!isProductionMode) {
       transports.push(consoleTransport());
