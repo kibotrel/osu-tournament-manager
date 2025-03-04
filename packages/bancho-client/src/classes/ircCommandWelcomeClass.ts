@@ -10,6 +10,6 @@ export class IrcCommandWelcome implements IrcCommand {
   }
 
   public handleCommand() {
-    this.banchoClient.emit(BanchoClientEvent.Connected);
+    this.banchoClient.emit(BanchoClientEvent.BotConnected);
   }
 }
