@@ -9,8 +9,8 @@ const cache: RedisClientType = createClient({
   url: `redis://default:${cacheConfig.password}@${cacheConfig.host}:${cacheConfig.port}`,
 });
 
-cache.on(CacheEvent.Error, async (error) => {
-  await logger.error('[Redis] Something went wrong!', { error });
+cache.on(CacheEvent.Error, (error) => {
+  logger.error('[Redis] Something went wrong!', { error });
 });
 
 await cache.connect();

@@ -6,7 +6,7 @@ import { logger } from '#src/dependencies/loggerDependency.js';
 
 const { isProductionMode } = environmentConfig;
 
-export const logHttpRequest: RequestHandler = async (request, _, next) => {
+export const logHttpRequest: RequestHandler = (request, _, next) => {
   const isHealthCheck = request.url === '/api/v1/public/health';
 
   if (
@@ -23,7 +23,7 @@ export const logHttpRequest: RequestHandler = async (request, _, next) => {
     ...(Object.keys(query).length > 0 && { query }),
   };
 
-  await logger.http(`${request.method} ${request.url}`, {
+  logger.http(`${request.method} ${request.url}`, {
     ...releventInformation,
     requestId: request.id,
   });

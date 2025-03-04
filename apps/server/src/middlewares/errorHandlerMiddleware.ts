@@ -114,7 +114,7 @@ export const errorHandler: ErrorRequestHandler<never, ErrorReport> = async (
   });
 
   if (mustLog || !environmentConfig.isProductionMode) {
-    await logger.error(error.message, {
+    logger.error(error.message, {
       requestId: request.id,
       errorMetadata: { ...error.metadata },
       error,
