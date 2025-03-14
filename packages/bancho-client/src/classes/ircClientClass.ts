@@ -58,24 +58,32 @@ export class BanchoClient extends EventEmitter {
    * necessary messages to authenticate the user.
    */
   public connect() {
-    const { host, port } = this.serverInformation;
+    return new Promise<void>((resolve) => {
+      const { host, port } = this.serverInformation;
 
-    if (this.connectionState !== IrcClientState.Disconnected) {
-      return;
-    }
+      if (this.connectionState !== IrcClientState.Disconnected) {
+        resolve();
 
-    this.socket = new Socket();
+        return;
+      }
 
-    this.socket.on(IrcEvent.Close, () => {
-      this.handleCloseEvent();
-    });
+      this.socket = new Socket();
 
-    this.socket.on(IrcEvent.Data, (packet) => {
-      this.handleDataEvent(packet.toString().replaceAll('\r', ''));
-    });
+      this.socket.on(IrcEvent.Close, () => {
+        this.handleCloseEvent();
+      });
 
-    this.socket.connect({ host, port }, () => {
-      this.handleConnectEvent();
+      this.socket.on(IrcEvent.Data, (packet) => {
+        this.handleDataEvent(packet.toString().replaceAll('\r', ''));
+      });
+
+      this.once(BanchoClientEvent.BotConnected, () => {
+        resolve();
+      });
+
+      this.socket.connect({ host, port }, () => {
+        this.handleConnectEvent();
+      });
     });
   }
 
@@ -83,9 +91,20 @@ export class BanchoClient extends EventEmitter {
    * Gracefully disconnect from the IRC server.
    */
   public disconnect() {
-    this.connectionState = IrcClientState.Disconnecting;
+    return new Promise<void>((resolve) => {
+      if (this.connectionState === IrcClientState.Disconnected) {
+        resolve();
 
-    this.sendIrcMessage(IrcKeyword.Quit);
+        return;
+      }
+
+      this.once(BanchoClientEvent.BotDisconnected, () => {
+        resolve();
+      });
+
+      this.sendIrcMessage(IrcKeyword.Quit);
+      this.connectionState = IrcClientState.Disconnecting;
+    });
   }
 
   private handleCloseEvent() {
