@@ -2,7 +2,6 @@ import type { UUID } from 'node:crypto';
 import { randomUUID } from 'node:crypto';
 import type { Server } from 'node:http';
 
-import type { Logger } from '@packages/logger';
 import type { WebSocketMessage } from '@packages/shared';
 import {
   HttpInternalServerError,
@@ -18,6 +17,7 @@ import { WebSocketServer as WSS } from 'ws';
 
 import { environmentConfig } from '#src/configs/environmentConfig.js';
 import { HttpEvent } from '#src/constants/httpConstants.js';
+import { logger } from '#src/dependencies/loggerDependency.js';
 import { session as sessionMiddleware } from '#src/middlewares/sessionMiddleware.js';
 
 /**
@@ -35,7 +35,6 @@ export interface WebSocketServerOptions {
   pingIntervalTime: number;
   pingPayload: number;
   pongPayload: number;
-  logger: Logger;
 }
 
 export interface WebSocketTopicsSubscription {
@@ -48,7 +47,6 @@ export interface WebSocketTopicsSubscription {
  * WebSocket server with request authentication, heartbeat mechanism to detect dead connections, and message broadcasting.
  */
 export class WebSocketServer {
-  private readonly logger: Logger;
   private readonly pingIntervalId: NodeJS.Timeout;
   private readonly pongPayload: number;
   /**
@@ -59,9 +57,8 @@ export class WebSocketServer {
   private readonly webSocketClients: Map<UUID, ExtendedWebSocket>;
 
   constructor(options: WebSocketServerOptions) {
-    const { logger, pingIntervalTime, pingPayload, pongPayload } = options;
+    const { pingIntervalTime, pingPayload, pongPayload } = options;
 
-    this.logger = logger;
     this.pongPayload = pongPayload;
     this.webSocketServer = new WSS({ noServer: true, clientTracking: false });
     this.webSocketClients = new Map();
@@ -140,8 +137,6 @@ export class WebSocketServer {
    * Gracefully close the WebSocket server and all the connection it holds.
    */
   public async close() {
-    await this.logger.debug('closing websocket server...');
-
     await this.webSocketServer.close(() => {
       for (const client of this.webSocketClients.values()) {
         client.close(
@@ -245,14 +240,10 @@ export class WebSocketServer {
       this.addTopicsSubscription(extendedWebSocket, subscription);
 
       extendedWebSocket.on(WebSocketEvent.Error, (error) => {
-        return this.logWebSocketPostUpgradeError(extendedWebSocket, error);
+        this.logWebSocketPostUpgradeError(extendedWebSocket, error);
       });
       extendedWebSocket.on(WebSocketEvent.Message, (message, isBinary) => {
-        return this.handleWebSocketMessageEvent(
-          extendedWebSocket,
-          message,
-          isBinary,
-        );
+        this.handleWebSocketMessageEvent(extendedWebSocket, message, isBinary);
       });
       extendedWebSocket.on(WebSocketEvent.Close, () => {
         this.handleWebSocketCloseEvent(extendedWebSocket);
@@ -274,7 +265,7 @@ export class WebSocketServer {
     return extendedWebSocket;
   }
 
-  private async logWebSocketPostUpgradeError(
+  private logWebSocketPostUpgradeError(
     webSocket: ExtendedWebSocket,
     error: Error,
   ) {
@@ -283,19 +274,19 @@ export class WebSocketServer {
       cause: error,
     });
 
-    await this.logger.error(internalServerError.message, {
+    logger.error(internalServerError.message, {
       error: internalServerError,
       webSocketId: webSocket.id,
     });
   }
 
-  private async logWebSocketPreUpgradeError(error: Error) {
+  private logWebSocketPreUpgradeError(error: Error) {
     const internalServerError = new HttpInternalServerError({
       message: 'Http request upgrade to websocket protocol failed',
       cause: error,
     });
 
-    await this.logger.error(internalServerError.message, {
+    logger.error(internalServerError.message, {
       error: internalServerError,
     });
   }
