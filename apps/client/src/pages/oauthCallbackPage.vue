@@ -21,5 +21,3 @@ onBeforeMount(() => {
   $router?.push('/login');
 });
 </script>
-
-<style scoped></style>

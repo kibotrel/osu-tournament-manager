@@ -38,5 +38,3 @@ const redirectToOsuAuthPage = () => {
   window.open(authUrl, '_self');
 };
 </script>
-
-<style scoped></style>

@@ -69,5 +69,3 @@ const message = reactive<WebSocketMessageMatch>({
   author: username,
 });
 </script>
-
-<style scoped></style>
