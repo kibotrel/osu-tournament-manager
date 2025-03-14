@@ -18,7 +18,7 @@
     "@vue/eslint-config-typescript": "13.0.0",
     "eslint-plugin-vue": "9.26.0",
     "prettier-plugin-tailwindcss": "0.6.6",
-    "vite": "5.4.12"
+    "vite": "6.2.2"
   },
   "imports": {
     "#src/*": "./src/*"
