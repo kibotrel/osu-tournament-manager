@@ -1,6 +1,11 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
+
+@theme {
+  --color-primary-1: #FAFAFA;
+  --color-primary-2: #A1A1AA;
+  --color-primary-3: #27272A;
+  --color-primary-4: #0A0A0B;
+}
 
 * {
   @apply box-border;

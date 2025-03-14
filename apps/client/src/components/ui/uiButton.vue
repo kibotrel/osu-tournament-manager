@@ -46,6 +46,8 @@ const slots = useSlots();
 </script>
 
 <style scoped>
+@reference '#src/assets/styles/index.css';
+
 .danger {
   @apply cursor-pointer bg-red-600 text-primary-1;
   @apply hover:bg-red-600/90 hover:text-primary-1/90;
@@ -93,6 +95,6 @@ button:disabled {
 }
 
 button:focus-visible {
-  @apply outline-none ring-2 ring-yellow-400;
+  @apply outline-hidden ring-2 ring-yellow-400;
 }
 </style>

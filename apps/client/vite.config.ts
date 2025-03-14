@@ -1,11 +1,12 @@
 import path from 'node:path';
 import { URL, fileURLToPath } from 'node:url';
 
+import tailwindcss from '@tailwindcss/vite';
 import vue from '@vitejs/plugin-vue';
 import { defineConfig } from 'vite';
 
 export default defineConfig({
-  plugins: [vue()],
+  plugins: [tailwindcss(), vue()],
   preview: {
     host: '192.168.1.100',
     port: 8080,
