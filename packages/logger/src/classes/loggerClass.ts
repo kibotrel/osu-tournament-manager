@@ -1,4 +1,3 @@
-import type { Client } from 'pg';
 import type { transport as Transport, Logger as WinstonLogger } from 'winston';
 import { createLogger } from 'winston';
 
@@ -10,7 +9,6 @@ const enum Events {
 }
 
 export interface LoggerOptions {
-  databaseClient?: Client;
   isProductionMode: boolean;
   level: LogLevel;
 }
