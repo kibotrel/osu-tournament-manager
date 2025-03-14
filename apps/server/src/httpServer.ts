@@ -5,30 +5,33 @@ import type { WebSocketServer } from '#src/classes/webSocketServerClass.js';
 import { environmentConfig } from '#src/configs/environmentConfig.js';
 import { cache } from '#src/dependencies/cacheDependency.js';
 import { postgresClient } from '#src/dependencies/databaseDependency.js';
+import { banchoClient } from '#src/dependencies/ircClientDependency.js';
 import { logger } from '#src/dependencies/loggerDependency.js';
 
 export const gracefulShutdown = async (
   httpServer: Server,
   webSocketServer: WebSocketServer,
 ) => {
-  logger.debug('shutting down server...');
-
   await webSocketServer.close();
+  await banchoClient.disconnect();
+
   httpServer.close(async (error) => {
     if (error) {
       return;
     }
 
-    await logger.end();
     await cache.quit();
     await postgresClient.end();
+    logger.end();
   });
 };
 
-export const createHttpServer = () => {
+export const createHttpServer = async () => {
   const application = createExpressApplication();
 
+  await banchoClient.connect();
+
   return application.listen(environmentConfig.expressPort, () => {
-    logger.debug('Server is running...');
+    logger.debug('HTTP Server is running...');
   });
 };
