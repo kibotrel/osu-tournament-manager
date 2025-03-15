@@ -7,8 +7,14 @@ import {
   IrcEvent,
   IrcKeyword,
 } from '#src/constants/ircConstants.js';
-import { parseIrcMessage } from '#src/methods/parseMethods.js';
-import { isSocketReady } from '#src/methods/typeGardMethods.js';
+import {
+  parseIrcMessage,
+  parseOsuUsername,
+} from '#src/methods/parseMethods.js';
+import {
+  isDirectMessageChannel,
+  isSocketReady,
+} from '#src/methods/typeGardMethods.js';
 
 export interface IrcClientCredentials {
   username: string;
@@ -172,5 +178,27 @@ export class BanchoClient extends EventEmitter {
         this.emit(BanchoClientEvent.BotSentMessage, { message });
       });
     });
+  }
+
+  /**
+   * Send a private message to the given recipient (channel or user).
+   */
+  public async sendPrivateMessage(
+    message: string,
+    options: { recipient: string },
+  ) {
+    const { recipient } = options;
+
+    if (isDirectMessageChannel(recipient)) {
+      await this.sendIrcMessage(
+        `${IrcKeyword.PrivateMessage} ${parseOsuUsername(recipient)} :${message}`,
+      );
+
+      return;
+    }
+
+    await this.sendIrcMessage(
+      `${IrcKeyword.PrivateMessage} ${recipient} :${message}`,
+    );
   }
 }
