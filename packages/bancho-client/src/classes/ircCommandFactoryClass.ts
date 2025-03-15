@@ -8,6 +8,7 @@ import { IrcCommandNoop } from './ircCommandNoopClass.js';
 import { IrcCommandPart } from './ircCommandPartClass.js';
 import { IrcCommandPrivateMessage } from './ircCommandPrivateMessageClass.js';
 import { IrcCommandQuit } from './ircCommandQuitClass.js';
+import { IrcCommandRecipientNotFound } from './ircCommandRecipientNotFoundClass.js';
 import { IrcCommandWelcome } from './ircCommandWelcomeClass.js';
 
 export class IrcCommandFactory {
@@ -41,6 +42,10 @@ export class IrcCommandFactory {
 
       case IrcKeyword.Quit: {
         return new IrcCommandQuit(this.banchoClient, packetParts);
+      }
+
+      case IrcKeyword.RecipientNotFound: {
+        return new IrcCommandRecipientNotFound(this.banchoClient, packetParts);
       }
 
       case IrcKeyword.Welcome: {

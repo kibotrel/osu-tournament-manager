@@ -32,6 +32,7 @@ export enum IrcKeyword {
   Pong = 'PONG',
   PrivateMessage = 'PRIVMSG',
   Quit = 'QUIT',
+  RecipientNotFound = '401',
   Username = 'USER',
   Welcome = '001',
 }
