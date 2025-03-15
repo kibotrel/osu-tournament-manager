@@ -26,6 +26,7 @@ export enum IrcKeyword {
   Mode = 'MODE',
   NameListBody = '353',
   Nickname = 'NICK',
+  Part = 'PART',
   Password = 'PASS',
   Ping = 'PING',
   Pong = 'PONG',

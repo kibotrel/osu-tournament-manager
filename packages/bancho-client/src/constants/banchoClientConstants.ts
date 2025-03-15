@@ -7,4 +7,5 @@ export enum BanchoClientEvent {
   ChannelMessage = 'channel_message',
   UserDisconnected = 'user_disconnected',
   UserJoinedChannel = 'user_joined_channel',
+  UserLeftChannel = 'user_left_channel',
 }
