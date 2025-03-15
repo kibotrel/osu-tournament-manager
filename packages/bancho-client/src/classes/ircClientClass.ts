@@ -48,7 +48,7 @@ export class BanchoClient extends EventEmitter {
     this.socket = undefined;
     this.remainingPacketData = '';
 
-    this.on(BanchoClientEvent.BotConnected, () => {
+    this.once(BanchoClientEvent.BotConnected, () => {
       this.connectionState = IrcClientState.Connected;
     });
   }
@@ -67,7 +67,7 @@ export class BanchoClient extends EventEmitter {
 
       this.socket = new Socket();
 
-      this.socket.on(IrcEvent.Close, () => {
+      this.socket.once(IrcEvent.Close, () => {
         this.handleCloseEvent();
       });
 
