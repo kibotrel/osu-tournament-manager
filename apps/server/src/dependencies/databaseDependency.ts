@@ -3,10 +3,9 @@ import pg from 'pg';
 
 import { databaseConfig } from '#src/configs/databaseConfig.js';
 
-const { Client } = pg;
+const { Pool } = pg;
 
-export const postgresClient = new Client(databaseConfig);
+export const postgresClient = new Pool(databaseConfig);
 
-await postgresClient.connect();
 
 export const database = drizzle(postgresClient);
