@@ -111,11 +111,11 @@ importers:
         specifier: 13.0.0
         version: 13.0.0(vue@3.5.8(typescript@5.8.2))
       pinia:
-        specifier: 2.2.2
-        version: 2.2.2(typescript@5.8.2)(vue@3.5.8(typescript@5.8.2))
+        specifier: 3.0.1
+        version: 3.0.1(typescript@5.8.2)(vue@3.5.8(typescript@5.8.2))
       pinia-plugin-persistedstate:
         specifier: 4.0.2
-        version: 4.0.2(pinia@2.2.2(typescript@5.8.2)(vue@3.5.8(typescript@5.8.2)))
+        version: 4.0.2(pinia@3.0.1(typescript@5.8.2)(vue@3.5.8(typescript@5.8.2)))
       tailwindcss:
         specifier: 4.0.14
         version: 4.0.14
@@ -1749,6 +1749,9 @@ packages:
 
   '@vue/devtools-api@6.6.4':
     resolution: {integrity: sha512-sGhTPMuXqZ1rVOk32RylztWkfXTRhuS7vgAKv0zjqk8gbsHkJ7xfFf+jbySxt7tWObEJwyKaHMikV/WGDiQm8g==}
+
+  '@vue/devtools-api@7.7.2':
+    resolution: {integrity: sha512-1syn558KhyN+chO5SjlZIwJ8bV/bQ1nOVTG66t2RbG66ZGekyiYNmRO7X9BJCXQqPsFHlnksqvPhce2qpzxFnA==}
 
   '@vue/devtools-core@7.7.2':
     resolution: {integrity: sha512-lexREWj1lKi91Tblr38ntSsy6CvI8ba7u+jmwh2yruib/ltLUcsIzEjCnrkh1yYGGIKXbAuYV2tOG10fGDB9OQ==}
@@ -4040,15 +4043,12 @@ packages:
       pinia:
         optional: true
 
-  pinia@2.2.2:
-    resolution: {integrity: sha512-ja2XqFWZC36mupU4z1ZzxeTApV7DOw44cV4dhQ9sGwun+N89v/XP7+j7q6TanS1u1tdbK4r+1BUx7heMaIdagA==}
+  pinia@3.0.1:
+    resolution: {integrity: sha512-WXglsDzztOTH6IfcJ99ltYZin2mY8XZCXujkYWVIJlBjqsP6ST7zw+Aarh63E1cDVYeyUcPCxPHzJpEOmzB6Wg==}
     peerDependencies:
-      '@vue/composition-api': ^1.4.0
       typescript: '>=4.4.4'
-      vue: ^2.6.14 || ^3.3.0
+      vue: ^2.7.0 || ^3.5.11
     peerDependenciesMeta:
-      '@vue/composition-api':
-        optional: true
       typescript:
         optional: true
 
@@ -5035,17 +5035,6 @@ packages:
       happy-dom:
         optional: true
       jsdom:
-        optional: true
-
-  vue-demi@0.14.10:
-    resolution: {integrity: sha512-nMZBOwuzabUO0nLgIcc6rycZEebF6eeUfaiQx9+WSk8e29IbLvPU9feI6tqW4kTo3hvoYAJkMh8n8D0fuISphg==}
-    engines: {node: '>=12'}
-    hasBin: true
-    peerDependencies:
-      '@vue/composition-api': ^1.0.0-rc.1
-      vue: ^3.0.0-0 || ^2.6.0
-    peerDependenciesMeta:
-      '@vue/composition-api':
         optional: true
 
   vue-eslint-parser@9.4.3:
@@ -6630,6 +6619,10 @@ snapshots:
       '@vue/shared': 3.5.8
 
   '@vue/devtools-api@6.6.4': {}
+
+  '@vue/devtools-api@7.7.2':
+    dependencies:
+      '@vue/devtools-kit': 7.7.2
 
   '@vue/devtools-core@7.7.2(vite@6.2.2(@types/node@22.13.10)(jiti@2.4.2)(lightningcss@1.29.2)(tsx@4.19.1))(vue@3.5.8(typescript@5.8.2))':
     dependencies:
@@ -9085,22 +9078,21 @@ snapshots:
 
   picomatch@4.0.2: {}
 
-  pinia-plugin-persistedstate@4.0.2(pinia@2.2.2(typescript@5.8.2)(vue@3.5.8(typescript@5.8.2))):
+  pinia-plugin-persistedstate@4.0.2(pinia@3.0.1(typescript@5.8.2)(vue@3.5.8(typescript@5.8.2))):
     dependencies:
       '@nuxt/kit': 3.16.0
       deep-pick-omit: 1.2.1
       defu: 6.1.4
       destr: 2.0.3
     optionalDependencies:
-      pinia: 2.2.2(typescript@5.8.2)(vue@3.5.8(typescript@5.8.2))
+      pinia: 3.0.1(typescript@5.8.2)(vue@3.5.8(typescript@5.8.2))
     transitivePeerDependencies:
       - magicast
 
-  pinia@2.2.2(typescript@5.8.2)(vue@3.5.8(typescript@5.8.2)):
+  pinia@3.0.1(typescript@5.8.2)(vue@3.5.8(typescript@5.8.2)):
     dependencies:
-      '@vue/devtools-api': 6.6.4
+      '@vue/devtools-api': 7.7.2
       vue: 3.5.8(typescript@5.8.2)
-      vue-demi: 0.14.10(vue@3.5.8(typescript@5.8.2))
     optionalDependencies:
       typescript: 5.8.2
 
@@ -10159,10 +10151,6 @@ snapshots:
       - terser
       - tsx
       - yaml
-
-  vue-demi@0.14.10(vue@3.5.8(typescript@5.8.2)):
-    dependencies:
-      vue: 3.5.8(typescript@5.8.2)
 
   vue-eslint-parser@9.4.3(eslint@8.57.0):
     dependencies:
