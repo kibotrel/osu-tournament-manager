@@ -3,6 +3,9 @@ import { IrcCommandFactory } from '#src/classes/ircCommandFactoryClass.js';
 import { IrcCommandPing } from '#src/classes/ircCommandPingClass.js';
 import { IrcKeyword, ignoredIrcKeywords } from '#src/constants/ircConstants.js';
 
+/**
+ * Parses the IRC message and returns the corresponding command handler.
+ */
 export const parseIrcMessage = (banchoClient: BanchoClient, packet: string) => {
   if (packet === `${IrcKeyword.Ping} ${banchoClient.serverInformation.host}`) {
     return new IrcCommandPing(banchoClient);
@@ -28,4 +31,12 @@ export const parseIrcMessage = (banchoClient: BanchoClient, packet: string) => {
  */
 export const parseIrcUsername = (username: string) => {
   return username.replace(/^(\+|@)/, '');
+};
+
+/**
+ * Bancho replaces spaces with underscores in usernames. See [osu! Iternet Relay Chat wiki](https://osu.ppy.sh/wiki/en/Community/Internet_Relay_Chat)
+ * for more information.
+ */
+export const parseOsuUsername = (username: string) => {
+  return username.replaceAll(' ', '_');
 };
