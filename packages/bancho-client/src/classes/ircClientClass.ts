@@ -62,9 +62,7 @@ export class BanchoClient extends EventEmitter {
       const { host, port } = this.serverInformation;
 
       if (this.connectionState !== IrcClientState.Disconnected) {
-        resolve();
-
-        return;
+        return resolve();
       }
 
       this.socket = new Socket();
@@ -93,9 +91,7 @@ export class BanchoClient extends EventEmitter {
   public disconnect() {
     return new Promise<void>((resolve) => {
       if (this.connectionState === IrcClientState.Disconnected) {
-        resolve();
-
-        return;
+        return resolve();
       }
 
       this.once(BanchoClientEvent.BotDisconnected, () => {
@@ -118,14 +114,16 @@ export class BanchoClient extends EventEmitter {
    * Authenticate the user with the IRC Bancho server as stated in
    * [RFC 1459](https://datatracker.ietf.org/doc/html/rfc1459#section-4.19).
    */
-  private handleConnectEvent() {
+  private async handleConnectEvent() {
     const { username, password } = this.clientCredentials;
 
     this.connectionState = IrcClientState.Connecting;
 
-    this.sendIrcMessage(`${IrcKeyword.Password} ${password}`);
-    this.sendIrcMessage(`${IrcKeyword.Nickname} ${username}`);
-    this.sendIrcMessage(`${IrcKeyword.Username} ${username} 0 * :${username}`);
+    await this.sendIrcMessage(`${IrcKeyword.Password} ${password}`);
+    await this.sendIrcMessage(`${IrcKeyword.Nickname} ${username}`);
+    await this.sendIrcMessage(
+      `${IrcKeyword.Username} ${username} 0 * :${username}`,
+    );
   }
 
   private async handleDataEvent(packet: string) {
@@ -151,10 +149,28 @@ export class BanchoClient extends EventEmitter {
    * method to send a message to an IRC server.
    */
   public sendIrcMessage(message: string) {
-    if (!isSocketReady(this.socket, this.connectionState)) {
-      return;
-    }
+    return new Promise<void>((resolve, reject) => {
+      if (!isSocketReady(this.socket, this.connectionState)) {
+        return resolve();
+      }
 
-    this.socket.write(`${message}\r\n`);
+      this.once(BanchoClientEvent.BotSentMessage, ({ error }) => {
+        if (error) {
+          return reject(error);
+        }
+
+        resolve();
+      });
+
+      this.socket.write(`${message}\r\n`, (error) => {
+        if (error) {
+          this.emit(BanchoClientEvent.BotSentMessage, { error, message });
+
+          return;
+        }
+
+        this.emit(BanchoClientEvent.BotSentMessage, { message });
+      });
+    });
   }
 }

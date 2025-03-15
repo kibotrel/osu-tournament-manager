@@ -9,8 +9,8 @@ export class IrcCommandPing implements IrcCommand {
     this.banchoClient = banchoClient;
   }
 
-  public handleCommand() {
-    this.banchoClient.sendIrcMessage(
+  public async handleCommand() {
+    await this.banchoClient.sendIrcMessage(
       `${IrcKeyword.Pong} ${this.banchoClient.serverInformation.host}`,
     );
   }
