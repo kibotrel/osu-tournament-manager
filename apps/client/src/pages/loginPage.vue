@@ -1,9 +1,9 @@
 <template>
   <div
-    class="mx-auto my-72 flex w-[90%] flex-col items-center justify-center rounded-lg border-1 border-primary-3 p-8 sm:w-3/4 md:w-2/3 lg:w-1/2 xl:w-1/3"
+    class="border-primary-3 mx-auto my-72 flex w-[90%] flex-col items-center justify-center rounded-lg border-1 p-8 sm:w-3/4 md:w-2/3 lg:w-1/2 xl:w-1/3"
   >
     <div class="w-full text-center">
-      <h1 class="mb-2 text-4xl font-semibold tracking-tight">Login</h1>
+      <h1 class="mb-2 text-4xl font-semibold tracking-tight">Welcome</h1>
       <p class="text-primary-2">
         To get access to this webapp, please login with your osu! account.
       </p>
