@@ -12,8 +12,8 @@ export const isPublicChannel = (recipient: string) => {
 };
 
 export const isSocketReady = (
-  socket: unknown,
   state: IrcClientState,
+  socket?: Socket,
 ): socket is Socket => {
-  return socket !== undefined && clientStatesAllowingMessage.has(state);
+  return socket?.writable === true && clientStatesAllowingMessage.has(state);
 };

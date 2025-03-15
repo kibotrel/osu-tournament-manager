@@ -156,7 +156,7 @@ export class BanchoClient extends EventEmitter {
    */
   public sendIrcMessage(message: string) {
     return new Promise<void>((resolve, reject) => {
-      if (!isSocketReady(this.socket, this.connectionState)) {
+      if (!isSocketReady(this.connectionState, this.socket)) {
         return resolve();
       }
 
