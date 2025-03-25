@@ -16,6 +16,7 @@ export enum IrcClientState {
  * List of [RFC 1459](https://tools.ietf.org/html/rfc1459) compliant IRC commands.
  */
 export enum IrcKeyword {
+  ChannelNotFound = '403',
   ChannelTopic = '332',
   ChannelTopicUpdatedAt = '333',
   EndOfNameList = '366',
