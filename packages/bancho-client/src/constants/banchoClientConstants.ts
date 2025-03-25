@@ -39,6 +39,14 @@ export enum BanchoCommand {
   TransferHost = '!mp host',
 }
 
+export enum BanchoCommonMessage {
+  ClosedMatch = 'Closed the match',
+}
+
+export enum BanchoUser {
+  BanchoBot = 'BanchoBot',
+}
+
 export enum BanchoPublicChannel {
   Lobby = '#lobby',
 }
