@@ -5,6 +5,8 @@ export enum BanchoClientEvent {
   BotJoinedChannel = 'bot_joined_channel',
   BotSentMessage = 'bot_sent_message',
   ChannelMessage = 'channel_message',
+  ChannelNotFound = 'channel_not_found',
+  MultiplayerChannelClosed = 'multiplayer_channel_closed',
   RecipientNotFound = 'recipient_not_found',
   UserDisconnected = 'user_disconnected',
   UserJoinedChannel = 'user_joined_channel',
