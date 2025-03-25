@@ -6,12 +6,15 @@ import { IrcKeyword, ignoredIrcKeywords } from '#src/constants/ircConstants.js';
 /**
  * Parses the IRC message and returns the corresponding command handler.
  */
-export const parseIrcMessage = (banchoClient: BanchoClient, packet: string) => {
-  if (packet === `${IrcKeyword.Ping} ${banchoClient.serverInformation.host}`) {
+export const parseIrcMessage = (
+  banchoClient: BanchoClient,
+  message: string,
+) => {
+  if (message === `${IrcKeyword.Ping} ${banchoClient.serverInformation.host}`) {
     return new IrcCommandPing(banchoClient);
   }
 
-  const parts = packet.split(':').filter(Boolean);
+  const parts = message.split(':').filter(Boolean);
   const [, command] = parts.at(0)?.split(' ') ?? [];
   const commandName = command as IrcKeyword;
 
