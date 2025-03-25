@@ -14,12 +14,8 @@ export class IrcCommandJoin implements IrcCommand {
 
   public handleCommand() {
     const channel = this.packetParts.at(1);
-    const user = this.packetParts.at(0)!.split('!').at(0)!;
+    const user = parseIrcUsername(this.packetParts.at(0)!.split('!').at(0)!);
 
-    this.banchoClient.emit(
-      BanchoClientEvent.UserJoinedChannel,
-      parseIrcUsername(user),
-      channel,
-    );
+    this.banchoClient.emit(BanchoClientEvent.UserJoinedChannel, user, channel);
   }
 }
