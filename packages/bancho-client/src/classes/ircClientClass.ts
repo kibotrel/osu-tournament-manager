@@ -64,11 +64,11 @@ export class BanchoClient extends EventEmitter {
    * necessary messages to authenticate the user.
    */
   public connect() {
-    return new Promise<void>((resolve) => {
+    return new Promise<void>((resolve, reject) => {
       const { host, port } = this.serverInformation;
 
       if (this.connectionState !== IrcClientState.Disconnected) {
-        return resolve();
+        return reject(new Error('Bancho client is already connected'));
       }
 
       this.socket = new Socket();
@@ -95,9 +95,9 @@ export class BanchoClient extends EventEmitter {
    * Gracefully disconnect from the IRC server.
    */
   public disconnect() {
-    return new Promise<void>((resolve) => {
+    return new Promise<void>((resolve, reject) => {
       if (this.connectionState === IrcClientState.Disconnected) {
-        return resolve();
+        return reject(new Error('Bancho client is already disconnected'));
       }
 
       this.once(BanchoClientEvent.BotDisconnected, () => {
@@ -157,16 +157,19 @@ export class BanchoClient extends EventEmitter {
   public sendIrcMessage(message: string) {
     return new Promise<void>((resolve, reject) => {
       if (!isSocketReady(this.connectionState, this.socket)) {
-        return resolve();
+        return reject(new Error('Bancho client is not connected'));
       }
 
-      this.once(BanchoClientEvent.BotSentMessage, ({ error }) => {
-        if (error) {
-          return reject(error);
-        }
+      this.once(
+        BanchoClientEvent.BotSentMessage,
+        ({ error }: { error?: Error }) => {
+          if (error) {
+            return reject(error);
+          }
 
-        resolve();
-      });
+          resolve();
+        },
+      );
 
       this.socket.write(`${message}\r\n`, (error) => {
         if (error) {
