@@ -1,7 +1,11 @@
 import { EventEmitter } from 'node:events';
 import { Socket } from 'node:net';
 
-import { BanchoClientEvent } from '#src/constants/banchoClientConstants.js';
+import {
+  BanchoClientEvent,
+  BanchoCommand,
+  BanchoPublicChannel,
+} from '#src/constants/banchoClientConstants.js';
 import {
   IrcClientState,
   IrcEvent,
@@ -88,6 +92,19 @@ export class BanchoClient extends EventEmitter {
       this.socket.connect({ host, port }, () => {
         this.handleConnectEvent();
       });
+    });
+  }
+
+  public createMultiplayerChannel(name: string) {
+    return new Promise<string>((resolve) => {
+      this.once(`${BanchoClientEvent.BotJoinedChannel}`, (channel: string) => {
+        resolve(channel);
+      });
+
+      this.sendPrivateMessage(
+        `${BanchoCommand.CreateTournamentMatch} ${name}`,
+        { recipient: BanchoPublicChannel.Lobby },
+      );
     });
   }
 
