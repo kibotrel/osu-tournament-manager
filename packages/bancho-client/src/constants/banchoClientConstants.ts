@@ -8,9 +8,12 @@ export enum BanchoClientEvent {
   ChannelNotFound = 'channel_not_found',
   MultiplayerChannelClosed = 'multiplayer_channel_closed',
   RecipientNotFound = 'recipient_not_found',
+  UserAlreadyInChannel = 'user_already_in_channel',
   UserDisconnected = 'user_disconnected',
+  UserInvitedToChannel = 'user_invited_to_channel',
   UserJoinedChannel = 'user_joined_channel',
   UserLeftChannel = 'user_left_channel',
+  UserNotFound = 'user_not_found',
 }
 
 /**
@@ -37,10 +40,6 @@ export enum BanchoCommand {
   StartMatch = '!mp start',
   StartTimer = '!mp timer',
   TransferHost = '!mp host',
-}
-
-export enum BanchoCommonMessage {
-  ClosedMatch = 'Closed the match',
 }
 
 export enum BanchoUser {

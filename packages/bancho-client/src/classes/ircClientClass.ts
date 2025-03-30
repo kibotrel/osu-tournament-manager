@@ -231,6 +231,36 @@ export class BanchoClient extends EventEmitter {
     });
   }
 
+  public inviteUserToMultiplayerChannel(username: string, channel: string) {
+    const sanitizedUsername = parseOsuUsername(username);
+
+    return new Promise<void>((resolve, reject) => {
+      this.once(BanchoClientEvent.UserNotFound, () => {
+        reject(
+          new Error(
+            `Could not invite user ${sanitizedUsername} to channel ${channel}`,
+          ),
+        );
+      });
+
+      this.once(BanchoClientEvent.UserAlreadyInChannel, () => {
+        resolve();
+      });
+
+      this.once(
+        `${BanchoClientEvent.UserInvitedToChannel}:${channel}:${sanitizedUsername}`,
+        () => {
+          resolve();
+        },
+      );
+
+      this.sendPrivateMessage(
+        `${BanchoCommand.InvitePlayer} ${sanitizedUsername}`,
+        { recipient: channel },
+      );
+    });
+  }
+
   /**
    * Send a private message to the given recipient (channel or user).
    */
