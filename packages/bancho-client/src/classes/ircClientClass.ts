@@ -63,6 +63,23 @@ export class BanchoClient extends EventEmitter {
     });
   }
 
+  public closeMultiplayerChannel(channel: string) {
+    return new Promise<void>((resolve, reject) => {
+      this.once(`${BanchoClientEvent.RecipientNotFound}:${channel}`, () => {
+        reject(new Error(`Match channel ${channel} not found`));
+      });
+
+      this.once(
+        `${BanchoClientEvent.MultiplayerChannelClosed}:${channel}`,
+        () => {
+          resolve();
+        },
+      );
+
+      this.sendPrivateMessage(BanchoCommand.CloseMatch, { recipient: channel });
+    });
+  }
+
   /**
    * Connect to the given IRC server, configure event listeners and send the
    * necessary messages to authenticate the user.
