@@ -12,11 +12,9 @@ export class IrcCommandChannelTopic implements IrcCommand {
   }
 
   public handleCommand() {
-    const channelName = this.packetParts.at(0)?.split(' ').at(3);
+    const channel = this.packetParts.at(0)!.split(' ').at(3)!;
 
-    this.banchoClient.emit(BanchoClientEvent.BotJoinedChannel, channelName);
-    this.banchoClient.emit(
-      `${BanchoClientEvent.BotJoinedChannel}:${channelName}`,
-    );
+    this.banchoClient.emit(BanchoClientEvent.BotJoinedChannel, { channel });
+    this.banchoClient.emit(`${BanchoClientEvent.BotJoinedChannel}:${channel}`);
   }
 }

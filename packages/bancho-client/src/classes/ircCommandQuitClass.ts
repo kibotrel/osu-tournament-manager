@@ -12,8 +12,8 @@ export class IrcCommandQuit implements IrcCommand {
   }
 
   public handleCommand() {
-    const user = this.packetParts.at(0)?.split('!')?.at(0)?.slice(1);
+    const user = this.packetParts.at(0)!.split('!')!.at(0)!.slice(1);
 
-    this.banchoClient.emit(BanchoClientEvent.UserDisconnected, user);
+    this.banchoClient.emit(BanchoClientEvent.UserDisconnected, { user });
   }
 }

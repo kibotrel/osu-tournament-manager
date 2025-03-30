@@ -20,6 +20,36 @@ import {
   isSocketReady,
 } from '#src/methods/typeGardMethods.js';
 
+interface EmmittedEvents {
+  [BanchoClientEvent.AddChannelMembers]: [{ channel: string; users: string[] }];
+  [BanchoClientEvent.BotConnected]: [];
+  [BanchoClientEvent.BotDisconnected]: [];
+  [BanchoClientEvent.BotJoinedChannel]: [{ channel: string }];
+  [BanchoClientEvent.BotSentMessage]: [{ error?: Error; message: string }];
+  [BanchoClientEvent.ChannelMessage]: [
+    { channel: string; message: string; user: string },
+  ];
+  [BanchoClientEvent.ChannelNotFound]: [{ channel: string }];
+  [BanchoClientEvent.MultiplayerChannelClosed]: [{ channel: string }];
+  [BanchoClientEvent.RecipientNotFound]: [{ recipient: string }];
+  [BanchoClientEvent.UserAlreadyInChannel]: [];
+  [BanchoClientEvent.UserDisconnected]: [{ user: string }];
+  [BanchoClientEvent.UserInvitedToChannel]: [{ channel: string; user: string }];
+  [BanchoClientEvent.UserJoinedChannel]: [{ channel: string; user: string }];
+  [BanchoClientEvent.UserLeftChannel]: [{ channel: string; user: string }];
+  [BanchoClientEvent.UserNotFound]: [];
+  [key: `${BanchoClientEvent.BotJoinedChannel}:${string}`]: [];
+  [key: `${BanchoClientEvent.ChannelMessage}:${string}`]: [
+    { message: string; user: string },
+  ];
+  [key: `${BanchoClientEvent.ChannelNotFound}:${string}`]: [];
+  [key: `${BanchoClientEvent.MultiplayerChannelClosed}:${string}`]: [];
+  [key: `${BanchoClientEvent.RecipientNotFound}:${string}`]: [];
+  [key: `${BanchoClientEvent.UserInvitedToChannel}:${string}:${string}`]: [];
+  [key: `${BanchoClientEvent.UserJoinedChannel}:${string}`]: [{ user: string }];
+  [key: `${BanchoClientEvent.UserLeftChannel}:${string}`]: [{ user: string }];
+}
+
 export interface IrcClientCredentials {
   username: string;
   password: string;
@@ -35,7 +65,7 @@ export interface IrcServerInformation {
   port: number;
 }
 
-export class BanchoClient extends EventEmitter {
+export class BanchoClient extends EventEmitter<EmmittedEvents> {
   private readonly clientCredentials: IrcClientCredentials;
   public readonly serverInformation: IrcServerInformation;
   private connectionState: IrcClientState;
@@ -112,9 +142,13 @@ export class BanchoClient extends EventEmitter {
     });
   }
 
+  /**
+   * Create a new multiplayer channel with the given name. Returns the internal
+   * id given by the Bancho server like `#mp_123456`.
+   */
   public createMultiplayerChannel(name: string) {
     return new Promise<string>((resolve) => {
-      this.once(`${BanchoClientEvent.BotJoinedChannel}`, (channel: string) => {
+      this.once(BanchoClientEvent.BotJoinedChannel, ({ channel }) => {
         resolve(channel);
       });
 
@@ -208,16 +242,13 @@ export class BanchoClient extends EventEmitter {
         return reject(new Error('Bancho client is not connected'));
       }
 
-      this.once(
-        BanchoClientEvent.BotSentMessage,
-        ({ error }: { error?: Error }) => {
-          if (error) {
-            return reject(error);
-          }
+      this.once(BanchoClientEvent.BotSentMessage, ({ error }) => {
+        if (error) {
+          return reject(error);
+        }
 
-          resolve();
-        },
-      );
+        resolve();
+      });
 
       this.socket.write(`${message}\r\n`, (error) => {
         if (error) {
@@ -232,14 +263,12 @@ export class BanchoClient extends EventEmitter {
   }
 
   public inviteUserToMultiplayerChannel(username: string, channel: string) {
-    const sanitizedUsername = parseOsuUsername(username);
+    const user = parseOsuUsername(username);
 
     return new Promise<void>((resolve, reject) => {
       this.once(BanchoClientEvent.UserNotFound, () => {
         reject(
-          new Error(
-            `Could not invite user ${sanitizedUsername} to channel ${channel}`,
-          ),
+          new Error(`Could not invite user ${user} to channel ${channel}`),
         );
       });
 
@@ -248,16 +277,15 @@ export class BanchoClient extends EventEmitter {
       });
 
       this.once(
-        `${BanchoClientEvent.UserInvitedToChannel}:${channel}:${sanitizedUsername}`,
+        `${BanchoClientEvent.UserInvitedToChannel}:${channel}:${user}`,
         () => {
           resolve();
         },
       );
 
-      this.sendPrivateMessage(
-        `${BanchoCommand.InvitePlayer} ${sanitizedUsername}`,
-        { recipient: channel },
-      );
+      this.sendPrivateMessage(`${BanchoCommand.InvitePlayer} ${user}`, {
+        recipient: channel,
+      });
     });
   }
 

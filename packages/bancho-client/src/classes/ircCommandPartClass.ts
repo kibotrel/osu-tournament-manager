@@ -13,13 +13,16 @@ export class IrcCommandPart implements IrcCommand {
   }
 
   public handleCommand() {
-    const [user] = this.packetParts.at(0)!.split(' ');
+    const [username] = this.packetParts.at(0)!.split(' ');
     const channel = this.packetParts.at(1)!;
+    const user = parseIrcUsername(username.split('!').at(0)!);
 
-    this.banchoClient.emit(
-      BanchoClientEvent.UserLeftChannel,
-      parseIrcUsername(user.split('!').at(0)!),
+    this.banchoClient.emit(BanchoClientEvent.UserLeftChannel, {
       channel,
-    );
+      user,
+    });
+    this.banchoClient.emit(`${BanchoClientEvent.UserLeftChannel}:${channel}`, {
+      user,
+    });
   }
 }

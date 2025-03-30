@@ -29,21 +29,14 @@ export class IrcCommandPrivateMessage implements IrcCommand {
     );
 
     if (userInvitedToChannelRegularExpression.test(message)) {
-      const [, username] = message.match(
-        userInvitedToChannelRegularExpression,
-      )!;
+      const [, user] = message.match(userInvitedToChannelRegularExpression)!;
 
-      this.banchoClient.emit(
-        BanchoClientEvent.UserInvitedToChannel,
+      this.banchoClient.emit(BanchoClientEvent.UserInvitedToChannel, {
         channel,
-        username,
-      );
+        user,
+      });
       this.banchoClient.emit(
-        `${BanchoClientEvent.UserInvitedToChannel}:${channel}`,
-        username,
-      );
-      this.banchoClient.emit(
-        `${BanchoClientEvent.UserInvitedToChannel}:${channel}:${username}`,
+        `${BanchoClientEvent.UserInvitedToChannel}:${channel}:${user}`,
       );
 
       return;
@@ -51,10 +44,9 @@ export class IrcCommandPrivateMessage implements IrcCommand {
 
     switch (message) {
       case BanchoBotCommonMessage.ClosedMatch: {
-        this.banchoClient.emit(
-          BanchoClientEvent.MultiplayerChannelClosed,
+        this.banchoClient.emit(BanchoClientEvent.MultiplayerChannelClosed, {
           channel,
-        );
+        });
         this.banchoClient.emit(
           `${BanchoClientEvent.MultiplayerChannelClosed}:${channel}`,
         );
@@ -69,29 +61,26 @@ export class IrcCommandPrivateMessage implements IrcCommand {
       case BanchoBotCommonMessage.UserAlreadyInChannel: {
         return this.banchoClient.emit(BanchoClientEvent.UserAlreadyInChannel);
       }
-
-      default: {
-        this.banchoClient.emit(
-          `${BanchoClientEvent.UserInvitedToChannel}:DemonWaves:${channel}`,
-        );
-      }
     }
   }
 
-  // TODO: Handle the ACTION feture
+  // TODO: Handle the ACTION feature
   public handleCommand() {
-    const [user, , channel] = this.packetParts.at(0)!.split(' ');
+    const [username, , channel] = this.packetParts.at(0)!.split(' ');
     const message = this.packetParts.slice(1).join(':');
-    const sanitizedUser = parseIrcUsername(user.split('!').at(0)!);
+    const user = parseIrcUsername(username.split('!').at(0)!);
 
-    this.banchoClient.emit(
-      BanchoClientEvent.ChannelMessage,
-      sanitizedUser,
+    this.banchoClient.emit(BanchoClientEvent.ChannelMessage, {
       channel,
       message,
-    );
+      user,
+    });
+    this.banchoClient.emit(`${BanchoClientEvent.ChannelMessage}:${channel}`, {
+      message,
+      user,
+    });
 
-    if (sanitizedUser === BanchoUser.BanchoBot) {
+    if (user === BanchoUser.BanchoBot) {
       this.emitBanchoBotEvents(channel, message);
     }
   }

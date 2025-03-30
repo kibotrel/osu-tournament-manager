@@ -13,15 +13,14 @@ export class IrcCommandNameListBody implements IrcCommand {
   }
 
   public handleCommand() {
-    const channel = this.packetParts.at(0)?.split('=')?.at(1)?.trim();
+    const channel = this.packetParts.at(0)!.split('=')!.at(1)!.trim();
     const users = this.packetParts.at(-1)!.split(' ').filter(Boolean);
 
-    this.banchoClient.emit(
-      BanchoClientEvent.AddChannelMembers,
+    this.banchoClient.emit(BanchoClientEvent.AddChannelMembers, {
       channel,
-      users.map((user) => {
+      users: users.map((user) => {
         return parseIrcUsername(user);
       }),
-    );
+    });
   }
 }

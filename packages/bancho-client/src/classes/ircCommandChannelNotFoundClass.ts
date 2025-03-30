@@ -12,11 +12,9 @@ export class IrcCommandChannelNotFound implements IrcCommand {
   }
 
   public handleCommand() {
-    const channelName = this.packetParts.at(0)?.split(' ').at(3);
+    const channel = this.packetParts.at(0)!.split(' ').at(3)!;
 
-    this.banchoClient.emit(BanchoClientEvent.ChannelNotFound, channelName);
-    this.banchoClient.emit(
-      `${BanchoClientEvent.ChannelNotFound}:${channelName}`,
-    );
+    this.banchoClient.emit(BanchoClientEvent.ChannelNotFound, { channel });
+    this.banchoClient.emit(`${BanchoClientEvent.ChannelNotFound}:${channel}`);
   }
 }
