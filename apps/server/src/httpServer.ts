@@ -1,5 +1,7 @@
 import type { Server } from 'node:http';
 
+import { BanchoPublicChannel } from '@packages/bancho-client';
+
 import { createExpressApplication } from '#src/application.js';
 import type { WebSocketServer } from '#src/classes/webSocketServerClass.js';
 import { environmentConfig } from '#src/configs/environmentConfig.js';
@@ -30,6 +32,7 @@ export const createHttpServer = async () => {
   const application = createExpressApplication();
 
   await banchoClient.connect();
+  await banchoClient.joinChannel(BanchoPublicChannel.Lobby);
 
   return application.listen(environmentConfig.expressPort, () => {
     logger.debug('HTTP Server is running...');

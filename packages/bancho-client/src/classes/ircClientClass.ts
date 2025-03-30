@@ -150,6 +150,20 @@ export class BanchoClient extends EventEmitter {
     }
   }
 
+  public joinChannel(channel: string) {
+    return new Promise<void>((resolve, reject) => {
+      this.once(`${BanchoClientEvent.BotJoinedChannel}:${channel}`, () => {
+        resolve();
+      });
+
+      this.once(`${BanchoClientEvent.ChannelNotFound}:${channel}`, () => {
+        reject(new Error(`Bancho channel ${channel} not found`));
+      });
+
+      this.sendIrcMessage(`${IrcKeyword.Join} ${channel}`);
+    });
+  }
+
   /**
    * [RFC 1459](https://datatracker.ietf.org/doc/html/rfc1459#section-2.3.1) compliant
    * method to send a message to an IRC server.
