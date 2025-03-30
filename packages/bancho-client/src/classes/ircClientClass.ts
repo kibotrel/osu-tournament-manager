@@ -172,8 +172,10 @@ export class BanchoClient extends EventEmitter<EmmittedEvents> {
         resolve();
       });
 
-      this.sendIrcMessage(IrcKeyword.Quit);
-      this.connectionState = IrcClientState.Disconnecting;
+      if (this.connectionState !== IrcClientState.Disconnecting) {
+        this.sendIrcMessage(IrcKeyword.Quit);
+        this.connectionState = IrcClientState.Disconnecting;
+      }
     });
   }
 
