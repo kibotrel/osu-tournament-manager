@@ -4,6 +4,7 @@ import { BanchoClient } from '#src/banchoClientExport.js';
 import { IrcCommandChannelNotFound } from '#src/classes/ircCommandChannelNotFoundClass.js';
 import { IrcCommandChannelTopic } from '#src/classes/ircCommandChannelTopicClass.js';
 import { IrcCommandJoin } from '#src/classes/ircCommandJoinClass.js';
+import { IrcCommandNoop } from '#src/classes/ircCommandNoopClass.js';
 import { IrcCommandPart } from '#src/classes/ircCommandPartClass.js';
 import { IrcCommandPing } from '#src/classes/ircCommandPingClass.js';
 import { IrcCommandQuit } from '#src/classes/ircCommandQuitClass.js';
@@ -103,6 +104,15 @@ describe('parseIrcMessage', () => {
         ':username!server@localhost.dev JOIN :#channel',
       ),
     ).toBeInstanceOf(IrcCommandJoin);
+  });
+
+  it('should return an instance of IrcCommandNoop for unknown type message', () => {
+    expect(
+      parseIrcMessage(
+        banchoClient,
+        ':username!server@localhost.dev UNKNOWN_COMMAND :unknown command',
+      ),
+    ).toBeInstanceOf(IrcCommandNoop);
   });
 
   it('should return an instance of IrcCommandPart for Part type message', () => {
