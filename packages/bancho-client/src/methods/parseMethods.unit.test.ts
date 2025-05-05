@@ -9,7 +9,10 @@ import { IrcCommandPing } from '#src/classes/ircCommandPingClass.js';
 import { IrcCommandQuit } from '#src/classes/ircCommandQuitClass.js';
 import { IrcCommandRecipientNotFound } from '#src/classes/ircCommandRecipientNotFoundClass.js';
 import { IrcCommandWelcome } from '#src/classes/ircCommandWelcomeClass.js';
-import { parseIrcMessage } from '#src/methods/parseMethods.js';
+import {
+  parseIrcMessage,
+  parseIrcUsername,
+} from '#src/methods/parseMethods.js';
 
 describe('parseIrcMessage', () => {
   const banchoClient = new BanchoClient({
@@ -141,5 +144,19 @@ describe('parseIrcMessage', () => {
     expect(
       parseIrcMessage(banchoClient, ':localhost.dev 001 username :Welcome'),
     ).toBeInstanceOf(IrcCommandWelcome);
+  });
+});
+
+describe('parseIrcUsername', () => {
+  it('should return the input if no special right is set', () => {
+    expect(parseIrcUsername('username')).toBe('username');
+  });
+
+  it('should remove the operator right character if present', () => {
+    expect(parseIrcUsername('@username')).toBe('username');
+  });
+
+  it('should remove the voice right character if present', () => {
+    expect(parseIrcUsername('+username')).toBe('username');
   });
 });
