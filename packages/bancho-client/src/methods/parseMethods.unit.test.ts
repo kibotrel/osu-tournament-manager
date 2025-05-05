@@ -12,6 +12,7 @@ import { IrcCommandWelcome } from '#src/classes/ircCommandWelcomeClass.js';
 import {
   parseIrcMessage,
   parseIrcUsername,
+  parseOsuUsername,
 } from '#src/methods/parseMethods.js';
 
 describe('parseIrcMessage', () => {
@@ -158,5 +159,19 @@ describe('parseIrcUsername', () => {
 
   it('should remove the voice right character if present', () => {
     expect(parseIrcUsername('+username')).toBe('username');
+  });
+});
+
+describe('parseOsuUsername', () => {
+  it('should return the input if no spaces are present', () => {
+    expect(parseOsuUsername('username')).toBe('username');
+  });
+
+  it('should replace spaces with underscores', () => {
+    expect(parseOsuUsername('user name')).toBe('user_name');
+  });
+
+  it('should replace multiple spaces with underscores', () => {
+    expect(parseOsuUsername('user   name')).toBe('user___name');
   });
 });
