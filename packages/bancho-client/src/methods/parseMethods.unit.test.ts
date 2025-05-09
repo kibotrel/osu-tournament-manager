@@ -4,9 +4,11 @@ import { BanchoClient } from '#src/banchoClientExport.js';
 import { IrcCommandChannelNotFound } from '#src/classes/ircCommandChannelNotFoundClass.js';
 import { IrcCommandChannelTopic } from '#src/classes/ircCommandChannelTopicClass.js';
 import { IrcCommandJoin } from '#src/classes/ircCommandJoinClass.js';
+import { IrcCommandNameListBody } from '#src/classes/ircCommandNameListBodyClass.js';
 import { IrcCommandNoop } from '#src/classes/ircCommandNoopClass.js';
 import { IrcCommandPart } from '#src/classes/ircCommandPartClass.js';
 import { IrcCommandPing } from '#src/classes/ircCommandPingClass.js';
+import { IrcCommandPrivateMessage } from '#src/classes/ircCommandPrivateMessageClass.js';
 import { IrcCommandQuit } from '#src/classes/ircCommandQuitClass.js';
 import { IrcCommandRecipientNotFound } from '#src/classes/ircCommandRecipientNotFoundClass.js';
 import { IrcCommandWelcome } from '#src/classes/ircCommandWelcomeClass.js';
@@ -106,6 +108,15 @@ describe('parseIrcMessage', () => {
     ).toBeInstanceOf(IrcCommandJoin);
   });
 
+  it('should return an instance of IrcCommandNameListBody for NameListBody type message', () => {
+    expect(
+      parseIrcMessage(
+        banchoClient,
+        ':localhost.dev 353 username = #channel :username1 username2 username3',
+      ),
+    ).toBeInstanceOf(IrcCommandNameListBody);
+  });
+
   it('should return an instance of IrcCommandNoop for unknown type message', () => {
     expect(
       parseIrcMessage(
@@ -130,7 +141,7 @@ describe('parseIrcMessage', () => {
         banchoClient,
         ':username!server@localhost.dev PRIVMSG #channel :message content',
       ),
-    );
+    ).toBeInstanceOf(IrcCommandPrivateMessage);
   });
 
   it('should return an instance of IrcCommandQuit for Quit type message', () => {
