@@ -16,7 +16,7 @@
     "dev": "nodemon --config nodemon.json",
     "format": "prettier --write src/**/*.ts",
     "lint": "eslint src/**/*.ts --config .eslintrc",
-    "test:unit": "vitest --config vitest.config.unit.ts run"
+    "test:unit": "vitest --config vitest.config.unit.ts"
   },
   "type": "module",
   "types": "dist/src/sharedExport.d.ts"

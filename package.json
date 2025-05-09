@@ -35,9 +35,7 @@
     "format": "pnpm --filter=@packages/* format && pnpm --filter=./apps/* format",
     "lint": "pnpm --filter=@packages/* lint && pnpm --filter=./apps/* lint",
     "prepare": "pnpm husky && pnpm --filter=@packages/* build",
-    "test": "vitest run",
-    "test:unit": "pnpm --filter=@packages/* test:unit && pnpm --filter=./apps/* test:unit",
-    "test:integration": "pnpm --filter=@packages/* test:integration && pnpm --filter=./apps/* test:integration"
+    "test": "vitest"
   },
   "type": "module",
   "workspaces": [
