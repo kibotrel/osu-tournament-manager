@@ -22,7 +22,7 @@ describe('IrcCommandJoin', () => {
   });
 
   describe('handleCommand', () => {
-    it('should emit user_joined_channel event with the channel name', () => {
+    it('should emit user_joined_channel event with the channel name and user', () => {
       const command = new IrcCommandJoin(banchoClient, packetParts);
       const eventEmitter = vi.spyOn(banchoClient, 'emit');
 
