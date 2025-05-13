@@ -7,5 +7,4 @@ const { Pool } = pg;
 
 export const postgresClient = new Pool(databaseConfig);
 
-
 export const database = drizzle(postgresClient);

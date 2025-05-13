@@ -1,4 +1,3 @@
-import type { ErrorReport } from '#src/classes/httpErrorReportClass.js';
 import { HttpRequest } from '#src/classes/httpRequestClass.js';
 import { HttpHeader } from '#src/constants/httpConstants.js';
 import type { Nothing } from '#src/types/utilityTypes.js';
@@ -93,14 +92,4 @@ export const putRequest = <
   const request = createGenericRequest<PayloadType>(configuration);
 
   return request.put<ResponseType>(endpoint);
-};
-
-export const isErrorReport = (input: unknown): input is ErrorReport => {
-  return (
-    typeof input === 'object' &&
-    input !== null &&
-    'instance' in input &&
-    'status' in input &&
-    'title' in input
-  );
 };

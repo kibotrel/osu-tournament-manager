@@ -1,6 +1,7 @@
 import { BanchoClientEvent } from '#src/banchoClientExport.js';
 import type { BanchoClient } from '#src/classes/ircClientClass.js';
 import type { IrcCommand } from '#src/classes/ircCommandClass.js';
+import { parseIrcUsername } from '#src/methods/parseMethods.js';
 
 export class IrcCommandQuit implements IrcCommand {
   public readonly banchoClient: BanchoClient;
@@ -12,7 +13,7 @@ export class IrcCommandQuit implements IrcCommand {
   }
 
   public handleCommand() {
-    const user = this.packetParts.at(0)!.split('!')!.at(0)!.slice(1);
+    const user = parseIrcUsername(this.packetParts.at(0)!.split('!')!.at(0)!);
 
     this.banchoClient.emit(BanchoClientEvent.UserDisconnected, { user });
   }
