@@ -2,19 +2,18 @@
 import { describe, expect, it } from 'vitest';
 
 import { BanchoClient } from '#src/classes/ircClientClass.js';
+import { IrcCommandChannelNotFound } from '#src/classes/ircCommandChannelNotFoundClass.js';
+import { IrcCommandChannelTopic } from '#src/classes/ircCommandChannelTopicClass.js';
+import { IrcCommandFactory } from '#src/classes/ircCommandFactoryClass.js';
+import { IrcCommandJoin } from '#src/classes/ircCommandJoinClass.js';
+import { IrcCommandNameListBody } from '#src/classes/ircCommandNameListBodyClass.js';
+import { IrcCommandNoop } from '#src/classes/ircCommandNoopClass.js';
+import { IrcCommandPart } from '#src/classes/ircCommandPartClass.js';
+import { IrcCommandPrivateMessage } from '#src/classes/ircCommandPrivateMessageClass.js';
+import { IrcCommandQuit } from '#src/classes/ircCommandQuitClass.js';
+import { IrcCommandRecipientNotFound } from '#src/classes/ircCommandRecipientNotFoundClass.js';
+import { IrcCommandWelcome } from '#src/classes/ircCommandWelcomeClass.js';
 import type { IrcKeyword } from '#src/constants/ircConstants.js';
-
-import { IrcCommandChannelNotFound } from './ircCommandChannelNotFoundClass.js';
-import { IrcCommandChannelTopic } from './ircCommandChannelTopicClass.js';
-import { IrcCommandFactory } from './ircCommandFactoryClass.js';
-import { IrcCommandJoin } from './ircCommandJoinClass.js';
-import { IrcCommandNameListBody } from './ircCommandNameListBodyClass.js';
-import { IrcCommandNoop } from './ircCommandNoopClass.js';
-import { IrcCommandPart } from './ircCommandPartClass.js';
-import { IrcCommandPrivateMessage } from './ircCommandPrivateMessageClass.js';
-import { IrcCommandQuit } from './ircCommandQuitClass.js';
-import { IrcCommandRecipientNotFound } from './ircCommandRecipientNotFoundClass.js';
-import { IrcCommandWelcome } from './ircCommandWelcomeClass.js';
 
 describe('IrcCommandFactory', () => {
   const banchoClient = new BanchoClient({
