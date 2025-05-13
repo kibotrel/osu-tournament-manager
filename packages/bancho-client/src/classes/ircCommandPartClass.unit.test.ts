@@ -12,7 +12,7 @@ describe('IrcCommandPart', () => {
   const packetParts = ['username!server@localhost.dev PART', '#channel'];
 
   describe('constructor', () => {
-    it('should create an instance of IrcCommandNameListBody', () => {
+    it('should create an instance of IrcCommandPart', () => {
       const command = new IrcCommandPart(banchoClient, packetParts);
 
       expect(command).toBeInstanceOf(IrcCommandPart);
@@ -22,7 +22,7 @@ describe('IrcCommandPart', () => {
   });
 
   describe('handleCommand', () => {
-    it('should emit user_left_channel event with the channel name and an user list', () => {
+    it('should emit user_left_channel event with the channel and user', () => {
       const command = new IrcCommandPart(banchoClient, packetParts);
       const eventEmitter = vi.spyOn(banchoClient, 'emit');
 
