@@ -153,7 +153,7 @@ export class WebSocketServer {
    */
   private extractConnectionIntents(url: string) {
     const { pathname, searchParams } = new URL(url, environmentConfig.baseUrl);
-    const [channel, threadId] = pathname.split('/').filter(Boolean).slice(2);
+    const [channel, threadId] = pathname.split('/').filter(Boolean).slice(1);
     const events = searchParams.get('events')?.split(',') ?? [];
 
     return { channel, threadId, events };
@@ -203,6 +203,8 @@ export class WebSocketServer {
   }
 
   private handleWebSocketCloseEvent(webSocket: ExtendedWebSocket) {
+    console.log('WebSocket connection closed:', webSocket.id);
+
     this.webSocketClients.delete(webSocket.id);
 
     for (const subscription of webSocket.subscriptions.values()) {
@@ -233,8 +235,12 @@ export class WebSocketServer {
 
   private handleWebSocketServerConnectionEvent() {
     this.webSocketServer.on(WebSocketEvent.Connection, (webSocket, request) => {
+      console.log('WebSocket connection established');
+
       const subscription = this.extractConnectionIntents(request.url!);
       const extendedWebSocket = this.injectCustomWebSocketProperties(webSocket);
+
+      console.log('WebSocket connection subscription:', subscription);
 
       this.cacheWebSocketClient(extendedWebSocket);
       this.addTopicsSubscription(extendedWebSocket, subscription);
