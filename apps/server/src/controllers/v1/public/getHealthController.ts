@@ -5,5 +5,5 @@ export const getHealthController: RequestHandler<never, never, never, never> = (
   _request,
   response,
 ) => {
-  return response.sendStatus(HttpStatusCode.Ok);
+  return response.status(HttpStatusCode.NoContent).end();
 };
