@@ -17,9 +17,5 @@ export const loginWithOsu = async (authenticationCode: string) => {
   const gameUser = await osuGetMe({ token: bearer.token });
   const { isNew, user } = await getOrCreateUser(gameUser);
 
-  return {
-    bearer,
-    isNew,
-    user,
-  };
+  return { bearer, isNew, user };
 };
