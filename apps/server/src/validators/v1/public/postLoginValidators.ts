@@ -3,10 +3,26 @@ import { body } from 'express-validator';
 
 const postLoginBodyValidator = (): ValidationChain[] => {
   return [
-    body('authenticationCode').escape().trim().hide().notEmpty().withMessage({
-      message: 'Authentication code cannot be empty',
-      errorCode: 'validator.postLoginBodyValidator.authenticationCode.empty',
-    }),
+    body('authenticationCode')
+      .exists()
+      .withMessage({
+        message: 'AuthenticationCode is required',
+        errorCode:
+          'validator.postLoginBodyValidator.authenticationCode.required',
+      })
+      .isString()
+      .withMessage({
+        message: 'AuthenticationCode must be a string',
+        errorCode: 'validator.postLoginBodyValidator.authenticationCode.string',
+      })
+      .notEmpty()
+      .withMessage({
+        message: 'AuthenticationCode cannot be empty',
+        errorCode: 'validator.postLoginBodyValidator.authenticationCode.empty',
+      })
+      .escape()
+      .trim()
+      .hide(),
   ];
 };
 
