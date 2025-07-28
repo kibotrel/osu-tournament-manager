@@ -54,6 +54,12 @@ export enum HttpHeader {
   Location = 'Location',
   /** Indicates the part of the ressource server should return. */
   Range = 'Range',
+  /**
+   * Unique identifier for the request, used to track it across
+   * the server and client.
+   * This is typically set by the server.
+   */
+  RequestId = 'X-Request-Id',
   /** Time after which the client should retry the request. */
   RetryAfter = 'Retry-After',
   /** Contains various metrics about the server request processing. */
