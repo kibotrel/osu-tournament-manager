@@ -23,6 +23,10 @@ export const expressRequestMock = <
     >
   > = {};
 
+  request.body = {} as RequestBodyType;
+  request.params = {} as PathParametersType;
+  request.query = {} as RequestQueryType;
+
   request.session = {
     cookie: {
       path: '/',
@@ -30,22 +34,29 @@ export const expressRequestMock = <
       httpOnly: true,
       originalMaxAge: Time.Week,
     },
+
     destroy: vi.fn().mockImplementation(() => {
       return request.session;
     }),
+
     id: randomUUID(),
+
     reload: vi.fn().mockImplementation(() => {
       return request.session;
     }),
+
     regenerate: vi.fn().mockImplementation(() => {
       return request.session;
     }),
+
     resetMaxAge: vi.fn().mockImplementation(() => {
       return request.session;
     }),
+
     save: vi.fn().mockImplementation(() => {
       return request.session;
     }),
+
     touch: vi.fn().mockImplementation(() => {
       return request.session;
     }),
@@ -62,16 +73,10 @@ export const expressRequestMock = <
 export const expressResponseMock = <ResponseBodyType = never>() => {
   const response: Partial<Response<ResponseBodyType>> = {};
 
-  response.json = vi.fn().mockImplementation(() => {
-    return response;
-  });
-
-  response.end = vi.fn().mockImplementation(() => {
-    return response;
-  });
-  response.status = vi.fn().mockImplementation(() => {
-    return response;
-  });
+  response.json = vi.fn().mockReturnThis();
+  response.end = vi.fn().mockReturnThis();
+  response.setHeader = vi.fn().mockReturnThis();
+  response.status = vi.fn().mockReturnThis();
 
   return response as Response<ResponseBodyType>;
 };
