@@ -1,3 +1,7 @@
+{
+	admin :2019
+}
+
 dev.osu-tournament-manager.app {
   @appWebSockets {
 		path /api/websockets/*
