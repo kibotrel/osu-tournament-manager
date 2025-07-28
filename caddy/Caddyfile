@@ -32,6 +32,8 @@ dev.osu-tournament-manager.app {
 	}
 
 	header -Server
+	header -Via
+
   reverse_proxy client:{$CLIENT_PORT_TARGET}
 	tls internal
 }
