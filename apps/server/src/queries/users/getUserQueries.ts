@@ -25,7 +25,7 @@ export const getUserByGameUserId = async <
     .where(eq(usersTable.gameUserId, gameUserId));
 
   if (!user) {
-    return;
+    return null;
   }
 
   return user as Columns extends []
