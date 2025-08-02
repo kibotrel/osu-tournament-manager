@@ -9,7 +9,6 @@ on:
 
 jobs:
   test-suite:
-    name: ${{ inputs.path }} unit tests
     runs-on: ubuntu-latest
 
     steps:
