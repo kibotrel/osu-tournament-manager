@@ -24,23 +24,23 @@ jobs:
 
       - name: Detect changed folders
         id: filter
-        uses: dorny/paths-filter@v2
+        uses: dorny/paths-filter@v3.0.2
         with:
           filters: |
             apps-client:
-              - 'apps/client/**'
+              - apps/client/**
             apps-server:
-              - 'apps/server/**'
+              - apps/server/**
             packages-api-specification:
-              - 'packages/api-specification/**'
+              - packages/api-specification/**
             packages-bancho-client:
-              - 'packages/bancho-client/**'
+              - packages/bancho-client/**
             packages-osu-sdk:
-              - 'packages/osu-sdk/**'
+              - packages/osu-sdk/**
             packages-logger:
-              - 'packages/logger/**'
+              - packages/logger/**
             packages-shared:
-              - 'packages/shared/**'
+              - packages/shared/**
 
   lint-apps-server:
     name: Server
@@ -123,39 +123,97 @@ jobs:
     name: Bancho client
     needs:
       - detect-changes
-      - lint-packages-bancho-client
 
     if: ${{ needs.detect-changes.outputs.packages-bancho-client == 'true' }}
 
     uses: ./.github/workflows/run_unit_tests_suite.yml
     with:
-      path: 'packages/bancho-client'
+      path: packages/bancho-client
 
   unit-tests-packages-shared:
     name: Shared package
     needs:
       - detect-changes
-      - lint-packages-shared
 
     if: ${{ needs.detect-changes.outputs.packages-shared == 'true' }}
 
     uses: ./.github/workflows/run_unit_tests_suite.yml
     with:
-      path: 'packages/shared'
+      path: packages/shared
 
   unit-tests-packages-apps-server:
     name: Server
     needs:
       - detect-changes
-      - lint-packages-api-specification
-      - lint-packages-logger
-      - lint-packages-osu-sdk
-      - lint-apps-server
-      - unit-tests-packages-bancho-client
-      - unit-tests-packages-shared
 
     if: ${{ needs.detect-changes.outputs.apps-server == 'true' }}
 
     uses: ./.github/workflows/run_unit_tests_suite.yml
     with:
-      path: 'apps/server'
+      path: apps/server
+
+  type-check-apps-client:
+    name: Client
+    needs:
+      - detect-changes
+
+    if: ${{ needs.detect-changes.outputs.apps-client == 'true' }}
+
+    uses: ./.github/workflows/run_type_check.yml
+    with:
+      path: apps/client
+
+  type-check-apps-server:
+    name: Server
+    needs:
+      - detect-changes
+
+    if: ${{ needs.detect-changes.outputs.apps-server == 'true' }}
+
+    uses: ./.github/workflows/run_type_check.yml
+    with:
+      path: apps/server
+
+  type-check-packages-bancho-client:
+    name: Bancho client
+    needs:
+      - detect-changes
+
+    if: ${{ needs.detect-changes.outputs.packages-bancho-client == 'true' }}
+
+    uses: ./.github/workflows/run_type_check.yml
+    with:
+      path: packages/bancho-client
+
+  type-check-packages-logger:
+    name: Logger
+    needs:
+      - detect-changes
+
+    if: ${{ needs.detect-changes.outputs.packages-logger == 'true' }}
+
+    uses: ./.github/workflows/run_type_check.yml
+    with:
+      path: packages/logger
+
+  type-check-packages-osu-sdk:
+    name: Osu SDK
+    needs:
+      - detect-changes
+
+    if: ${{ needs.detect-changes.outputs.packages-osu-sdk == 'true' }}
+
+    uses: ./.github/workflows/run_type_check.yml
+    with:
+      path: packages/osu-sdk
+
+  type-check-packages-shared:
+    name: Shared package
+    needs:
+      - detect-changes
+
+    if: ${{ needs.detect-changes.outputs.packages-shared == 'true' }}
+
+    uses: ./.github/workflows/run_type_check.yml
+    with:
+      path: packages/shared
