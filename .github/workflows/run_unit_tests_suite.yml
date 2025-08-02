@@ -7,8 +7,6 @@ on:
         required: true
         type: string
 
-    secrets: inherit
-
 jobs:
   test-suite:
     name: ${{ inputs.path }} unit tests
