@@ -31,7 +31,7 @@ jobs:
               - 'packages/shared/**'
 
   packages-bancho-client-unit-tests:
-    name: Run packages/bancho-client unit tests
+    name: Bancho client unit tests
     needs:
       - detect-changes
 
@@ -42,7 +42,7 @@ jobs:
       path: 'packages/bancho-client'
 
   packages-shared-unit-tests:
-    name: Run packages/shared unit tests
+    name: Shared package unit tests
     needs:
       - detect-changes
 
@@ -53,7 +53,7 @@ jobs:
       path: 'packages/shared'
 
   packages-apps-server-unit-tests:
-    name: Run apps/server unit tests
+    name: Server unit tests
     needs:
       - detect-changes
       - packages-bancho-client-unit-tests
