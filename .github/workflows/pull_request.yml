@@ -41,8 +41,6 @@ jobs:
     with:
       path: 'packages/bancho-client'
 
-    secrets: inherit
-
   packages-shared-unit-tests:
     name: Run packages/shared unit tests
     needs:
@@ -53,8 +51,6 @@ jobs:
     uses: ./.github/workflows/run_unit_tests_suite.yml
     with:
       path: 'packages/shared'
-
-    secrets: inherit
 
   packages-apps-server-unit-tests:
     name: Run apps/server unit tests
@@ -68,5 +64,3 @@ jobs:
     uses: ./.github/workflows/run_unit_tests_suite.yml
     with:
       path: 'apps/server'
-
-    secrets: inherit
