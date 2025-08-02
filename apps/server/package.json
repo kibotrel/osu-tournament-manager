@@ -45,7 +45,8 @@
     "format": "prettier --write src/**/*.ts",
     "healthcheck": "tsx --env-file=.env ./src/scripts/healthCheckScript.ts",
     "lint": "eslint src/**/*.ts --config .eslintrc",
-    "test:unit": "vitest --config vitest.config.unit.ts"
+    "test:unit": "vitest --config vitest.config.unit.ts",
+    "type-check": "tsc --noEmit"
   },
   "type": "module"
 }

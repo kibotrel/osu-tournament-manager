@@ -15,7 +15,8 @@
     "dev": "nodemon --config nodemon.json",
     "format": "prettier --write src/**/*.ts",
     "lint": "eslint src/**/*.ts --config .eslintrc",
-    "test:unit": "vitest --silent --config vitest.config.unit.ts"
+    "test:unit": "vitest --silent --config vitest.config.unit.ts",
+    "type-check": "tsc --noEmit"
   },
   "type": "module",
   "types": "dist/src/banchoClientExport.d.ts"
