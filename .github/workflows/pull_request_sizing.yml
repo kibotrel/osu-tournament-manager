@@ -1,4 +1,4 @@
-name: 'Pull Request Sizing'
+name: Pull Request Sizing
 
 on:
   pull_request:
@@ -6,7 +6,7 @@ on:
 
 jobs:
   label_pull_request:
-    name: 'Set Pull Request Size Label'
+    name: Set Pull Request Size Label
     permissions:
       contents: read
       pull-requests: write
