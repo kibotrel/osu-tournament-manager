@@ -54,7 +54,7 @@ jobs:
       path: apps/server
 
   lint-apps-client:
-    name: Server
+    name: Client
     needs:
       - detect-changes
 
@@ -154,7 +154,7 @@ jobs:
       - unit-tests-packages-bancho-client
       - unit-tests-packages-shared
 
-    if: ${{ needs.detect-changes.outputs.apps-server == 'true' || needs.detect-changes.outputs.packages-bancho-client == 'true' || needs.detect-changes.outputs.packages-shared == 'true' }}
+    if: ${{ needs.detect-changes.outputs.apps-server == 'true' }}
 
     uses: ./.github/workflows/run_unit_tests_suite.yml
     with:

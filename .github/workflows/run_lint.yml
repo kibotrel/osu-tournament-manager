@@ -8,8 +8,8 @@ on:
         type: string
 
 jobs:
-  test-suite:
-    name: Unit tests
+  lint:
+    name: Lint
     runs-on: ubuntu-latest
 
     steps:
