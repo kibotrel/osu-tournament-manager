@@ -6,10 +6,6 @@
     "@vue/eslint-config-prettier/skip-formatting",
     "../../.eslintrc"
   ],
-  "include": [
-    "src/**/*.ts",
-    "src/**/*.vue"
-  ],
   "parser": "vue-eslint-parser",
   "parserOptions": {
     "ecmaVersion": "latest"
