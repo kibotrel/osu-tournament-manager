@@ -24,7 +24,6 @@ jobs:
     needs:
       - detect-changes
       - lint-apps-client
-      - unit-tests-apps-client
       - type-check-apps-client
 
     if: ${{ needs.detect-changes.outputs.apps-client == 'true' }}
