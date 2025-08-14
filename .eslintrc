@@ -198,11 +198,7 @@
     "no-var": "error",
     "object-curly-spacing": [
       "error",
-      "always",
-      {
-        "arraysInObjects": false,
-        "objectsInObjects": false
-      }
+      "always"
     ],
     "padding-line-between-statements": [
       "error",

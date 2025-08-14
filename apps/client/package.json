@@ -18,7 +18,8 @@
     "eslint-plugin-vue": "9.26.0",
     "prettier-plugin-tailwindcss": "0.6.11",
     "vite": "6.2.2",
-    "vite-plugin-vue-devtools": "7.7.2"
+    "vite-plugin-vue-devtools": "7.7.2",
+    "vue-tsc": "3.0.5"
   },
   "imports": {
     "#src/*": "./src/*"
@@ -30,7 +31,8 @@
     "dev": "vite --host",
     "format": "prettier --write src/**/*.ts src/**/*.vue",
     "lint": "eslint src/**/*.ts src/**/*.vue --config .eslintrc",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "type-check": "vue-tsc --noEmit"
   },
   "type": "module"
 }

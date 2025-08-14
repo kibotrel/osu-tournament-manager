@@ -1,7 +1,9 @@
 {
   "devDependencies": {
     "@packages/prettier-config": "workspace:*",
-    "@types/express": "4.17.21"
+    "@types/express": "4.17.21",
+    "jsdom": "26.0.0",
+    "vitest": "3.0.8"
   },
   "imports": {
     "#src/*": "./src/*"
@@ -13,7 +15,9 @@
     "build": "tsc && tsc-alias",
     "dev": "nodemon --config nodemon.json",
     "format": "prettier --write src/**/*.ts",
-    "lint": "eslint src/**/*.ts --config .eslintrc"
+    "lint": "eslint src/**/*.ts --config .eslintrc",
+    "test:unit": "vitest --silent --config vitest.config.unit.ts",
+    "type-check": "tsc --noEmit"
   },
   "type": "module",
   "types": "dist/src/sharedExport.d.ts"

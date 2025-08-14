@@ -18,7 +18,8 @@
     "build": "tsc && tsc-alias",
     "dev": "nodemon --config nodemon.json",
     "format": "prettier --write src/**/*.ts",
-    "lint": "eslint src/**/*.ts --config .eslintrc"
+    "lint": "eslint src/**/*.ts --config .eslintrc",
+    "type-check": "tsc --noEmit"
   },
   "type": "module",
   "types": "dist/src/loggerExport.d.ts"

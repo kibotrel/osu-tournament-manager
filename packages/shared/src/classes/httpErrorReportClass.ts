@@ -72,11 +72,11 @@ export class HttpErrorReport {
 
   public serialize() {
     return {
+      detail: this.detail,
+      errors: this.errors,
       instance: this.instance,
       status: this.status,
       title: this.title,
-      detail: this.detail,
-      errors: this.errors,
     };
   }
 }

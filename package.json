@@ -34,7 +34,8 @@
   "scripts": {
     "format": "pnpm --filter=@packages/* format && pnpm --filter=./apps/* format",
     "lint": "pnpm --filter=@packages/* lint && pnpm --filter=./apps/* lint",
-    "prepare": "pnpm husky && pnpm --filter=@packages/* build"
+    "prepare": "pnpm husky && pnpm --filter=@packages/* build",
+    "test": "vitest --silent"
   },
   "type": "module",
   "workspaces": [

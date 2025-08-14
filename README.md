@@ -1,2 +1,3 @@
 # Osu tournament manager
-Currently W.I.P
+
+Currently W.I.P!

@@ -1,3 +1,7 @@
+{
+	admin :2019
+}
+
 dev.osu-tournament-manager.app {
   @appWebSockets {
 		path /api/websockets/*
@@ -28,6 +32,8 @@ dev.osu-tournament-manager.app {
 	}
 
 	header -Server
+	header -Via
+
   reverse_proxy client:{$CLIENT_PORT_TARGET}
 	tls internal
 }
