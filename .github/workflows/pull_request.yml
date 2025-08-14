@@ -5,6 +5,99 @@ on:
     types: [opened, reopened, synchronize]
 
 jobs:
+  build-apps-server:
+    name: Server
+    needs:
+      - detect-changes
+      - lint-apps-server
+      - unit-tests-packages-apps-server
+      - type-check-apps-server
+
+    if: ${{ needs.detect-changes.outputs.apps-server == 'true' }}
+
+    uses: ./.github/workflows/build_artifact.yml
+    with:
+      path: apps/server
+
+  build-apps-client:
+    name: Client
+    needs:
+      - detect-changes
+      - lint-apps-client
+      - unit-tests-packages-apps-client
+      - type-check-apps-client
+
+    if: ${{ needs.detect-changes.outputs.apps-client == 'true' }}
+
+    uses: ./.github/workflows/build_artifact.yml
+    with:
+      path: apps/client
+
+  build-packages-api-specification:
+    name: API specification
+    needs:
+      - detect-changes
+
+    if: ${{ needs.detect-changes.outputs.packages-api-specification == 'true' }}
+
+    uses: ./.github/workflows/build_artifact.yml
+    with:
+      path: packages/api-specification
+
+  build-packages-bancho-client:
+    name: Bancho client
+    needs:
+      - detect-changes
+      - lint-packages-bancho-client
+      - unit-tests-packages-bancho-client
+      - type-check-packages-bancho-client
+
+    if: ${{ needs.detect-changes.outputs.packages-bancho-client == 'true' }}
+
+    uses: ./.github/workflows/build_artifact.yml
+    with:
+      path: packages/bancho-client
+
+  build-packages-logger:
+    name: Logger
+    needs:
+      - detect-changes
+      - lint-packages-logger
+      - type-check-packages-logger
+
+    if: ${{ needs.detect-changes.outputs.packages-logger == 'true' }}
+
+    uses: ./.github/workflows/build_artifact.yml
+    with:
+      path: packages/logger
+
+  build-packages-osu-sdk:
+    name: Osu SDK
+    needs:
+      - detect-changes
+      - lint-packages-osu-sdk
+      - type-check-packages-osu-sdk
+
+    if: ${{ needs.detect-changes.outputs.packages-osu-sdk == 'true' }}
+
+    uses: ./.github/workflows/build_artifact.yml
+    with:
+      path: packages/osu-sdk
+
+  build-packages-shared:
+    name: Shared package
+    needs:
+      - detect-changes
+      - lint-packages-shared
+      - unit-tests-packages-shared
+      - type-check-packages-shared
+
+    if: ${{ needs.detect-changes.outputs.packages-shared == 'true' }}
+
+    uses: ./.github/workflows/build_artifact.yml
+    with:
+      path: packages/shared
+
   detect-changes:
     name: Detect changes
     runs-on: ubuntu-latest
@@ -42,17 +135,6 @@ jobs:
             packages-shared:
               - packages/shared/**
 
-  lint-apps-server:
-    name: Server
-    needs:
-      - detect-changes
-
-    if: ${{ needs.detect-changes.outputs.apps-server == 'true' }}
-
-    uses: ./.github/workflows/run_lint.yml
-    with:
-      path: apps/server
-
   lint-apps-client:
     name: Client
     needs:
@@ -64,16 +146,16 @@ jobs:
     with:
       path: apps/client
 
-  lint-packages-api-specification:
-    name: API specification
+  lint-apps-server:
+    name: Server
     needs:
       - detect-changes
 
-    if: ${{ needs.detect-changes.outputs.packages-api-specification == 'true' }}
+    if: ${{ needs.detect-changes.outputs.apps-server == 'true' }}
 
     uses: ./.github/workflows/run_lint.yml
     with:
-      path: packages/api-specification
+      path: apps/server
 
   lint-packages-bancho-client:
     name: Bancho client
