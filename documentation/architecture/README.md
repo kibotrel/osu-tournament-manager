@@ -5,7 +5,7 @@ As stated in the main [README.md](../README.md), this project is set up as a mon
 - `apps`: The client and server applications that ultimately make up the tournament manager.
 - `packages`: Shared code between the client and server, such as types, utilities, and key systems isolated from the main applications to ease up maintenance and development.
 
-This document provides a high-level overview of each component and its role within the architecture.
+This document provides a high-level overview of core components and their role within the project.
 
 ## [`@apps/client`](./architecture-apps-client.md)
 
