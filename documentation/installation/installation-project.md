@@ -22,13 +22,10 @@ As stated in the main [README.md](../../README.md), you'll need several tools in
   127.0.0.1       dev.osu-tournament-manager.app
   ```
 
-- Create `.env` files at root directory and both in `apps/client` and `apps/server` directories and proceed to fill them with the required environment variables.
+- Create `.env` files at root directory and both in `apps/client` and `apps/server` directories. See [Environment](../environment-files/README.md) documentation if you need more information about their purpose and how to set them up.
 
   ```shell
   cp .env.example .env
   cp apps/client/.env.example apps/client/.env
   cp apps/server/.env.example apps/server/.env
   ```
-
-  > [!TIP]
-  > All variables in these `.env` files are documented [here](../environment-files/README.md) if you need more information about their purpose and how to set them up.
