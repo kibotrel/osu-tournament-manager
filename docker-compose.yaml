@@ -42,7 +42,7 @@ services:
     networks:
       - web
     ports:
-      - ${CLIENT_PORT_SOURCE}:${CLIENT_PORT_TARGET}
+      - ${CLIENT_PORT_HOST}:${CLIENT_PORT_CONTAINER}
     restart: always
     volumes:
       - ./apps/client:/osu-tournanament-manager/apps/client
@@ -61,7 +61,7 @@ services:
     networks:
       - web
     ports:
-      - ${DATABASE_PORT_SOURCE}:${DATABASE_PORT_TARGET}
+      - ${DATABASE_PORT_HOST}:${DATABASE_PORT_CONTAINER}
     restart: always
     volumes:
       - postgres:/var/lib/postgresql/data
@@ -146,7 +146,7 @@ services:
     networks:
       - web
     ports:
-      - ${REDIS_PORT_SOURCE}:${REDIS_PORT_TARGET}
+      - ${REDIS_PORT_HOST}:${REDIS_PORT_CONTAINER}
     restart: always
     volumes:
       - redis:/data
@@ -169,7 +169,7 @@ services:
     networks:
       - web
     ports:
-      - ${SERVER_PORT_SOURCE}:${SERVER_PORT_TARGET}
+      - ${SERVER_PORT_HOST}:${SERVER_PORT_CONTAINER}
     restart: always
     volumes:
       - ./apps/server:/osu-tournanament-manager/apps/server

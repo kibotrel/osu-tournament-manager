@@ -19,21 +19,21 @@ dev.osu-tournament-manager.app {
 
 	handle @appWebSockets {
 		uri strip_prefix /api
-		reverse_proxy server:{$SERVER_PORT_TARGET}
+		reverse_proxy server:{$SERVER_PORT_CONTAINER}
 	}
 
   handle /api/* {
-    reverse_proxy server:{$SERVER_PORT_TARGET}
+    reverse_proxy server:{$SERVER_PORT_CONTAINER}
   }
 
 	handle @viteWebSockets {
 		uri strip_prefix /api
-		reverse_proxy client:{$CLIENT_PORT_TARGET}
+		reverse_proxy client:{$CLIENT_PORT_CONTAINER}
 	}
 
 	header -Server
 	header -Via
 
-  reverse_proxy client:{$CLIENT_PORT_TARGET}
+  reverse_proxy client:{$CLIENT_PORT_CONTAINER}
 	tls internal
 }
