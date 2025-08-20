@@ -7,6 +7,10 @@ As stated in the main [README.md](../README.md), this project is set up as a mon
 
 This document provides a high-level overview of each component and its role within the architecture.
 
+## [`@apps/client`](./architecture-apps-client.md)
+
+> The user interface of this project, allowing users to interact with players in-game, manage tournaments, and view statistics.
+
 ## [`@apps/server`](./architecture-apps-server.md)
 
 > Heart of the application, the server is responsible for serving the client with data and bridging with both the osu! API and its IRC server.
@@ -15,6 +19,6 @@ This document provides a high-level overview of each component and its role with
 
 > Programmatic IRC client designed to interact with the osu! IRC server, providing a simple interface through an event-driven architecture.
 
-## [`@packages/osu-sdk`](./architecture-packages-osu-sdk.md)
+## [`@packages/shared`](./architecture-packages-shared.md)
 
-> A TypeScript library that wraps the osu! API, providing a type-safe interface to interact with osu! data and operations.
+> Shared code between the client and server, including types and utiliities that are used across the application.

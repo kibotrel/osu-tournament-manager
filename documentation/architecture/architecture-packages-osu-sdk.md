@@ -1,1 +1,0 @@
-# `@packages/osu-sdk`
