@@ -1,4 +1,4 @@
-# Architecture
+# 🏗️ Architecture
 
 As stated in the main [README.md](../README.md), this project is set up as a monorepo. The code is split into two main categories:
 
@@ -7,14 +7,14 @@ As stated in the main [README.md](../README.md), this project is set up as a mon
 
 This document provides a high-level overview of each component and its role within the architecture.
 
-## [`@apps/server`](./apps-server.md)
+## [`@apps/server`](./architecture-apps-server.md)
 
 > Heart of the application, the server is responsible for serving the client with data and bridging with both the osu! API and its IRC server.
 
-## [`@packages/bancho-client`](./packages-bancho-client.md)
+## [`@packages/bancho-client`](./architecture-packages-bancho-client.md)
 
 > Programmatic IRC client designed to interact with the osu! IRC server, providing a simple interface through an event-driven architecture.
 
-## [`@packages/osu-sdk`](./packages-osu-sdk.md)
+## [`@packages/osu-sdk`](./architecture-packages-osu-sdk.md)
 
 > A TypeScript library that wraps the osu! API, providing a type-safe interface to interact with osu! data and operations.
