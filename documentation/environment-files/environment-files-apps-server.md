@@ -6,6 +6,10 @@ This file contains environment variables used in the `server` application.
 
 > Mainly used to configure the Websocket server and OAuth redirection, this should be the URL at which you can access the client application.
 
+> [!NOTE]
+>
+> This must be the same as [`VITE_BASE_APP_URL`](./environment-files-apps-client.md#vite_base_app_url) in the `client` application.
+
 ### `EXPRESS_PORT`
 
 > The port on which the [`express`](https://expressjs.com/) server will run.
@@ -17,6 +21,10 @@ This file contains environment variables used in the `server` application.
 ### `OSU_CLIENT_ID`
 
 > Obtained by creating a [new OAuth application](https://osu.ppy.sh/home/account/edit#oauth) on the osu! website.
+
+> [!NOTE]
+>
+> This must be the same as [`VITE_OSU_APPLICATION_CLIENT_ID`](./environment-files-apps-client.md#vite_osu_application_client_id) in the `client` application.
 
 ### `OSU_CLIENT_SECRET`
 
@@ -38,13 +46,25 @@ This file contains environment variables used in the `server` application.
 
 > The hostname of the PostgreSQL server.
 
+> [!NOTE]
+>
+> In development environment, this should be the name of `postgres` container as defined in [docker-compose.yaml](../../docker-compose.yaml).
+
 ### `POSTGRES_PASSWORD`
 
 > The password for the PostgreSQL user.
 
+> [!CAUTION]
+>
+> It is recommended to set a strong password for Postgres in production environment to prevent unauthorized access.
+
 ### `POSTGRES_PORT`
 
 > Port on which the PostgreSQL server is running.
+
+> [!NOTE]
+>
+> This must be the same as [`DATABASE_PORT_HOST`](./environment-files-root.md#database_port_host) in the root `.env` file.
 
 ### `POSTGRES_USER`
 
@@ -54,6 +74,10 @@ This file contains environment variables used in the `server` application.
 
 > The hostname of the Redis server.
 
+> [!NOTE]
+>
+> In development environment, this should be the name of `redis` container as defined in [docker-compose.yaml](../../docker-compose.yaml).
+
 ### `REDIS_PASSWORD`
 
 > The password for the Redis server.
@@ -61,6 +85,10 @@ This file contains environment variables used in the `server` application.
 ### `REDIS_PORT`
 
 > Port on which the Redis server is running.
+
+> [!NOTE]
+>
+> This must be the same as [`REDIS_PORT_HOST`](./environment-files-root.md#redis_port_host) in the root `.env` file.
 
 ### `SESSION_SECRET`
 
