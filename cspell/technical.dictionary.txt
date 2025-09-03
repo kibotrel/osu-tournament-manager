@@ -11,8 +11,11 @@ persistedstate
 postgres
 postgresql
 REDISCLI
+redocly
 requirepass
 resave
+rushstack
+shadcn
 smallint
 varchar
 vueuse
