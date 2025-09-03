@@ -16,7 +16,7 @@ import { error } from 'express-openapi-validator';
 
 import { environmentConfig } from '#src/configs/environmentConfig.js';
 import { CacheTopic } from '#src/constants/cacheConstants.js';
-import { allowedHttpMethodsOnRessource } from '#src/constants/httpConstants.js';
+import { allowedHttpMethodsOnResource } from '#src/constants/httpConstants.js';
 import { logger } from '#src/dependencies/loggerDependency.js';
 import { popCacheArrayByKey } from '#src/queries/cache/deleteCacheQueries.js';
 
@@ -53,7 +53,7 @@ export const normalizeError = (options: ParseErrorOptions): NormalizedError => {
   if (isExpressOpenApiValidatorMethodNotAllowedError(error)) {
     return {
       error: new HttpMethodNotAllowedError({
-        message: `Method ${method} not allowed on ressource at ${url}`,
+        message: `Method ${method} not allowed on resource at ${url}`,
       }),
       mustLog: false,
     };
@@ -62,7 +62,7 @@ export const normalizeError = (options: ParseErrorOptions): NormalizedError => {
   if (isExpressOpenApiValidatorNotFoundError(error)) {
     return {
       error: new HttpNotFoundError({
-        message: `Ressource at ${url} could not be found`,
+        message: `Resource at ${url} could not be found`,
       }),
       mustLog: false,
     };
@@ -123,7 +123,7 @@ export const errorHandler: ErrorRequestHandler<never, ErrorReport> = async (
 
   const errorReport = new HttpErrorReport({
     request,
-    allowedHttpMethodsOnRessource,
+    allowedHttpMethodsOnResource,
     error,
   });
 

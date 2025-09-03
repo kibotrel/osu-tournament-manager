@@ -21,4 +21,4 @@ This document provides a high-level overview of core components and their role w
 
 ## [`@packages/shared`](./architecture-packages-shared.md)
 
-> Shared code between the client and server, including types and utiliities that are used across the application.
+> Shared code between the client and server, including types and utilities that are used across the application.

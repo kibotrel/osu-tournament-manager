@@ -32,7 +32,7 @@
   "tags": [
     {
       "name": "Public",
-      "description": "Publicly available ressources, no authentication required.\n"
+      "description": "Publicly available resources, no authentication required.\n"
     }
   ],
   "paths": {

@@ -63,4 +63,4 @@ As stated in the main [README.md](../../README.md), you'll need several tools in
   docker-compose exec -it server /bin/sh -c "pnpm db:migrate"
   ```
 
-- You can now access the application at [https://dev.osu-tournament-manager.app](https://dev.osu-tournament-manager.app) and start moding around!
+- You can now access the application at [https://dev.osu-tournament-manager.app](https://dev.osu-tournament-manager.app) and start modding around!
