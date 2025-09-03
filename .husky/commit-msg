@@ -1,1 +1,2 @@
 pnpm commitlint --edit $1
+pnpm cspell --config cspell.json --no-progress --no-summary --no-show-suggestions --language-id commit-msg $1
