@@ -37,7 +37,7 @@ export const parseIrcUsername = (username: string) => {
 };
 
 /**
- * Bancho replaces spaces with underscores in usernames. See [osu! Iternet Relay Chat wiki](https://osu.ppy.sh/wiki/en/Community/Internet_Relay_Chat)
+ * Bancho replaces spaces with underscores in usernames. See [osu! Internet Relay Chat wiki](https://osu.ppy.sh/wiki/en/Community/Internet_Relay_Chat)
  * for more information.
  */
 export const parseOsuUsername = (username: string) => {

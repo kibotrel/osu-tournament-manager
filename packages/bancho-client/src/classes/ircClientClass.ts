@@ -20,7 +20,7 @@ import {
   isSocketReady,
 } from '#src/methods/typeGardMethods.js';
 
-interface EmmittedEvents {
+interface EmittedEvents {
   [BanchoClientEvent.AddChannelMembers]: [{ channel: string; users: string[] }];
   [BanchoClientEvent.BotConnected]: [];
   [BanchoClientEvent.BotDisconnected]: [];
@@ -65,7 +65,7 @@ export interface IrcServerInformation {
   port: number;
 }
 
-export class BanchoClient extends EventEmitter<EmmittedEvents> {
+export class BanchoClient extends EventEmitter<EmittedEvents> {
   private readonly clientCredentials: IrcClientCredentials;
   public readonly serverInformation: IrcServerInformation;
   private connectionState: IrcClientState;

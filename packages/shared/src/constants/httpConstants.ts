@@ -138,7 +138,7 @@ export enum HttpStatusCode {
   /**
    * Request has been successfully processed, response body contains
    * a subset of a ressource collection. Quite useful to add semantic
-   * to paginable resources.
+   * to paginated resources.
    */
   PartialContent = 206,
   /**
@@ -249,7 +249,7 @@ export enum HttpStatusMessage {
   /**
    * Request has been successfully processed, response body contains
    * a subset of a ressource collection. Quite useful to add semantic
-   * to paginable resources.
+   * to paginated resources.
    */
   PartialContent = 'Partial Content',
   /**

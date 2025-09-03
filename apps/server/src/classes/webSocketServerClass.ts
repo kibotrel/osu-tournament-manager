@@ -160,7 +160,7 @@ export class WebSocketServer {
   }
 
   /**
-   * Handle HTTP Upgrade requsts to WebSocket protocol.
+   * Handle HTTP Upgrade requests to WebSocket protocol.
    */
   public handleHttpRequestUpgradeEvent(httpServer: Server) {
     httpServer.on(HttpEvent.Upgrade, (request, socket, head) => {

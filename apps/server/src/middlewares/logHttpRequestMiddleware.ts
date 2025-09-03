@@ -17,14 +17,14 @@ export const logHttpRequest: RequestHandler = (request, _, next) => {
   }
 
   const { body, params, query } = request;
-  const releventInformation = {
+  const relevantInformation = {
     ...(Object.keys(body).length > 0 && { body }),
     ...(Object.keys(params).length > 0 && { params }),
     ...(Object.keys(query).length > 0 && { query }),
   };
 
   logger.http(`${request.method} ${request.url}`, {
-    ...releventInformation,
+    ...relevantInformation,
     requestId: request.id,
   });
 

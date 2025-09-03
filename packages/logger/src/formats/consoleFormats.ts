@@ -34,7 +34,7 @@ const formatError = (options: FormatErrorParameters) => {
       return chalk.grey(
         `${' '.repeat(2 * nestingLevel)}${line
           .replace(/ +/, '')
-          .replace(/\(\/osu-tournanament-manager\//, '(')}`,
+          .replace(/\(\/osu-tournament-manager\//, '(')}`,
       );
     }),
   );

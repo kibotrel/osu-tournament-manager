@@ -25,7 +25,7 @@ describe('getOrCreateUser', () => {
   });
 
   it('should return existing user if found', async () => {
-    const mocckedGetUserByGameUserId = vi.mocked(getUserByGameUserId);
+    const mockedGetUserByGameUserId = vi.mocked(getUserByGameUserId);
     const gameUser: OsuGetMeResponseBody = {
       id: 1,
       avatarUrl: 'http://example.com/test.png',
@@ -42,7 +42,7 @@ describe('getOrCreateUser', () => {
       updatedAt: new Date(),
     };
 
-    mocckedGetUserByGameUserId.mockResolvedValueOnce(existingUser);
+    mockedGetUserByGameUserId.mockResolvedValueOnce(existingUser);
 
     const result = await getOrCreateUser(gameUser);
 
@@ -53,8 +53,8 @@ describe('getOrCreateUser', () => {
   });
 
   it('should create a new user if not found', async () => {
-    const mocckedGetUserByGameUserId = vi.mocked(getUserByGameUserId);
-    const mocckedCreateUser = vi.mocked(createUser);
+    const mockedGetUserByGameUserId = vi.mocked(getUserByGameUserId);
+    const mockedCreateUser = vi.mocked(createUser);
     const gameUser: OsuGetMeResponseBody = {
       id: 2,
       avatarUrl: 'http://example.com/test2.png',
@@ -71,8 +71,8 @@ describe('getOrCreateUser', () => {
       updatedAt: new Date(),
     };
 
-    mocckedGetUserByGameUserId.mockResolvedValueOnce(null);
-    mocckedCreateUser.mockResolvedValueOnce(newUser);
+    mockedGetUserByGameUserId.mockResolvedValueOnce(null);
+    mockedCreateUser.mockResolvedValueOnce(newUser);
 
     const result = await getOrCreateUser(gameUser);
 

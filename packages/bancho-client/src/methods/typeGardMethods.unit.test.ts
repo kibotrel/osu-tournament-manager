@@ -30,11 +30,11 @@ describe('isPublicChannel', () => {
 });
 
 describe('isSocketReady', () => {
-  it('should return true if socket is writtable and given state is connected', () => {
+  it('should return true if socket is writable and given state is connected', () => {
     expect(isSocketReady(IrcClientState.Connected, new Socket())).toBe(true);
   });
 
-  it('should return true if socket is writtable and given state is connecting', () => {
+  it('should return true if socket is writable and given state is connecting', () => {
     expect(isSocketReady(IrcClientState.Connecting, new Socket())).toBe(true);
   });
 
