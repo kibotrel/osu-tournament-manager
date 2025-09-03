@@ -1,0 +1,30 @@
+{
+  "version": "0.2",
+  "ignorePaths": [
+    "**/node_modules",
+    "**/dist",
+    "pnpm-lock.yaml",
+    "apps/client/public"
+  ],
+  "dictionaries": [
+    "css",
+    "en_US",
+    "fonts",
+    "fr_FR",
+    "html",
+    "irc",
+    "misc",
+    "node",
+    "npm",
+    "osu",
+    "softwareTerms",
+    "technical",
+    "typescript"
+  ],
+  "dictionaryDefinitions": [
+    { "name": "irc", "path": "./cspell/irc.dictionary.txt" },
+    { "name": "osu", "path": "./cspell/osu.dictionary.txt" },
+    { "name": "technical", "path": "./cspell/technical.dictionary.txt" }
+  ],
+  "enabled": true
+}

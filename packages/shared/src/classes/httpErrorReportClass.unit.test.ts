@@ -14,12 +14,12 @@ describe('HttpErrorReport', () => {
     it('should instantiate with all necessary details', () => {
       const errorReport = new HttpErrorReport({
         error: new HttpError({ message: 'test message', status: 400 }),
-        request: { path: '/ressource/1' } as Request,
+        request: { path: '/resource/1' } as Request,
       });
 
       expect(errorReport.detail).toBe('test message');
       expect(errorReport.errors).toBeUndefined();
-      expect(errorReport.instance).toBe('/ressource/1');
+      expect(errorReport.instance).toBe('/resource/1');
       expect(errorReport.status).toBe(400);
       expect(errorReport.title).toBe('Bad Request');
     });
@@ -31,14 +31,14 @@ describe('HttpErrorReport', () => {
           message: 'test message',
           status: 400,
         }),
-        request: { path: '/ressource/1' } as Request,
+        request: { path: '/resource/1' } as Request,
       });
 
       expect(errorReport.detail).toBe('test message');
       expect(errorReport.errors).toBeDefined();
       expect(Array.isArray(errorReport.errors)).toBe(true);
       expect(errorReport.errors).toHaveLength(2);
-      expect(errorReport.instance).toBe('/ressource/1');
+      expect(errorReport.instance).toBe('/resource/1');
       expect(errorReport.status).toBe(400);
       expect(errorReport.title).toBe('Bad Request');
     });
@@ -49,12 +49,12 @@ describe('HttpErrorReport', () => {
           errors: [{ error1: 'message1' }, { error2: 'message2' }],
           message: 'test message',
         }),
-        request: { path: '/ressource/1' } as Request,
+        request: { path: '/resource/1' } as Request,
       });
 
       expect(errorReport.detail).toBeUndefined();
       expect(errorReport.errors).toBeUndefined();
-      expect(errorReport.instance).toBe('/ressource/1');
+      expect(errorReport.instance).toBe('/resource/1');
       expect(errorReport.status).toBe(500);
       expect(errorReport.title).toBe('Internal Server Error');
     });
@@ -62,12 +62,12 @@ describe('HttpErrorReport', () => {
     it('should not expose errors and detail for status code 404', () => {
       const errorReport = new HttpErrorReport({
         error: new HttpNotFoundError({ message: 'test message' }),
-        request: { path: '/ressource/1' } as Request,
+        request: { path: '/resource/1' } as Request,
       });
 
       expect(errorReport.detail).toBeUndefined();
       expect(errorReport.errors).toBeUndefined();
-      expect(errorReport.instance).toBe('/ressource/1');
+      expect(errorReport.instance).toBe('/resource/1');
       expect(errorReport.status).toBe(404);
       expect(errorReport.title).toBe('Not Found');
     });
@@ -75,12 +75,12 @@ describe('HttpErrorReport', () => {
     it('should not expose errors and detail for status code 405', () => {
       const errorReport = new HttpErrorReport({
         error: new HttpMethodNotAllowedError({ message: 'test message' }),
-        request: { path: '/ressource/1' } as Request,
+        request: { path: '/resource/1' } as Request,
       });
 
       expect(errorReport.detail).toBeUndefined();
       expect(errorReport.errors).toBeUndefined();
-      expect(errorReport.instance).toBe('/ressource/1');
+      expect(errorReport.instance).toBe('/resource/1');
       expect(errorReport.status).toBe(405);
       expect(errorReport.title).toBe('Method Not Allowed');
     });
@@ -90,9 +90,9 @@ describe('HttpErrorReport', () => {
     it('should return the allowed methods for a given path', () => {
       const errorReport = new HttpErrorReport({
         error: new HttpError({ message: 'test message', status: 400 }),
-        request: { path: '/ressource/1' } as Request,
-        allowedHttpMethodsOnRessource: {
-          '/ressource/x': ['GET', 'POST'],
+        request: { path: '/resource/1' } as Request,
+        allowedHttpMethodsOnResource: {
+          '/resource/x': ['GET', 'POST'],
         },
       });
 
@@ -102,7 +102,7 @@ describe('HttpErrorReport', () => {
     it('should return an empty string if no allowed methods are defined', () => {
       const errorReport = new HttpErrorReport({
         error: new HttpError({ message: 'test message', status: 400 }),
-        request: { path: '/ressource/1' } as Request,
+        request: { path: '/resource/1' } as Request,
       });
 
       expect(errorReport.getAllowedMethods()).toBe('');
@@ -113,12 +113,12 @@ describe('HttpErrorReport', () => {
     it('should serialize the error report correctly', () => {
       const errorReport = new HttpErrorReport({
         error: new HttpError({ message: 'test message', status: 400 }),
-        request: { path: '/ressource/1' } as Request,
+        request: { path: '/resource/1' } as Request,
       });
       const serialized = errorReport.serialize();
 
       expect(serialized).toEqual({
-        instance: '/ressource/1',
+        instance: '/resource/1',
         status: 400,
         title: 'Bad Request',
         detail: 'test message',
@@ -133,12 +133,12 @@ describe('HttpErrorReport', () => {
           message: 'test message',
           status: 400,
         }),
-        request: { path: '/ressource/1' } as Request,
+        request: { path: '/resource/1' } as Request,
       });
       const serialized = errorReport.serialize();
 
       expect(serialized).toEqual({
-        instance: '/ressource/1',
+        instance: '/resource/1',
         status: 400,
         title: 'Bad Request',
         detail: 'test message',
@@ -152,12 +152,12 @@ describe('HttpErrorReport', () => {
           errors: [{ error1: 'message1' }, { error2: 'message2' }],
           message: 'test message',
         }),
-        request: { path: '/ressource/1' } as Request,
+        request: { path: '/resource/1' } as Request,
       });
       const serialized = errorReport.serialize();
 
       expect(serialized).toEqual({
-        instance: '/ressource/1',
+        instance: '/resource/1',
         status: 500,
         title: 'Internal Server Error',
         detail: undefined,
@@ -171,12 +171,12 @@ describe('HttpErrorReport', () => {
           errors: [{ error1: 'message1' }, { error2: 'message2' }],
           message: 'test message',
         }),
-        request: { path: '/ressource/1' } as Request,
+        request: { path: '/resource/1' } as Request,
       });
       const serialized = errorReport.serialize();
 
       expect(serialized).toEqual({
-        instance: '/ressource/1',
+        instance: '/resource/1',
         status: 404,
         title: 'Not Found',
         detail: undefined,
@@ -190,12 +190,12 @@ describe('HttpErrorReport', () => {
           errors: [{ error1: 'message1' }, { error2: 'message2' }],
           message: 'test message',
         }),
-        request: { path: '/ressource/1' } as Request,
+        request: { path: '/resource/1' } as Request,
       });
       const serialized = errorReport.serialize();
 
       expect(serialized).toEqual({
-        instance: '/ressource/1',
+        instance: '/resource/1',
         status: 405,
         title: 'Method Not Allowed',
         detail: undefined,

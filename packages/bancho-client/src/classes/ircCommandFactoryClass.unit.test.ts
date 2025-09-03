@@ -118,7 +118,7 @@ describe('IrcCommandFactory', () => {
     });
 
     it('should return an instance of IrcCommandQuit if command is QUIT', () => {
-      const packetParts = ['sername!server@localhost.dev QUIT', 'quit'];
+      const packetParts = ['username!server@localhost.dev QUIT', 'quit'];
       const command = commandFactory.createCommandHandler(
         'QUIT' as IrcKeyword,
         packetParts,

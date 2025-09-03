@@ -6,7 +6,7 @@
       cy="20"
       fill="none"
       opacity="0.25"
-      pathlength="100"
+      path-length="100"
       r="17.5"
       stroke="currentColor"
     />
@@ -15,7 +15,7 @@
       cx="20"
       cy="20"
       fill="none"
-      pathlength="100"
+      path-length="100"
       r="17.5"
       stroke="currentColor"
       stroke-dasharray="25, 75"

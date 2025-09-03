@@ -32,4 +32,4 @@ servers:
 tags:
   - name: Public
     description: |
-      Publicly available ressources, no authentication required.
+      Publicly available resources, no authentication required.

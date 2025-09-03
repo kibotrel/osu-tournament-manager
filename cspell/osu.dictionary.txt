@@ -1,0 +1,9 @@
+aborttimer
+bancho
+beatmap
+Beatmap
+clearhost
+mappool
+Mappool
+mappools
+taiko

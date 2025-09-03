@@ -3,24 +3,24 @@ ARG PNPM_VERSION=9.15.4
 RUN npm --global install pnpm@${PNPM_VERSION}
 
 FROM base-image AS install-dependencies
-WORKDIR /osu-tournanament-manager
+WORKDIR /osu-tournament-manager
 COPY package.json pnpm-workspace.yaml pnpm-lock.yaml tsconfig.json ./
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
 
 FROM install-dependencies AS install-local-packages
-WORKDIR /osu-tournanament-manager/
+WORKDIR /osu-tournament-manager/
 COPY packages/tsconfig.json ./packages/
 COPY packages/prettier-config ./packages/prettier-config/
 COPY packages/shared ./packages/shared/
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
 
 FROM install-local-packages AS install-app
-WORKDIR /osu-tournanament-manager
+WORKDIR /osu-tournament-manager
 COPY apps/tsconfig.json ./apps/
 COPY apps/client ./apps/client/
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
 
 FROM install-app AS dev
-WORKDIR /osu-tournanament-manager/apps/client
+WORKDIR /osu-tournament-manager/apps/client
 ENTRYPOINT ["/usr/local/bin/pnpm"]
 CMD ["run", "dev"]

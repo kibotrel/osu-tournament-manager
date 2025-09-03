@@ -45,8 +45,8 @@ services:
       - ${CLIENT_PORT_HOST}:${CLIENT_PORT_CONTAINER}
     restart: always
     volumes:
-      - ./apps/client:/osu-tournanament-manager/apps/client
-      - ./packages/shared/dist:/osu-tournanament-manager/apps/client/node_modules/@packages/shared/dist
+      - ./apps/client:/osu-tournament-manager/apps/client
+      - ./packages/shared/dist:/osu-tournament-manager/apps/client/node_modules/@packages/shared/dist
 
   postgres:
     container_name: postgres
@@ -75,7 +75,7 @@ services:
       dockerfile: ./docker/packages-builder/Dockerfile.dev
     restart: always
     volumes:
-      - ./packages/api-specification:/osu-tournanament-manager/packages/api-specification
+      - ./packages/api-specification:/osu-tournament-manager/packages/api-specification
 
   package-bancho-client-builder:
     container_name: package-bancho-client-builder
@@ -86,8 +86,8 @@ services:
       dockerfile: ./docker/packages-builder/Dockerfile.dev
     restart: always
     volumes:
-      - ./packages/bancho-client:/osu-tournanament-manager/packages/bancho-client
-      - ./packages/shared/dist:/osu-tournanament-manager/packages/bancho-client/node_modules/@packages/shared/dist
+      - ./packages/bancho-client:/osu-tournament-manager/packages/bancho-client
+      - ./packages/shared/dist:/osu-tournament-manager/packages/bancho-client/node_modules/@packages/shared/dist
 
   package-logger-builder:
     container_name: package-logger-builder
@@ -98,8 +98,8 @@ services:
       dockerfile: ./docker/packages-builder/Dockerfile.dev
     restart: always
     volumes:
-      - ./packages/logger:/osu-tournanament-manager/packages/logger
-      - ./packages/shared/dist:/osu-tournanament-manager/packages/logger/node_modules/@packages/shared/dist
+      - ./packages/logger:/osu-tournament-manager/packages/logger
+      - ./packages/shared/dist:/osu-tournament-manager/packages/logger/node_modules/@packages/shared/dist
 
   package-osu-sdk-builder:
     container_name: package-osu-sdk-builder
@@ -110,8 +110,8 @@ services:
       dockerfile: ./docker/packages-builder/Dockerfile.dev
     restart: always
     volumes:
-      - ./packages/osu-sdk:/osu-tournanament-manager/packages/osu-sdk
-      - ./packages/shared/dist:/osu-tournanament-manager/packages/osu-sdk/node_modules/@packages/shared/dist
+      - ./packages/osu-sdk:/osu-tournament-manager/packages/osu-sdk
+      - ./packages/shared/dist:/osu-tournament-manager/packages/osu-sdk/node_modules/@packages/shared/dist
 
   package-shared-builder:
     container_name: package-shared-builder
@@ -122,7 +122,7 @@ services:
       dockerfile: ./docker/packages-builder/Dockerfile.dev
     restart: always
     volumes:
-      - ./packages/shared:/osu-tournanament-manager/packages/shared
+      - ./packages/shared:/osu-tournament-manager/packages/shared
 
   redis:
     command:
@@ -172,12 +172,12 @@ services:
       - ${SERVER_PORT_HOST}:${SERVER_PORT_CONTAINER}
     restart: always
     volumes:
-      - ./apps/server:/osu-tournanament-manager/apps/server
-      - ./packages/api-specification/dist:/osu-tournanament-manager/apps/server/node_modules/@packages/api-specification/dist
-      - ./packages/bancho-client/dist:/osu-tournanament-manager/apps/server/node_modules/@packages/bancho-client/dist
-      - ./packages/logger/dist:/osu-tournanament-manager/apps/server/node_modules/@packages/logger/dist
-      - ./packages/osu-sdk/dist:/osu-tournanament-manager/apps/server/node_modules/@packages/osu-sdk/dist
-      - ./packages/shared/dist:/osu-tournanament-manager/apps/server/node_modules/@packages/shared/dist
+      - ./apps/server:/osu-tournament-manager/apps/server
+      - ./packages/api-specification/dist:/osu-tournament-manager/apps/server/node_modules/@packages/api-specification/dist
+      - ./packages/bancho-client/dist:/osu-tournament-manager/apps/server/node_modules/@packages/bancho-client/dist
+      - ./packages/logger/dist:/osu-tournament-manager/apps/server/node_modules/@packages/logger/dist
+      - ./packages/osu-sdk/dist:/osu-tournament-manager/apps/server/node_modules/@packages/osu-sdk/dist
+      - ./packages/shared/dist:/osu-tournament-manager/apps/server/node_modules/@packages/shared/dist
 
 volumes:
   caddy:

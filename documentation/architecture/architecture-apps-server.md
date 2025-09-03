@@ -5,7 +5,7 @@
 
 This is the core component of this project, built using [`express`](https://expressjs.com/), it is responsible for serving the client with data and bridging with both the osu! API through [`@packages/osu-sdk`](./packages-osu-sdk.md) and its IRC server via [`@packages/bancho-client`](./packages-bancho-client).
 
-## 📁 Stucture
+## 📁 Structure
 
 The server is structured into several directories, each serving a specific purpose.
 

@@ -2,11 +2,11 @@
  * This list contains all the accessible endpoints on this server and
  * the HTTP methods that are allowed on them. It is used to populate
  * [HTTP Header Allow](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Allow)
- * through the [ressourceNotFoundHandler](../middlewares/ressourceNotFoundMiddleware.ts) or
+ * through the [resourceNotFoundHandler](../middlewares/resourceNotFoundMiddleware.ts) or
  * [errorHandler](../middlewares/errorHandlerMiddleware.ts) middlewares depending
  * on the context.
  */
-export const allowedHttpMethodsOnRessource: Record<
+export const allowedHttpMethodsOnResource: Record<
   string,
   Array<'DELETE' | 'GET' | 'PATCH' | 'POST' | 'PUT'>
 > = {
@@ -26,6 +26,6 @@ export const silentHttpEndpoints = new Set([
 ]);
 
 export enum HttpEvent {
-  Connexion = 'connection',
+  Connection = 'connection',
   Upgrade = 'upgrade',
 }

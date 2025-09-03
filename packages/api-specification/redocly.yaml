@@ -18,7 +18,6 @@ rules:
     requestBodies: error
   info-contact: off
   info-license: error
-  info-license-url: error
   no-ambiguous-paths: error
   no-empty-servers: off
   no-enum-type-mismatch: error
@@ -57,7 +56,6 @@ rules:
   operation-tag-defined: error
   parameter-description: error
   path-declaration-must-exist: error
-  path-excludes-patterns: off
   path-not-include-query: error
   path-parameters-defined: error
   path-segment-plural:
@@ -82,7 +80,6 @@ rules:
   scalar-property-missing-example: error
   security-defined: error
   spec-components-invalid-map-name: error
-  spec: error
   spec-strict-refs: error
   tag-description: error
   tags-alphabetical: error

@@ -4,6 +4,10 @@ on:
   pull_request:
     types: [opened, reopened, synchronize]
 
+concurrency:
+  cancel-in-progress: true
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+
 jobs:
   build-apps-server:
     name: Server
@@ -200,38 +204,41 @@ jobs:
     with:
       path: packages/shared
 
-  unit-tests-packages-bancho-client:
-    name: Bancho client
-    needs:
-      - detect-changes
+  spellcheck:
+    name: Spell check
+    runs-on: ubuntu-latest
 
-    if: ${{ needs.detect-changes.outputs.packages-bancho-client == 'true' }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4.2.2
 
-    uses: ./.github/workflows/run_unit_tests_suite.yml
-    with:
-      path: packages/bancho-client
+      - name: Install pnpm v9.15.4
+        uses: pnpm/action-setup@v4.1.0
+        with:
+          version: 9.15.4
 
-  unit-tests-packages-shared:
-    name: Shared package
-    needs:
-      - detect-changes
+      - name: Get pnpm store path
+        id: pnpm-store-path
+        run: echo "STORE_PATH=$(pnpm store path)" >> "$GITHUB_OUTPUT"
 
-    if: ${{ needs.detect-changes.outputs.packages-shared == 'true' }}
+      - name: Use pnpm cache
+        uses: actions/cache@v4.2.3
+        with:
+          path: ${{ steps.pnpm-store-path.outputs.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
 
-    uses: ./.github/workflows/run_unit_tests_suite.yml
-    with:
-      path: packages/shared
 
-  unit-tests-packages-apps-server:
-    name: Server
-    needs:
-      - detect-changes
+      - name: Install node v22.13.0
+        uses: actions/setup-node@v4.4.0
+        with:
+          cache: pnpm
+          node-version: 22.13.0
 
-    if: ${{ needs.detect-changes.outputs.apps-server == 'true' }}
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
 
-    uses: ./.github/workflows/run_unit_tests_suite.yml
-    with:
-      path: apps/server
+      - name: Run type-checks on ${{ inputs.path }}
+        run: pnpm spellcheck
 
   type-check-apps-client:
     name: Client
@@ -298,3 +305,36 @@ jobs:
     uses: ./.github/workflows/run_type_check.yml
     with:
       path: packages/shared
+
+  unit-tests-packages-bancho-client:
+    name: Bancho client
+    needs:
+      - detect-changes
+
+    if: ${{ needs.detect-changes.outputs.packages-bancho-client == 'true' }}
+
+    uses: ./.github/workflows/run_unit_tests_suite.yml
+    with:
+      path: packages/bancho-client
+
+  unit-tests-packages-shared:
+    name: Shared package
+    needs:
+      - detect-changes
+
+    if: ${{ needs.detect-changes.outputs.packages-shared == 'true' }}
+
+    uses: ./.github/workflows/run_unit_tests_suite.yml
+    with:
+      path: packages/shared
+
+  unit-tests-packages-apps-server:
+    name: Server
+    needs:
+      - detect-changes
+
+    if: ${{ needs.detect-changes.outputs.apps-server == 'true' }}
+
+    uses: ./.github/workflows/run_unit_tests_suite.yml
+    with:
+      path: apps/server

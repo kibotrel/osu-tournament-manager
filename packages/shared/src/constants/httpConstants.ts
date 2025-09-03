@@ -29,13 +29,13 @@ export enum HttpMethod {
 export enum HttpHeader {
   /** Contains the media type client is expecting in the response. */
   Accept = 'Accept',
-  /** List of allowed methods on the corresponding ressource. */
+  /** List of allowed methods on the corresponding resource. */
   Allow = 'Allow',
   /** Contains the credentials to authenticate client like a JWT token. */
   Authorization = 'Authorization',
   /** Size, in bytes, of the message body. */
   ContentLength = 'Content-Length',
-  /** Media type of the ressource. */
+  /** Media type of the resource. */
   ContentType = 'Content-Type',
   /**
    * Holds the cookie data sent previously by server
@@ -48,11 +48,11 @@ export enum HttpHeader {
   Expires = 'Expires',
   /** Domain name of the server and optionally the TCP port number. */
   Host = 'Host',
-  /** Last date and time at which the ressource has been modified. */
+  /** Last date and time at which the resource has been modified. */
   LastModified = 'Last-Modified',
-  /** Location of the ressource in case of a redirection. */
+  /** Location of the resource in case of a redirection. */
   Location = 'Location',
-  /** Indicates the part of the ressource server should return. */
+  /** Indicates the part of the resource server should return. */
   Range = 'Range',
   /**
    * Unique identifier for the request, used to track it across
@@ -92,7 +92,7 @@ export enum HttpStatusCode {
   Created = 201,
   /**
    * Request couldn't be processed by the server because client is authenticated
-   * but doesn't have the necessary permissions to access the ressource.
+   * but doesn't have the necessary permissions to access the resource.
    */
   Forbidden = 403,
   /**
@@ -102,19 +102,19 @@ export enum HttpStatusCode {
   InternalServerError = 500,
   /**
    * Request couldn't be processed by the server because the corresponding
-   * ressource is either not currently available or the implied action
+   * resource is either not currently available or the implied action
    * is temporarily disabled for some reason like maintenance, ban,
    * archiving, etc.
    */
   Locked = 423,
   /**
    * Request couldn't be processed by the server because the method used is not
-   * allowed on the corresponding ressource. Response must include an `Allow`
+   * allowed on the corresponding resource. Response must include an `Allow`
    * header to inform the client about the allowed methods.
    */
   MethodNotAllowed = 405,
   /**
-   * Request couldn't be processed by the server as the corresponding ressource
+   * Request couldn't be processed by the server as the corresponding resource
    * has been moved to another location. This must be only used in a redirection
    * context along with the new location to reach. Only usable without user
    * interaction for `GET` or `HEAD` requests.
@@ -127,7 +127,7 @@ export enum HttpStatusCode {
   NoContent = 204,
   /**
    * Request couldn't be processed by the server because the corresponding
-   * ressource couldn't be found.
+   * resource couldn't be found.
    */
   NotFound = 404,
   /**
@@ -137,8 +137,8 @@ export enum HttpStatusCode {
   Ok = 200,
   /**
    * Request has been successfully processed, response body contains
-   * a subset of a ressource collection. Quite useful to add semantic
-   * to paginable resources.
+   * a subset of a resource collection. Quite useful to add semantic
+   * to paginated resources.
    */
   PartialContent = 206,
   /**
@@ -147,7 +147,7 @@ export enum HttpStatusCode {
    */
   PermanentRedirect = 308,
   /**
-   * Request couldn't be processed by the server or the corresponding ressource
+   * Request couldn't be processed by the server or the corresponding resource
    * subset couldn't be found when using the `Range` header.
    */
   RangeNotSatisfiable = 416,
@@ -159,7 +159,7 @@ export enum HttpStatusCode {
   SeeOther = 303,
   /**
    * Request couldn't be processed by the server because the corresponding
-   * ressource is temporarily unavailable or the server is overloaded
+   * resource is temporarily unavailable or the server is overloaded
    * like during a DDoS attack, maintenance or bug fixing.
    */
   ServiceUnavailable = 503,
@@ -174,7 +174,7 @@ export enum HttpStatusCode {
   Unauthorized = 401,
   /**
    * Request couldn't be processed by the server because the corresponding
-   * ressource is forbidden according to client's country laws.
+   * resource is forbidden according to client's country laws.
    */
   UnavailableForLegalReasons = 451,
   /**
@@ -203,7 +203,7 @@ export enum HttpStatusMessage {
   Created = 'Created',
   /**
    * Request couldn't be processed by the server because client is authenticated
-   * but doesn't have the necessary permissions to access the ressource.
+   * but doesn't have the necessary permissions to access the resource.
    */
   Forbidden = 'Forbidden',
   /**
@@ -213,19 +213,19 @@ export enum HttpStatusMessage {
   InternalServerError = 'Internal Server Error',
   /**
    * Request couldn't be processed by the server because the corresponding
-   * ressource is either not currently available or the implied action
+   * resource is either not currently available or the implied action
    * is temporarily disabled for some reason like maintenance, ban,
    * archiving, etc.
    */
   Locked = 'Locked',
   /**
    * Request couldn't be processed by the server because the method used is not
-   * allowed on the corresponding ressource. Response must include an `Allow`
+   * allowed on the corresponding resource. Response must include an `Allow`
    * header to inform the client about the allowed methods.
    */
   MethodNotAllowed = 'Method Not Allowed',
   /**
-   * Request couldn't be processed by the server as the corresponding ressource
+   * Request couldn't be processed by the server as the corresponding resource
    * has been moved to another location. This must be only used in a redirection
    * context along with the new location to reach. Only usable without user
    * interaction for `GET` or `HEAD` requests.
@@ -238,7 +238,7 @@ export enum HttpStatusMessage {
   NoContent = 'No Content',
   /**
    * Request couldn't be processed by the server because the corresponding
-   * ressource couldn't be found.
+   * resource couldn't be found.
    */
   NotFound = 'Not Found',
   /**
@@ -248,8 +248,8 @@ export enum HttpStatusMessage {
   Ok = 'OK',
   /**
    * Request has been successfully processed, response body contains
-   * a subset of a ressource collection. Quite useful to add semantic
-   * to paginable resources.
+   * a subset of a resource collection. Quite useful to add semantic
+   * to paginated resources.
    */
   PartialContent = 'Partial Content',
   /**
@@ -258,7 +258,7 @@ export enum HttpStatusMessage {
    */
   PermanentRedirect = 'Permanent Redirect',
   /**
-   * Request couldn't be processed by the server or the corresponding ressource
+   * Request couldn't be processed by the server or the corresponding resource
    * subset couldn't be found when using the `Range` header.
    */
   RangeNotSatisfiable = 'Range Not Satisfiable',
@@ -270,7 +270,7 @@ export enum HttpStatusMessage {
   SeeOther = 'See Other',
   /**
    * Request couldn't be processed by the server because the corresponding
-   * ressource is temporarily unavailable or the server is overloaded
+   * resource is temporarily unavailable or the server is overloaded
    * like during a DDoS attack, maintenance or bug fixing.
    */
   ServiceUnavailable = 'Service Unavailable',
@@ -285,7 +285,7 @@ export enum HttpStatusMessage {
   Unauthorized = 'Unauthorized',
   /**
    * Request couldn't be processed by the server because the corresponding
-   * ressource is forbidden according to client's country laws.
+   * resource is forbidden according to client's country laws.
    */
   UnavailableForLegalReasons = 'Unavailable For Legal Reasons',
   /**
