@@ -49,39 +49,39 @@ const slots = useSlots();
 @reference '#src/assets/styles/index.css';
 
 .danger {
-  @apply cursor-pointer bg-red-600 text-primary-1;
-  @apply hover:bg-red-600/90 hover:text-primary-1/90;
-  @apply active:bg-red-600/80 active:text-primary-1/80;
+  @apply text-primary-1 cursor-pointer bg-red-600;
+  @apply hover:text-primary-1/90 hover:bg-red-600/90;
+  @apply active:text-primary-1/80 active:bg-red-600/80;
 }
 
 .ghost {
-  @apply cursor-pointer bg-transparent text-primary-1;
+  @apply text-primary-1 cursor-pointer bg-transparent;
   @apply hover:text-primary-1/90;
   @apply active:text-primary-1/80;
 }
 
 .primary {
-  @apply cursor-pointer bg-primary-1 text-primary-4;
+  @apply bg-primary-1 text-primary-4 cursor-pointer;
   @apply hover:bg-primary-1/90 hover:text-primary-4/90;
   @apply active:bg-primary-1/80 active:text-primary-4/80;
 }
 
 .secondary {
-  @apply cursor-pointer bg-primary-3 text-primary-1;
+  @apply bg-primary-3 text-primary-1 cursor-pointer;
   @apply hover:bg-primary-3/90 hover:text-primary-1/90;
   @apply active:bg-primary-3/80 active:text-primary-1/80;
 }
 
 .success {
-  @apply cursor-pointer bg-green-500 text-primary-1;
-  @apply hover:bg-green-500/90 hover:text-primary-1/90;
-  @apply active:bg-green-500/80 active:text-primary-1/80;
+  @apply text-primary-1 cursor-pointer bg-green-500;
+  @apply hover:text-primary-1/90 hover:bg-green-500/90;
+  @apply active:text-primary-1/80 active:bg-green-500/80;
 }
 
 .warning {
-  @apply cursor-pointer bg-yellow-400 text-primary-4;
-  @apply hover:bg-yellow-400/90 hover:text-primary-4/90;
-  @apply active:bg-yellow-400/80 active:text-primary-4/80;
+  @apply text-primary-4 cursor-pointer bg-yellow-400;
+  @apply hover:text-primary-4/90 hover:bg-yellow-400/90;
+  @apply active:text-primary-4/80 active:bg-yellow-400/80;
 }
 
 button {
@@ -90,11 +90,11 @@ button {
 }
 
 button:disabled {
-  @apply cursor-not-allowed bg-primary-2 text-primary-4;
+  @apply bg-primary-2 text-primary-4 cursor-not-allowed;
   @apply hover:bg-primary-2 hover:text-primary-4;
 }
 
 button:focus-visible {
-  @apply outline-hidden ring-2 ring-yellow-400;
+  @apply ring-2 ring-yellow-400 outline-hidden;
 }
 </style>
