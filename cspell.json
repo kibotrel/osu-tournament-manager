@@ -1,6 +1,11 @@
 {
   "version": "0.2",
-  "ignorePaths": ["node_modules", "dist"],
+  "ignorePaths": [
+    "**/node_modules",
+    "**/dist",
+    "pnpm-lock.yaml",
+    "apps/client/public"
+  ],
   "dictionaries": [
     "css",
     "en_US",
