@@ -1,5 +1,8 @@
 # Osu tournament manager
 
+[![License](https://img.shields.io/github/license/kibotrel/osu-tournament-manager)](./LICENSE)
+![GitHub contributors](https://img.shields.io/github/contributors/kibotrel/osu-tournament-manager)
+
 All-in-one application to manage osu! tournaments built using [`express`](https://expressjs.com/) and [`Vue.js`](https://vuejs.org/) written in TypeScript.
 
 Everything is open-source and licensed under the [GNU GPLv3 License](./LICENSE). Feel free to use, modify or host your own instance of the application to keep ownership and privacy of tournament data you create.
