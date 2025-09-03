@@ -36,7 +36,7 @@
     "format": "pnpm --filter=@packages/* format && pnpm --filter=./apps/* format",
     "lint": "pnpm --filter=@packages/* lint && pnpm --filter=./apps/* lint",
     "prepare": "pnpm husky && pnpm --filter=@packages/* build",
-    "spellcheck": "cspell --config cspell.json --no-progress --no-summary --no-show-suggestions --no-must-find-files  --gitignore",
+    "spellcheck": "cspell --config cspell.json --no-progress --no-summary --no-show-suggestions --no-must-find-files  --gitignore .",
     "test": "vitest --silent"
   },
   "type": "module",
