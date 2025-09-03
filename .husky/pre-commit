@@ -4,6 +4,5 @@ git diff --staged --name-only | grep packages/api-specification/src/specs > /dev
   pnpm -C packages/api-specification specs:bundle:internal > /dev/null 2>&1;
   echo "Adding generated files to current commit..."
   git add packages/api-specification/src/specs/**/*.openapi.yaml packages/api-specification/src/*.openapi.json
-) || (
-  echo "No OpenAPI specs were modified. Skipping..."
-)
+) || echo "" > /dev/null 2>&1
+git diff --staged --name-only | pnpm cspell --no-summary --no-progress --no-must-find-files --no-show-suggestions --file-list stdin
