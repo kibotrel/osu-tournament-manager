@@ -200,38 +200,10 @@ jobs:
     with:
       path: packages/shared
 
-  unit-tests-packages-bancho-client:
-    name: Bancho client
-    needs:
-      - detect-changes
+  spellcheck:
+    name: Spell check
 
-    if: ${{ needs.detect-changes.outputs.packages-bancho-client == 'true' }}
-
-    uses: ./.github/workflows/run_unit_tests_suite.yml
-    with:
-      path: packages/bancho-client
-
-  unit-tests-packages-shared:
-    name: Shared package
-    needs:
-      - detect-changes
-
-    if: ${{ needs.detect-changes.outputs.packages-shared == 'true' }}
-
-    uses: ./.github/workflows/run_unit_tests_suite.yml
-    with:
-      path: packages/shared
-
-  unit-tests-packages-apps-server:
-    name: Server
-    needs:
-      - detect-changes
-
-    if: ${{ needs.detect-changes.outputs.apps-server == 'true' }}
-
-    uses: ./.github/workflows/run_unit_tests_suite.yml
-    with:
-      path: apps/server
+    uses: ./.github/workflows/run_spellcheck.yml
 
   type-check-apps-client:
     name: Client
@@ -298,3 +270,36 @@ jobs:
     uses: ./.github/workflows/run_type_check.yml
     with:
       path: packages/shared
+
+  unit-tests-packages-bancho-client:
+    name: Bancho client
+    needs:
+      - detect-changes
+
+    if: ${{ needs.detect-changes.outputs.packages-bancho-client == 'true' }}
+
+    uses: ./.github/workflows/run_unit_tests_suite.yml
+    with:
+      path: packages/bancho-client
+
+  unit-tests-packages-shared:
+    name: Shared package
+    needs:
+      - detect-changes
+
+    if: ${{ needs.detect-changes.outputs.packages-shared == 'true' }}
+
+    uses: ./.github/workflows/run_unit_tests_suite.yml
+    with:
+      path: packages/shared
+
+  unit-tests-packages-apps-server:
+    name: Server
+    needs:
+      - detect-changes
+
+    if: ${{ needs.detect-changes.outputs.apps-server == 'true' }}
+
+    uses: ./.github/workflows/run_unit_tests_suite.yml
+    with:
+      path: apps/server

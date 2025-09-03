@@ -2,6 +2,7 @@ appendonly
 Bitfield
 caddyfile
 Caddyfile
+dorny
 geist
 genid
 healthcheck
