@@ -6,16 +6,16 @@
 import { inject, onBeforeMount } from 'vue';
 import type { Router } from 'vue-router';
 
-import { useUserStore } from '#src/stores/userStore.js';
+import { usePostPublicLogin } from '#src/api/publicApi.js';
 
 const $router = inject<Router>('$router');
-const { login } = useUserStore();
+const { mutateAsync: login } = usePostPublicLogin();
 
-onBeforeMount(() => {
+onBeforeMount(async () => {
   const [parameter, token] = window.location.search.slice(1).split('=');
 
   if (parameter === 'code' && token) {
-    return login(token);
+    return await login(token);
   }
 
   $router?.push('/login');
