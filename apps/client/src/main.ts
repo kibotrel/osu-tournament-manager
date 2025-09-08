@@ -1,3 +1,4 @@
+import { VueQueryPlugin } from '@tanstack/vue-query';
 import { createPinia } from 'pinia';
 import { createPersistedState } from 'pinia-plugin-persistedstate';
 import { createApp } from 'vue';
@@ -23,6 +24,7 @@ const pinia = createPinia();
 app.use(pinia);
 app.use(router);
 app.use(vuePluginRouter);
+app.use(VueQueryPlugin, { enableDevtoolsV6Plugin: true });
 pinia.use(piniaPluginRouter);
 pinia.use(createPersistedState());
 
