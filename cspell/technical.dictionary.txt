@@ -18,5 +18,7 @@ resave
 rushstack
 shadcn
 smallint
+sonarjs
 varchar
 vueuse
+yoda
