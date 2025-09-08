@@ -24,7 +24,12 @@ const pinia = createPinia();
 app.use(pinia);
 app.use(router);
 app.use(vuePluginRouter);
-app.use(VueQueryPlugin, { enableDevtoolsV6Plugin: true });
+app.use(VueQueryPlugin, {
+  enableDevtoolsV6Plugin: true,
+  queryClientConfig: {
+    defaultOptions: { queries: { refetchOnWindowFocus: false } },
+  },
+});
 pinia.use(piniaPluginRouter);
 pinia.use(createPersistedState());
 
