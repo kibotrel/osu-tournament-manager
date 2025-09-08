@@ -1,7 +1,12 @@
 <template>
   <div class="m-4">
-    <p>Welcome {{ username }} ({{ gameUserId }}). Login: {{ isLoggedIn }}</p>
-    <ui-button @mousedown="logout">Logout</ui-button>
+    <p>
+      Welcome {{ user.name }} ({{ user.gameUserId }}). Login:
+      {{ user.isLoggedIn }}
+    </p>
+    <ui-button class="w-24" @mousedown="logout" :isLoading="isPending"
+      >Logout</ui-button
+    >
 
     <input
       type="text"
@@ -49,6 +54,7 @@ import {
 import { inject, reactive } from 'vue';
 import type { Router } from 'vue-router';
 
+import { usePostPublicLogout } from '#src/api/publicApi.js';
 import uiButton from '#src/components/ui/uiButton.vue';
 import { useUserStore } from '#src/stores/userStore.js';
 import { defineWebsocketStore } from '#src/stores/webSocketStore.js';
@@ -62,10 +68,11 @@ const useWebSocketStore = defineWebsocketStore<
   events: [WebSocketChannelMatchesEvent.ChatMessages],
   threadId: $router?.currentRoute.value.query.id as string,
 });
-const { gameUserId, username, isLoggedIn, logout } = useUserStore();
+const { isPending, mutate: logout } = usePostPublicLogout();
+const { user } = useUserStore();
 const { connect, disconnect, history, sendMessage } = useWebSocketStore();
 const message = reactive<WebSocketMessageMatch>({
   content: '',
-  author: username,
+  author: user.name,
 });
 </script>
