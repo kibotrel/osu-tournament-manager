@@ -4,10 +4,12 @@ export interface PostPublicLoginRequestBody {
   authenticationCode: string;
 }
 
+export interface PostPublicLoginResponseData {
+  avatarUrl: string;
+  gameUserId: number;
+  name: string;
+}
+
 export type PostPublicLoginResponseBody =
-  | {
-      avatarUrl: string;
-      gameUserId: number;
-      name: string;
-    }
+  | PostPublicLoginResponseData
   | ErrorReport;

@@ -1,10 +1,10 @@
 {
   "extends": [
-    "plugin:vue/vue3-essential",
-    "eslint:recommended",
-    "@vue/eslint-config-typescript",
+    "../../.eslintrc",
     "@vue/eslint-config-prettier/skip-formatting",
-    "../../.eslintrc"
+    "@vue/eslint-config-typescript",
+    "plugin:@tanstack/query/recommended",
+    "plugin:vue/vue3-essential"
   ],
   "parser": "vue-eslint-parser",
   "parserOptions": {
