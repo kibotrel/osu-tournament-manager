@@ -1,6 +1,6 @@
 # `@apps/client`
 
-This is the main interface for users to interact with the application. It is built using [Vue.js](https://vuejs.org/), [Tailwind CSS](https://tailwindcss.com/) and [Vite](https://vitejs.dev/).
+This is the main interface for users to interact with the application. It is built using [Vue.js](https://vuejs.org/), [Tailwind CSS](https://tailwindcss.com/), [Tanstack Query](https://tanstack.com/query/latest) and [Vite](https://vitejs.dev/).
 
 ## 📁 Structure
 
