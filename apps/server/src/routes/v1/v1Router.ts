@@ -1,7 +1,8 @@
 import type { Router } from 'express';
 import express from 'express';
 
-import { publicRouter } from '#src/routes/v1/public/publicRouter.js';
+import { authenticationRouter } from './authentication/authenticationRouter.js';
+import { publicRouter } from './public/publicRouter.js';
 
 const v1Router: Router = express.Router({
   caseSensitive: true,
@@ -9,6 +10,7 @@ const v1Router: Router = express.Router({
   mergeParams: true,
 });
 
+v1Router.use('/authentication', authenticationRouter);
 v1Router.use('/public', publicRouter);
 
 export { v1Router };

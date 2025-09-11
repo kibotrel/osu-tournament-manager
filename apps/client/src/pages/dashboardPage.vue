@@ -54,7 +54,7 @@ import {
 import { inject, reactive } from 'vue';
 import type { Router } from 'vue-router';
 
-import { usePostPublicLogout } from '#src/api/publicApi.js';
+import { usePostPublicLogout } from '#src/api/authenticationApi.js';
 import uiButton from '#src/components/ui/uiButton.vue';
 import { useUserStore } from '#src/stores/userStore.js';
 import { defineWebsocketStore } from '#src/stores/webSocketStore.js';

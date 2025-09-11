@@ -19,7 +19,7 @@ const postPublicLogin = async (authenticationCode: string) => {
     PostPublicLoginResponseBody
   >({
     baseUrl,
-    endpoint: '/public/login',
+    endpoint: '/authentication/login',
     payload: { authenticationCode },
   });
 
@@ -36,7 +36,7 @@ const getPublicLogout = async () => {
     GetPublicLogoutResponseBody
   >({
     baseUrl,
-    endpoint: '/public/logout',
+    endpoint: '/authentication/logout',
     payload: {},
   });
 

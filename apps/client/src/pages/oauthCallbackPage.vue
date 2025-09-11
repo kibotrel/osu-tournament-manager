@@ -6,7 +6,7 @@
 import { inject, onBeforeMount } from 'vue';
 import type { Router } from 'vue-router';
 
-import { usePostPublicLogin } from '#src/api/publicApi.js';
+import { usePostPublicLogin } from '#src/api/authenticationApi.js';
 
 const $router = inject<Router>('$router');
 const { mutateAsync: login } = usePostPublicLogin();

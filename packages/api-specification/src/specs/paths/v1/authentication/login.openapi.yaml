@@ -55,7 +55,7 @@ post:
           schema:
             properties:
               instance:
-                example: /api/v1/public/login
+                example: /api/v1/authentication/login
                 type: string
               status:
                 example: 400
@@ -84,4 +84,4 @@ post:
   security: []
   summary: Authentication callback from osu!
   tags:
-    -  Public
+    -  Authentication

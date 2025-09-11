@@ -10,4 +10,4 @@ get:
   security: []
   summary: Destroy session and log out
   tags:
-    -  Public
+    -  Authentication

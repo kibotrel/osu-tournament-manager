@@ -31,36 +31,16 @@
   ],
   "tags": [
     {
+      "name": "Authentication",
+      "description": "User session management.\n"
+    },
+    {
       "name": "Public",
       "description": "Publicly available resources, no authentication required.\n"
     }
   ],
   "paths": {
-    "/public/health": {
-      "get": {
-        "description": "This allows to check if the server is up and running.\nHelpful if you want to check API status before making any request.\n",
-        "operationId": "getHealth",
-        "responses": {
-          "200": {
-            "content": {
-              "plain/text": {
-                "schema": {
-                  "example": "OK",
-                  "type": "string"
-                }
-              }
-            },
-            "description": "For now, it only tells that the API is up and running."
-          }
-        },
-        "security": [],
-        "summary": "Check server systems status",
-        "tags": [
-          "Public"
-        ]
-      }
-    },
-    "/public/login": {
+    "/authentication/login": {
       "post": {
         "description": "This is where all osu! OAuth successful authentication requests are redirected to.\nIt creates a session to keep user logged-in for subsequent requests\nand a token to interact with osu! API. <b>This endpoint shouldn't be used directly.</b>\n",
         "operationId": "postLogin",
@@ -136,7 +116,7 @@
                 "schema": {
                   "properties": {
                     "instance": {
-                      "example": "/api/v1/public/login",
+                      "example": "/api/v1/authentication/login",
                       "type": "string"
                     },
                     "status": {
@@ -180,11 +160,11 @@
         "security": [],
         "summary": "Authentication callback from osu!",
         "tags": [
-          "Public"
+          "Authentication"
         ]
       }
     },
-    "/public/logout": {
+    "/authentication/logout": {
       "get": {
         "description": "This endpoint destroy any session associated with the request and effectively logs out the user.\n",
         "operationId": "getLogout",
@@ -195,6 +175,30 @@
         },
         "security": [],
         "summary": "Destroy session and log out",
+        "tags": [
+          "Authentication"
+        ]
+      }
+    },
+    "/public/health": {
+      "get": {
+        "description": "This allows to check if the server is up and running.\nHelpful if you want to check API status before making any request.\n",
+        "operationId": "getHealth",
+        "responses": {
+          "200": {
+            "content": {
+              "plain/text": {
+                "schema": {
+                  "example": "OK",
+                  "type": "string"
+                }
+              }
+            },
+            "description": "For now, it only tells that the API is up and running."
+          }
+        },
+        "security": [],
+        "summary": "Check server systems status",
         "tags": [
           "Public"
         ]
