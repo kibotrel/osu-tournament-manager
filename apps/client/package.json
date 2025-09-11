@@ -13,6 +13,7 @@
   },
   "devDependencies": {
     "@packages/prettier-config": "workspace:*",
+    "@tanstack/eslint-plugin-query": "5.86.0",
     "@vitejs/plugin-vue": "5.2.1",
     "@vue/eslint-config-prettier": "9.0.0",
     "@vue/eslint-config-typescript": "13.0.0",
