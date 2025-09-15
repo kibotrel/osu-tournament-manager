@@ -8,7 +8,8 @@
       inputmode="numeric"
       min="0"
       type="number"
-      :disabled="properties.disabled"
+      :class="properties.errorMessage ? 'error' : ''"
+      :disabled="properties.isDisabled"
       :placeholder="properties.placeholder"
       :value="modelValue"
       @blur="emit('blur')"
@@ -17,7 +18,8 @@
     />
     <input
       v-else
-      :disabled="properties.disabled"
+      :class="properties.errorMessage ? 'error' : ''"
+      :disabled="properties.isDisabled"
       :placeholder="properties.placeholder"
       :value="modelValue"
       @blur="emit('blur')"
@@ -28,16 +30,20 @@
 
 <script setup lang="ts">
 interface Properties {
+  isDisabled?: boolean;
+  errorMessage?: string;
   label?: string;
   disabled?: boolean;
   modelValue?: string;
   placeholder?: string;
+  isRequired?: boolean;
   type?: 'text' | 'number';
 }
 
 const emit = defineEmits(['blur', 'update:modelValue']);
 const properties = withDefaults(defineProps<Properties>(), {
-  disabled: false,
+  isDisabled: false,
+  isRequired: false,
   placeholder: '',
   type: 'text',
 });
