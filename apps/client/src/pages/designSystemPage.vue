@@ -58,5 +58,11 @@ const buttonVariants: Array<{
   { name: 'Warning', variant: 'warning' },
   { name: 'Danger', variant: 'danger' },
 ];
-const icons: IconNames[] = ['identification', 'loading', 'transparentCube'];
+const icons: IconNames[] = [
+  'archive',
+  'identification',
+  'leave',
+  'loading',
+  'transparentCube',
+];
 </script>

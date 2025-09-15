@@ -5,7 +5,12 @@
 <script setup lang="ts">
 import { defineAsyncComponent } from 'vue';
 
-export type IconNames = 'identification' | 'loading' | 'transparentCube';
+export type IconNames =
+  | 'archive'
+  | 'identification'
+  | 'leave'
+  | 'loading'
+  | 'transparentCube';
 
 const properties = defineProps<{
   name: IconNames;
