@@ -21,9 +21,9 @@ export const createExpressApplication = (): Express => {
   application.use(logHttpRequest);
   application.use(session);
 
+  application.use('/api', apiRouter);
   application.use(specificationValidator);
 
-  application.use('/api', apiRouter);
   application.use(resourceNotFoundHandler);
   application.use(errorHandler);
 
