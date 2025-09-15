@@ -1,7 +1,13 @@
-import { banchoChannelFromGameMatchId } from '@packages/shared';
+import {
+  HttpNotFoundError,
+  HttpUnprocessableContentError,
+  banchoChannelFromGameMatchId,
+} from '@packages/shared';
 
 import { banchoClient } from '#src/dependencies/ircClientDependency.js';
 import { createMatch } from '#src/queries/matches/createMatchQueries.js';
+import { getMatchById } from '#src/queries/matches/getMatchQueries.js';
+import { patchMatchById } from '#src/queries/matches/updateMatchQueries.js';
 import { openMultiplayerChannel } from '#src/services/bancho/multiplayerService.js';
 import { removeMatchFromCachedSet } from '#src/services/cache/cacheService.js';
 
@@ -32,4 +38,32 @@ export const openMatch = async (name: string) => {
 
     throw error;
   }
+};
+
+export const closeMatch = async (id: number) => {
+  const match = await getMatchById(id, {
+    columnsFilter: ['gameMatchId', 'id', 'endsAt'],
+  });
+
+  if (!match) {
+    throw new HttpNotFoundError({ message: 'Match not found' });
+  }
+
+  if (match.endsAt) {
+    throw new HttpUnprocessableContentError({
+      message: 'Match already closed',
+    });
+  }
+
+  const channel = banchoChannelFromGameMatchId(match.gameMatchId);
+  const promises = [
+    banchoClient.closeMultiplayerChannel(channel),
+    removeMatchFromCachedSet(channel),
+    patchMatchById(id, { endsAt: new Date() }),
+  ];
+
+  await Promise.all(promises);
+
+  // TODO: implement detection about wether or nor the match was actually played, cancelled, forfeited etc.
+  return { status: 'closed' as const };
 };
