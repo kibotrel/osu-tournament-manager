@@ -12,6 +12,10 @@ paths:
     $ref: paths/v1/authentication/login.openapi.yaml
   /authentication/logout:
     $ref: paths/v1/authentication/logout.openapi.yaml
+  /matches:
+    $ref: paths/v1/matches/matches.openapi.yaml
+  /matches/{id}/close:
+    $ref: paths/v1/matches/closeMatch.openapi.yaml
   /public/health:
     $ref: paths/v1/public/health.openapi.yaml
 
@@ -33,6 +37,9 @@ tags:
   - name: Authentication
     description: |
       User session management.
+  - name: Matches
+    description: |
+      Match management and related operations.
   - name: Public
     description: |
       Publicly available resources, no authentication required.
