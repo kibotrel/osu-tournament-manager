@@ -34,9 +34,8 @@ describe('loginValidators', () => {
         {
           location: 'body',
           msg: {
-            errorCode:
-              'validator.postLoginBodyValidator.authenticationCode.string',
-            message: 'AuthenticationCode must be a string',
+            errorCode: 'validator.loginBodyValidator.authenticationCode.string',
+            message: 'authenticationCode must be a string',
           },
           path: 'authenticationCode',
           type: 'field',
@@ -61,8 +60,8 @@ describe('loginValidators', () => {
           location: 'body',
           msg: {
             errorCode:
-              'validator.postLoginBodyValidator.authenticationCode.required',
-            message: 'AuthenticationCode is required',
+              'validator.loginBodyValidator.authenticationCode.required',
+            message: 'authenticationCode is required',
           },
           path: 'authenticationCode',
           type: 'field',
@@ -70,9 +69,8 @@ describe('loginValidators', () => {
         {
           location: 'body',
           msg: {
-            errorCode:
-              'validator.postLoginBodyValidator.authenticationCode.string',
-            message: 'AuthenticationCode must be a string',
+            errorCode: 'validator.loginBodyValidator.authenticationCode.string',
+            message: 'authenticationCode must be a string',
           },
           path: 'authenticationCode',
           type: 'field',
@@ -80,9 +78,8 @@ describe('loginValidators', () => {
         {
           location: 'body',
           msg: {
-            errorCode:
-              'validator.postLoginBodyValidator.authenticationCode.empty',
-            message: 'AuthenticationCode cannot be empty',
+            errorCode: 'validator.loginBodyValidator.authenticationCode.empty',
+            message: 'authenticationCode cannot be empty',
           },
           path: 'authenticationCode',
           type: 'field',
@@ -106,9 +103,8 @@ describe('loginValidators', () => {
         {
           location: 'body',
           msg: {
-            errorCode:
-              'validator.postLoginBodyValidator.authenticationCode.empty',
-            message: 'AuthenticationCode cannot be empty',
+            errorCode: 'validator.loginBodyValidator.authenticationCode.empty',
+            message: 'authenticationCode cannot be empty',
           },
           path: 'authenticationCode',
           type: 'field',
