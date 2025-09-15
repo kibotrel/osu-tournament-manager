@@ -1,9 +1,9 @@
 import type {
-  GetPublicLogoutRequestBody,
-  GetPublicLogoutResponseBody,
-  PostPublicLoginRequestBody,
-  PostPublicLoginResponseBody,
-  PostPublicLoginResponseData,
+  LoginRequestBody,
+  LoginResponseBody,
+  LoginResponseData,
+  LogoutRequestBody,
+  LogoutResponseBody,
 } from '@packages/shared';
 import { getRequest, postRequest } from '@packages/shared';
 import { useMutation } from '@tanstack/vue-query';
@@ -13,11 +13,8 @@ import type { Router } from 'vue-router';
 import { baseUrl } from '#src/api/apiConstants.js';
 import { useUserStore } from '#src/stores/userStore.js';
 
-const postPublicLogin = async (authenticationCode: string) => {
-  const response = await postRequest<
-    PostPublicLoginRequestBody,
-    PostPublicLoginResponseBody
-  >({
+const login = async (authenticationCode: string) => {
+  const response = await postRequest<LoginRequestBody, LoginResponseBody>({
     baseUrl,
     endpoint: '/authentication/login',
     payload: { authenticationCode },
@@ -27,14 +24,11 @@ const postPublicLogin = async (authenticationCode: string) => {
     throw new Error(JSON.stringify(response.data));
   }
 
-  return response.data as PostPublicLoginResponseData;
+  return response.data as LoginResponseData;
 };
 
-const getPublicLogout = async () => {
-  const response = await getRequest<
-    GetPublicLogoutRequestBody,
-    GetPublicLogoutResponseBody
-  >({
+const logout = async () => {
+  const response = await getRequest<LogoutRequestBody, LogoutResponseBody>({
     baseUrl,
     endpoint: '/authentication/logout',
     payload: {},
@@ -50,20 +44,22 @@ const getPublicLogout = async () => {
 /**
  * Exchange an authentication code from osu! Oauth for a user bearer token + init a session.
  */
-export const usePostPublicLogin = () => {
+export const useLogin = () => {
   const router = inject<Router>('$router');
 
-  return useMutation<PostPublicLoginResponseData, Error, string>({
+  return useMutation<LoginResponseData, Error, string>({
     mutationFn: async (code) => {
-      return await postPublicLogin(code);
+      return await login(code);
     },
     onSuccess: async (data) => {
+      // TODO: Add a toast message here
       const { setUser } = useUserStore();
 
       setUser({ ...data, isLoggedIn: true });
       await router?.push('/');
     },
     onError: async () => {
+      // TODO: Add a toast message here
       await router?.push('/login');
     },
   });
@@ -72,14 +68,14 @@ export const usePostPublicLogin = () => {
 /**
  * Log out the user and destroy its session.
  */
-export const usePostPublicLogout = () => {
+export const useLogout = () => {
   const router = inject<Router>('$router');
 
-  return useMutation<GetPublicLogoutResponseBody, Error>({
+  return useMutation<LogoutResponseBody, Error>({
     mutationFn: async () => {
-      return await getPublicLogout();
+      return await logout();
     },
-    onSuccess: async () => {
+    onSettled: async () => {
       const { resetUser } = useUserStore();
 
       resetUser();

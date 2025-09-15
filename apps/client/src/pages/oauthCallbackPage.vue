@@ -6,10 +6,10 @@
 import { inject, onBeforeMount } from 'vue';
 import type { Router } from 'vue-router';
 
-import { usePostPublicLogin } from '#src/api/authenticationApi.js';
+import { useLogin } from '#src/api/authenticationApi.js';
 
 const $router = inject<Router>('$router');
-const { mutateAsync: login } = usePostPublicLogin();
+const { mutateAsync: login } = useLogin();
 
 onBeforeMount(async () => {
   const [parameter, token] = window.location.search.slice(1).split('=');

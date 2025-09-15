@@ -54,7 +54,7 @@ import {
 import { inject, reactive } from 'vue';
 import type { Router } from 'vue-router';
 
-import { usePostPublicLogout } from '#src/api/authenticationApi.js';
+import { useLogout } from '#src/api/authenticationApi.js';
 import uiButton from '#src/components/ui/uiButton.vue';
 import { useUserStore } from '#src/stores/userStore.js';
 import { defineWebsocketStore } from '#src/stores/webSocketStore.js';
@@ -68,7 +68,7 @@ const useWebSocketStore = defineWebsocketStore<
   events: [WebSocketChannelMatchesEvent.ChatMessages],
   threadId: $router?.currentRoute.value.query.id as string,
 });
-const { isPending, mutate: logout } = usePostPublicLogout();
+const { isPending, mutate: logout } = useLogout();
 const { user } = useUserStore();
 const { connect, disconnect, history, sendMessage } = useWebSocketStore();
 const message = reactive<WebSocketMessageMatch>({
