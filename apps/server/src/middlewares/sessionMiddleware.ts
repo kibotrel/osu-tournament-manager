@@ -1,6 +1,6 @@
 import { randomUUID } from 'node:crypto';
 
-import { Time } from '@packages/shared';
+import { HttpUnauthorizedError, Time } from '@packages/shared';
 import RedisStore from 'connect-redis';
 import type { RequestHandler } from 'express';
 import expressSession from 'express-session';
@@ -19,3 +19,15 @@ export const session: RequestHandler = expressSession({
   secret: environmentConfig.sessionSecret,
   store: new RedisStore({ client: cache }),
 });
+
+export const isAuthenticated: RequestHandler = (request, _response, next) => {
+  if (request.session?.user) {
+    return next();
+  }
+
+  return next(
+    new HttpUnauthorizedError({
+      message: 'You must be authenticated to access this resource',
+    }),
+  );
+};
