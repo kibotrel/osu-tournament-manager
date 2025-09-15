@@ -11,3 +11,10 @@ export const formatTimestamp = (timestamp: number): string => {
     timeZone: 'UTC',
   }).format(timestamp);
 };
+
+/**
+ * Convert a game match ID to a Bancho multiplayer channel name.
+ */
+export const banchoChannelFromGameMatchId = (gameMatchId: number): string => {
+  return `#mp_${gameMatchId}`;
+};
