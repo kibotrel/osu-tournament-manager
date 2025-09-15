@@ -7,14 +7,14 @@ import {
   expressResponseMock,
 } from '#src/tests/expressMocks.js';
 
-import { getHealthController } from './getHealthController.js';
+import { healthController } from './healthController.js';
 
-describe('getHealthController', () => {
+describe('healthController', () => {
   it('should respond with status 204', () => {
     const response = expressResponseMock();
     const next = expressNextFunctionMock();
 
-    getHealthController(expressRequestMock(), response, next);
+    healthController(expressRequestMock(), response, next);
 
     expect(next).not.toHaveBeenCalled();
     expect(response.status).toHaveBeenCalledWith(HttpStatusCode.NoContent);
