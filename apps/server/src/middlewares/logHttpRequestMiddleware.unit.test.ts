@@ -59,12 +59,12 @@ describe('logHttpRequest', () => {
     expect(next).toHaveBeenCalled();
   });
 
-  it('should not log request if route is /api/v1/public/login', () => {
+  it('should not log request if route is /api/v1/authentication/login', () => {
     const request = expressRequestMock() as Request;
     const response = expressResponseMock() as Response;
     const next = expressNextFunctionMock();
 
-    request.url = '/api/v1/public/login';
+    request.url = '/api/v1/authentication/login';
     request.method = 'POST';
 
     logHttpRequest(request, response, next);
@@ -73,12 +73,12 @@ describe('logHttpRequest', () => {
     expect(next).toHaveBeenCalled();
   });
 
-  it('should not log request if route is /api/v1/public/logout', () => {
+  it('should not log request if route is /api/v1/authentication/logout', () => {
     const request = expressRequestMock() as Request;
     const response = expressResponseMock() as Response;
     const next = expressNextFunctionMock();
 
-    request.url = '/api/v1/public/logout';
+    request.url = '/api/v1/authentication/logout';
     request.method = 'GET';
 
     logHttpRequest(request, response, next);
