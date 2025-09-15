@@ -11,6 +11,7 @@
       :disabled="properties.disabled"
       :placeholder="properties.placeholder"
       :value="modelValue"
+      @blur="emit('blur')"
       @input="handleInput"
       @keydown="blockInvalidNumberInput"
     />
@@ -19,6 +20,7 @@
       :disabled="properties.disabled"
       :placeholder="properties.placeholder"
       :value="modelValue"
+      @blur="emit('blur')"
       @input="handleInput"
     />
   </div>
@@ -33,7 +35,7 @@ interface Properties {
   type?: 'text' | 'number';
 }
 
-const emit = defineEmits(['update:modelValue']);
+const emit = defineEmits(['blur', 'update:modelValue']);
 const properties = withDefaults(defineProps<Properties>(), {
   disabled: false,
   placeholder: '',
