@@ -27,6 +27,54 @@
       </div>
     </div>
     <div class="my-2 space-y-2 text-2xl">
+      <h2>Inputs</h2>
+      <div class="flex flex-row items-end space-x-2">
+        <ui-input
+          label="Label"
+          placeholder="String"
+          v-model="stringInputValue"
+        />
+        <ui-input placeholder="String" v-model="stringInputValue" />
+        <ui-input
+          label="Label"
+          placeholder="String"
+          v-model="stringInputValue"
+          :disabled="true"
+        />
+        <ui-input
+          placeholder="String"
+          v-model="stringInputValue"
+          :disabled="true"
+        />
+      </div>
+      <div class="flex flex-row items-end space-x-2">
+        <ui-input
+          label="Label"
+          placeholder="Number"
+          type="number"
+          v-model="numberInputValue"
+        />
+        <ui-input
+          placeholder="Number"
+          type="number"
+          v-model="numberInputValue"
+        />
+        <ui-input
+          label="Label"
+          placeholder="Number"
+          type="number"
+          v-model="numberInputValue"
+          :disabled="true"
+        />
+        <ui-input
+          placeholder="Number"
+          type="number"
+          v-model="numberInputValue"
+          :disabled="true"
+        />
+      </div>
+    </div>
+    <div class="my-2 space-y-2 text-2xl">
       <h2>Icons</h2>
       <div class="flex flex-row space-x-2">
         <ui-icon
@@ -41,11 +89,14 @@
 </template>
 
 <script setup lang="ts">
+import { ref } from 'vue';
+
 import transparentCubeIcon from '#src/components/icons/transparentCubeIcon.vue';
 import type { ButtonVariants } from '#src/components/ui/uiButton.vue';
 import uiButton from '#src/components/ui/uiButton.vue';
 import type { IconNames } from '#src/components/ui/uiIcon.vue';
 import uiIcon from '#src/components/ui/uiIcon.vue';
+import uiInput from '#src/components/ui/uiInput.vue';
 
 const buttonVariants: Array<{
   name: string;
@@ -65,4 +116,6 @@ const icons: IconNames[] = [
   'loading',
   'transparentCube',
 ];
+const stringInputValue = ref('');
+const numberInputValue = ref('');
 </script>
