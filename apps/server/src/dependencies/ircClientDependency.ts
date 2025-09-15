@@ -18,4 +18,8 @@ banchoClient.on(BanchoClientEvent.BotConnected, () => {
   logger.debug('Connected to the osu! IRC server.');
 });
 
+banchoClient.on(BanchoClientEvent.BotJoinedChannel, ({ channel }) => {
+  logger.debug(`Joined channel ${channel}.`);
+});
+
 export { banchoClient };
