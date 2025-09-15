@@ -1,17 +1,17 @@
 import { HttpRequest } from '#src/classes/httpRequestClass.js';
 import { HttpHeader } from '#src/constants/httpConstants.js';
-import type { Nothing } from '#src/types/utilityTypes.js';
+import type { NothingRecord } from '#src/types/utilityTypes.js';
 
 export interface RequestConfiguration<PayloadType> {
   baseUrl: string;
   endpoint: string;
   baseApiEndpoint?: string;
-  payload: PayloadType extends Nothing ? Nothing : PayloadType;
+  payload: PayloadType extends NothingRecord ? NothingRecord : PayloadType;
   token?: string;
   apiVersion?: string;
 }
 
-const createGenericRequest = <PayloadType extends object = Nothing>(
+const createGenericRequest = <PayloadType extends object = NothingRecord>(
   configuration: RequestConfiguration<PayloadType>,
 ) => {
   const {
@@ -35,8 +35,8 @@ const createGenericRequest = <PayloadType extends object = Nothing>(
 };
 
 export const deleteRequest = <
-  PayloadType extends object = Nothing,
-  ResponseType = Nothing,
+  PayloadType extends object = NothingRecord,
+  ResponseType = NothingRecord,
 >(
   configuration: RequestConfiguration<PayloadType>,
 ) => {
@@ -47,8 +47,8 @@ export const deleteRequest = <
 };
 
 export const getRequest = <
-  PayloadType extends object = Nothing,
-  ResponseType = Nothing,
+  PayloadType extends object = NothingRecord,
+  ResponseType = NothingRecord,
 >(
   configuration: RequestConfiguration<PayloadType>,
 ) => {
@@ -59,8 +59,8 @@ export const getRequest = <
 };
 
 export const patchRequest = <
-  PayloadType extends object = Nothing,
-  ResponseType = Nothing,
+  PayloadType extends object = NothingRecord,
+  ResponseType = NothingRecord,
 >(
   configuration: RequestConfiguration<PayloadType>,
 ) => {
@@ -71,8 +71,8 @@ export const patchRequest = <
 };
 
 export const postRequest = <
-  PayloadType extends object = Nothing,
-  ResponseType = Nothing,
+  PayloadType extends object = NothingRecord,
+  ResponseType = NothingRecord,
 >(
   configuration: RequestConfiguration<PayloadType>,
 ) => {
@@ -83,8 +83,8 @@ export const postRequest = <
 };
 
 export const putRequest = <
-  PayloadType extends object = Nothing,
-  ResponseType = Nothing,
+  PayloadType extends object = NothingRecord,
+  ResponseType = NothingRecord,
 >(
   configuration: RequestConfiguration<PayloadType>,
 ) => {

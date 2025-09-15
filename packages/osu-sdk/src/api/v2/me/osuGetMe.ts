@@ -1,4 +1,4 @@
-import type { Nothing } from '@packages/shared';
+import type { NothingRecord } from '@packages/shared';
 import { HttpError, getRequest } from '@packages/shared';
 
 import { baseUrl } from '#src/constants/osuConstants.js';
@@ -14,7 +14,7 @@ export interface OsuGetMeResponseBody {
   name: string;
 }
 
-type InternalOsuGetMeRequestQuery = Nothing;
+type InternalOsuGetMeRequestQuery = NothingRecord;
 
 interface InternalOsuGetMeResponseBody {
   avatar_url: string;
