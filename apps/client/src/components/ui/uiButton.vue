@@ -23,7 +23,7 @@ import { useSlots } from 'vue';
 
 import loadingIcon from '#src/components/icons/loadingIcon.vue';
 
-export type ButtonVariants =
+export type ButtonVariant =
   | 'danger'
   | 'ghost'
   | 'primary'
@@ -34,7 +34,7 @@ export type ButtonVariants =
 interface Properties {
   isDisabled?: boolean;
   isLoading?: boolean;
-  variant?: ButtonVariants;
+  variant?: ButtonVariant;
 }
 
 const properties = withDefaults(defineProps<Properties>(), {
@@ -47,6 +47,20 @@ const slots = useSlots();
 
 <style scoped>
 @reference '#src/assets/styles/index.css';
+
+button {
+  @apply flex items-center justify-center;
+  @apply rounded-md p-2 text-base font-medium;
+}
+
+button:disabled {
+  @apply bg-primary-2 text-primary-4 cursor-not-allowed;
+  @apply hover:bg-primary-2 hover:text-primary-4;
+}
+
+button:focus-visible {
+  @apply ring-2 ring-yellow-400 outline-hidden;
+}
 
 .danger {
   @apply text-primary-1 cursor-pointer bg-red-600;
@@ -82,19 +96,5 @@ const slots = useSlots();
   @apply text-primary-4 cursor-pointer bg-yellow-400;
   @apply hover:text-primary-4/90 hover:bg-yellow-400/90;
   @apply active:text-primary-4/80 active:bg-yellow-400/80;
-}
-
-button {
-  @apply flex items-center justify-center;
-  @apply rounded-md p-2 text-base font-medium;
-}
-
-button:disabled {
-  @apply bg-primary-2 text-primary-4 cursor-not-allowed;
-  @apply hover:bg-primary-2 hover:text-primary-4;
-}
-
-button:focus-visible {
-  @apply ring-2 ring-yellow-400 outline-hidden;
 }
 </style>

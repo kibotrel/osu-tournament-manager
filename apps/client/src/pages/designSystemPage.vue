@@ -92,7 +92,7 @@
 import { ref } from 'vue';
 
 import transparentCubeIcon from '#src/components/icons/transparentCubeIcon.vue';
-import type { ButtonVariants } from '#src/components/ui/uiButton.vue';
+import type { ButtonVariant } from '#src/components/ui/uiButton.vue';
 import uiButton from '#src/components/ui/uiButton.vue';
 import type { IconNames } from '#src/components/ui/uiIcon.vue';
 import uiIcon from '#src/components/ui/uiIcon.vue';
@@ -100,7 +100,7 @@ import uiInput from '#src/components/ui/uiInput.vue';
 
 const buttonVariants: Array<{
   name: string;
-  variant: ButtonVariants;
+  variant: ButtonVariant;
 }> = [
   { name: 'Primary', variant: 'primary' },
   { name: 'Secondary', variant: 'secondary' },
