@@ -1,8 +1,14 @@
 <template>
   <div>
-    <label v-if="properties.label" class="mb-1 block text-sm font-semibold">{{
-      properties.label
-    }}</label>
+    <label
+      v-if="properties.label"
+      :class="!properties.isDisabled && properties.errorMessage ? 'error' : ''"
+    >
+      <span>
+        {{ properties.label }}
+      </span>
+      <span v-if="properties.isRequired" class="text-red-400"> * </span>
+    </label>
     <input
       v-if="properties.type === 'number'"
       inputmode="numeric"
@@ -25,6 +31,14 @@
       @blur="emit('blur')"
       @input="handleInput"
     />
+    <div
+      v-if="properties.errorMessage"
+      class="mt-1 flex flex-row text-sm text-red-400"
+    >
+      <span>
+        {{ properties.errorMessage }}
+      </span>
+    </div>
   </div>
 </template>
 
@@ -33,7 +47,6 @@ interface Properties {
   isDisabled?: boolean;
   errorMessage?: string;
   label?: string;
-  disabled?: boolean;
   modelValue?: string;
   placeholder?: string;
   isRequired?: boolean;
@@ -65,7 +78,7 @@ const blockInvalidNumberInput = (event: KeyboardEvent) => {
 @reference '#src/assets/styles/index.css';
 
 input {
-  @apply border-primary-3 block w-full rounded-md border-2 px-4 py-2 text-base;
+  @apply border-primary-3 block w-full rounded-md border-2 p-2 text-base;
 }
 
 input:focus-visible {
@@ -73,7 +86,7 @@ input:focus-visible {
 }
 
 input:disabled {
-  @apply bg-primary-3 text-primary-2 cursor-not-allowed;
+  @apply border-primary-3 bg-primary-3 text-primary-2 cursor-not-allowed;
 }
 
 input[type='number'] {
@@ -86,5 +99,17 @@ input[type='number']::-webkit-inner-spin-button,
 input[type='number']::-webkit-outer-spin-button {
   -webkit-appearance: none;
   margin: 0;
+}
+
+label {
+  @apply mb-1 block text-sm font-semibold;
+}
+
+label.error {
+  @apply text-red-400;
+}
+
+input.error:not(:disabled) {
+  @apply border-red-400 text-red-400;
 }
 </style>
