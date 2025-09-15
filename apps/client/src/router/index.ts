@@ -11,6 +11,20 @@ const router = createRouter({
       },
     },
     {
+      path: '/matches/create',
+      name: 'match-creation',
+      component: () => {
+        return import('#src/pages/matches/createMatchPage.vue');
+      },
+    },
+    {
+      path: '/matches/:gameMatchId(\\d+)',
+      name: 'match',
+      component: () => {
+        return import('#src/pages/matches/matchPage.vue');
+      },
+    },
+    {
       path: '/design-system',
       name: 'design-system',
       component: () => {
