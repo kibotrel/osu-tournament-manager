@@ -1,7 +1,4 @@
-import {
-  type GetPublicLogoutResponseBody,
-  HttpStatusCode,
-} from '@packages/shared';
+import { type LogoutResponseBody, HttpStatusCode } from '@packages/shared';
 import { describe, expect, it } from 'vitest';
 
 import {
@@ -10,15 +7,15 @@ import {
   expressResponseMock,
 } from '#src/tests/expressMocks.js';
 
-import { getLogoutController } from './getLogoutController.js';
+import { logoutController } from './logoutController.js';
 
-describe('getLogoutController', () => {
+describe('logoutController', () => {
   it('should respond with status 204 and destroy session', () => {
     const next = expressNextFunctionMock();
-    const request = expressRequestMock<never, GetPublicLogoutResponseBody>();
-    const response = expressResponseMock<GetPublicLogoutResponseBody>();
+    const request = expressRequestMock<never, LogoutResponseBody>();
+    const response = expressResponseMock<LogoutResponseBody>();
 
-    getLogoutController(request, response, next);
+    logoutController(request, response, next);
 
     expect(next).not.toHaveBeenCalled();
     expect(request.session.destroy).toHaveBeenCalled();

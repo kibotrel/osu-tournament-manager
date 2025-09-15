@@ -1,11 +1,11 @@
-import type { GetPublicLogoutResponseBody } from '@packages/shared';
+import type { LogoutResponseBody } from '@packages/shared';
 import { HttpStatusCode } from '@packages/shared';
 import type { RequestHandler } from 'express';
 
-export const getLogoutController: RequestHandler<
-  never,
-  GetPublicLogoutResponseBody
-> = (request, response) => {
+export const logoutController: RequestHandler<never, LogoutResponseBody> = (
+  request,
+  response,
+) => {
   const { session } = request;
 
   session.destroy(() => {

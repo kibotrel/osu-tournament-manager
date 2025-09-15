@@ -1,13 +1,13 @@
 import { matchedData, validationResult } from 'express-validator';
 import { describe, expect, it } from 'vitest';
 
-import { postLoginValidators } from './postLoginValidators.js';
+import { loginValidators } from './loginValidators.js';
 
-describe('postLoginValidators', () => {
+describe('loginValidators', () => {
   describe('authenticationCode', () => {
     it('should pass when it is a string', async () => {
       const request = { body: { authenticationCode: 'abc123' } };
-      const validators = postLoginValidators();
+      const validators = loginValidators();
 
       for (const validator of validators) {
         await validator.run(request);
@@ -20,7 +20,7 @@ describe('postLoginValidators', () => {
 
     it('should fail when value is not a string', async () => {
       const request = { body: { authenticationCode: 1 } };
-      const validators = postLoginValidators();
+      const validators = loginValidators();
 
       for (const validator of validators) {
         await validator.run(request);
@@ -46,7 +46,7 @@ describe('postLoginValidators', () => {
 
     it('should fail if missing', async () => {
       const request = { body: {} };
-      const validators = postLoginValidators();
+      const validators = loginValidators();
 
       for (const validator of validators) {
         await validator.run(request);
@@ -92,7 +92,7 @@ describe('postLoginValidators', () => {
 
     it('should fail if empty', async () => {
       const request = { body: { authenticationCode: '' } };
-      const validators = postLoginValidators();
+      const validators = loginValidators();
 
       for (const validator of validators) {
         await validator.run(request);
@@ -118,7 +118,7 @@ describe('postLoginValidators', () => {
 
     it('should trim value', async () => {
       const request = { body: { authenticationCode: '  abc123  ' } };
-      const validators = postLoginValidators();
+      const validators = loginValidators();
 
       for (const validator of validators) {
         await validator.run(request);
@@ -137,7 +137,7 @@ describe('postLoginValidators', () => {
       const request = {
         body: { authenticationCode: '<b>test</b>' },
       };
-      const validators = postLoginValidators();
+      const validators = loginValidators();
 
       for (const validator of validators) {
         await validator.run(request);

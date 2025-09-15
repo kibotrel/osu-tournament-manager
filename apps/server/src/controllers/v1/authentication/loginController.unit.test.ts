@@ -1,8 +1,8 @@
 import type { OsuPostOauthTokenResponseBody } from '@packages/osu-sdk';
 import {
   HttpStatusCode,
-  type PostPublicLoginRequestBody,
-  type PostPublicLoginResponseBody,
+  type LoginRequestBody,
+  type LoginResponseBody,
 } from '@packages/shared';
 import { matchedData } from 'express-validator';
 import { describe, expect, it, vi } from 'vitest';
@@ -15,7 +15,7 @@ import {
   expressResponseMock,
 } from '#src/tests/expressMocks.js';
 
-import { postLoginController } from './postLoginController.js';
+import { loginController } from './loginController.js';
 
 vi.mock('express-validator', () => {
   return {
@@ -31,14 +31,14 @@ vi.mock('#src/services/login/loginWithOsuService.js', () => {
   };
 });
 
-describe('postLoginController', () => {
+describe('loginController', () => {
   it('should respond with status 200 for existing users', async () => {
     const loginWithOsuMock = vi.mocked(loginWithOsu);
     const next = expressNextFunctionMock();
     const request = expressRequestMock<
       never,
-      PostPublicLoginResponseBody,
-      PostPublicLoginRequestBody,
+      LoginResponseBody,
+      LoginRequestBody,
       never
     >();
 
@@ -61,9 +61,9 @@ describe('postLoginController', () => {
 
     loginWithOsuMock.mockResolvedValue({ isNew: false, user, bearer });
 
-    const response = expressResponseMock<PostPublicLoginResponseBody>();
+    const response = expressResponseMock<LoginResponseBody>();
 
-    await postLoginController(request, response, next);
+    await loginController(request, response, next);
 
     expect(matchedData).toHaveBeenCalledWith(request);
     expect(loginWithOsu).toHaveBeenCalledWith(request.body.authenticationCode);
@@ -81,8 +81,8 @@ describe('postLoginController', () => {
     const next = expressNextFunctionMock();
     const request = expressRequestMock<
       never,
-      PostPublicLoginResponseBody,
-      PostPublicLoginRequestBody,
+      LoginResponseBody,
+      LoginRequestBody,
       never
     >();
 
@@ -105,9 +105,9 @@ describe('postLoginController', () => {
 
     loginWithOsuMock.mockResolvedValue({ isNew: true, user, bearer });
 
-    const response = expressResponseMock<PostPublicLoginResponseBody>();
+    const response = expressResponseMock<LoginResponseBody>();
 
-    await postLoginController(request, response, next);
+    await loginController(request, response, next);
 
     expect(matchedData).toHaveBeenCalledWith(request);
     expect(loginWithOsu).toHaveBeenCalledWith(request.body.authenticationCode);
@@ -125,8 +125,8 @@ describe('postLoginController', () => {
     const next = expressNextFunctionMock();
     const request = expressRequestMock<
       never,
-      PostPublicLoginResponseBody,
-      PostPublicLoginRequestBody,
+      LoginResponseBody,
+      LoginRequestBody,
       never
     >();
 
@@ -136,9 +136,9 @@ describe('postLoginController', () => {
 
     loginWithOsuMock.mockRejectedValue(error);
 
-    const response = expressResponseMock<PostPublicLoginResponseBody>();
+    const response = expressResponseMock<LoginResponseBody>();
 
-    await postLoginController(request, response, next);
+    await loginController(request, response, next);
 
     expect(matchedData).toHaveBeenCalledWith(request);
     expect(loginWithOsu).toHaveBeenCalledWith(request.body.authenticationCode);

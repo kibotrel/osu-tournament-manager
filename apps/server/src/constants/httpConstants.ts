@@ -10,9 +10,9 @@ export const allowedHttpMethodsOnResource: Record<
   string,
   Array<'DELETE' | 'GET' | 'PATCH' | 'POST' | 'PUT'>
 > = {
+  '/api/v1/authentication/logout': ['GET'],
+  '/api/v1/authentication/login': ['POST'],
   '/api/v1/public/health': ['GET'],
-  '/api/v1/public/logout': ['GET'],
-  '/api/v1/public/login': ['POST'],
 };
 
 /**
@@ -20,9 +20,9 @@ export const allowedHttpMethodsOnResource: Record<
  * Reason can be that they are too noisy or contain sensitive information.
  */
 export const silentHttpEndpoints = new Set([
+  '/api/v1/authentication/login',
+  '/api/v1/authentication/logout',
   '/api/v1/public/health',
-  '/api/v1/public/login',
-  '/api/v1/public/logout',
 ]);
 
 export enum HttpEvent {
