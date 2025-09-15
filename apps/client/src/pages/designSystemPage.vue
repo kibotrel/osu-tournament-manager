@@ -34,43 +34,31 @@
           placeholder="String"
           v-model="stringInputValue"
         />
-        <ui-input placeholder="String" v-model="stringInputValue" />
         <ui-input
           label="Label"
-          placeholder="String"
-          v-model="stringInputValue"
-          :disabled="true"
+          placeholder="Number"
+          type="number"
+          v-model="numberInputValue"
         />
-        <ui-input
-          placeholder="String"
-          v-model="stringInputValue"
-          :disabled="true"
-        />
+        <ui-input isDisabled label="Label" placeholder="Disabled" />
       </div>
-      <div class="flex flex-row items-end space-x-2">
+      <div class="mt-4 flex flex-row space-x-2">
         <ui-input
+          class="mt-6"
+          placeholder="No label"
+          v-model="stringInputValue"
+        />
+        <ui-input
+          isRequired
           label="Label"
-          placeholder="Number"
-          type="number"
-          v-model="numberInputValue"
+          placeholder="Required"
+          v-model="stringInputValue"
         />
         <ui-input
-          placeholder="Number"
-          type="number"
-          v-model="numberInputValue"
-        />
-        <ui-input
+          errorMessage="Error message"
           label="Label"
-          placeholder="Number"
-          type="number"
-          v-model="numberInputValue"
-          :disabled="true"
-        />
-        <ui-input
-          placeholder="Number"
-          type="number"
-          v-model="numberInputValue"
-          :disabled="true"
+          placeholder="Error"
+          v-model="stringErrorValue"
         />
       </div>
     </div>
@@ -118,4 +106,5 @@ const icons: IconNames[] = [
 ];
 const stringInputValue = ref('');
 const numberInputValue = ref('');
+const stringErrorValue = ref('Error');
 </script>
