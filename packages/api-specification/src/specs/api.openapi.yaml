@@ -36,3 +36,10 @@ tags:
   - name: Public
     description: |
       Publicly available resources, no authentication required.
+
+components:
+  securitySchemes:
+    cookie:
+      type: apiKey
+      in: cookie
+      name: sessionId

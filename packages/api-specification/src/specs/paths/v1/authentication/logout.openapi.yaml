@@ -1,7 +1,8 @@
 get:
   description: |
-    This endpoint destroy any session associated with the request and effectively logs out the user.
-  operationId: getLogout
+    This endpoint destroy any session associated with the request and effectively
+    logs out the user.
+  operationId: logout
 
   responses:
     204:
