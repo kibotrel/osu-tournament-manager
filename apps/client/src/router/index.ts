@@ -5,30 +5,30 @@ const router = createRouter({
   routes: [
     {
       path: '/',
-      name: 'Dashboard',
+      name: 'dashboard',
       component: () => {
         return import('#src/pages/dashboardPage.vue');
       },
     },
     {
       path: '/design-system',
-      name: 'Design System',
+      name: 'design-system',
       component: () => {
         return import('#src/pages/designSystemPage.vue');
       },
     },
     {
-      path: '/oauth/callback',
-      name: 'OauthCallback',
+      path: '/login',
+      name: 'login',
       component: () => {
-        return import('#src/pages/oauthCallbackPage.vue');
+        return import('#src/pages/loginPage.vue');
       },
     },
     {
-      path: '/login',
-      name: 'Login',
+      path: '/oauth/callback',
+      name: 'oauth-callback',
       component: () => {
-        return import('#src/pages/loginPage.vue');
+        return import('#src/pages/oauthCallbackPage.vue');
       },
     },
   ],
