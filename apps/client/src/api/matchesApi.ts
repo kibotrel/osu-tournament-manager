@@ -44,6 +44,9 @@ const createMatch = async (name: string) => {
   return response.data as CreateMatchResponseData;
 };
 
+/**
+ * Close an existing match and its corresponding channel on bancho.
+ */
 export const useCloseMatch = () => {
   const router = inject<Router>('$router');
 
