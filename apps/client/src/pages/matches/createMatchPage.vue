@@ -5,14 +5,17 @@
         Create new match
       </h1>
       <ui-input
-        v-model="matchName"
+        isRequired
         label="Room Name"
         placeholder="Enter the name of the room"
+        v-model="matchName"
+        @keydown.enter="createMatch(matchName)"
       />
       <div class="flex justify-center">
         <ui-button
           class="mt-8 w-32"
           @mousedown="createMatch(matchName)"
+          @keydown.enter="createMatch(matchName)"
           :isLoading="isPending"
           >Create</ui-button
         >

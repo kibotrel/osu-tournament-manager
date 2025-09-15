@@ -6,6 +6,7 @@
       variant="danger"
       :isLoading="isPending"
       @mousedown="closeMatch(matchId)"
+      @keydown.enter="closeMatch(matchId)"
     >
       <template #default>Close Match</template>
       <template #icon><archive-icon /></template>
