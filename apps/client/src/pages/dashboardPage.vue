@@ -4,10 +4,9 @@
       Welcome {{ user.name }} ({{ user.gameUserId }}). Login:
       {{ user.isLoggedIn }}
     </p>
-    <ui-button class="w-24" @mousedown="logout" :isLoading="isPending"
-      >Logout</ui-button
-    >
-
+    <BaseButton class="w-24" @mousedown="logout" :isLoading="isPending">
+      Logout
+    </BaseButton>
     <input
       type="text"
       placeholder="Enter message..."
@@ -21,16 +20,16 @@
       class="my-2 rounded-md border border-gray-300 bg-inherit p-2"
     />
     <div class="mt-2 flex gap-2">
-      <ui-button @mousedown="connect">Connect</ui-button>
-      <ui-button @mousedown="disconnect">Disconnect</ui-button>
-      <ui-button
+      <BaseButton @mousedown="connect">Connect</BaseButton>
+      <BaseButton @mousedown="disconnect">Disconnect</BaseButton>
+      <BaseButton
         @mousedown="
           () => {
             sendMessage(message, WebSocketChannelMatchesEvent.ChatMessages);
             message.content = '';
           }
         "
-        >Send message</ui-button
+        >Send message</BaseButton
       >
     </div>
     <div class="my-2">
@@ -55,7 +54,7 @@ import { inject, reactive } from 'vue';
 import type { Router } from 'vue-router';
 
 import { useLogout } from '#src/api/authenticationApi.js';
-import uiButton from '#src/components/ui/uiButton.vue';
+import BaseButton from '#src/components/base/baseButton.vue';
 import { useUserStore } from '#src/stores/userStore.js';
 import { defineWebsocketStore } from '#src/stores/webSocketStore.js';
 

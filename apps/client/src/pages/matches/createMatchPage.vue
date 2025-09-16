@@ -4,7 +4,7 @@
       <h1 class="mb-8 text-center text-4xl font-semibold tracking-tight">
         Create new match
       </h1>
-      <ui-input
+      <BaseInput
         isRequired
         label="Room Name"
         placeholder="Enter the name of the room"
@@ -12,13 +12,14 @@
         @keydown.enter="createMatch(matchName)"
       />
       <div class="flex justify-center">
-        <ui-button
+        <BaseButton
           class="mt-8 w-32"
           @mousedown="createMatch(matchName)"
           @keydown.enter="createMatch(matchName)"
           :isLoading="isPending"
-          >Create</ui-button
         >
+          Create
+        </BaseButton>
       </div>
     </div>
   </div>
@@ -28,8 +29,8 @@
 import { ref } from 'vue';
 
 import { useCreateMatch } from '#src/api/matchesApi.js';
-import uiButton from '#src/components/ui/uiButton.vue';
-import uiInput from '#src/components/ui/uiInput.vue';
+import BaseButton from '#src/components/base/baseButton.vue';
+import BaseInput from '#src/components/base/baseInput.vue';
 
 const matchName = ref('');
 const { mutate: createMatch, isPending } = useCreateMatch();

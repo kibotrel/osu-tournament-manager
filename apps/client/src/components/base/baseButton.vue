@@ -4,15 +4,14 @@
     :disabled="properties.isLoading || properties.isDisabled"
   >
     <div v-if="isLoading">
-      <loading-icon class="h-6 w-6" />
+      <LoadingIcon class="h-6 w-6" />
     </div>
     <div v-else class="flex items-center">
       <div v-if="slots.icon" class="mr-2 h-6 w-6">
         <slot name="icon" />
       </div>
-
       <div>
-        <slot />
+        <slot> Button </slot>
       </div>
     </div>
   </button>
@@ -21,7 +20,7 @@
 <script setup lang="ts">
 import { useSlots } from 'vue';
 
-import loadingIcon from '#src/components/icons/loadingIcon.vue';
+import LoadingIcon from '#src/components/icons/loadingIcon.vue';
 
 export type ButtonVariant =
   | 'danger'

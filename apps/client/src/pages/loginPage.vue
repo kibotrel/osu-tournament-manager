@@ -5,16 +5,16 @@
       <p class="text-primary-2">
         To get access to this webapp, please login with your osu! account.
       </p>
-      <ui-button
+      <BaseButton
         @mousedown="redirectToOsuAuthPage()"
         :isLoading="isLoginButtonLoading"
         class="m-auto mt-8 w-32"
       >
         <template #default> Login </template>
         <template #icon>
-          <ui-icon name="identification" />
+          <IdentificationIcon />
         </template>
-      </ui-button>
+      </BaseButton>
     </div>
   </div>
 </template>
@@ -22,8 +22,8 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 
-import uiButton from '#src/components/ui/uiButton.vue';
-import uiIcon from '#src/components/ui/uiIcon.vue';
+import BaseButton from '#src/components/base/baseButton.vue';
+import IdentificationIcon from '#src/components/icons/identificationIcon.vue';
 
 const baseUrl = import.meta.env.VITE_BASE_APP_URL;
 const callbackUrl = encodeURIComponent(`${baseUrl}/oauth/callback`);

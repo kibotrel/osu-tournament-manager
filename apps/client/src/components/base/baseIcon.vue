@@ -10,7 +10,8 @@ export type IconNames =
   | 'identification'
   | 'leave'
   | 'loading'
-  | 'transparentCube';
+  | 'transparentCube'
+  | 'xMark';
 
 const properties = defineProps<{
   name: IconNames;

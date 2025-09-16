@@ -105,11 +105,7 @@ label {
   @apply mb-1 block text-sm font-semibold;
 }
 
-label.error {
-  @apply text-red-400;
-}
-
 input.error:not(:disabled) {
-  @apply border-red-400 text-red-400;
+  @apply border-red-400 bg-red-400/20 text-red-400;
 }
 </style>

@@ -1,5 +1,7 @@
 <template>
-  <div></div>
+  <div class="fixed inset-0 flex items-center justify-center">
+    <LoadingIcon />
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -7,6 +9,7 @@ import { inject, onBeforeMount } from 'vue';
 import type { Router } from 'vue-router';
 
 import { useLogin } from '#src/api/authenticationApi.js';
+import LoadingIcon from '#src/components/icons/loadingIcon.vue';
 
 const $router = inject<Router>('$router');
 const { mutateAsync: login } = useLogin();
