@@ -75,6 +75,43 @@
         />
       </div>
     </div>
+    <div class="my-2 space-y-2 text-2xl">
+      <h2>Modals</h2>
+      <div class="flex flex-row space-x-2">
+        <BaseButton class="w-32" @click="isDefaultModalVisible = true">
+          Base
+        </BaseButton>
+        <BaseModal
+          v-show="isDefaultModalVisible"
+          @close="isDefaultModalVisible = false"
+        >
+          <template #header>
+            <h1 class="mb-4 font-semibold tracking-tight">Modal title</h1>
+          </template>
+          <template #body>
+            <p class="text-base">Content</p>
+          </template>
+          <template #footer>
+            <div class="mt-4 flex flex-row justify-end space-x-2">
+              <BaseButton
+                class="w-24"
+                variant="secondary"
+                @mousedown="isDefaultModalVisible = false"
+              >
+                Cancel
+              </BaseButton>
+              <BaseButton
+                class="w-24"
+                variant="primary"
+                @mousedown="isDefaultModalVisible = false"
+              >
+                Confirm
+              </BaseButton>
+            </div>
+          </template>
+        </BaseModal>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -86,6 +123,7 @@ import BaseButton from '#src/components/base/baseButton.vue';
 import type { IconNames } from '#src/components/base/baseIcon.vue';
 import BaseIcon from '#src/components/base/baseIcon.vue';
 import BaseInput from '#src/components/base/baseInput.vue';
+import BaseModal from '#src/components/base/baseModal.vue';
 
 const buttonVariants: Array<{
   name: string;
@@ -109,4 +147,5 @@ const icons: IconNames[] = [
 const stringInputValue = ref('');
 const numberInputValue = ref('');
 const stringErrorValue = ref('Wrong input');
+const isDefaultModalVisible = ref(false);
 </script>
