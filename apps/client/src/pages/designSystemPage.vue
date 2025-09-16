@@ -14,12 +14,12 @@
         <BaseButton class="w-32" :variant="variant">
           <template #default> {{ name }} </template>
           <template #icon>
-            <BaseIcon name="transparentCube" />
+            <BaseIcon name="cubeTransparent" />
           </template>
         </BaseButton>
         <BaseButton class="w-32" :variant="variant">
           <template #icon>
-            <BaseIcon name="transparentCube" />
+            <BaseIcon name="cubeTransparent" />
           </template>
         </BaseButton>
         <BaseButton v-if="variant === 'primary'" class="w-32" isLoading />
@@ -99,11 +99,12 @@ const buttonVariants: Array<{
   { name: 'Danger', variant: 'danger' },
 ];
 const icons: IconNames[] = [
-  'archive',
+  'archiveBox',
+  'arrowLeftStartOnRectangle',
+  'cubeTransparent',
   'identification',
-  'leave',
   'loading',
-  'transparentCube',
+  'xMark',
 ];
 const stringInputValue = ref('');
 const numberInputValue = ref('');

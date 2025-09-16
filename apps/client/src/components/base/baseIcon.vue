@@ -6,11 +6,11 @@
 import { defineAsyncComponent } from 'vue';
 
 export type IconNames =
-  | 'archive'
+  | 'archiveBox'
+  | 'arrowLeftStartOnRectangle'
+  | 'cubeTransparent'
   | 'identification'
-  | 'leave'
   | 'loading'
-  | 'transparentCube'
   | 'xMark';
 
 const properties = defineProps<{

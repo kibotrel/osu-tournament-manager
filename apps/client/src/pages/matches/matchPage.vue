@@ -10,7 +10,7 @@
     >
       <template #default> Close Match </template>
       <template #icon>
-        <LeaveIcon />
+        <ArrowLeftStartOnRectangleIcon />
       </template>
     </BaseButton>
   </div>
@@ -20,7 +20,7 @@ import { useRoute } from 'vue-router';
 
 import { useCloseMatch } from '#src/api/matchesApi.js';
 import BaseButton from '#src/components/base/baseButton.vue';
-import LeaveIcon from '#src/components/icons/leaveIcon.vue';
+import ArrowLeftStartOnRectangleIcon from '#src/components/icons/arrowLeftStartOnRectangleIcon.vue';
 
 const route = useRoute();
 const matchId = Number(route.params.gameMatchId);
