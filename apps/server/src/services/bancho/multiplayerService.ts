@@ -7,9 +7,6 @@ import {
 export const openMultiplayerChannel = async (name: string) => {
   const channel = await banchoClient.createMultiplayerChannel(name);
 
-  // TODO: Remove this hardcoded invitation, used for debugging purposes.
-  await banchoClient.inviteUserToMultiplayerChannel('DemonWaves', channel);
-
   await addMatchToCachedSet(channel);
 
   /**
