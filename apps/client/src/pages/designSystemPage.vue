@@ -1,7 +1,7 @@
 <template>
   <div class="m-4">
-    <h1 class="my-4 text-4xl font-semibold tracking-tight">Design System</h1>
-    <div class="my-2 space-y-2 text-2xl">
+    <h1 class="text-4xl font-semibold tracking-tight">Design System</h1>
+    <div class="my-4 space-y-2 text-2xl">
       <h2>Buttons</h2>
       <div
         class="flex flex-row space-x-2"
@@ -28,7 +28,7 @@
         </BaseButton>
       </div>
     </div>
-    <div class="my-2 space-y-2 text-2xl">
+    <div class="my-8 space-y-2 text-2xl">
       <h2>Inputs</h2>
       <div class="flex flex-row items-end space-x-2">
         <BaseInput
@@ -64,7 +64,7 @@
         />
       </div>
     </div>
-    <div class="my-2 space-y-2 text-2xl">
+    <div class="my-8 space-y-2 text-2xl">
       <h2>Icons</h2>
       <div class="flex flex-row space-x-2">
         <BaseIcon
@@ -75,7 +75,7 @@
         />
       </div>
     </div>
-    <div class="my-2 space-y-2 text-2xl">
+    <div class="my-8 space-y-2 text-2xl">
       <h2>Modals</h2>
       <div class="flex flex-row space-x-2">
         <BaseButton class="w-32" @click="isDefaultModalVisible = true">
