@@ -96,17 +96,21 @@ export class BanchoClient extends EventEmitter<EmittedEvents> {
   public closeMultiplayerChannel(channel: string) {
     return new Promise<void>((resolve, reject) => {
       this.once(`${BanchoClientEvent.RecipientNotFound}:${channel}`, () => {
-        reject(new Error(`Match channel ${channel} not found`));
+        return reject(new Error(`Match channel ${channel} not found`));
       });
 
       this.once(
         `${BanchoClientEvent.MultiplayerChannelClosed}:${channel}`,
         () => {
-          resolve();
+          return resolve();
         },
       );
 
-      this.sendPrivateMessage(BanchoCommand.CloseMatch, { recipient: channel });
+      this.sendPrivateMessage(BanchoCommand.CloseMatch, {
+        recipient: channel,
+      }).catch((error) => {
+        return reject(error);
+      });
     });
   }
 
@@ -133,11 +137,15 @@ export class BanchoClient extends EventEmitter<EmittedEvents> {
       });
 
       this.once(BanchoClientEvent.BotConnected, () => {
-        resolve();
+        return resolve();
       });
 
       this.socket.connect({ host, port }, () => {
-        this.handleConnectEvent();
+        this.handleConnectEvent().catch((error) => {
+          this.handleCloseEvent();
+
+          return reject(error);
+        });
       });
     });
   }
@@ -147,7 +155,7 @@ export class BanchoClient extends EventEmitter<EmittedEvents> {
    * id given by the Bancho server like `#mp_123456`.
    */
   public createMultiplayerChannel(name: string) {
-    return new Promise<string>((resolve) => {
+    return new Promise<string>((resolve, reject) => {
       this.once(BanchoClientEvent.BotJoinedChannel, ({ channel }) => {
         resolve(channel);
       });
@@ -155,7 +163,9 @@ export class BanchoClient extends EventEmitter<EmittedEvents> {
       this.sendPrivateMessage(
         `${BanchoCommand.CreateTournamentMatch} ${name}`,
         { recipient: BanchoPublicChannel.Lobby },
-      );
+      ).catch((error) => {
+        reject(error);
+      });
     });
   }
 
@@ -169,11 +179,15 @@ export class BanchoClient extends EventEmitter<EmittedEvents> {
       }
 
       this.once(BanchoClientEvent.BotDisconnected, () => {
-        resolve();
+        return resolve();
       });
 
       if (this.connectionState !== IrcClientState.Disconnecting) {
-        this.sendIrcMessage(IrcKeyword.Quit);
+        this.sendIrcMessage(IrcKeyword.Quit).catch(() => {
+          this.handleCloseEvent();
+
+          return resolve();
+        });
         this.connectionState = IrcClientState.Disconnecting;
       }
     });
@@ -223,14 +237,16 @@ export class BanchoClient extends EventEmitter<EmittedEvents> {
   public joinChannel(channel: string) {
     return new Promise<void>((resolve, reject) => {
       this.once(`${BanchoClientEvent.BotJoinedChannel}:${channel}`, () => {
-        resolve();
+        return resolve();
       });
 
       this.once(`${BanchoClientEvent.ChannelNotFound}:${channel}`, () => {
-        reject(new Error(`Bancho channel ${channel} not found`));
+        return reject(new Error(`Bancho channel ${channel} not found`));
       });
 
-      this.sendIrcMessage(`${IrcKeyword.Join} ${channel}`);
+      this.sendIrcMessage(`${IrcKeyword.Join} ${channel}`).catch((error) => {
+        return reject(error);
+      });
     });
   }
 
@@ -249,7 +265,7 @@ export class BanchoClient extends EventEmitter<EmittedEvents> {
           return reject(error);
         }
 
-        resolve();
+        return resolve();
       });
 
       this.socket.write(`${message}\r\n`, (error) => {
@@ -269,24 +285,26 @@ export class BanchoClient extends EventEmitter<EmittedEvents> {
 
     return new Promise<void>((resolve, reject) => {
       this.once(BanchoClientEvent.UserNotFound, () => {
-        reject(
+        return reject(
           new Error(`Could not invite user ${user} to channel ${channel}`),
         );
       });
 
       this.once(BanchoClientEvent.UserAlreadyInChannel, () => {
-        resolve();
+        return resolve();
       });
 
       this.once(
         `${BanchoClientEvent.UserInvitedToChannel}:${channel}:${user}`,
         () => {
-          resolve();
+          return resolve();
         },
       );
 
       this.sendPrivateMessage(`${BanchoCommand.InvitePlayer} ${user}`, {
         recipient: channel,
+      }).catch((error) => {
+        return reject(error);
       });
     });
   }
