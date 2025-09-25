@@ -1,14 +1,13 @@
-get:
-  description: |
-    This endpoint destroy any session associated with the request and effectively
-    logs out the user.
-  operationId: logout
+description: |
+  This endpoint destroy any session associated with the request and effectively
+  logs out the user.
+operationId: logout
 
-  responses:
-    204:
-      description: Any session associated with the request has been destroyed.
+responses:
+  204:
+    description: Any session associated with the request has been destroyed.
 
-  security: []
-  summary: Destroy session and log out
-  tags:
-    -  Authentication
+security: []
+summary: Destroy session and log out.
+tags:
+  -  Authentication
