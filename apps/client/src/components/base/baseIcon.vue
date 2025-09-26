@@ -8,6 +8,7 @@ import { defineAsyncComponent } from 'vue';
 export type IconNames =
   | 'archiveBox'
   | 'arrowLeftStartOnRectangle'
+  | 'arrowRightEndOnRectangle'
   | 'cubeTransparent'
   | 'identification'
   | 'loading'
