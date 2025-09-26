@@ -1,11 +1,12 @@
-import type {
-  CloseMatchRequestParameters,
-  CloseMatchResponseBody,
+import {
+  type CloseMatchRequestParameters,
+  type CloseMatchResponseBody,
+  HttpStatusCode,
 } from '@packages/shared';
 import type { RequestHandler } from 'express';
 import { matchedData } from 'express-validator';
 
-import { closeMatch } from '#src/services/matches/matchesService.js';
+import { closeMatchService } from '#src/services/matches/matchesService.js';
 
 export const closeMatchController: RequestHandler<
   CloseMatchRequestParameters,
@@ -16,9 +17,9 @@ export const closeMatchController: RequestHandler<
   const { id } = matchedData<CloseMatchRequestParameters>(request);
 
   try {
-    const { status } = await closeMatch(Number(id));
+    const { status } = await closeMatchService(Number(id));
 
-    return response.status(200).json({ status });
+    return response.status(HttpStatusCode.Ok).json({ status });
   } catch (error) {
     return next(error);
   }

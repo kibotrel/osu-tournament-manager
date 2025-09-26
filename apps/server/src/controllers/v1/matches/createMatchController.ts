@@ -1,11 +1,12 @@
-import type {
-  CreateMatchRequestBody,
-  CreateMatchResponseBody,
+import {
+  type CreateMatchRequestBody,
+  type CreateMatchResponseBody,
+  HttpStatusCode,
 } from '@packages/shared';
 import type { RequestHandler } from 'express';
 import { matchedData } from 'express-validator';
 
-import { openMatch } from '#src/services/matches/matchesService.js';
+import { openMatchService } from '#src/services/matches/matchesService.js';
 
 export const createMatchController: RequestHandler<
   never,
@@ -16,9 +17,9 @@ export const createMatchController: RequestHandler<
   const { name } = matchedData<CreateMatchRequestBody>(request);
 
   try {
-    const { gameMatchId, id } = await openMatch(name);
+    const { gameMatchId, id } = await openMatchService(name);
 
-    return response.status(201).json({
+    return response.status(HttpStatusCode.Created).json({
       gameMatchId,
       id,
       name,
