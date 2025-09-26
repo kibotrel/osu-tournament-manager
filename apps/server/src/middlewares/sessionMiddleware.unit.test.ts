@@ -16,6 +16,14 @@ vi.mock('#src/dependencies/cacheDependency.js', () => {
   };
 });
 
+vi.mock('express-session', () => {
+  return {
+    default: () => {
+      return vi.fn();
+    },
+  };
+});
+
 describe('isAuthenticated', () => {
   afterEach(() => {
     vi.clearAllMocks();
