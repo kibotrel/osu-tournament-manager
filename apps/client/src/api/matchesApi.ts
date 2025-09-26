@@ -4,10 +4,12 @@ import type {
   CreateMatchRequestBody,
   CreateMatchResponseBody,
   CreateMatchResponseData,
+  GetMatchResponseBody,
+  GetMatchResponseData,
   NothingRecord,
 } from '@packages/shared';
-import { postRequest } from '@packages/shared';
-import { useMutation } from '@tanstack/vue-query';
+import { getRequest, postRequest } from '@packages/shared';
+import { useMutation, useQuery } from '@tanstack/vue-query';
 import { inject } from 'vue';
 import type { Router } from 'vue-router';
 
@@ -44,20 +46,27 @@ const createMatch = async (name: string) => {
   return response.data as CreateMatchResponseData;
 };
 
+const getMatch = async (matchId: number) => {
+  const response = await getRequest<NothingRecord, GetMatchResponseBody>({
+    baseUrl,
+    endpoint: `/matches/${matchId}`,
+    payload: {},
+  });
+
+  if (!response.isOk) {
+    throw new Error(JSON.stringify(response.data));
+  }
+
+  return response.data as GetMatchResponseData;
+};
+
 /**
  * Close an existing match and its corresponding channel on bancho.
  */
 export const useCloseMatch = () => {
-  const router = inject<Router>('$router');
-
   return useMutation<CloseMatchResponseData, Error, number>({
     mutationFn: async (matchId) => {
       return await closeMatch(matchId);
-    },
-    onSuccess: () => {
-      // TODO: Toaster here to indicate close or deletion depending on how far match went.
-
-      router?.push(`/matches/create`);
     },
     onError: (error) => {
       // TODO: Add a toast message here
@@ -83,5 +92,17 @@ export const useCreateMatch = () => {
       // TODO: Add a toast message here
       console.log(JSON.parse(error.message));
     },
+  });
+};
+
+/**
+ * Fetch an existing match by its id.
+ */
+export const useGetMatch = (id: number, staleTime = 0) => {
+  return useQuery({
+    queryFn: () => getMatch(id),
+    queryKey: ['match', id],
+    staleTime,
+    retry: false,
   });
 };

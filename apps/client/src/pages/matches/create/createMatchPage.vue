@@ -5,20 +5,27 @@
         Create new match
       </h1>
       <BaseInput
+        id="match-name"
         isRequired
-        label="Room Name"
-        placeholder="Enter the name of the room"
+        label="Match name"
+        placeholder="MWC4K2025 RO32: Philippines VS France"
         v-model="matchName"
         @keydown.enter="createMatch(matchName)"
       />
       <div class="flex justify-center">
         <BaseButton
           class="mt-8 w-32"
+          id="create-match-button"
+          variant="success"
           @mousedown="createMatch(matchName)"
           @keydown.enter="createMatch(matchName)"
+          :isDisabled="matchName.length === 0"
           :isLoading="isPending"
         >
-          Create
+          <template #default> Create </template>
+          <template #icon>
+            <ArrowRightEndOnRectangleIcon />
+          </template>
         </BaseButton>
       </div>
     </div>
@@ -31,6 +38,7 @@ import { ref } from 'vue';
 import { useCreateMatch } from '#src/api/matchesApi.js';
 import BaseButton from '#src/components/base/baseButton.vue';
 import BaseInput from '#src/components/base/baseInput.vue';
+import ArrowRightEndOnRectangleIcon from '#src/components/icons/arrowRightEndOnRectangleIcon.vue';
 
 const matchName = ref('');
 const { mutate: createMatch, isPending } = useCreateMatch();

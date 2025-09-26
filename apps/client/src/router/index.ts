@@ -14,7 +14,7 @@ const router = createRouter({
       path: '/matches/create',
       name: 'match-creation',
       component: () => {
-        return import('#src/pages/matches/createMatchPage.vue');
+        return import('#src/pages/matches/create/createMatchPage.vue');
       },
     },
     {
