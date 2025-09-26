@@ -20,7 +20,7 @@ import { loginController } from './loginController.js';
 vi.mock('express-validator', () => {
   return {
     matchedData: vi.fn().mockImplementation((request) => {
-      return request.body;
+      return { ...request.params, ...request.body, ...request.query };
     }),
   };
 });
