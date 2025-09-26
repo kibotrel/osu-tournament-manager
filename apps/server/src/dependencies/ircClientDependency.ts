@@ -15,11 +15,15 @@ const banchoClient = new BanchoClient({
 });
 
 banchoClient.on(BanchoClientEvent.BotConnected, () => {
-  logger.debug('Connected to the osu! IRC server.');
+  logger.debug('[IRC] Connected to the osu! server.');
 });
 
 banchoClient.on(BanchoClientEvent.BotJoinedChannel, ({ channel }) => {
-  logger.debug(`Joined channel ${channel}.`);
+  logger.debug(`[IRC] Joined ${channel}.`);
+});
+
+banchoClient.on(BanchoClientEvent.MultiplayerChannelClosed, ({ channel }) => {
+  logger.debug(`[IRC] Match ${channel} closed.`);
 });
 
 export { banchoClient };
