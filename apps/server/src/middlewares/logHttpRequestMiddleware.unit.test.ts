@@ -46,6 +46,29 @@ describe('logHttpRequest', () => {
     expect(next).toHaveBeenCalled();
   });
 
+  it('should log body, params, and query if they exist', () => {
+    const request = expressRequestMock() as Request;
+    const response = expressResponseMock() as Response;
+    const next = expressNextFunctionMock();
+
+    request.id = 'test-request-id';
+    request.method = 'POST';
+    request.url = '/api/v1/test';
+    request.body = { key: 'value' };
+    request.params = { id: '123' };
+    request.query = { search: 'term' };
+
+    logHttpRequest(request, response, next);
+
+    expect(logger.http).toHaveBeenCalledWith('POST /api/v1/test', {
+      body: request.body,
+      params: request.params,
+      query: request.query,
+      requestId: 'test-request-id',
+    });
+    expect(next).toHaveBeenCalled();
+  });
+
   it('should not log health check requests', () => {
     const request = expressRequestMock() as Request;
     const response = expressResponseMock() as Response;
