@@ -6,9 +6,10 @@
         To get access to this webapp, please login with your osu! account.
       </p>
       <BaseButton
+        class="m-auto mt-8 w-32"
+        id="login-button"
         @mousedown="redirectToOsuAuthPage()"
         :isLoading="isLoginButtonLoading"
-        class="m-auto mt-8 w-32"
       >
         <template #default> Login </template>
         <template #icon>

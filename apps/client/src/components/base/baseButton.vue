@@ -2,6 +2,7 @@
   <button
     :class="properties.variant"
     :disabled="properties.isLoading || properties.isDisabled"
+    :id="properties.id"
   >
     <div v-if="isLoading">
       <LoadingIcon class="h-6 w-6" />
@@ -31,6 +32,7 @@ export type ButtonVariant =
   | 'warning';
 
 interface Properties {
+  id: string;
   isDisabled?: boolean;
   isLoading?: boolean;
   variant?: ButtonVariant;

@@ -4,7 +4,12 @@
       Welcome {{ user.name }} ({{ user.gameUserId }}). Login:
       {{ user.isLoggedIn }}
     </p>
-    <BaseButton class="w-24" @mousedown="logout" :isLoading="isPending">
+    <BaseButton
+      class="w-24"
+      id="logout-button"
+      @mousedown="logout"
+      :isLoading="isPending"
+    >
       Logout
     </BaseButton>
     <input
@@ -20,9 +25,12 @@
       class="my-2 rounded-md border border-gray-300 bg-inherit p-2"
     />
     <div class="mt-2 flex gap-2">
-      <BaseButton @mousedown="connect">Connect</BaseButton>
-      <BaseButton @mousedown="disconnect">Disconnect</BaseButton>
+      <BaseButton id="connect-button" @mousedown="connect">Connect</BaseButton>
+      <BaseButton id="disconnect-button" @mousedown="disconnect"
+        >Disconnect</BaseButton
+      >
       <BaseButton
+        id="send-message-button"
         @mousedown="
           () => {
             sendMessage(message, WebSocketChannelMatchesEvent.ChatMessages);

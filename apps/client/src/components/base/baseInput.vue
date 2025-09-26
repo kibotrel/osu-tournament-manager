@@ -3,6 +3,7 @@
     <label
       v-if="properties.label"
       :class="!properties.isDisabled && properties.errorMessage ? 'error' : ''"
+      :for="properties.id"
     >
       <span>
         {{ properties.label }}
@@ -16,6 +17,7 @@
       type="number"
       :class="properties.errorMessage ? 'error' : ''"
       :disabled="properties.isDisabled"
+      :id="properties.id"
       :placeholder="properties.placeholder"
       :value="modelValue"
       @blur="emit('blur')"
@@ -26,6 +28,7 @@
       v-else
       :class="properties.errorMessage ? 'error' : ''"
       :disabled="properties.isDisabled"
+      :id="properties.id"
       :placeholder="properties.placeholder"
       :value="modelValue"
       @blur="emit('blur')"
@@ -44,12 +47,13 @@
 
 <script setup lang="ts">
 interface Properties {
-  isDisabled?: boolean;
+  id: string;
   errorMessage?: string;
+  isDisabled?: boolean;
+  isRequired?: boolean;
   label?: string;
   modelValue?: string;
   placeholder?: string;
-  isRequired?: boolean;
   type?: 'text' | 'number';
 }
 
