@@ -1,4 +1,5 @@
 import {
+  HttpInternalServerError,
   HttpNotFoundError,
   HttpUnprocessableContentError,
   banchoChannelFromGameMatchId,
@@ -37,6 +38,18 @@ export const closeMatchService = async (id: number) => {
 
   // TODO: implement detection about wether or nor the match was actually played, cancelled, forfeited etc.
   return { status: 'closed' as const };
+};
+
+export const getMatchService = async (id: number) => {
+  const match = await getMatchById(id, {
+    columnsFilter: ['endsAt', 'id', 'name'],
+  });
+
+  if (!match) {
+    throw new HttpNotFoundError({ message: 'Match not found' });
+  }
+
+  return match;
 };
 
 export const openMatchService = async (name: string) => {
