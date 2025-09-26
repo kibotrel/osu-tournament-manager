@@ -22,6 +22,7 @@
       <div class="flex flex-row justify-end">
         <BaseButton
           class="w-32"
+          id="close-match-button"
           variant="danger"
           :isLoading="isPending"
           :isDisabled="properties.matchName !== confirmationMatchName"
