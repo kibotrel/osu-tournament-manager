@@ -9,9 +9,9 @@ const getMatchParametersValidator = (): ValidationChain[] => {
         message: 'id is required',
         errorCode: 'validator.getMatchParametersValidator.id.required',
       })
-      .isInt({ allow_leading_zeroes: false, min: 0 })
+      .isInt({ allow_leading_zeroes: false, min: 1 })
       .withMessage({
-        message: 'id must be a integer string',
+        message: 'id must be a positive integer string',
         errorCode: 'validator.getMatchParametersValidator.id.integer',
       })
       .notEmpty()
