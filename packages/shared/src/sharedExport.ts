@@ -12,6 +12,7 @@ export * from '#src/types/api/v1/authentication/loginTypes.js';
 export * from '#src/types/api/v1/authentication/logoutTypes.js';
 export * from '#src/types/api/v1/matches/closeMatchTypes.js';
 export * from '#src/types/api/v1/matches/createMatchTypes.js';
+export * from '#src/types/api/v1/matches/getMatchTypes.js';
 export * from '#src/types/utilityTypes.js';
 export * from '#src/types/webSocketTypes.js';
 export * from '#src/validators/objectValidators.js';
