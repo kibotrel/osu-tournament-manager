@@ -53,9 +53,13 @@ export const getMatchService = async (id: number) => {
 };
 
 export const openMatchService = async (name: string) => {
-  const { gameMatchId } = await openMultiplayerChannel(name);
+  let matchId: number = 0;
 
   try {
+    const { gameMatchId } = await openMultiplayerChannel(name);
+
+    matchId = gameMatchId;
+
     // TODO: Fill with real data when creating tournament, mappools and teams are implemented.
     return await createMatch({
       bansPerTeam: 0,
@@ -69,11 +73,18 @@ export const openMatchService = async (name: string) => {
       tournamentId: 0,
     });
   } catch (error) {
-    if (!(error instanceof Error)) {
-      throw error;
+    const usableError =
+      error instanceof Error ? error : new Error(String(error));
+
+    if (!matchId) {
+      throw new HttpInternalServerError({
+        cause: usableError,
+        message: 'Failed to open bancho multiplayer channel',
+        metadata: { name },
+      });
     }
 
-    const channel = banchoChannelFromGameMatchId(gameMatchId);
+    const channel = banchoChannelFromGameMatchId(matchId);
     const promises = [
       banchoClient.closeMultiplayerChannel(channel),
       removeMatchFromCachedSet(channel),
@@ -82,10 +93,9 @@ export const openMatchService = async (name: string) => {
     await Promise.all(promises);
 
     throw new HttpInternalServerError({
-      cause: error,
-      message:
-        'Failed to create match after opening bancho multiplayer channel',
-      metadata: { name, gameMatchId },
+      cause: usableError,
+      message: 'Failed to create match in database',
+      metadata: { name, gameMatchId: matchId },
     });
   }
 };
