@@ -9,6 +9,7 @@
         class="m-auto mt-8 w-32"
         id="login-button"
         @mousedown="redirectToOsuAuthPage()"
+        @keydown.enter="redirectToOsuAuthPage()"
         :isLoading="isLoginButtonLoading"
       >
         <template #default> Login </template>

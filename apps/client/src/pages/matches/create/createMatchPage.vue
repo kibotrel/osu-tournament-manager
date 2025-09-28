@@ -10,15 +10,15 @@
         label="Match name"
         placeholder="MWC4K2025 RO32: Philippines VS France"
         v-model="matchName"
-        @keydown.enter="createMatch(matchName)"
+        @keydown.enter="handleCreateMatch"
       />
       <div class="flex justify-center">
         <BaseButton
           class="mt-8 w-32"
           id="create-match-button"
           variant="success"
-          @mousedown="createMatch(matchName)"
-          @keydown.enter="createMatch(matchName)"
+          @mousedown="handleCreateMatch"
+          @keydown.enter="handleCreateMatch"
           :isDisabled="matchName.length === 0"
           :isLoading="isPending"
         >
@@ -42,4 +42,12 @@ import ArrowRightEndOnRectangleIcon from '#src/components/icons/arrowRightEndOnR
 
 const matchName = ref('');
 const { mutate: createMatch, isPending } = useCreateMatch();
+
+const handleCreateMatch = () => {
+  if (matchName.value.length === 0 || isPending.value) {
+    return;
+  }
+
+  createMatch(matchName.value);
+};
 </script>

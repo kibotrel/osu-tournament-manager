@@ -15,6 +15,7 @@
           id="match-name-confirmation"
           placeholder="MWC4K2025 RO32: Philippines VS France"
           v-model="confirmationMatchName"
+          @keydown.enter="handleCloseMatch"
         />
       </div>
     </template>
@@ -26,6 +27,7 @@
           variant="danger"
           :isLoading="isPending"
           :isDisabled="properties.matchName !== confirmationMatchName"
+          @keydown.enter="handleCloseMatch"
           @mousedown="handleCloseMatch"
         >
           <template #default> Close </template>
@@ -61,6 +63,10 @@ const { mutate: closeMatch, isPending } = useCloseMatch();
 const confirmationMatchName = ref('');
 
 const handleCloseMatch = () => {
+  if (properties.matchName !== confirmationMatchName.value || isPending.value) {
+    return;
+  }
+
   closeMatch(properties.matchId, {
     onSuccess: () => {
       // TODO: Toaster here to indicate close or deletion depending on how far match went.
