@@ -15,10 +15,10 @@ import type { ErrorRequestHandler } from 'express';
 import { error } from 'express-openapi-validator';
 
 import { environmentConfig } from '#src/configs/environmentConfig.js';
-import { CacheTopic } from '#src/constants/cacheConstants.js';
+import { CacheListTopic } from '#src/constants/cacheConstants.js';
 import { allowedHttpMethodsOnResource } from '#src/constants/httpConstants.js';
 import { logger } from '#src/dependencies/loggerDependency.js';
-import { popCacheArrayByKey } from '#src/queries/cache/deleteCacheQueries.js';
+import { deleteListInCacheByKey } from '#src/queries/cache/deleteCacheQueries.js';
 
 const { NotFound, MethodNotAllowed } = error;
 
@@ -131,8 +131,8 @@ export const errorHandler: ErrorRequestHandler<never, ErrorReport> = async (
     response.setHeader(HttpHeader.Allow, errorReport.getAllowedMethods());
   }
 
-  const metrics = await popCacheArrayByKey(
-    `${CacheTopic.ServerMetrics}:${request.id}`,
+  const metrics = await deleteListInCacheByKey(
+    `${CacheListTopic.ServerMetrics}:${request.id}`,
   );
 
   response.setHeader(HttpHeader.ServerTiming, metrics.join(', '));

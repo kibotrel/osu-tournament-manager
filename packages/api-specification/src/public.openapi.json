@@ -35,6 +35,10 @@
       "description": "User session management.\n"
     },
     {
+      "name": "Matches",
+      "description": "Match management and related operations.\n"
+    },
+    {
       "name": "Public",
       "description": "Publicly available resources, no authentication required.\n"
     }
@@ -43,7 +47,7 @@
     "/authentication/login": {
       "post": {
         "description": "This is where all osu! OAuth successful authentication requests are redirected to.\nIt creates a session to keep user logged-in for subsequent requests\nand a token to interact with osu! API. <b>This endpoint shouldn't be used directly.</b>\n",
-        "operationId": "postLogin",
+        "operationId": "login",
         "requestBody": {
           "content": {
             "application/json": {
@@ -139,11 +143,11 @@
                             "type": "string"
                           },
                           "message": {
-                            "example": "Authentication code cannot be empty",
+                            "example": "authenticationCode cannot be empty",
                             "type": "string"
                           },
                           "errorCode": {
-                            "example": "validator.postLoginBodyValidator.authenticationCode.empty",
+                            "example": "validator.loginBodyValidator.authenticationCode.empty",
                             "type": "string"
                           }
                         }
@@ -165,18 +169,396 @@
       }
     },
     "/authentication/logout": {
-      "get": {
-        "description": "This endpoint destroy any session associated with the request and effectively logs out the user.\n",
-        "operationId": "getLogout",
+      "post": {
+        "description": "This endpoint destroy any session associated with the request and effectively\nlogs out the user.\n",
+        "operationId": "logout",
         "responses": {
           "204": {
             "description": "Any session associated with the request has been destroyed."
           }
         },
         "security": [],
-        "summary": "Destroy session and log out",
+        "summary": "Destroy session and log out.",
         "tags": [
           "Authentication"
+        ]
+      }
+    },
+    "/matches": {
+      "post": {
+        "description": "Creates a new match. This will ask bancho to create a new multiplayer channel\nand return the channel details for later use.\n",
+        "operationId": "createMatch",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "name"
+                ],
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "avatarUrl": {
+                      "example": "https://a.ppy.sh/3909293?1555203556.jpeg",
+                      "type": "string"
+                    },
+                    "gameUserId": {
+                      "example": 3909293,
+                      "type": "integer"
+                    },
+                    "name": {
+                      "example": "DemonWaves",
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "New match created and channel opened on bancho."
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "instance": {
+                      "example": "/api/v1/matches",
+                      "type": "string"
+                    },
+                    "status": {
+                      "example": 400,
+                      "type": "integer"
+                    },
+                    "title": {
+                      "example": "Bad Request",
+                      "type": "string"
+                    },
+                    "detail": {
+                      "example": "Input validation failed",
+                      "type": "string"
+                    },
+                    "errors": {
+                      "items": {
+                        "properties": {
+                          "path": {
+                            "example": "/body/name",
+                            "type": "string"
+                          },
+                          "message": {
+                            "example": "name cannot be empty",
+                            "type": "string"
+                          },
+                          "errorCode": {
+                            "example": "validator.createMatchBodyValidator.name.empty",
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Missing or invalid name."
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "instance": {
+                      "example": "/api/v1/matches",
+                      "type": "string"
+                    },
+                    "status": {
+                      "example": 401,
+                      "type": "integer"
+                    },
+                    "title": {
+                      "example": "Unauthorized",
+                      "type": "string"
+                    },
+                    "detail": {
+                      "example": "You must be authenticated to access this resource.",
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Missing or invalid authentication."
+          }
+        },
+        "security": [
+          {
+            "cookie": []
+          }
+        ],
+        "summary": "Create a new match.",
+        "tags": [
+          "Matches"
+        ]
+      }
+    },
+    "/matches/{id}": {
+      "get": {
+        "description": "Get an existing match by its ID.\n",
+        "operationId": "getMatch",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "integer"
+            },
+            "required": true,
+            "description": "The ID of the match to get."
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "endsAt": {
+                      "example": "2024-12-31T23:59:59.000Z",
+                      "format": "date-time",
+                      "nullable": true,
+                      "type": "string"
+                    },
+                    "id": {
+                      "example": 1,
+                      "type": "number"
+                    },
+                    "name": {
+                      "example": "MWC4K2025 RO32: Philippines VS France",
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Match and bancho channel closed."
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "instance": {
+                      "example": "/api/v1/matches/1",
+                      "type": "string"
+                    },
+                    "status": {
+                      "example": 400,
+                      "type": "integer"
+                    },
+                    "title": {
+                      "example": "Bad Request",
+                      "type": "string"
+                    },
+                    "detail": {
+                      "example": "Input validation failed",
+                      "type": "string"
+                    },
+                    "errors": {
+                      "items": {
+                        "properties": {
+                          "path": {
+                            "example": "/params/id",
+                            "type": "string"
+                          },
+                          "message": {
+                            "example": "id cannot be empty",
+                            "type": "string"
+                          },
+                          "errorCode": {
+                            "example": "validator.getMatchParametersValidator.id.empty",
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Missing or invalid id."
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "instance": {
+                      "example": "/api/v1/matches/1",
+                      "type": "string"
+                    },
+                    "status": {
+                      "example": 401,
+                      "type": "integer"
+                    },
+                    "title": {
+                      "example": "Unauthorized",
+                      "type": "string"
+                    },
+                    "detail": {
+                      "example": "You must be authenticated to access this resource.",
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Missing or invalid authentication."
+          }
+        },
+        "security": [
+          {
+            "cookie": []
+          }
+        ],
+        "summary": "Get an existing match.",
+        "tags": [
+          "Matches"
+        ]
+      }
+    },
+    "/matches/{id}/close": {
+      "post": {
+        "description": "Closes an existing match. This will also ask bancho to close the multiplayer channel\nassociated with it.\n",
+        "operationId": "closeMatch",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "integer"
+            },
+            "required": true,
+            "description": "The ID of the match to close."
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "status": {
+                      "example": "closed",
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Match and bancho channel closed."
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "instance": {
+                      "example": "/api/v1/matches/1/close",
+                      "type": "string"
+                    },
+                    "status": {
+                      "example": 400,
+                      "type": "integer"
+                    },
+                    "title": {
+                      "example": "Bad Request",
+                      "type": "string"
+                    },
+                    "detail": {
+                      "example": "Input validation failed",
+                      "type": "string"
+                    },
+                    "errors": {
+                      "items": {
+                        "properties": {
+                          "path": {
+                            "example": "/params/id",
+                            "type": "string"
+                          },
+                          "message": {
+                            "example": "id cannot be empty",
+                            "type": "string"
+                          },
+                          "errorCode": {
+                            "example": "validator.closeMatchParametersValidator.id.empty",
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Missing or invalid id."
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "instance": {
+                      "example": "/api/v1/matches/1/close",
+                      "type": "string"
+                    },
+                    "status": {
+                      "example": 401,
+                      "type": "integer"
+                    },
+                    "title": {
+                      "example": "Unauthorized",
+                      "type": "string"
+                    },
+                    "detail": {
+                      "example": "You must be authenticated to access this resource.",
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Missing or invalid authentication."
+          }
+        },
+        "security": [
+          {
+            "cookie": []
+          }
+        ],
+        "summary": "Close an existing match.",
+        "tags": [
+          "Matches"
         ]
       }
     },
@@ -198,12 +580,20 @@
           }
         },
         "security": [],
-        "summary": "Check server systems status",
+        "summary": "Check server systems status.",
         "tags": [
           "Public"
         ]
       }
     }
   },
-  "components": {}
+  "components": {
+    "securitySchemes": {
+      "cookie": {
+        "type": "apiKey",
+        "in": "cookie",
+        "name": "sessionId"
+      }
+    }
+  }
 }

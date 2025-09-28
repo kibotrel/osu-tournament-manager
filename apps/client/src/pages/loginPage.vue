@@ -1,22 +1,22 @@
 <template>
-  <div
-    class="border-primary-3 mx-auto my-72 flex w-[90%] flex-col items-center justify-center rounded-lg border-1 p-8 sm:w-3/4 md:w-2/3 lg:w-1/2 xl:w-1/3"
-  >
-    <div class="w-full text-center">
+  <div class="flex min-h-screen items-center justify-center">
+    <div class="border-primary-3 w-1/4 rounded-md border-2 p-8 text-center">
       <h1 class="mb-2 text-4xl font-semibold tracking-tight">Welcome</h1>
       <p class="text-primary-2">
         To get access to this webapp, please login with your osu! account.
       </p>
-      <ui-button
-        @mousedown="redirectToOsuAuthPage()"
-        :isLoading="isLoginButtonLoading"
+      <BaseButton
         class="m-auto mt-8 w-32"
+        id="login-button"
+        @mousedown="redirectToOsuAuthPage()"
+        @keydown.enter="redirectToOsuAuthPage()"
+        :isLoading="isLoginButtonLoading"
       >
         <template #default> Login </template>
         <template #icon>
-          <ui-icon name="identification" />
+          <IdentificationIcon />
         </template>
-      </ui-button>
+      </BaseButton>
     </div>
   </div>
 </template>
@@ -24,8 +24,8 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 
-import uiButton from '#src/components/ui/uiButton.vue';
-import uiIcon from '#src/components/ui/uiIcon.vue';
+import BaseButton from '#src/components/base/baseButton.vue';
+import IdentificationIcon from '#src/components/icons/identificationIcon.vue';
 
 const baseUrl = import.meta.env.VITE_BASE_APP_URL;
 const callbackUrl = encodeURIComponent(`${baseUrl}/oauth/callback`);

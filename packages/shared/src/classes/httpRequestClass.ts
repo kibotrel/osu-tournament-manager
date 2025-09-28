@@ -1,6 +1,6 @@
 import type { HttpStatusCode } from '#src/constants/httpConstants.js';
 import { HttpHeader, HttpMethod } from '#src/constants/httpConstants.js';
-import type { Nothing, Unknown } from '#src/types/utilityTypes.js';
+import type { NothingRecord, UnknownRecord } from '#src/types/utilityTypes.js';
 
 export interface HttpResponse<ResponseType> {
   data: ResponseType;
@@ -11,11 +11,11 @@ export interface HttpResponse<ResponseType> {
 /**
  * Simple wrapper around the fetch API to make it easier to use.
  */
-export class HttpRequest<PayloadType extends object = Nothing> {
+export class HttpRequest<PayloadType extends object = NothingRecord> {
   public baseApiEndpoint: string;
   public baseUrl: string;
   public httpHeaders: Headers;
-  public payload: PayloadType | Nothing;
+  public payload: PayloadType | NothingRecord;
   public apiVersion: string;
 
   constructor() {
@@ -28,7 +28,7 @@ export class HttpRequest<PayloadType extends object = Nothing> {
     this.setHttpHeader(HttpHeader.ContentType, 'application/json');
   }
 
-  public async delete<ResponseType = Unknown>(
+  public async delete<ResponseType = UnknownRecord>(
     endpoint: string,
   ): Promise<HttpResponse<ResponseType>> {
     const url = this.setRequestQueryParams(endpoint);
@@ -41,7 +41,7 @@ export class HttpRequest<PayloadType extends object = Nothing> {
     return { data, isOk: response.ok, status: response.status };
   }
 
-  public async get<ResponseType = Unknown>(
+  public async get<ResponseType = UnknownRecord>(
     endpoint: string,
   ): Promise<HttpResponse<ResponseType>> {
     const url = this.setRequestQueryParams(endpoint);
@@ -54,11 +54,13 @@ export class HttpRequest<PayloadType extends object = Nothing> {
     return { data, isOk: response.ok, status: response.status };
   }
 
-  public isPayloadEmpty(payload: PayloadType | Nothing): payload is Nothing {
+  public isPayloadEmpty(
+    payload: PayloadType | NothingRecord,
+  ): payload is NothingRecord {
     return Object.keys(payload).length === 0;
   }
 
-  public async patch<ResponseType = Unknown>(
+  public async patch<ResponseType = UnknownRecord>(
     endpoint: string,
   ): Promise<HttpResponse<ResponseType>> {
     this.setHttpHeader(HttpHeader.ContentType, 'application/json');
@@ -74,7 +76,7 @@ export class HttpRequest<PayloadType extends object = Nothing> {
     return { data, isOk: response.ok, status: response.status };
   }
 
-  public async post<ResponseType = Unknown>(
+  public async post<ResponseType = UnknownRecord>(
     endpoint: string,
   ): Promise<HttpResponse<ResponseType>> {
     this.setHttpHeader(HttpHeader.ContentType, 'application/json');
@@ -90,7 +92,7 @@ export class HttpRequest<PayloadType extends object = Nothing> {
     return { data, isOk: response.ok, status: response.status };
   }
 
-  public async put<ResponseType = Unknown>(
+  public async put<ResponseType = UnknownRecord>(
     endpoint: string,
   ): Promise<HttpResponse<ResponseType>> {
     this.setHttpHeader(HttpHeader.ContentType, 'application/json');
@@ -109,7 +111,7 @@ export class HttpRequest<PayloadType extends object = Nothing> {
   /**
    * Internal method to safely parse the response from the fetch API.
    */
-  private readResponse<ResponseType = Unknown>(
+  private readResponse<ResponseType = UnknownRecord>(
     response: Response,
   ): Promise<ResponseType> {
     return response.json().catch(() => {
@@ -166,7 +168,7 @@ export class HttpRequest<PayloadType extends object = Nothing> {
   /**
    * This will be used to set either the query parameters or the body of the request.
    */
-  public setPayload(payload: PayloadType | Nothing) {
+  public setPayload(payload: PayloadType | NothingRecord) {
     if (!this.isPayloadEmpty(payload)) {
       this.payload = payload;
     }

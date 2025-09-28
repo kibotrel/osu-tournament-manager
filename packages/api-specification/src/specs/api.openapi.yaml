@@ -9,11 +9,23 @@ openapi: 3.0.0
 
 paths:
   /authentication/login:
-    $ref: paths/v1/authentication/login.openapi.yaml
+    post:
+      $ref: paths/v1/authentication/login.openapi.yaml
   /authentication/logout:
-    $ref: paths/v1/authentication/logout.openapi.yaml
+    post:
+      $ref: paths/v1/authentication/logout.openapi.yaml
+  /matches:
+    post:
+      $ref: paths/v1/matches/createMatch.openapi.yaml
+  /matches/{id}:
+    get:
+      $ref: paths/v1/matches/getMatch.openapi.yaml
+  /matches/{id}/close:
+    post:
+      $ref: paths/v1/matches/closeMatch.openapi.yaml
   /public/health:
-    $ref: paths/v1/public/health.openapi.yaml
+    get:
+      $ref: paths/v1/public/health.openapi.yaml
 
 servers:
   - url: https://{environment}.osu-tournament-manager.app/api/{version}
@@ -33,6 +45,16 @@ tags:
   - name: Authentication
     description: |
       User session management.
+  - name: Matches
+    description: |
+      Match management and related operations.
   - name: Public
     description: |
       Publicly available resources, no authentication required.
+
+components:
+  securitySchemes:
+    cookie:
+      type: apiKey
+      in: cookie
+      name: sessionId

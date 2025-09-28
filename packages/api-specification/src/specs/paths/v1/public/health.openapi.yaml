@@ -1,19 +1,18 @@
-get:
-  description: |
-    This allows to check if the server is up and running.
-    Helpful if you want to check API status before making any request.
-  operationId: getHealth
+description: |
+  This allows to check if the server is up and running.
+  Helpful if you want to check API status before making any request.
+operationId: getHealth
 
-  responses:
-    200:
-      content:
-        plain/text:
-          schema:
-            example: "OK"
-            type: string
-      description: For now, it only tells that the API is up and running.
+responses:
+  200:
+    content:
+      plain/text:
+        schema:
+          example: "OK"
+          type: string
+    description: For now, it only tells that the API is up and running.
 
-  security: []
-  summary: Check server systems status
-  tags:
-    -  Public
+security: []
+summary: Check server systems status.
+tags:
+  -  Public

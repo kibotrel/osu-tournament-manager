@@ -1,10 +1,10 @@
 import type { Router } from 'express';
 import express from 'express';
 
-import { getLogoutController } from '#src/controllers/v1/authentication/getLogoutController.js';
-import { postLoginController } from '#src/controllers/v1/authentication/postLoginController.js';
+import { loginController } from '#src/controllers/v1/authentication/loginController.js';
+import { logoutController } from '#src/controllers/v1/authentication/logoutController.js';
 import { validateRequest } from '#src/middlewares/requestValidatorMiddleware.js';
-import { postLoginValidators } from '#src/validators/v1/public/postLoginValidators.js';
+import { loginValidators } from '#src/validators/v1/authentication/loginValidators.js';
 
 const authenticationRouter: Router = express.Router({
   caseSensitive: true,
@@ -14,10 +14,10 @@ const authenticationRouter: Router = express.Router({
 
 authenticationRouter.post(
   '/login',
-  postLoginValidators(),
+  loginValidators(),
   validateRequest,
-  postLoginController,
+  loginController,
 );
-authenticationRouter.get('/logout', getLogoutController);
+authenticationRouter.get('/logout', logoutController);
 
 export { authenticationRouter };

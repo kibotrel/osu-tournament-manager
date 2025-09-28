@@ -1,7 +1,7 @@
 import type { Router } from 'express';
 import express from 'express';
 
-import { getHealthController } from '#src/controllers/v1/public/getHealthController.js';
+import { healthController } from '#src/controllers/v1/public/healthController.js';
 
 const publicRouter: Router = express.Router({
   caseSensitive: true,
@@ -9,6 +9,6 @@ const publicRouter: Router = express.Router({
   mergeParams: true,
 });
 
-publicRouter.get('/health', getHealthController);
+publicRouter.get('/health', healthController);
 
 export { publicRouter };
