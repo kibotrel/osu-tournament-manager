@@ -29,7 +29,7 @@
     "tsc-alias": "1.8.11",
     "typescript": "5.8.2",
     "typescript-eslint": "8.6.0",
-    "vitest": "3.0.8"
+    "vitest": "3.2.4"
   },
   "name": "@osu-tournament-manager",
   "scripts": {
