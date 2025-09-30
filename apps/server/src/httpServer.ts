@@ -22,7 +22,7 @@ export const gracefulShutdown = async (
       return;
     }
 
-    await cache.quit();
+    await cache.close();
     await postgresClient.end();
     logger.end();
   });
