@@ -1,7 +1,7 @@
 import { randomUUID } from 'node:crypto';
 
 import { HttpUnauthorizedError, Time } from '@packages/shared';
-import RedisStore from 'connect-redis';
+import { RedisStore } from 'connect-redis';
 import type { RequestHandler } from 'express';
 import expressSession from 'express-session';
 
