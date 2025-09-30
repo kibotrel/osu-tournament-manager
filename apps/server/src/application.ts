@@ -16,8 +16,8 @@ export const createExpressApplication = (): Express => {
   application.use(helmet());
   application.set('trust proxy', 1);
 
-  application.use(setRequestId);
   application.use(express.json());
+  application.use(setRequestId);
   application.use(logHttpRequest);
   application.use(session);
 
