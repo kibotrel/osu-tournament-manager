@@ -5,7 +5,7 @@
     "@packages/logger": "workspace:*",
     "@packages/osu-sdk": "workspace:*",
     "@packages/shared": "workspace:*",
-    "connect-redis": "7.1.1",
+    "connect-redis": "9.0.0",
     "dotenv": "16.4.5",
     "drizzle-orm": "0.40.0",
     "express": "4.21.0",
