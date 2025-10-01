@@ -3,7 +3,7 @@
     "@fontsource/geist-sans": "5.1.0",
     "@packages/shared": "workspace:*",
     "@tailwindcss/vite": "4.0.14",
-    "@tanstack/vue-query": "5.87.1",
+    "@tanstack/vue-query": "5.90.2",
     "@vueuse/core": "13.9.0",
     "pinia": "2.2.2",
     "pinia-plugin-persistedstate": "4.0.2",
