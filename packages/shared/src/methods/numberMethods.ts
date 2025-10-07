@@ -6,6 +6,20 @@ export const banchoChannelFromGameMatchId = (gameMatchId: number): string => {
 };
 
 /**
+ * Useful for retrying operations with increasing delays.
+ */
+export const exponentialBackoffDelay = (options: {
+  attempt: number;
+  baseDelay?: number;
+  factor?: number;
+  maxDelay?: number;
+}): number => {
+  const { attempt, baseDelay = 1000, maxDelay = 30_000, factor = 2 } = options;
+
+  return Math.min(baseDelay * factor ** attempt, maxDelay);
+};
+
+/**
  * Format UTC timestamp to a human-readable string in `HH:mm:ss` format.
  */
 export const formatTimestamp = (timestamp: number): string => {
