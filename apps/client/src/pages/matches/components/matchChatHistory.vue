@@ -1,0 +1,170 @@
+<template>
+  <div class="border-primary-3 mx-auto mt-4 w-3/4 rounded-md border-2">
+    <div
+      class="text m-4 mr-0 h-96 overflow-y-auto pr-4"
+      ref="chatHistoryDiv"
+      tabindex="-1"
+    >
+      <div
+        v-if="isLoading"
+        class="align-center flex h-full flex-col items-center justify-center"
+      >
+        <LoadingIcon class="h-6" />
+      </div>
+      <div v-else-if="!history.length">
+        <p class="text-primary-2">No message yet.</p>
+      </div>
+      <div
+        v-else
+        v-for="(entry, index) in history"
+        :key="entry.timestamp"
+        class="cursor-move"
+      >
+        <div :class="detectMarginBetweenMessages(index)">
+          <div v-if="shouldDisplayUsername(index)">
+            <span :class="usernameColorByRole(entry.message.author)">
+              {{ entry.message.author }}
+            </span>
+            <span class="text-primary-2 ml-2 text-xs">
+              {{ new Date(entry.timestamp).toLocaleTimeString() }}
+            </span>
+          </div>
+          <p
+            v-if="entry.message.content.startsWith('\x01ACTION')"
+            class="whitespace-pre-wrap italic"
+          >
+            {{ entry.message.content.replace(/^\x01ACTION ?/, '') }}
+          </p>
+          <p v-else class="whitespace-pre-wrap">
+            {{ entry.message.content }}
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="border-primary-3 flex flex-row items-center border-t-2">
+      <BaseInput
+        id="message-input"
+        placeholder="Type your message..."
+        class="flex-1"
+        variant="ghost"
+        v-model="refereeMessage.content"
+        :isDisabled="!isSocketReady"
+        @keydown.enter="sendRefereeMessage"
+      />
+      <div
+        :class="['p-2.5', !isSocketReady ? 'bg-primary-3' : '']"
+        @mousedown="sendRefereeMessage"
+      >
+        <PaperAirplaneIcon
+          :class="
+            !isSocketReady || !refereeMessage.content
+              ? 'text-primary-2 cursor-not-allowed'
+              : 'hover:text-primary-1/80 cursor-pointer'
+          "
+        />
+      </div>
+    </div>
+  </div>
+</template>
+
+<script setup lang="ts">
+import { useGetMatchChatHistory } from '#src/api/matchesApi.js';
+import BaseInput from '#src/components/base/baseInput.vue';
+import LoadingIcon from '#src/components/icons/loadingIcon.vue';
+import PaperAirplaneIcon from '#src/components/icons/paperAirplaneIcon.vue';
+import { useScrollToBottomInElement } from '#src/composables/useScrollToBottomInElementComposable.js';
+import { useUserStore } from '#src/stores/userStore.js';
+import { defineWebsocketStore } from '#src/stores/webSocketStore.js';
+import {
+  WebSocketChannel,
+  WebSocketChannelMatchesEvent,
+  WebSocketMessageMatch,
+} from '@packages/shared';
+import { storeToRefs } from 'pinia';
+import { reactive, ref, watch } from 'vue';
+import { useRoute } from 'vue-router';
+
+const route = useRoute();
+const matchId = Number(route.params.gameMatchId);
+
+const { data: cacheHistory, isLoading } = useGetMatchChatHistory(matchId);
+
+const chatHistoryDiv = ref<HTMLElement | null>(null);
+const { scrollToBottom } = useScrollToBottomInElement(chatHistoryDiv);
+
+const { user } = useUserStore();
+const useWebSocketStore = defineWebsocketStore<
+  WebSocketMessageMatch,
+  WebSocketChannel.Matches
+>({
+  channel: WebSocketChannel.Matches,
+  events: [WebSocketChannelMatchesEvent.ChatMessages],
+  threadId: matchId.toString(),
+});
+const { history, isSocketReady } = storeToRefs(useWebSocketStore());
+
+const { sendMessage, setHistory } = useWebSocketStore();
+
+const refereeMessage = reactive<WebSocketMessageMatch>({
+  content: '',
+  author: user.name,
+});
+
+watch(
+  history,
+  () => {
+    scrollToBottom();
+  },
+  { deep: true, immediate: true },
+);
+
+watch(cacheHistory, () => {
+  if (cacheHistory.value) {
+    setHistory(cacheHistory.value.history);
+  }
+});
+
+const detectMarginBetweenMessages = (index: number) => {
+  if (index === 0) {
+    return 'mt-0';
+  }
+
+  const currentMessage = history.value[index];
+  const previousMessage = history.value[index - 1];
+
+  return currentMessage.message.author !== previousMessage.message.author
+    ? 'mt-4'
+    : 'mt-0';
+};
+
+const shouldDisplayUsername = (index: number) => {
+  if (index === 0) {
+    return true;
+  }
+
+  const currentMessage = history.value[index];
+  const previousMessage = history.value[index - 1];
+
+  return currentMessage.message.author !== previousMessage.message.author;
+};
+
+const sendRefereeMessage = () => {
+  if (!refereeMessage.content || !isSocketReady.value) {
+    return;
+  }
+
+  sendMessage(refereeMessage, WebSocketChannelMatchesEvent.ChatMessages);
+  refereeMessage.content = '';
+};
+
+const usernameColorByRole = (author: string) => {
+  if (author === 'BanchoBot') {
+    return 'text-pink-400 font-bold';
+  }
+  if (author === user.name) {
+    return 'text-yellow-400 font-bold';
+  }
+
+  return 'font-bold';
+};
+</script>

@@ -4,6 +4,8 @@ import type {
   CreateMatchRequestBody,
   CreateMatchResponseBody,
   CreateMatchResponseData,
+  GetMatchChatHistoryResponseBody,
+  GetMatchChatHistoryResponseData,
   GetMatchResponseBody,
   GetMatchResponseData,
   NothingRecord,
@@ -60,6 +62,23 @@ const getMatch = async (gameMatchId: number | string) => {
   return response.data as GetMatchResponseData;
 };
 
+const getMatchChatHistory = async (gameMatchId: number | string) => {
+  const response = await getRequest<
+    NothingRecord,
+    GetMatchChatHistoryResponseBody
+  >({
+    baseUrl,
+    endpoint: `/matches/${gameMatchId}/chat-history`,
+    payload: {},
+  });
+
+  if (!response.isOk) {
+    throw new Error(JSON.stringify(response.data));
+  }
+
+  return response.data as GetMatchChatHistoryResponseData;
+};
+
 /**
  * Close an existing match and its corresponding channel on bancho.
  */
@@ -110,5 +129,22 @@ export const useGetMatch = (
     queryKey: ['match', gameMatchId],
     staleTime,
     retry: false,
+  });
+};
+
+/**
+ * Fetch the chat history of an existing match by its bancho channel id.
+ */
+export const useGetMatchChatHistory = (
+  gameMatchId: number | string,
+  options: { enabled?: boolean; staleTime?: number } = {},
+) => {
+  const { enabled = true, staleTime = 0 } = options;
+
+  return useQuery({
+    enabled,
+    queryFn: () => getMatchChatHistory(gameMatchId),
+    queryKey: ['match', gameMatchId, 'chat-history'],
+    staleTime,
   });
 };
