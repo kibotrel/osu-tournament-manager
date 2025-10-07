@@ -12,6 +12,8 @@ export type IconNames =
   | 'cubeTransparent'
   | 'identification'
   | 'loading'
+  | 'paperAirplane'
+  | 'play'
   | 'xMark';
 
 const properties = defineProps<{

@@ -161,6 +161,8 @@ import type { IconNames } from '#src/components/base/baseIcon.vue';
 import BaseIcon from '#src/components/base/baseIcon.vue';
 import BaseInput from '#src/components/base/baseInput.vue';
 import BaseModal from '#src/components/base/baseModal.vue';
+import CubeTransparentIcon from '#src/components/icons/cubeTransparentIcon.vue';
+import XMarkIcon from '#src/components/icons/xMarkIcon.vue';
 
 const icons: IconNames[] = [
   'archiveBox',
@@ -169,6 +171,8 @@ const icons: IconNames[] = [
   'cubeTransparent',
   'identification',
   'loading',
+  'paperAirplane',
+  'play',
   'xMark',
 ];
 const stringInputValue = ref('');
