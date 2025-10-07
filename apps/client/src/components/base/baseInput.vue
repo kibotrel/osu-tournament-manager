@@ -18,6 +18,7 @@
       :class="properties.errorMessage ? 'error' : ''"
       :disabled="properties.isDisabled"
       :id="properties.id"
+      :autocomplete="properties.doAutoComplete ? 'on' : 'off'"
       :placeholder="properties.placeholder"
       :value="modelValue"
       @blur="emit('blur')"
@@ -29,6 +30,7 @@
       :class="properties.errorMessage ? 'error' : ''"
       :disabled="properties.isDisabled"
       :id="properties.id"
+      :autocomplete="properties.doAutoComplete ? 'on' : 'off'"
       :placeholder="properties.placeholder"
       :value="modelValue"
       @blur="emit('blur')"
@@ -48,6 +50,7 @@
 <script setup lang="ts">
 interface Properties {
   id: string;
+  doAutoComplete?: boolean;
   errorMessage?: string;
   isDisabled?: boolean;
   isRequired?: boolean;
@@ -59,6 +62,7 @@ interface Properties {
 
 const emit = defineEmits(['blur', 'update:modelValue']);
 const properties = withDefaults(defineProps<Properties>(), {
+  doAutoComplete: false,
   isDisabled: false,
   isRequired: false,
   placeholder: '',
