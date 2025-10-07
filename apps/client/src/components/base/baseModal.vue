@@ -28,38 +28,15 @@
 </template>
 
 <script setup lang="ts">
-import { useIntersectionObserver } from '@vueuse/core';
-import { onUnmounted, shallowRef, useTemplateRef, watch } from 'vue';
+import { useTemplateRef } from 'vue';
 
 import xMarkIcon from '#src/components/icons/xMarkIcon.vue';
+import { useEscapeBehavior } from '#src/composables/useEscapeBehaviorComposable.js';
 
 const emit = defineEmits(['close:modal']);
 const modal = useTemplateRef<HTMLDivElement>('modal');
-const targetIsVisible = shallowRef(false);
 
-useIntersectionObserver(modal, ([{ isIntersecting }]) => {
-  targetIsVisible.value = isIntersecting || false;
-});
-
-const handleKeydown = (event: KeyboardEvent) => {
-  event.stopPropagation();
-
-  if (event.key === 'Escape') {
-    emit('close:modal');
-  }
-};
-
-onUnmounted(() => {
-  window.removeEventListener('keydown', handleKeydown);
-});
-
-watch(targetIsVisible, (isVisible) => {
-  if (isVisible) {
-    window.addEventListener('keydown', handleKeydown);
-  } else {
-    window.removeEventListener('keydown', handleKeydown);
-  }
-});
+useEscapeBehavior({ target: modal, onEscape: () => emit('close:modal') });
 </script>
 
 <style scoped></style>
