@@ -7,7 +7,7 @@
       <div class="space-y-2">
         <p>
           You are about to close the match
-          <MatchNameCopySpan :matchName="properties.matchName" />. This action
+          <MatchNameCopy :matchName="properties.matchName" />. This action
           cannot be undone.
         </p>
         <p>To confirm, please type the match name exactly as shown above.</p>
@@ -49,7 +49,7 @@ import BaseIcon from '#src/components/base/baseIcon.vue';
 import BaseInput from '#src/components/base/baseInput.vue';
 import BaseModal from '#src/components/base/baseModal.vue';
 
-import MatchNameCopySpan from './matchNameCopySpan.vue';
+import MatchNameCopy from './matchNameCopy.vue';
 
 interface Properties {
   isModalOpen: boolean;
