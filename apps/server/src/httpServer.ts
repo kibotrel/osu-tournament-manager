@@ -1,6 +1,9 @@
 import type { Server } from 'node:http';
 
-import { BanchoPublicChannel } from '@packages/bancho-client';
+import {
+  BanchoClientEvent,
+  BanchoPublicChannel,
+} from '@packages/bancho-client';
 
 import { createExpressApplication } from '#src/application.js';
 import type { WebSocketServer } from '#src/classes/webSocketServerClass.js';
@@ -15,6 +18,12 @@ export const gracefulShutdown = async (
   webSocketServer: WebSocketServer,
 ) => {
   await webSocketServer.close();
+  await banchoClient.removeAllListeners(BanchoClientEvent.BotDisconnected);
+
+  banchoClient.on(BanchoClientEvent.BotDisconnected, () => {
+    logger.debug('[IRC] Disconnected from osu! server');
+  });
+
   await banchoClient.disconnect();
 
   httpServer.close(async (error) => {
