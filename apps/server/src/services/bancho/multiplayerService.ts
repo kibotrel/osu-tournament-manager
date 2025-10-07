@@ -4,6 +4,7 @@ import { banchoClient } from '#src/dependencies/ircClientDependency.js';
 import {
   addMatchToCachedSet,
   getAllOngoingMatchesFromCache,
+  removeMatchFromCachedSet,
 } from '#src/services/cache/cacheService.js';
 
 export const openMultiplayerChannel = async (name: string) => {
@@ -21,8 +22,12 @@ export const joinAllOngoingMatches = async () => {
     return;
   }
 
-  const promises = ongoingMatches.map((channel) => {
-    banchoClient.joinChannel(channel);
+  const promises = ongoingMatches.map(async (channel) => {
+    try {
+      await banchoClient.joinChannel(channel);
+    } catch {
+      await removeMatchFromCachedSet(channel);
+    }
   });
 
   await Promise.all(promises);
