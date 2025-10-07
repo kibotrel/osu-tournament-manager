@@ -253,6 +253,10 @@ export class WebSocketServer {
   }
 
   private handleWebSocketCloseEvent(webSocket: ExtendedWebSocket) {
+    logger.debug('[WS] Closed connection', {
+      websocketId: webSocket.id,
+    });
+
     this.webSocketClients.delete(webSocket.id);
 
     for (const subscription of webSocket.subscriptions.values()) {
@@ -288,6 +292,10 @@ export class WebSocketServer {
     this.webSocketServer.on(WebSocketEvent.Connection, (webSocket, request) => {
       const subscription = this.extractConnectionIntents(request.url!);
       const extendedWebSocket = this.injectCustomWebSocketProperties(webSocket);
+
+      logger.debug('[WS] New open connection', {
+        websocketId: extendedWebSocket.id,
+      });
 
       this.cacheWebSocketClient(extendedWebSocket);
       this.addTopicsSubscription(extendedWebSocket, subscription);
