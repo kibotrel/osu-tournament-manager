@@ -9,6 +9,7 @@ import {
   getSetFromCacheByKey,
 } from '#src/queries/cache/getCacheQueries.js';
 import {
+  addToListInCacheByKey,
   addToSetInCacheByKey,
   removeFromSetInCacheByKey,
 } from '#src/queries/cache/updateCacheQueries.js';
@@ -18,6 +19,25 @@ export const addMatchToCachedSet = async (channel: string) => {
     key: CacheSetTopic.OpenMatches,
     value: channel,
   });
+};
+
+export const addMatchMessageToCache = async (options: {
+  channel: number | string;
+  message: string;
+}) => {
+  const { channel, message } = options;
+
+  await addToListInCacheByKey({
+    expiryInSeconds: CacheExpiry.MatchMessages,
+    key: `${CacheListTopic.MatchMessages}:${channel}`,
+    value: message,
+  });
+};
+
+export const deleteMatchChatHistoryFromCache = async (
+  channel: number | string,
+) => {
+  await deleteListInCacheByKey(`${CacheListTopic.MatchMessages}:${channel}`);
 };
 
 export const getAllOngoingMatchesFromCache = async () => {

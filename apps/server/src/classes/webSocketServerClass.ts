@@ -2,14 +2,16 @@ import type { UUID } from 'node:crypto';
 import { randomUUID } from 'node:crypto';
 import type { Server } from 'node:http';
 
-import type { WebSocketMessage } from '@packages/shared';
+import type { WebSocketMessage, WebSocketMessageMatch } from '@packages/shared';
 import {
   HttpInternalServerError,
   HttpStatusCode,
   HttpStatusMessage,
+  WebSocketChannelMatchesEvent,
   WebSocketClosureCode,
   WebSocketClosureReason,
   WebSocketEvent,
+  banchoChannelFromGameMatchId,
 } from '@packages/shared';
 import type { Request, Response } from 'express';
 import type { RawData, WebSocket } from 'ws';
@@ -17,8 +19,10 @@ import { WebSocketServer as WSS } from 'ws';
 
 import { environmentConfig } from '#src/configs/environmentConfig.js';
 import { HttpEvent } from '#src/constants/httpConstants.js';
+import { banchoClient } from '#src/dependencies/ircClientDependency.js';
 import { logger } from '#src/dependencies/loggerDependency.js';
 import { session as sessionMiddleware } from '#src/middlewares/sessionMiddleware.js';
+import { addMatchMessageToCache } from '#src/services/cache/cacheService.js';
 
 /**
  * This trick is needed because augmenting the WebSocket interface through declaration merging
@@ -29,6 +33,11 @@ export interface ExtendedWebSocket extends WebSocket {
   id: UUID;
   isAlive: boolean;
   subscriptions: Set<string>;
+}
+
+interface BroadcastMessageOptions {
+  isBinary: boolean;
+  isBanchoMessage: boolean;
 }
 
 export interface WebSocketServerOptions {
@@ -52,7 +61,7 @@ export class WebSocketServer {
   /**
    * Set members are UUIds of cached WebSocket clients.
    */
-  private readonly topicsSubscribers: Map<string, Set<UUID>>;
+  public readonly topicsSubscribers: Map<string, Set<UUID>>;
   private readonly webSocketServer: WSS;
   private readonly webSocketClients: Map<UUID, ExtendedWebSocket>;
 
@@ -91,7 +100,11 @@ export class WebSocketServer {
     }
   }
 
-  public broadcastMessageToSubscribers(message: RawData, isBinary: boolean) {
+  public broadcastMessageToSubscribers(
+    message: RawData,
+    options: BroadcastMessageOptions,
+  ) {
+    const { isBinary, isBanchoMessage } = options;
     const { topic }: WebSocketMessage = JSON.parse(message.toString());
     const [channel, threadId, event] = topic.split(':');
     const isChannelWideMessage = threadId === '*';
@@ -122,6 +135,24 @@ export class WebSocketServer {
 
     const uniqueWebSocketIds = new Set<UUID>(allSubscriptions);
 
+    if (
+      !isBanchoMessage &&
+      event === WebSocketChannelMatchesEvent.ChatMessages
+    ) {
+      const chatMessage: WebSocketMessage<WebSocketMessageMatch> = JSON.parse(
+        message.toString(),
+      );
+
+      banchoClient.sendPrivateMessage(chatMessage.message.content, {
+        recipient: banchoChannelFromGameMatchId(Number(threadId)),
+      });
+    }
+
+    addMatchMessageToCache({
+      channel: threadId,
+      message: message.toString(),
+    });
+
     for (const webSocketId of uniqueWebSocketIds) {
       const webSocket = this.webSocketClients.get(webSocketId);
 
@@ -145,6 +176,25 @@ export class WebSocketServer {
         );
       }
     });
+  }
+
+  public disconnectAllTopicSubscribers(topic: string) {
+    const subscribers = this.topicsSubscribers.get(topic);
+
+    if (!subscribers) {
+      return;
+    }
+
+    for (const subscriberId of subscribers) {
+      const webSocket = this.webSocketClients.get(subscriberId);
+
+      if (webSocket) {
+        webSocket.close(
+          WebSocketClosureCode.Normal,
+          WebSocketClosureReason.FinishedCommunicating,
+        );
+      }
+    }
   }
 
   /**
@@ -222,7 +272,10 @@ export class WebSocketServer {
       return;
     }
 
-    this.broadcastMessageToSubscribers(message, isBinary);
+    this.broadcastMessageToSubscribers(message, {
+      isBinary,
+      isBanchoMessage: false,
+    });
   }
 
   private handleWebSocketServerCloseEvent() {
