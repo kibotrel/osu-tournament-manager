@@ -94,6 +94,13 @@
           placeholder="No label"
           v-model="stringInputValue"
         />
+        <BaseInput
+          class="mt-6"
+          id="ghost-input"
+          placeholder="Ghost"
+          v-model="stringInputValue"
+          variant="ghost"
+        />
       </div>
     </div>
     <div class="my-8 space-y-2 text-2xl">
@@ -161,8 +168,6 @@ import type { IconNames } from '#src/components/base/baseIcon.vue';
 import BaseIcon from '#src/components/base/baseIcon.vue';
 import BaseInput from '#src/components/base/baseInput.vue';
 import BaseModal from '#src/components/base/baseModal.vue';
-import CubeTransparentIcon from '#src/components/icons/cubeTransparentIcon.vue';
-import XMarkIcon from '#src/components/icons/xMarkIcon.vue';
 
 const icons: IconNames[] = [
   'archiveBox',
