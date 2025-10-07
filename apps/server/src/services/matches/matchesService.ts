@@ -28,8 +28,10 @@ export const closeMatchService = async (gameMatchId: number) => {
   }
 
   const channel = banchoChannelFromGameMatchId(match.gameMatchId);
+
+  await banchoClient.closeMultiplayerChannel(channel);
+
   const promises = [
-    banchoClient.closeMultiplayerChannel(channel),
     removeMatchFromCachedSet(channel),
     patchMatchById(id, { endsAt: new Date() }),
   ];
