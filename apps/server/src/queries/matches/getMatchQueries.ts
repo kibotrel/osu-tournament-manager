@@ -34,3 +34,31 @@ export const getMatchById = async <
     ? SelectMatch | null
     : Pick<SelectMatch, Columns[number]> | null;
 };
+
+export const getMatchByGameMatchId = async <
+  Columns extends ReadonlyArray<keyof SelectMatch> = [],
+>(
+  gameMatchId: number,
+  options: { columnsFilter?: Columns } = {},
+) => {
+  const { columnsFilter = [] } = options;
+  const selectedColumns: SelectedFields =
+    columnsFilter.length === 0 ? getTableColumns(matchesTable) : {};
+
+  for (const field of columnsFilter) {
+    selectedColumns[field] = matchesTable[field];
+  }
+
+  const [match] = await database
+    .select(selectedColumns)
+    .from(matchesTable)
+    .where(eq(matchesTable.gameMatchId, gameMatchId));
+
+  if (!match) {
+    return null;
+  }
+
+  return match as Columns extends []
+    ? SelectMatch | null
+    : Pick<SelectMatch, Columns[number]> | null;
+};

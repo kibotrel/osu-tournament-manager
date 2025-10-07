@@ -24,13 +24,13 @@ matchesRouter.post(
   createMatchController,
 );
 matchesRouter.post(
-  '/:id/close',
+  '/:gameMatchId/close',
   closeMatchValidators(),
   validateRequest,
   closeMatchController,
 );
 matchesRouter.get(
-  '/:id',
+  '/:gameMatchId',
   getMatchValidators(),
   validateRequest,
   getMatchController,

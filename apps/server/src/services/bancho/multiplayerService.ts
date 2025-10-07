@@ -1,3 +1,5 @@
+import { gameMatchIdFromBanchoChannel } from '@packages/shared';
+
 import { banchoClient } from '#src/dependencies/ircClientDependency.js';
 import {
   addMatchToCachedSet,
@@ -9,13 +11,7 @@ export const openMultiplayerChannel = async (name: string) => {
 
   await addMatchToCachedSet(channel);
 
-  /**
-   * The channel returned by the IRC server is in the format #mp_<channelId>.
-   * Handling channelId throughout the application is easier.
-   */
-  const gameMatchId = channel.slice(4);
-
-  return { gameMatchId: Number(gameMatchId) };
+  return { gameMatchId: gameMatchIdFromBanchoChannel(channel) };
 };
 
 export const joinAllOngoingMatches = async () => {

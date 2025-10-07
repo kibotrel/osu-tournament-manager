@@ -15,10 +15,10 @@ import type { Router } from 'vue-router';
 
 import { baseUrl } from '#src/api/apiConstants.js';
 
-const closeMatch = async (matchId: number) => {
+const closeMatch = async (gameMatchId: number | string) => {
   const response = await postRequest<NothingRecord, CloseMatchResponseBody>({
     baseUrl,
-    endpoint: `/matches/${matchId}/close`,
+    endpoint: `/matches/${gameMatchId}/close`,
     payload: {},
   });
 
@@ -46,10 +46,10 @@ const createMatch = async (name: string) => {
   return response.data as CreateMatchResponseData;
 };
 
-const getMatch = async (matchId: number) => {
+const getMatch = async (gameMatchId: number | string) => {
   const response = await getRequest<NothingRecord, GetMatchResponseBody>({
     baseUrl,
-    endpoint: `/matches/${matchId}`,
+    endpoint: `/matches/${gameMatchId}`,
     payload: {},
   });
 
@@ -65,8 +65,8 @@ const getMatch = async (matchId: number) => {
  */
 export const useCloseMatch = () => {
   return useMutation<CloseMatchResponseData, Error, number>({
-    mutationFn: async (matchId) => {
-      return await closeMatch(matchId);
+    mutationFn: async (gameMatchId) => {
+      return await closeMatch(gameMatchId);
     },
     onError: (error) => {
       // TODO: Add a toast message here
@@ -86,7 +86,7 @@ export const useCreateMatch = () => {
       return await createMatch(name);
     },
     onSuccess: (data) => {
-      router?.push(`/matches/${data.id}`);
+      router?.push(`/matches/${data.gameMatchId}`);
     },
     onError: (error) => {
       // TODO: Add a toast message here
@@ -96,12 +96,18 @@ export const useCreateMatch = () => {
 };
 
 /**
- * Fetch an existing match by its id.
+ * Fetch an existing match by its bancho channel id.
  */
-export const useGetMatch = (id: number, staleTime = 0) => {
+export const useGetMatch = (
+  gameMatchId: number,
+  options: { enabled?: boolean; staleTime?: number } = {},
+) => {
+  const { enabled = true, staleTime = 0 } = options;
+
   return useQuery({
-    queryFn: () => getMatch(id),
-    queryKey: ['match', id],
+    enabled,
+    queryFn: () => getMatch(gameMatchId),
+    queryKey: ['match', gameMatchId],
     staleTime,
     retry: false,
   });

@@ -6,7 +6,6 @@ export interface CreateMatchRequestBody {
 
 export interface CreateMatchResponseData {
   gameMatchId: number;
-  id: number;
   name: string;
 }
 

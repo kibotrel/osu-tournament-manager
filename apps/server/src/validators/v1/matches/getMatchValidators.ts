@@ -3,21 +3,21 @@ import { param } from 'express-validator';
 
 const getMatchParametersValidator = (): ValidationChain[] => {
   return [
-    param('id')
+    param('gameMatchId')
       .exists()
       .withMessage({
-        message: 'id is required',
-        errorCode: 'validator.getMatchParametersValidator.id.required',
+        message: 'gameMatchId is required',
+        errorCode: 'validator.getMatchParametersValidator.gameMatchId.required',
       })
       .isInt({ allow_leading_zeroes: false, min: 1 })
       .withMessage({
-        message: 'id must be a positive integer string',
-        errorCode: 'validator.getMatchParametersValidator.id.integer',
+        message: 'gameMatchId must be a positive integer string',
+        errorCode: 'validator.getMatchParametersValidator.gameMatchId.integer',
       })
       .notEmpty()
       .withMessage({
-        message: 'id cannot be empty',
-        errorCode: 'validator.getMatchParametersValidator.id.empty',
+        message: 'gameMatchId cannot be empty',
+        errorCode: 'validator.getMatchParametersValidator.gameMatchId.empty',
       })
       .escape()
       .trim(),
