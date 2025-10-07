@@ -64,7 +64,6 @@ export class IrcCommandPrivateMessage implements IrcCommand {
     }
   }
 
-  // TODO: Handle the ACTION feature
   public handleCommand() {
     const [username, , channel] = this.packetParts.at(0)!.split(' ');
     const message = this.packetParts.slice(1).join(':');
@@ -72,11 +71,13 @@ export class IrcCommandPrivateMessage implements IrcCommand {
 
     this.banchoClient.emit(BanchoClientEvent.ChannelMessage, {
       channel,
-      message,
+      /* eslint-disable-next-line no-control-regex, unicorn/no-hex-escape */
+      message: message.replace(/\x01$/, ''),
       user,
     });
     this.banchoClient.emit(`${BanchoClientEvent.ChannelMessage}:${channel}`, {
-      message,
+      /* eslint-disable-next-line no-control-regex, unicorn/no-hex-escape */
+      message: message.replace(/\x01$/, ''),
       user,
     });
 
