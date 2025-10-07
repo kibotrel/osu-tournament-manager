@@ -9,6 +9,7 @@ export * from '#src/constants/webSocketConstants.js';
 export * from '#src/methods/arrayMethods.js';
 export * from '#src/methods/numberMethods.js';
 export * from '#src/methods/stringMethods.js';
+export * from '#src/methods/timeMethods.js';
 export * from '#src/types/api/v1/authentication/loginTypes.js';
 export * from '#src/types/api/v1/authentication/logoutTypes.js';
 export * from '#src/types/api/v1/matches/closeMatchTypes.js';
