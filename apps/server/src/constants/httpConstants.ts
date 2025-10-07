@@ -14,6 +14,7 @@ export const allowedHttpMethodsOnResource: Record<
   '/api/v1/authentication/login': ['POST'],
   '/api/v1/matches': ['POST'],
   '/api/v1/matches/x': ['GET'],
+  '/api/v1/matches/x/chat-history': ['GET'],
   '/api/v1/matches/x/close': ['POST'],
   '/api/v1/public/health': ['GET'],
 };
