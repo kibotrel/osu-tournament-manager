@@ -8,11 +8,17 @@ import { afterEach, describe, expect, it, vi } from 'vitest';
 
 import { banchoClient } from '#src/dependencies/ircClientDependency.js';
 import { createMatch } from '#src/queries/matches/createMatchQueries.js';
-import { getMatchById } from '#src/queries/matches/getMatchQueries.js';
+import {
+  getMatchByGameMatchId,
+  getMatchById,
+} from '#src/queries/matches/getMatchQueries.js';
 import { patchMatchById } from '#src/queries/matches/updateMatchQueries.js';
 import type { SelectMatch } from '#src/schemas/matches/matchesTable.js';
 import { openMultiplayerChannel } from '#src/services/bancho/multiplayerService.js';
-import { removeMatchFromCachedSet } from '#src/services/cache/cacheService.js';
+import {
+  deleteMatchChatHistoryFromCache,
+  removeMatchFromCachedSet,
+} from '#src/services/cache/cacheService.js';
 
 import {
   closeMatchService,
@@ -25,15 +31,27 @@ vi.mock('#src/dependencies/ircClientDependency.js', () => {
 });
 
 vi.mock('#src/services/cache/cacheService.js', () => {
-  return { removeMatchFromCachedSet: vi.fn() };
+  return {
+    deleteMatchChatHistoryFromCache: vi.fn(),
+    getMatchChatHistoryFromCache: vi.fn(),
+    removeMatchFromCachedSet: vi.fn(),
+  };
+});
+
+vi.mock('#src/websocketServer.js', () => {
+  return {
+    webSocketServer: {
+      disconnectAllTopicSubscribers: vi.fn(),
+    },
+  };
 });
 
 vi.mock('#src/queries/matches/updateMatchQueries.js', () => {
-  return { patchMatchById: vi.fn() };
+  return { patchMatchById: vi.fn(), patchMatchByGameMatchId: vi.fn() };
 });
 
 vi.mock('#src/queries/matches/getMatchQueries.js', () => {
-  return { getMatchById: vi.fn() };
+  return { getMatchById: vi.fn(), getMatchByGameMatchId: vi.fn() };
 });
 
 vi.mock('#src/services/bancho/multiplayerService.js', () => {
@@ -51,7 +69,7 @@ describe('closeMatchService', () => {
 
   it('should close bancho channel and update match in database if not already closed', async () => {
     const id = 1;
-    const getMatchByIdMock = vi.mocked(getMatchById);
+    const getMatchByGameMatchIdMock = vi.mocked(getMatchByGameMatchId);
     const banchoChannelFromGameMatchIdSpy = vi.spyOn(
       shared,
       'banchoChannelFromGameMatchId',
@@ -63,12 +81,12 @@ describe('closeMatchService', () => {
       endsAt: null,
     };
 
-    getMatchByIdMock.mockResolvedValueOnce(match as SelectMatch);
+    getMatchByGameMatchIdMock.mockResolvedValueOnce(match as SelectMatch);
 
     const { status } = await closeMatchService(id);
 
-    expect(getMatchById).toHaveBeenCalledWith(id, {
-      columnsFilter: ['gameMatchId', 'id', 'endsAt'],
+    expect(getMatchByGameMatchId).toHaveBeenCalledWith(id, {
+      columnsFilter: ['endsAt', 'gameMatchId', 'gameMatchId', 'id'],
     });
     expect(banchoChannelFromGameMatchIdSpy).toHaveBeenCalledWith(
       match.gameMatchId,
@@ -82,6 +100,9 @@ describe('closeMatchService', () => {
     expect(patchMatchById).toHaveBeenCalledWith(
       id,
       expect.objectContaining({ endsAt: expect.any(Date) }),
+    );
+    expect(deleteMatchChatHistoryFromCache).toHaveBeenCalledWith(
+      match.gameMatchId,
     );
     expect(promiseAllSpy).toHaveBeenCalled();
     expect(status).toBe('closed');
@@ -107,8 +128,8 @@ describe('closeMatchService', () => {
       );
     }
 
-    expect(getMatchById).toHaveBeenCalledWith(id, {
-      columnsFilter: ['gameMatchId', 'id', 'endsAt'],
+    expect(getMatchByGameMatchId).toHaveBeenCalledWith(id, {
+      columnsFilter: ['endsAt', 'gameMatchId', 'gameMatchId', 'id'],
     });
 
     expect(banchoChannelFromGameMatchIdSpy).not.toHaveBeenCalled();
@@ -120,7 +141,7 @@ describe('closeMatchService', () => {
 
   it('should throw HttpUnprocessableContentError if match already closed', async () => {
     const id = 1;
-    const getMatchByIdMock = vi.mocked(getMatchById);
+    const getMatchByGameMatchIdMock = vi.mocked(getMatchByGameMatchId);
     const banchoChannelFromGameMatchIdSpy = vi.spyOn(
       shared,
       'banchoChannelFromGameMatchId',
@@ -132,7 +153,7 @@ describe('closeMatchService', () => {
       endsAt: new Date(),
     };
 
-    getMatchByIdMock.mockResolvedValueOnce(match as SelectMatch);
+    getMatchByGameMatchIdMock.mockResolvedValueOnce(match as SelectMatch);
 
     try {
       await closeMatchService(id);
@@ -143,8 +164,8 @@ describe('closeMatchService', () => {
       );
     }
 
-    expect(getMatchById).toHaveBeenCalledWith(id, {
-      columnsFilter: ['gameMatchId', 'id', 'endsAt'],
+    expect(getMatchByGameMatchId).toHaveBeenCalledWith(id, {
+      columnsFilter: ['endsAt', 'gameMatchId', 'gameMatchId', 'id'],
     });
 
     expect(banchoChannelFromGameMatchIdSpy).not.toHaveBeenCalled();
@@ -162,28 +183,28 @@ describe('getMatchService', () => {
 
   it('should return match if found', async () => {
     const id = 1;
-    const getMatchByIdMock = vi.mocked(getMatchById);
+    const getMatchByGameMatchIdMock = vi.mocked(getMatchByGameMatchId);
     const match = {
       endsAt: null,
       id,
       name: 'Test Match',
     };
 
-    getMatchByIdMock.mockResolvedValueOnce(match as SelectMatch);
+    getMatchByGameMatchIdMock.mockResolvedValueOnce(match as SelectMatch);
 
     const result = await getMatchService(id);
 
-    expect(getMatchById).toHaveBeenCalledWith(id, {
-      columnsFilter: ['endsAt', 'id', 'name'],
+    expect(getMatchByGameMatchId).toHaveBeenCalledWith(id, {
+      columnsFilter: ['endsAt', 'gameMatchId', 'name'],
     });
     expect(result).toEqual(match);
   });
 
   it('should throw HttpNotFoundError if match not found', async () => {
     const id = 1;
-    const getMatchByIdMock = vi.mocked(getMatchById);
+    const getMatchByGameMatchIdMock = vi.mocked(getMatchByGameMatchId);
 
-    getMatchByIdMock.mockResolvedValueOnce(null);
+    getMatchByGameMatchIdMock.mockResolvedValueOnce(null);
 
     try {
       await getMatchService(id);
@@ -194,8 +215,8 @@ describe('getMatchService', () => {
       );
     }
 
-    expect(getMatchById).toHaveBeenCalledWith(id, {
-      columnsFilter: ['endsAt', 'id', 'name'],
+    expect(getMatchByGameMatchId).toHaveBeenCalledWith(id, {
+      columnsFilter: ['endsAt', 'gameMatchId', 'name'],
     });
   });
 });
