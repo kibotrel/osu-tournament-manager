@@ -22,7 +22,7 @@ import { webSocketServer } from '#src/websocketServer.js';
 
 export const closeMatchService = async (gameMatchId: number) => {
   const match = await getMatchByGameMatchId(gameMatchId, {
-    columnsFilter: ['gameMatchId', 'gameMatchId', 'id', 'endsAt'],
+    columnsFilter: ['endsAt', 'gameMatchId', 'gameMatchId', 'id'],
   });
 
   if (!match) {
