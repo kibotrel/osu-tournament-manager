@@ -10,9 +10,24 @@ import {
 import {
   addMatchMessageToCache,
   addMatchToCachedSet,
+  deleteMatchChatHistoryFromCache,
   getAllOngoingMatchesFromCache,
   removeMatchFromCachedSet,
 } from './cacheService.js';
+
+vi.mock('#src/queries/cache/getCacheQueries.js', () => {
+  return {
+    getListFromCacheByKey: vi.fn(),
+    getSetFromCacheByKey: vi.fn(),
+  };
+});
+
+vi.mock('#src/queries/cache/deleteCacheQueries.js', () => {
+  return {
+    deleteListInCacheByKey: vi.fn(),
+    deleteSetInCacheByKey: vi.fn(),
+  };
+});
 
 vi.mock('#src/queries/cache/updateCacheQueries.js', () => {
   return {
@@ -49,6 +64,19 @@ describe('addMatchToCachedSet', () => {
       key: CacheSetTopic.OpenMatches,
       value: channel,
     });
+  });
+});
+
+describe('deleteMatchChatHistoryFromCache', () => {
+  it('should call deleteListInCacheByKey with correct parameters', async () => {
+    const channel = 'test-channel';
+    const mockedDeleteListInCacheByKey = vi.mocked(deleteListInCacheByKey);
+
+    await deleteMatchChatHistoryFromCache(channel);
+
+    expect(mockedDeleteListInCacheByKey).toHaveBeenCalledWith(
+      `match-messages:${channel}`,
+    );
   });
 });
 
