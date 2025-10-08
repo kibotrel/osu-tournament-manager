@@ -16,6 +16,10 @@ export const exponentialBackoffDelay = (options: {
 }): number => {
   const { attempt, baseDelay = 1000, maxDelay = 30_000, factor = 2 } = options;
 
+  if (attempt < 0 || !Number.isInteger(attempt)) {
+    throw new Error('Attempt must be a positive integer');
+  }
+
   return Math.min(baseDelay * factor ** attempt, maxDelay);
 };
 
