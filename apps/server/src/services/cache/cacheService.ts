@@ -14,13 +14,6 @@ import {
   removeFromSetInCacheByKey,
 } from '#src/queries/cache/updateCacheQueries.js';
 
-export const addMatchToCachedSet = async (channel: string) => {
-  await addToSetInCacheByKey({
-    key: CacheSetTopic.OpenMatches,
-    value: channel,
-  });
-};
-
 export const addMatchMessageToCache = async (options: {
   channel: number | string;
   message: string;
@@ -31,6 +24,13 @@ export const addMatchMessageToCache = async (options: {
     expiryInSeconds: CacheExpiry.MatchMessages,
     key: `${CacheListTopic.MatchMessages}:${channel}`,
     value: message,
+  });
+};
+
+export const addMatchToCachedSet = async (channel: string) => {
+  await addToSetInCacheByKey({
+    key: CacheSetTopic.OpenMatches,
+    value: channel,
   });
 };
 

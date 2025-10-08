@@ -8,6 +8,7 @@ import {
 } from '#src/queries/cache/updateCacheQueries.js';
 
 import {
+  addMatchMessageToCache,
   addMatchToCachedSet,
   getAllOngoingMatchesFromCache,
   removeMatchFromCachedSet,
@@ -15,15 +16,26 @@ import {
 
 vi.mock('#src/queries/cache/updateCacheQueries.js', () => {
   return {
+    addToListInCacheByKey: vi.fn(),
     addToSetInCacheByKey: vi.fn(),
     removeFromSetInCacheByKey: vi.fn(),
   };
 });
 
-vi.mock('#src/queries/cache/getCacheQueries.js', () => {
-  return {
-    getSetFromCacheByKey: vi.fn(),
-  };
+describe('addMatchMessageToCache', () => {
+  it('should call addToListInCacheByKey with correct parameters', async () => {
+    const channel = 'test-channel';
+    const message = 'test-message';
+    const mockedAddToListInCacheByKey = vi.mocked(addToListInCacheByKey);
+
+    await addMatchMessageToCache({ channel, message });
+
+    expect(mockedAddToListInCacheByKey).toHaveBeenCalledWith({
+      expiryInSeconds: 3600,
+      key: `match-messages:${channel}`,
+      value: message,
+    });
+  });
 });
 
 describe('addMatchToCachedSet', () => {
