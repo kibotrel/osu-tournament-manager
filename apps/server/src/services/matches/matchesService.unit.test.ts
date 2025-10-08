@@ -19,6 +19,7 @@ import {
   deleteMatchChatHistoryFromCache,
   removeMatchFromCachedSet,
 } from '#src/services/cache/cacheService.js';
+import { webSocketServer } from '#src/websocketServer.js';
 
 import {
   closeMatchService,
@@ -103,6 +104,9 @@ describe('closeMatchService', () => {
     );
     expect(deleteMatchChatHistoryFromCache).toHaveBeenCalledWith(
       match.gameMatchId,
+    );
+    expect(webSocketServer.disconnectAllTopicSubscribers).toHaveBeenCalledWith(
+      `matches:${match.gameMatchId}:chat-messages`,
     );
     expect(promiseAllSpy).toHaveBeenCalled();
     expect(promiseAllSpy.mock.calls?.at(0)?.at(0)).toHaveLength(4);
