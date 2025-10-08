@@ -66,7 +66,6 @@ describe('closeMatchController', () => {
     expect(response.status).toHaveBeenCalledWith(HttpStatusCode.Created);
     expect(response.json).toHaveBeenCalledWith({
       gameMatchId: 1,
-      id: 1,
       name: request.body.name,
     });
     expect(next).not.toHaveBeenCalled();

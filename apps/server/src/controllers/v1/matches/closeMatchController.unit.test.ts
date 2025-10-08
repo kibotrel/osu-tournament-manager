@@ -38,7 +38,7 @@ describe('closeMatchController', () => {
       CloseMatchResponseBody
     >();
 
-    request.params = { id: '1' };
+    request.params = { gameMatchId: '1' };
     // TODO: Replace this by an enum when match closing states are implemented.
     closeMatchServiceMock.mockResolvedValueOnce({ status: 'closed' });
 
@@ -48,7 +48,7 @@ describe('closeMatchController', () => {
 
     expect(matchedData).toHaveBeenCalledWith(request);
     expect(closeMatchServiceMock).toHaveBeenCalledWith(
-      Number(request.params.id),
+      Number(request.params.gameMatchId),
     );
     expect(response.status).toHaveBeenCalledWith(HttpStatusCode.Ok);
     expect(response.json).toHaveBeenCalledWith({ status: 'closed' });
@@ -63,7 +63,7 @@ describe('closeMatchController', () => {
       CloseMatchResponseBody
     >();
 
-    request.params = { id: '1' };
+    request.params = { gameMatchId: '1' };
 
     const error = new Error('Test error');
 
@@ -74,7 +74,7 @@ describe('closeMatchController', () => {
     await closeMatchController(request, response, next);
 
     expect(closeMatchServiceMock).toHaveBeenCalledWith(
-      Number(request.params.id),
+      Number(request.params.gameMatchId),
     );
     expect(response.status).not.toHaveBeenCalled();
     expect(response.json).not.toHaveBeenCalled();
