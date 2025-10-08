@@ -105,6 +105,7 @@ describe('closeMatchService', () => {
       match.gameMatchId,
     );
     expect(promiseAllSpy).toHaveBeenCalled();
+    expect(promiseAllSpy.mock.calls?.at(0)?.at(0)).toHaveLength(4);
     expect(status).toBe('closed');
   });
 
@@ -353,5 +354,6 @@ describe('openMatchService', () => {
     );
     expect(removeMatchFromCachedSet).toHaveBeenCalledWith(`#mp_${gameMatchId}`);
     expect(promiseAllSpy).toHaveBeenCalled();
+    expect(promiseAllSpy.mock.calls?.at(0)?.at(0)).toHaveLength(2);
   });
 });
