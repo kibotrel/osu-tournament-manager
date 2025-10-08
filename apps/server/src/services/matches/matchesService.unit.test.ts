@@ -1,3 +1,4 @@
+import type { WebSocketMessage, WebSocketMessageMatch } from '@packages/shared';
 import * as shared from '@packages/shared';
 import {
   HttpInternalServerError,
@@ -17,12 +18,14 @@ import type { SelectMatch } from '#src/schemas/matches/matchesTable.js';
 import { openMultiplayerChannel } from '#src/services/bancho/multiplayerService.js';
 import {
   deleteMatchChatHistoryFromCache,
+  getMatchChatHistoryFromCache,
   removeMatchFromCachedSet,
 } from '#src/services/cache/cacheService.js';
 import { webSocketServer } from '#src/websocketServer.js';
 
 import {
   closeMatchService,
+  getMatchChatHistoryService,
   getMatchService,
   openMatchService,
 } from './matchesService.js';
@@ -223,6 +226,57 @@ describe('getMatchService', () => {
     expect(getMatchByGameMatchId).toHaveBeenCalledWith(id, {
       columnsFilter: ['endsAt', 'gameMatchId', 'name'],
     });
+  });
+});
+
+describe('getMatchChatHistoryService', () => {
+  afterEach(() => {
+    vi.clearAllMocks();
+  });
+
+  it('should return an array of chat messages if found', async () => {
+    const gameMatchId = 123_456;
+    const chatHistory: Array<WebSocketMessage<WebSocketMessageMatch>> = [
+      {
+        message: {
+          author: 'user',
+          content: 'Hello',
+        },
+        timestamp: Date.now(),
+        topic: `matches:${gameMatchId}:chat-messages`,
+      },
+    ];
+    const getMatchChatHistoryFromCacheMock = vi.mocked(
+      getMatchChatHistoryFromCache,
+    );
+
+    getMatchChatHistoryFromCacheMock.mockResolvedValueOnce(
+      chatHistory.map((item) => {
+        return JSON.stringify(item);
+      }),
+    );
+
+    const result = await getMatchChatHistoryService(gameMatchId);
+
+    expect(getMatchChatHistoryFromCache).toHaveBeenCalledWith(gameMatchId);
+    expect(Array.isArray(result)).toBe(true);
+    expect(result).toHaveLength(1);
+    expect(result).toEqual(chatHistory);
+  });
+
+  it('should return an empty array if no chat message is found', async () => {
+    const gameMatchId = 123_456;
+    const getMatchChatHistoryFromCacheMock = vi.mocked(
+      getMatchChatHistoryFromCache,
+    );
+
+    getMatchChatHistoryFromCacheMock.mockResolvedValueOnce([]);
+
+    const result = await getMatchChatHistoryService(gameMatchId);
+
+    expect(getMatchChatHistoryFromCache).toHaveBeenCalledWith(gameMatchId);
+    expect(Array.isArray(result)).toBe(true);
+    expect(result).toHaveLength(0);
   });
 });
 
