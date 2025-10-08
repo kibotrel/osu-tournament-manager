@@ -1,8 +1,12 @@
 import { describe, expect, it, vi } from 'vitest';
 
-import { CacheSetTopic } from '#src/constants/cacheConstants.js';
-import { getSetFromCacheByKey } from '#src/queries/cache/getCacheQueries.js';
+import { deleteListInCacheByKey } from '#src/queries/cache/deleteCacheQueries.js';
 import {
+  getListFromCacheByKey,
+  getSetFromCacheByKey,
+} from '#src/queries/cache/getCacheQueries.js';
+import {
+  addToListInCacheByKey,
   addToSetInCacheByKey,
   removeFromSetInCacheByKey,
 } from '#src/queries/cache/updateCacheQueries.js';
@@ -12,6 +16,7 @@ import {
   addMatchToCachedSet,
   deleteMatchChatHistoryFromCache,
   getAllOngoingMatchesFromCache,
+  getMatchChatHistoryFromCache,
   removeMatchFromCachedSet,
 } from './cacheService.js';
 
@@ -33,6 +38,7 @@ vi.mock('#src/queries/cache/updateCacheQueries.js', () => {
   return {
     addToListInCacheByKey: vi.fn(),
     addToSetInCacheByKey: vi.fn(),
+    removeFromListInCacheByKey: vi.fn(),
     removeFromSetInCacheByKey: vi.fn(),
   };
 });
@@ -61,7 +67,7 @@ describe('addMatchToCachedSet', () => {
     await addMatchToCachedSet(channel);
 
     expect(mockedAddToSetInCacheByKey).toHaveBeenCalledWith({
-      key: CacheSetTopic.OpenMatches,
+      key: 'open-matches',
       value: channel,
     });
   });
@@ -86,8 +92,19 @@ describe('getAllOngoingMatchesFromCache', () => {
 
     await getAllOngoingMatchesFromCache();
 
-    expect(mockedGetSetFromCacheByKey).toHaveBeenCalledWith(
-      CacheSetTopic.OpenMatches,
+    expect(mockedGetSetFromCacheByKey).toHaveBeenCalledWith('open-matches');
+  });
+});
+
+describe('getMatchChatHistoryFromCache', () => {
+  it('should call getListFromCacheByKey with correct parameters', async () => {
+    const channel = 'test-channel';
+    const mockedGetListFromCacheByKey = vi.mocked(getListFromCacheByKey);
+
+    await getMatchChatHistoryFromCache(channel);
+
+    expect(mockedGetListFromCacheByKey).toHaveBeenCalledWith(
+      `match-messages:${channel}`,
     );
   });
 });
@@ -102,7 +119,7 @@ describe('removeMatchFromCachedSet', () => {
     await removeMatchFromCachedSet(channel);
 
     expect(mockedRemoveFromSetInCacheByKey).toHaveBeenCalledWith({
-      key: CacheSetTopic.OpenMatches,
+      key: 'open-matches',
       value: channel,
     });
   });
