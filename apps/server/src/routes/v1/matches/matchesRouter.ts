@@ -9,7 +9,7 @@ import { validateRequest } from '#src/middlewares/requestValidatorMiddleware.js'
 import { isAuthenticated } from '#src/middlewares/sessionMiddleware.js';
 import { closeMatchValidators } from '#src/validators/v1/matches/closeMatchValidators.js';
 import { createMatchValidators } from '#src/validators/v1/matches/createMatchValidators.js';
-import { getMatchChatHistoryValidators } from '#src/validators/v1/matches/getMatchChatHistoryValidators..js';
+import { getMatchChatHistoryValidators } from '#src/validators/v1/matches/getMatchChatHistoryValidators.js';
 import { getMatchValidators } from '#src/validators/v1/matches/getMatchValidators.js';
 
 const matchesRouter: Router = express.Router({
