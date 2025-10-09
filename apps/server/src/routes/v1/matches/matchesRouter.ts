@@ -3,7 +3,7 @@ import express from 'express';
 
 import { closeMatchController } from '#src/controllers/v1/matches/closeMatchController.js';
 import { createMatchController } from '#src/controllers/v1/matches/createMatchController.js';
-import { getMatchChatHistoryController } from '#src/controllers/v1/matches/getMatchChatHistoryController..js';
+import { getMatchChatHistoryController } from '#src/controllers/v1/matches/getMatchChatHistoryController.js';
 import { getMatchController } from '#src/controllers/v1/matches/getMatchController.js';
 import { validateRequest } from '#src/middlewares/requestValidatorMiddleware.js';
 import { isAuthenticated } from '#src/middlewares/sessionMiddleware.js';
