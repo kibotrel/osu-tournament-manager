@@ -17,11 +17,10 @@ export const createMatchController: RequestHandler<
   const { name } = matchedData<CreateMatchRequestBody>(request);
 
   try {
-    const { gameMatchId, id } = await openMatchService(name);
+    const { gameMatchId } = await openMatchService(name);
 
     return response.status(HttpStatusCode.Created).json({
       gameMatchId,
-      id,
       name,
     });
   } catch (error) {

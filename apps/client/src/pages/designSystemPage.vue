@@ -94,6 +94,13 @@
           placeholder="No label"
           v-model="stringInputValue"
         />
+        <BaseInput
+          class="mt-6"
+          id="ghost-input"
+          placeholder="Ghost"
+          v-model="stringInputValue"
+          variant="ghost"
+        />
       </div>
     </div>
     <div class="my-8 space-y-2 text-2xl">
@@ -169,6 +176,8 @@ const icons: IconNames[] = [
   'cubeTransparent',
   'identification',
   'loading',
+  'paperAirplane',
+  'play',
   'xMark',
 ];
 const stringInputValue = ref('');

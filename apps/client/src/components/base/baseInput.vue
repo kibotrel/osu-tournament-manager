@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-bind="$attrs" :class="[$attrs.class, 'min-w-0']">
     <label
       v-if="properties.label"
       :class="!properties.isDisabled && properties.errorMessage ? 'error' : ''"
@@ -15,9 +15,10 @@
       inputmode="numeric"
       min="0"
       type="number"
-      :class="properties.errorMessage ? 'error' : ''"
+      :class="[properties.errorMessage ? 'error' : '', properties.variant]"
       :disabled="properties.isDisabled"
       :id="properties.id"
+      :autocomplete="properties.doAutoComplete ? 'on' : 'off'"
       :placeholder="properties.placeholder"
       :value="modelValue"
       @blur="emit('blur')"
@@ -26,9 +27,10 @@
     />
     <input
       v-else
-      :class="properties.errorMessage ? 'error' : ''"
+      :class="[properties.errorMessage ? 'error' : '', properties.variant]"
       :disabled="properties.isDisabled"
       :id="properties.id"
+      :autocomplete="properties.doAutoComplete ? 'on' : 'off'"
       :placeholder="properties.placeholder"
       :value="modelValue"
       @blur="emit('blur')"
@@ -46,8 +48,11 @@
 </template>
 
 <script setup lang="ts">
+export type InputVariant = 'ghost' | 'primary';
+
 interface Properties {
   id: string;
+  doAutoComplete?: boolean;
   errorMessage?: string;
   isDisabled?: boolean;
   isRequired?: boolean;
@@ -55,14 +60,17 @@ interface Properties {
   modelValue?: string;
   placeholder?: string;
   type?: 'text' | 'number';
+  variant?: InputVariant;
 }
 
 const emit = defineEmits(['blur', 'update:modelValue']);
 const properties = withDefaults(defineProps<Properties>(), {
+  doAutoComplete: false,
   isDisabled: false,
   isRequired: false,
   placeholder: '',
   type: 'text',
+  variant: 'primary',
 });
 
 const handleInput = (event: Event) => {
@@ -82,10 +90,15 @@ const blockInvalidNumberInput = (event: KeyboardEvent) => {
 @reference '#src/assets/styles/index.css';
 
 input {
-  @apply border-primary-3 block w-full rounded-md border-2 p-2 text-base;
+  @apply block w-full rounded-md border-2 border-transparent p-2 text-base;
 }
 
+input:focus,
 input:focus-visible {
+  @apply outline-none;
+}
+
+input:focus-visible:not(.ghost) {
   @apply ring-1 ring-yellow-400 outline-hidden;
 }
 
@@ -111,5 +124,13 @@ label {
 
 input.error:not(:disabled) {
   @apply border-red-400 bg-red-400/20 text-red-400;
+}
+
+.primary {
+  @apply border-primary-3;
+}
+
+.ghost {
+  @apply rounded-none;
 }
 </style>

@@ -167,6 +167,18 @@ describe('parseIrcMessage', () => {
       parseIrcMessage(banchoClient, ':localhost.dev 001 username :Welcome'),
     ).toBeInstanceOf(IrcCommandWelcome);
   });
+
+  it('should correctly handle messages with colons in it', () => {
+    const command = parseIrcMessage(
+      banchoClient,
+      ':username!server@localhost.dev PRIVMSG #channel :message :: content',
+    );
+
+    expect(command).toBeInstanceOf(IrcCommandPrivateMessage);
+    expect((command as IrcCommandPrivateMessage).packetParts.at(-1)).toBe(
+      'message :: content',
+    );
+  });
 });
 
 describe('parseIrcUsername', () => {

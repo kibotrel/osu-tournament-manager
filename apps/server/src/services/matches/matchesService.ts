@@ -1,20 +1,28 @@
+import type { WebSocketMessage, WebSocketMessageMatch } from '@packages/shared';
 import {
   HttpInternalServerError,
   HttpNotFoundError,
   HttpUnprocessableContentError,
+  WebSocketChannel,
+  WebSocketChannelMatchesEvent,
   banchoChannelFromGameMatchId,
 } from '@packages/shared';
 
 import { banchoClient } from '#src/dependencies/ircClientDependency.js';
 import { createMatch } from '#src/queries/matches/createMatchQueries.js';
-import { getMatchById } from '#src/queries/matches/getMatchQueries.js';
+import { getMatchByGameMatchId } from '#src/queries/matches/getMatchQueries.js';
 import { patchMatchById } from '#src/queries/matches/updateMatchQueries.js';
 import { openMultiplayerChannel } from '#src/services/bancho/multiplayerService.js';
-import { removeMatchFromCachedSet } from '#src/services/cache/cacheService.js';
+import {
+  deleteMatchChatHistoryFromCache,
+  getMatchChatHistoryFromCache,
+  removeMatchFromCachedSet,
+} from '#src/services/cache/cacheService.js';
+import { webSocketServer } from '#src/websocketServer.js';
 
-export const closeMatchService = async (id: number) => {
-  const match = await getMatchById(id, {
-    columnsFilter: ['gameMatchId', 'id', 'endsAt'],
+export const closeMatchService = async (gameMatchId: number) => {
+  const match = await getMatchByGameMatchId(gameMatchId, {
+    columnsFilter: ['endsAt', 'gameMatchId', 'gameMatchId', 'id'],
   });
 
   if (!match) {
@@ -28,10 +36,16 @@ export const closeMatchService = async (id: number) => {
   }
 
   const channel = banchoChannelFromGameMatchId(match.gameMatchId);
+
+  await banchoClient.closeMultiplayerChannel(channel);
+
   const promises = [
-    banchoClient.closeMultiplayerChannel(channel),
     removeMatchFromCachedSet(channel),
-    patchMatchById(id, { endsAt: new Date() }),
+    deleteMatchChatHistoryFromCache(match.gameMatchId),
+    patchMatchById(match.id, { endsAt: new Date() }),
+    webSocketServer.disconnectAllTopicSubscribers(
+      `${WebSocketChannel.Matches}:${match.gameMatchId}:${WebSocketChannelMatchesEvent.ChatMessages}`,
+    ),
   ];
 
   await Promise.all(promises);
@@ -40,9 +54,9 @@ export const closeMatchService = async (id: number) => {
   return { status: 'closed' as const };
 };
 
-export const getMatchService = async (id: number) => {
-  const match = await getMatchById(id, {
-    columnsFilter: ['endsAt', 'id', 'name'],
+export const getMatchService = async (gameMatchId: number) => {
+  const match = await getMatchByGameMatchId(gameMatchId, {
+    columnsFilter: ['endsAt', 'gameMatchId', 'name'],
   });
 
   if (!match) {
@@ -50,6 +64,16 @@ export const getMatchService = async (id: number) => {
   }
 
   return match;
+};
+
+export const getMatchChatHistoryService = async (
+  gameMatchId: number | string,
+) => {
+  const cacheHistory = await getMatchChatHistoryFromCache(gameMatchId);
+
+  return cacheHistory.map<WebSocketMessage<WebSocketMessageMatch>>((entry) => {
+    return JSON.parse(entry);
+  });
 };
 
 export const openMatchService = async (name: string) => {

@@ -3,11 +3,13 @@ import express from 'express';
 
 import { closeMatchController } from '#src/controllers/v1/matches/closeMatchController.js';
 import { createMatchController } from '#src/controllers/v1/matches/createMatchController.js';
+import { getMatchChatHistoryController } from '#src/controllers/v1/matches/getMatchChatHistoryController.js';
 import { getMatchController } from '#src/controllers/v1/matches/getMatchController.js';
 import { validateRequest } from '#src/middlewares/requestValidatorMiddleware.js';
 import { isAuthenticated } from '#src/middlewares/sessionMiddleware.js';
 import { closeMatchValidators } from '#src/validators/v1/matches/closeMatchValidators.js';
 import { createMatchValidators } from '#src/validators/v1/matches/createMatchValidators.js';
+import { getMatchChatHistoryValidators } from '#src/validators/v1/matches/getMatchChatHistoryValidators.js';
 import { getMatchValidators } from '#src/validators/v1/matches/getMatchValidators.js';
 
 const matchesRouter: Router = express.Router({
@@ -23,14 +25,20 @@ matchesRouter.post(
   validateRequest,
   createMatchController,
 );
+matchesRouter.get(
+  '/:gameMatchId/chat-history',
+  getMatchChatHistoryValidators(),
+  validateRequest,
+  getMatchChatHistoryController,
+);
 matchesRouter.post(
-  '/:id/close',
+  '/:gameMatchId/close',
   closeMatchValidators(),
   validateRequest,
   closeMatchController,
 );
 matchesRouter.get(
-  '/:id',
+  '/:gameMatchId',
   getMatchValidators(),
   validateRequest,
   getMatchController,

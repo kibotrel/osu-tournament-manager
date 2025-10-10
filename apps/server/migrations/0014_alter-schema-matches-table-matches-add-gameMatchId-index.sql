@@ -1,0 +1,1 @@
+CREATE INDEX "matches_gameMatchId_index" ON "matches"."matches" USING btree ("gameMatchId");

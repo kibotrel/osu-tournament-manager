@@ -11,4 +11,5 @@ export type CacheSetKey = CacheSetTopic | `${CacheSetTopic}:${string}`;
 export interface AddToCacheOptions<CacheKeyType = CacheKey> {
   key: CacheKeyType;
   value: string;
+  expiryInSeconds?: number;
 }

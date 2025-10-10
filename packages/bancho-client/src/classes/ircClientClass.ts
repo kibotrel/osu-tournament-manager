@@ -330,4 +330,8 @@ export class BanchoClient extends EventEmitter<EmittedEvents> {
       `${IrcKeyword.PrivateMessage} ${recipient} :${message}`,
     );
   }
+
+  public get username(): string {
+    return this.clientCredentials.username;
+  }
 }

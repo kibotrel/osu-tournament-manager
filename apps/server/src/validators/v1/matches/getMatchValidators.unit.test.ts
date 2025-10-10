@@ -4,9 +4,9 @@ import { describe, expect, it } from 'vitest';
 import { getMatchValidators } from './getMatchValidators.js';
 
 describe('getMatchValidators', () => {
-  describe('id', () => {
+  describe('gameMatchId', () => {
     it('should pass when it is a positive integer string', async () => {
-      const request = { params: { id: '1' } };
+      const request = { params: { gameMatchId: '1' } };
       const validators = getMatchValidators();
 
       for (const validator of validators) {
@@ -19,7 +19,7 @@ describe('getMatchValidators', () => {
     });
 
     it('should fail when id is not a positive integer string', async () => {
-      const request = { params: { id: 'abc' } };
+      const request = { params: { gameMatchId: 'abc' } };
       const validators = getMatchValidators();
 
       for (const validator of validators) {
@@ -35,10 +35,11 @@ describe('getMatchValidators', () => {
           type: 'field',
           value: 'abc',
           msg: {
-            message: 'id must be a positive integer string',
-            errorCode: 'validator.getMatchParametersValidator.id.integer',
+            message: 'gameMatchId must be a positive integer string',
+            errorCode:
+              'validator.getMatchParametersValidator.gameMatchId.integer',
           },
-          path: 'id',
+          path: 'gameMatchId',
           location: 'params',
         },
       ]);
@@ -61,37 +62,40 @@ describe('getMatchValidators', () => {
           type: 'field',
           value: undefined,
           msg: {
-            message: 'id is required',
-            errorCode: 'validator.getMatchParametersValidator.id.required',
+            message: 'gameMatchId is required',
+            errorCode:
+              'validator.getMatchParametersValidator.gameMatchId.required',
           },
-          path: 'id',
+          path: 'gameMatchId',
           location: 'params',
         },
         {
           type: 'field',
           value: undefined,
           msg: {
-            message: 'id must be a positive integer string',
-            errorCode: 'validator.getMatchParametersValidator.id.integer',
+            message: 'gameMatchId must be a positive integer string',
+            errorCode:
+              'validator.getMatchParametersValidator.gameMatchId.integer',
           },
-          path: 'id',
+          path: 'gameMatchId',
           location: 'params',
         },
         {
           type: 'field',
           value: undefined,
           msg: {
-            message: 'id cannot be empty',
-            errorCode: 'validator.getMatchParametersValidator.id.empty',
+            message: 'gameMatchId cannot be empty',
+            errorCode:
+              'validator.getMatchParametersValidator.gameMatchId.empty',
           },
-          path: 'id',
+          path: 'gameMatchId',
           location: 'params',
         },
       ]);
     });
 
     it('should fail when empty', async () => {
-      const request = { params: { id: '' } };
+      const request = { params: { gameMatchId: '' } };
       const validators = getMatchValidators();
 
       for (const validator of validators) {
@@ -107,27 +111,29 @@ describe('getMatchValidators', () => {
           type: 'field',
           value: '',
           msg: {
-            message: 'id must be a positive integer string',
-            errorCode: 'validator.getMatchParametersValidator.id.integer',
+            message: 'gameMatchId must be a positive integer string',
+            errorCode:
+              'validator.getMatchParametersValidator.gameMatchId.integer',
           },
-          path: 'id',
+          path: 'gameMatchId',
           location: 'params',
         },
         {
           type: 'field',
           value: '',
           msg: {
-            message: 'id cannot be empty',
-            errorCode: 'validator.getMatchParametersValidator.id.empty',
+            message: 'gameMatchId cannot be empty',
+            errorCode:
+              'validator.getMatchParametersValidator.gameMatchId.empty',
           },
-          path: 'id',
+          path: 'gameMatchId',
           location: 'params',
         },
       ]);
     });
 
-    it('should fail when id is a negative integer string', async () => {
-      const request = { params: { id: '-5' } };
+    it('should fail when gameMatchId is a negative integer string', async () => {
+      const request = { params: { gameMatchId: '-5' } };
       const validators = getMatchValidators();
 
       for (const validator of validators) {
@@ -143,17 +149,18 @@ describe('getMatchValidators', () => {
           type: 'field',
           value: '-5',
           msg: {
-            message: 'id must be a positive integer string',
-            errorCode: 'validator.getMatchParametersValidator.id.integer',
+            message: 'gameMatchId must be a positive integer string',
+            errorCode:
+              'validator.getMatchParametersValidator.gameMatchId.integer',
           },
-          path: 'id',
+          path: 'gameMatchId',
           location: 'params',
         },
       ]);
     });
 
     it('should fail when id has leading zeroes', async () => {
-      const request = { params: { id: '007' } };
+      const request = { params: { gameMatchId: '007' } };
       const validators = getMatchValidators();
 
       for (const validator of validators) {
@@ -168,10 +175,11 @@ describe('getMatchValidators', () => {
         {
           location: 'params',
           msg: {
-            errorCode: 'validator.getMatchParametersValidator.id.integer',
-            message: 'id must be a positive integer string',
+            errorCode:
+              'validator.getMatchParametersValidator.gameMatchId.integer',
+            message: 'gameMatchId must be a positive integer string',
           },
-          path: 'id',
+          path: 'gameMatchId',
           type: 'field',
           value: '007',
         },

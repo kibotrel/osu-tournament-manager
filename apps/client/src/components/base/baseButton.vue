@@ -64,9 +64,9 @@ button:focus-visible {
 }
 
 .danger {
-  @apply text-primary-1 cursor-pointer bg-red-600;
-  @apply hover:text-primary-1/90 hover:bg-red-600/90;
-  @apply active:text-primary-1/80 active:bg-red-600/80;
+  @apply text-primary-1 cursor-pointer bg-red-500;
+  @apply hover:text-primary-1/90 hover:bg-red-500/90;
+  @apply active:text-primary-1/80 active:bg-red-500/80;
 }
 
 .ghost {

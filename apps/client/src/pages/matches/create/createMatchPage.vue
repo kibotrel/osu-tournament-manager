@@ -20,7 +20,7 @@
           @mousedown="handleCreateMatch"
           @keydown.enter="handleCreateMatch"
           :isDisabled="matchName.length === 0"
-          :isLoading="isPending"
+          :isLoading="isPending || !isIdle"
         >
           <template #default> Create </template>
           <template #icon>
@@ -41,7 +41,7 @@ import BaseInput from '#src/components/base/baseInput.vue';
 import ArrowRightEndOnRectangleIcon from '#src/components/icons/arrowRightEndOnRectangleIcon.vue';
 
 const matchName = ref('');
-const { mutate: createMatch, isPending } = useCreateMatch();
+const { mutate: createMatch, isPending, isIdle } = useCreateMatch();
 
 const handleCreateMatch = () => {
   if (matchName.value.length === 0 || isPending.value) {
