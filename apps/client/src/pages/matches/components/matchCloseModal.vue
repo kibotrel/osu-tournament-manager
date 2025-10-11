@@ -1,5 +1,5 @@
 <template>
-  <BaseModal v-show="properties.isModalOpen" @close:modal="emit('close:modal')">
+  <BaseModal :isModalOpen="isModalOpen" @close:modal="emit('close:modal')">
     <template #header>
       <h1 class="text-2xl font-semibold tracking-tight">Close match</h1>
     </template>

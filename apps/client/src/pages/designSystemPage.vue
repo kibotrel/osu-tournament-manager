@@ -117,16 +117,12 @@
     <div class="my-8 space-y-2 text-2xl">
       <h2>Modals</h2>
       <div class="flex flex-row space-x-2">
-        <BaseButton
-          class="w-32"
-          id="base-modal"
-          @click="isDefaultModalVisible = true"
-        >
+        <BaseButton class="w-32" id="base-modal" @click="isModalOpen = true">
           Base
         </BaseButton>
         <BaseModal
-          v-show="isDefaultModalVisible"
-          @close:modal="isDefaultModalVisible = false"
+          :isModalOpen="isModalOpen"
+          @close:modal="isModalOpen = false"
         >
           <template #header>
             <h1 class="mb-4 font-semibold tracking-tight">Modal title</h1>
@@ -140,7 +136,7 @@
                 class="w-24"
                 id="base-modal-cancel-button"
                 variant="secondary"
-                @mousedown="isDefaultModalVisible = false"
+                @mousedown="isModalOpen = false"
               >
                 Cancel
               </BaseButton>
@@ -148,7 +144,7 @@
                 class="w-24"
                 id="base-modal-confirm-button"
                 variant="primary"
-                @mousedown="isDefaultModalVisible = false"
+                @mousedown="isModalOpen = false"
               >
                 Confirm
               </BaseButton>
@@ -183,5 +179,5 @@ const icons: IconNames[] = [
 const stringInputValue = ref('');
 const numberInputValue = ref('');
 const stringErrorValue = ref('Wrong input');
-const isDefaultModalVisible = ref(false);
+const isModalOpen = ref(false);
 </script>
