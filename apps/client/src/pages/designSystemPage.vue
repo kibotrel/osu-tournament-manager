@@ -117,10 +117,16 @@
     <div class="my-8 space-y-2 text-2xl">
       <h2>Modals</h2>
       <div class="flex flex-row space-x-2">
-        <BaseButton class="w-32" id="base-modal" @click="isModalOpen = true">
+        <BaseButton
+          class="w-32"
+          id="base-modal"
+          @keydown.enter="isModalOpen = true"
+          @mousedown="isModalOpen = true"
+        >
           Base
         </BaseButton>
         <BaseModal
+          id="base-modal"
           :isModalOpen="isModalOpen"
           @close:modal="isModalOpen = false"
         >

@@ -2,7 +2,7 @@
   <Transition name="modal">
     <div
       v-show="properties.isModalOpen"
-      class="fixed inset-0 z-10 flex items-center justify-center bg-black/50"
+      class="fixed inset-0 z-11 flex items-center justify-center bg-black/50"
       ref="modal"
       @mousedown="emit('close:modal')"
     >
@@ -13,7 +13,7 @@
         <div>
           <x-mark-icon
             class="text-primary-1 hover:text-primary-1/90 active:text-primary-1/80 absolute right-0 mr-4 h-6 hover:cursor-pointer"
-            @click="emit('close:modal')"
+            @mousedown="emit('close:modal')"
           />
         </div>
         <div>
@@ -34,23 +34,24 @@
 import { useTemplateRef } from 'vue';
 
 import xMarkIcon from '#src/components/icons/xMarkIcon.vue';
-import { useEscapeBehavior } from '#src/composables/useEscapeBehaviorComposable.js';
+import { usePopUpBehavior } from '#src/composables/usePopUpComposable.js';
 
 interface Properties {
   isModalOpen: boolean;
+  id: string;
 }
 
 const properties = defineProps<Properties>();
 const emit = defineEmits(['close:modal']);
 const modal = useTemplateRef<HTMLDivElement>('modal');
 
-useEscapeBehavior({ target: modal, onEscape: () => emit('close:modal') });
+usePopUpBehavior({ element: modal, onEscape: () => emit('close:modal') });
 </script>
 
 <style scoped>
 .modal-enter-active,
 .modal-leave-active {
-  transition: all 0.1s ease;
+  transition: all 0.2s ease;
 }
 
 .modal-enter-from,
