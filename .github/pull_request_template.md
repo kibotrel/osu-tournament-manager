@@ -22,6 +22,7 @@ To be merged, your Pull Request must pass all the following checks.
 - [ ] I have performed a self-review of my code
 - [ ] If needed, I updated the documentation accordingly
 - [ ] For bug fixes or features, I added some tests
+- [ ] If I introduced a new server route. I updated [`allowedHttpMethodsOnResource`](https://github.com/kibotrel/osu-tournament-manager/blob/main/apps/server/src/constants/httpConstants.ts#L9) accordingly.
 
 ## :camera_flash: Screenshots
 
