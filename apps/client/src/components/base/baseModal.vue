@@ -1,19 +1,22 @@
 <template>
   <Transition name="modal">
     <div
-      v-show="properties.isModalOpen"
-      class="fixed inset-0 z-10 flex items-center justify-center bg-black/50"
+      class="fixed inset-0 z-11 flex items-center justify-center bg-black/50"
       ref="modal"
+      v-show="properties.isModalOpen"
       @mousedown="emit('close:modal')"
     >
       <div
         class="bg-primary-4 border-primary-3 relative w-1/3 rounded-md border-2 p-4"
+        :id="properties.id"
         @mousedown.stop
       >
         <div>
-          <x-mark-icon
-            class="text-primary-1 hover:text-primary-1/90 active:text-primary-1/80 absolute right-0 mr-4 h-6 hover:cursor-pointer"
-            @click="emit('close:modal')"
+          <XMarkIcon
+            tabindex="0"
+            class="x-mark"
+            @keydown.enter="emit('close:modal')"
+            @mousedown="emit('close:modal')"
           />
         </div>
         <div>
@@ -33,29 +36,40 @@
 <script setup lang="ts">
 import { useTemplateRef } from 'vue';
 
-import xMarkIcon from '#src/components/icons/xMarkIcon.vue';
-import { useEscapeBehavior } from '#src/composables/useEscapeBehaviorComposable.js';
+import XMarkIcon from '#src/components/icons/xMarkIcon.vue';
+import { usePopUpBehavior } from '#src/composables/usePopUpComposable.js';
 
 interface Properties {
   isModalOpen: boolean;
+  id: string;
 }
 
 const properties = defineProps<Properties>();
 const emit = defineEmits(['close:modal']);
 const modal = useTemplateRef<HTMLDivElement>('modal');
 
-useEscapeBehavior({ target: modal, onEscape: () => emit('close:modal') });
+usePopUpBehavior({ element: modal, onEscape: () => emit('close:modal') });
 </script>
 
 <style scoped>
+@reference '#src/assets/styles/index.css';
+
 .modal-enter-active,
 .modal-leave-active {
-  transition: all 0.1s ease;
+  transition: all 0.2s ease;
 }
 
 .modal-enter-from,
 .modal-leave-to {
   opacity: 0;
   transform: scale(1.1);
+}
+
+.x-mark {
+  @apply text-primary-1 hover:text-primary-1/90 active:text-primary-1/80 absolute right-0 mr-4 h-6 ring-0 outline-none hover:cursor-pointer;
+}
+
+.x-mark:focus-visible {
+  @apply rounded-md ring-2 ring-yellow-400 outline-hidden;
 }
 </style>

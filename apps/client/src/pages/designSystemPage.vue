@@ -117,10 +117,16 @@
     <div class="my-8 space-y-2 text-2xl">
       <h2>Modals</h2>
       <div class="flex flex-row space-x-2">
-        <BaseButton class="w-32" id="base-modal" @click="isModalOpen = true">
+        <BaseButton
+          class="w-32"
+          id="base-modal"
+          @keydown.enter="isModalOpen = true"
+          @mousedown="isModalOpen = true"
+        >
           Base
         </BaseButton>
         <BaseModal
+          id="base-modal"
           :isModalOpen="isModalOpen"
           @close:modal="isModalOpen = false"
         >
@@ -136,6 +142,7 @@
                 class="w-24"
                 id="base-modal-cancel-button"
                 variant="secondary"
+                @keydown.enter="isModalOpen = false"
                 @mousedown="isModalOpen = false"
               >
                 Cancel
@@ -144,6 +151,7 @@
                 class="w-24"
                 id="base-modal-confirm-button"
                 variant="primary"
+                @keydown.enter="isModalOpen = false"
                 @mousedown="isModalOpen = false"
               >
                 Confirm
@@ -153,6 +161,83 @@
         </BaseModal>
       </div>
     </div>
+    <div class="my-8 space-y-2 text-2xl">
+      <h2>Drawers</h2>
+      <div class="flex flex-row space-x-2">
+        <BaseButton
+          class="w-32"
+          id="open-bottom-drawer"
+          @keydown.enter="isBottomDrawerOpen = true"
+          @mousedown="isBottomDrawerOpen = true"
+        >
+          Bottom
+        </BaseButton>
+        <BaseButton
+          class="w-32"
+          id="open-right-drawer"
+          @keydown.enter="isRightDrawerOpen = true"
+          @mousedown="isRightDrawerOpen = true"
+        >
+          Right
+        </BaseButton>
+        <BaseDrawer
+          id="base-bottom-drawer"
+          variant="bottom"
+          :isDrawerOpen="isBottomDrawerOpen"
+          @close:drawer="isBottomDrawerOpen = false"
+        >
+          <template #header>
+            <h1 class="mb-4 font-semibold tracking-tight">
+              Bottom drawer title
+            </h1>
+          </template>
+          <template #body>
+            <p class="text-base">Content</p>
+          </template>
+          <template #footer>
+            <div class="mt-4 flex flex-row justify-end space-x-2">
+              <BaseButton
+                class="w-24"
+                id="base-modal-confirm-button"
+                variant="primary"
+                @keydown.enter="isBottomDrawerOpen = false"
+                @mousedown="isBottomDrawerOpen = false"
+              >
+                Close
+              </BaseButton>
+            </div>
+          </template>
+        </BaseDrawer>
+        <BaseDrawer
+          id="base-right-drawer"
+          variant="right"
+          :isDrawerOpen="isRightDrawerOpen"
+          @close:drawer="isRightDrawerOpen = false"
+        >
+          <template #header>
+            <h1 class="mb-4 font-semibold tracking-tight">
+              Right drawer title
+            </h1>
+          </template>
+          <template #body>
+            <p class="text-base">Content</p>
+          </template>
+          <template #footer>
+            <div class="mt-4 flex flex-row justify-end space-x-2">
+              <BaseButton
+                class="w-24"
+                id="base-modal-confirm-button"
+                variant="primary"
+                @keydown.enter="isRightDrawerOpen = false"
+                @mousedown="isRightDrawerOpen = false"
+              >
+                Close
+              </BaseButton>
+            </div>
+          </template>
+        </BaseDrawer>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -160,6 +245,7 @@
 import { ref } from 'vue';
 
 import BaseButton from '#src/components/base/baseButton.vue';
+import BaseDrawer from '#src/components/base/baseDrawer.vue';
 import type { IconNames } from '#src/components/base/baseIcon.vue';
 import BaseIcon from '#src/components/base/baseIcon.vue';
 import BaseInput from '#src/components/base/baseInput.vue';
@@ -180,4 +266,6 @@ const stringInputValue = ref('');
 const numberInputValue = ref('');
 const stringErrorValue = ref('Wrong input');
 const isModalOpen = ref(false);
+const isBottomDrawerOpen = ref(false);
+const isRightDrawerOpen = ref(false);
 </script>
