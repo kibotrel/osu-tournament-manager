@@ -148,9 +148,7 @@
         "max": 1
       }
     ],
-    "multiline-comment-style": [
-      "off"
-    ],
+    "multiline-comment-style": "off",
     "no-alert": "error",
     "no-caller": "error",
     "no-empty": [
