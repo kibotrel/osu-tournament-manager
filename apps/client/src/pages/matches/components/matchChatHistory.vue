@@ -1,25 +1,16 @@
 <template>
   <div class="border-primary-3 mx-auto mt-4 w-3/4 rounded-md border-2">
-    <div
-      class="text m-4 mr-0 h-96 overflow-y-auto pr-4"
-      ref="chatHistoryDiv"
-      tabindex="-1"
-    >
+    <div class="chat-history-container" ref="chatHistoryDiv" tabindex="-1">
       <div
         v-if="isLoading"
         class="align-center flex h-full flex-col items-center justify-center"
       >
         <LoadingIcon class="h-6" />
       </div>
-      <div v-else-if="!history.length">
+      <div v-else-if="history.length === 0">
         <p class="text-primary-2">No message yet.</p>
       </div>
-      <div
-        v-else
-        v-for="(entry, index) in history"
-        :key="entry.timestamp"
-        class="cursor-move"
-      >
+      <div v-else v-for="(entry, index) in history" :key="entry.timestamp">
         <div :class="detectMarginBetweenMessages(index)">
           <div v-if="shouldDisplayUsername(index)">
             <span :class="usernameColorByRole(entry.message.author)">
@@ -68,6 +59,15 @@
 </template>
 
 <script setup lang="ts">
+import type { WebSocketMessageMatch } from '@packages/shared';
+import {
+  WebSocketChannel,
+  WebSocketChannelMatchesEvent,
+} from '@packages/shared';
+import { storeToRefs } from 'pinia';
+import { reactive, ref, watch } from 'vue';
+import { useRoute } from 'vue-router';
+
 import { useGetMatchChatHistory } from '#src/api/matchesApi.js';
 import BaseInput from '#src/components/base/baseInput.vue';
 import LoadingIcon from '#src/components/icons/loadingIcon.vue';
@@ -75,23 +75,12 @@ import PaperAirplaneIcon from '#src/components/icons/paperAirplaneIcon.vue';
 import { useScrollToBottomInElement } from '#src/composables/useScrollToBottomInElementComposable.js';
 import { useUserStore } from '#src/stores/userStore.js';
 import { defineWebsocketStore } from '#src/stores/webSocketStore.js';
-import {
-  WebSocketChannel,
-  WebSocketChannelMatchesEvent,
-  WebSocketMessageMatch,
-} from '@packages/shared';
-import { storeToRefs } from 'pinia';
-import { reactive, ref, watch } from 'vue';
-import { useRoute } from 'vue-router';
 
 const route = useRoute();
 const matchId = Number(route.params.gameMatchId);
-
 const { data: cacheHistory, isLoading } = useGetMatchChatHistory(matchId);
-
 const chatHistoryDiv = ref<HTMLElement | null>(null);
 const { scrollToBottom } = useScrollToBottomInElement(chatHistoryDiv);
-
 const { user } = useUserStore();
 const useWebSocketStore = defineWebsocketStore<
   WebSocketMessageMatch,
@@ -102,9 +91,7 @@ const useWebSocketStore = defineWebsocketStore<
   threadId: matchId.toString(),
 });
 const { history, isSocketReady } = storeToRefs(useWebSocketStore());
-
 const { sendMessage, setHistory } = useWebSocketStore();
-
 const refereeMessage = reactive<WebSocketMessageMatch>({
   content: '',
   author: user.name,
@@ -132,9 +119,9 @@ const detectMarginBetweenMessages = (index: number) => {
   const currentMessage = history.value[index];
   const previousMessage = history.value[index - 1];
 
-  return currentMessage.message.author !== previousMessage.message.author
-    ? 'mt-4'
-    : 'mt-0';
+  return currentMessage.message.author === previousMessage.message.author
+    ? 'mt-0'
+    : 'mt-4';
 };
 
 const shouldDisplayUsername = (index: number) => {
@@ -161,6 +148,7 @@ const usernameColorByRole = (author: string) => {
   if (author === 'BanchoBot') {
     return 'text-pink-400 font-bold';
   }
+
   if (author === user.name) {
     return 'text-yellow-400 font-bold';
   }
@@ -168,3 +156,15 @@ const usernameColorByRole = (author: string) => {
   return 'font-bold';
 };
 </script>
+
+<style scoped>
+@reference '#src/assets/styles/index.css';
+
+.chat-history-container {
+  @apply h-96 overflow-y-auto p-4;
+
+  scrollbar-width: auto;
+  scrollbar-gutter: stable;
+  scrollbar-color: oklch(85.2% 0.199 91.936) transparent;
+}
+</style>
