@@ -15,7 +15,9 @@
     >
       <div>
         <XMarkIcon
-          class="text-primary-1 hover:text-primary-1/90 active:text-primary-1/80 absolute right-0 mr-4 h-6 hover:cursor-pointer"
+          tabindex="0"
+          class="x-mark"
+          @keydown.enter="emit('close:drawer')"
           @mousedown="emit('close:drawer')"
         />
       </div>
@@ -90,5 +92,13 @@ usePopUpBehavior({
 
 .bottom {
   @apply bg-primary-4 border-primary-3 fixed bottom-0 left-0 z-10 flex h-1/3 w-full flex-col border-t-2 p-4;
+}
+
+.x-mark {
+  @apply text-primary-1 hover:text-primary-1/90 active:text-primary-1/80 absolute right-0 mr-4 h-6 ring-0 outline-none hover:cursor-pointer;
+}
+
+.x-mark:focus-visible {
+  @apply rounded-md ring-2 ring-yellow-400 outline-hidden;
 }
 </style>

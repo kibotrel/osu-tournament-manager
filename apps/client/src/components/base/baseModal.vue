@@ -12,8 +12,10 @@
         @mousedown.stop
       >
         <div>
-          <x-mark-icon
-            class="text-primary-1 hover:text-primary-1/90 active:text-primary-1/80 absolute right-0 mr-4 h-6 hover:cursor-pointer"
+          <XMarkIcon
+            tabindex="0"
+            class="x-mark"
+            @keydown.enter="emit('close:modal')"
             @mousedown="emit('close:modal')"
           />
         </div>
@@ -34,7 +36,7 @@
 <script setup lang="ts">
 import { useTemplateRef } from 'vue';
 
-import xMarkIcon from '#src/components/icons/xMarkIcon.vue';
+import XMarkIcon from '#src/components/icons/xMarkIcon.vue';
 import { usePopUpBehavior } from '#src/composables/usePopUpComposable.js';
 
 interface Properties {
@@ -50,6 +52,8 @@ usePopUpBehavior({ element: modal, onEscape: () => emit('close:modal') });
 </script>
 
 <style scoped>
+@reference '#src/assets/styles/index.css';
+
 .modal-enter-active,
 .modal-leave-active {
   transition: all 0.2s ease;
@@ -59,5 +63,13 @@ usePopUpBehavior({ element: modal, onEscape: () => emit('close:modal') });
 .modal-leave-to {
   opacity: 0;
   transform: scale(1.1);
+}
+
+.x-mark {
+  @apply text-primary-1 hover:text-primary-1/90 active:text-primary-1/80 absolute right-0 mr-4 h-6 ring-0 outline-none hover:cursor-pointer;
+}
+
+.x-mark:focus-visible {
+  @apply rounded-md ring-2 ring-yellow-400 outline-hidden;
 }
 </style>
