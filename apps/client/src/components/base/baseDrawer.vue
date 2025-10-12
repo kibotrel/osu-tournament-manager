@@ -8,9 +8,10 @@
   </Transition>
   <Transition :name="`drawer-${properties.variant}`">
     <div
+      ref="drawer"
       v-show="properties.isDrawerOpen"
       :class="properties.variant"
-      ref="drawer"
+      :id="properties.id"
     >
       <div>
         <XMarkIcon
@@ -40,12 +41,12 @@ import { usePopUpBehavior } from '#src/composables/usePopUpComposable.js';
 interface Properties {
   id: string;
   isDrawerOpen: boolean;
-  variant: 'right' | 'bottom';
+  variant: 'bottom' | 'right';
 }
 
-const properties = defineProps<Properties>();
 const emit = defineEmits(['close:drawer']);
 const drawer = useTemplateRef<HTMLDivElement>('drawer');
+const properties = defineProps<Properties>();
 
 usePopUpBehavior({
   element: drawer,

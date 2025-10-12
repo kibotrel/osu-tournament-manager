@@ -1,13 +1,14 @@
 <template>
   <Transition name="modal">
     <div
-      v-show="properties.isModalOpen"
       class="fixed inset-0 z-11 flex items-center justify-center bg-black/50"
       ref="modal"
+      v-show="properties.isModalOpen"
       @mousedown="emit('close:modal')"
     >
       <div
         class="bg-primary-4 border-primary-3 relative w-1/3 rounded-md border-2 p-4"
+        :id="properties.id"
         @mousedown.stop
       >
         <div>
