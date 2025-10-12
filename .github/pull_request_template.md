@@ -19,7 +19,6 @@
 To be merged, your Pull Request must pass all the following checks.
 -->
 
-- [ ] I have added the right labels to this Pull Request
 - [ ] I have performed a self-review of my code
 - [ ] If needed, I updated the documentation accordingly
 - [ ] For bug fixes or features, I added some tests
