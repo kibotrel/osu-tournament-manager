@@ -2,13 +2,23 @@
   <div v-bind="$attrs" :class="[$attrs.class, 'min-w-0']">
     <label
       v-if="properties.label"
-      :class="!properties.isDisabled && properties.errorMessage ? 'error' : ''"
+      :class="[
+        'mb-1 block text-sm',
+        !properties.isDisabled && properties.errorMessage ? 'error' : '',
+      ]"
       :for="properties.id"
     >
-      <span>
+      <BaseBody variant="small" isInline class="font-semibold!">
         {{ properties.label }}
-      </span>
-      <span v-if="properties.isRequired" class="text-red-400"> * </span>
+      </BaseBody>
+      <BaseBody
+        v-if="properties.isRequired"
+        isInline
+        variant="small"
+        class="text-red-400"
+      >
+        *
+      </BaseBody>
     </label>
     <input
       v-if="properties.type === 'number'"
@@ -36,18 +46,17 @@
       @blur="emit('blur')"
       @input="handleInput"
     />
-    <div
-      v-if="properties.errorMessage"
-      class="mt-1 flex flex-row text-sm text-red-400"
-    >
-      <span>
+    <div v-if="properties.errorMessage" class="mt-1 flex flex-row">
+      <BaseBody variant="small" class="text-red-400">
         {{ properties.errorMessage }}
-      </span>
+      </BaseBody>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
+import BaseBody from './baseBody.vue';
+
 export type InputVariant = 'ghost' | 'primary';
 
 interface Properties {
@@ -116,10 +125,6 @@ input[type='number']::-webkit-inner-spin-button,
 input[type='number']::-webkit-outer-spin-button {
   -webkit-appearance: none;
   margin: 0;
-}
-
-label {
-  @apply mb-1 block text-sm font-semibold;
 }
 
 input.error:not(:disabled) {

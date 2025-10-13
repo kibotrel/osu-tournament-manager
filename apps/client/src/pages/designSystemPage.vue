@@ -1,8 +1,41 @@
 <template>
   <div class="m-4">
-    <h1 class="text-4xl font-semibold tracking-tight">Design System</h1>
-    <div class="my-4 space-y-2 text-2xl">
-      <h2>Buttons</h2>
+    <BaseHeadline variant="hero">Design System</BaseHeadline>
+    <div class="my-4 space-y-2">
+      <BaseHeadline variant="title">Headlines</BaseHeadline>
+      <div class="space-y-1">
+        <BaseHeadline variant="hero"
+          >The quick brown fox jumps over the lazy dog
+        </BaseHeadline>
+        <BaseHeadline variant="title"
+          >The quick brown fox jumps over the lazy dog
+        </BaseHeadline>
+        <BaseHeadline variant="subtitle"
+          >The quick brown fox jumps over the lazy dog
+        </BaseHeadline>
+      </div>
+    </div>
+    <div class="my-4 space-y-2">
+      <BaseHeadline variant="title">Bodies</BaseHeadline>
+      <div class="space-y-1">
+        <BaseBody variant="base">
+          The quick brown fox jumps over the lazy dog
+        </BaseBody>
+        <BaseBody variant="small">
+          The quick brown fox jumps over the lazy dog
+        </BaseBody>
+      </div>
+    </div>
+    <div class="my-4 space-y-2">
+      <BaseHeadline variant="title">Captions</BaseHeadline>
+      <div class="space-y-1">
+        <BaseCaption variant="base"
+          >The quick brown fox jumps over the lazy dog
+        </BaseCaption>
+      </div>
+    </div>
+    <div class="my-4 space-y-2">
+      <BaseHeadline variant="title">Buttons</BaseHeadline>
       <div class="flex flex-row space-x-2">
         <BaseButton class="w-32" id="button-primary" variant="primary">
           Primary
@@ -51,7 +84,7 @@
       </div>
     </div>
     <div class="my-8 space-y-2 text-2xl">
-      <h2>Inputs</h2>
+      <BaseHeadline variant="title">Inputs</BaseHeadline>
       <div class="flex flex-row items-end space-x-2">
         <BaseInput
           id="string-input"
@@ -104,7 +137,7 @@
       </div>
     </div>
     <div class="my-8 space-y-2 text-2xl">
-      <h2>Icons</h2>
+      <BaseHeadline variant="title">Icons</BaseHeadline>
       <div class="flex flex-row space-x-2">
         <BaseIcon
           v-for="icon in icons"
@@ -115,7 +148,7 @@
       </div>
     </div>
     <div class="my-8 space-y-2 text-2xl">
-      <h2>Modals</h2>
+      <BaseHeadline variant="title">Modals</BaseHeadline>
       <div class="flex flex-row space-x-2">
         <BaseButton
           class="w-32"
@@ -125,44 +158,10 @@
         >
           Base
         </BaseButton>
-        <BaseModal
-          id="base-modal"
-          :isModalOpen="isModalOpen"
-          @close:modal="isModalOpen = false"
-        >
-          <template #header>
-            <h1 class="mb-4 font-semibold tracking-tight">Modal title</h1>
-          </template>
-          <template #body>
-            <p class="text-base">Content</p>
-          </template>
-          <template #footer>
-            <div class="mt-4 flex flex-row justify-end space-x-2">
-              <BaseButton
-                class="w-24"
-                id="base-modal-cancel-button"
-                variant="secondary"
-                @keydown.enter="isModalOpen = false"
-                @mousedown="isModalOpen = false"
-              >
-                Cancel
-              </BaseButton>
-              <BaseButton
-                class="w-24"
-                id="base-modal-confirm-button"
-                variant="primary"
-                @keydown.enter="isModalOpen = false"
-                @mousedown="isModalOpen = false"
-              >
-                Confirm
-              </BaseButton>
-            </div>
-          </template>
-        </BaseModal>
       </div>
     </div>
     <div class="my-8 space-y-2 text-2xl">
-      <h2>Drawers</h2>
+      <BaseHeadline variant="title">Drawers</BaseHeadline>
       <div class="flex flex-row space-x-2">
         <BaseButton
           class="w-32"
@@ -180,72 +179,108 @@
         >
           Right
         </BaseButton>
-        <BaseDrawer
-          id="base-bottom-drawer"
-          variant="bottom"
-          :isDrawerOpen="isBottomDrawerOpen"
-          @close:drawer="isBottomDrawerOpen = false"
-        >
-          <template #header>
-            <h1 class="mb-4 font-semibold tracking-tight">
-              Bottom drawer title
-            </h1>
-          </template>
-          <template #body>
-            <p class="text-base">Content</p>
-          </template>
-          <template #footer>
-            <div class="mt-4 flex flex-row justify-end space-x-2">
-              <BaseButton
-                class="w-24"
-                id="base-modal-confirm-button"
-                variant="primary"
-                @keydown.enter="isBottomDrawerOpen = false"
-                @mousedown="isBottomDrawerOpen = false"
-              >
-                Close
-              </BaseButton>
-            </div>
-          </template>
-        </BaseDrawer>
-        <BaseDrawer
-          id="base-right-drawer"
-          variant="right"
-          :isDrawerOpen="isRightDrawerOpen"
-          @close:drawer="isRightDrawerOpen = false"
-        >
-          <template #header>
-            <h1 class="mb-4 font-semibold tracking-tight">
-              Right drawer title
-            </h1>
-          </template>
-          <template #body>
-            <p class="text-base">Content</p>
-          </template>
-          <template #footer>
-            <div class="mt-4 flex flex-row justify-end space-x-2">
-              <BaseButton
-                class="w-24"
-                id="base-modal-confirm-button"
-                variant="primary"
-                @keydown.enter="isRightDrawerOpen = false"
-                @mousedown="isRightDrawerOpen = false"
-              >
-                Close
-              </BaseButton>
-            </div>
-          </template>
-        </BaseDrawer>
       </div>
     </div>
+    <BaseModal
+      id="base-modal"
+      :isModalOpen="isModalOpen"
+      @close:modal="isModalOpen = false"
+    >
+      <template #header>
+        <h1 class="mb-4 font-semibold tracking-tight">Modal title</h1>
+      </template>
+      <template #body>
+        <p class="text-base">Content</p>
+      </template>
+      <template #footer>
+        <BaseButton
+          class="w-24"
+          id="base-modal-cancel-button"
+          variant="secondary"
+          @keydown.enter="isModalOpen = false"
+          @mousedown="isModalOpen = false"
+        >
+          Cancel
+        </BaseButton>
+        <BaseButton
+          class="w-24"
+          id="base-modal-confirm-button"
+          variant="primary"
+          @keydown.enter="isModalOpen = false"
+          @mousedown="isModalOpen = false"
+        >
+          Confirm
+        </BaseButton>
+      </template>
+    </BaseModal>
+    <BaseDrawer
+      id="base-bottom-drawer"
+      variant="bottom"
+      :isDrawerOpen="isBottomDrawerOpen"
+      @close:drawer="isBottomDrawerOpen = false"
+    >
+      <template #header>
+        <h1 class="pb-4">Bottom drawer title</h1>
+      </template>
+      <template #body>
+        <p class="text-base">Content</p>
+      </template>
+      <template #footer>
+        <BaseButton
+          class="w-24"
+          id="base-modal-confirm-button"
+          variant="primary"
+          @keydown.enter="isBottomDrawerOpen = false"
+          @mousedown="isBottomDrawerOpen = false"
+        >
+          Close
+        </BaseButton>
+      </template>
+    </BaseDrawer>
+    <BaseDrawer
+      id="base-right-drawer"
+      variant="right"
+      :isDrawerOpen="isRightDrawerOpen"
+      @close:drawer="isRightDrawerOpen = false"
+    >
+      <template #header>
+        <h1 class="pb-4 font-semibold tracking-tight">Right drawer title</h1>
+      </template>
+      <template #body>
+        <p class="text-base">Content</p>
+      </template>
+      <template #footer>
+        <BaseButton
+          class="w-24"
+          id="base-modal-confirm-button"
+          variant="primary"
+          @keydown.enter="isRightDrawerOpen = false"
+          @mousedown="isRightDrawerOpen = false"
+        >
+          Close
+        </BaseButton>
+        <BaseButton
+          class="w-24"
+          id="base-modal-confirm-button"
+          variant="primary"
+          @keydown.enter="isRightDrawerOpen = false"
+          @mousedown="isRightDrawerOpen = false"
+        >
+          Close
+        </BaseButton>
+      </template>
+    </BaseDrawer>
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue';
 
+import BaseBody from '#src/components/base/baseBody.vue';
 import BaseButton from '#src/components/base/baseButton.vue';
+import BaseCaption from '#src/components/base/baseCaption.vue';
 import BaseDrawer from '#src/components/base/baseDrawer.vue';
+import BaseHeadline from '#src/components/base/baseHeadline.vue';
 import type { IconNames } from '#src/components/base/baseIcon.vue';
 import BaseIcon from '#src/components/base/baseIcon.vue';
 import BaseInput from '#src/components/base/baseInput.vue';

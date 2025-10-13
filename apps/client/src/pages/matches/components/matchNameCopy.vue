@@ -1,13 +1,17 @@
 <template>
-  "<span
+  "<BaseBody
+    isInline
     :class="isSupported ? 'copy' : ''"
     @mousedown="copy(properties.matchName)"
-    >{{ properties.matchName }}</span
+  >
+    {{ properties.matchName }} </BaseBody
   >"
 </template>
 
 <script setup lang="ts">
 import { useClipboard } from '@vueuse/core';
+
+import BaseBody from '#src/components/base/baseBody.vue';
 
 interface Properties {
   matchName: string;
