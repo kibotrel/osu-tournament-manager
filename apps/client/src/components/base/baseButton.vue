@@ -11,9 +11,9 @@
       <div v-if="slots.icon" class="mr-2 h-6 w-6">
         <slot name="icon" />
       </div>
-      <div>
+      <BaseBody>
         <slot> Button </slot>
-      </div>
+      </BaseBody>
     </div>
   </button>
 </template>
@@ -22,6 +22,8 @@
 import { useSlots } from 'vue';
 
 import LoadingIcon from '#src/components/icons/loadingIcon.vue';
+
+import BaseBody from './baseBody.vue';
 
 export type ButtonVariant =
   | 'danger'

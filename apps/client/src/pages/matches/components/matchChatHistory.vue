@@ -8,27 +8,30 @@
         <LoadingIcon class="h-6" />
       </div>
       <div v-else-if="history.length === 0">
-        <p class="text-primary-2">No message yet.</p>
+        <BaseBody class="text-primary-2">No message yet.</BaseBody>
       </div>
       <div v-else v-for="(entry, index) in history" :key="entry.timestamp">
         <div :class="detectMarginBetweenMessages(index)">
           <div v-if="shouldDisplayUsername(index)">
-            <span :class="usernameColorByRole(entry.message.author)">
+            <BaseBody
+              :class="['font-bold!', usernameColorByRole(entry.message.author)]"
+              isInline
+            >
               {{ entry.message.author }}
-            </span>
-            <span class="text-primary-2 ml-2 text-xs">
+            </BaseBody>
+            <BaseCaption class="text-primary-2 ml-2" isInline>
               {{ new Date(entry.timestamp).toLocaleTimeString() }}
-            </span>
+            </BaseCaption>
           </div>
-          <p
+          <BaseBody
             v-if="entry.message.content.startsWith('\x01ACTION')"
             class="whitespace-pre-wrap italic"
           >
             {{ entry.message.content.replace(/^\x01ACTION ?/, '') }}
-          </p>
-          <p v-else class="whitespace-pre-wrap">
+          </BaseBody>
+          <BaseBody v-else class="whitespace-pre-wrap">
             {{ entry.message.content }}
-          </p>
+          </BaseBody>
         </div>
       </div>
     </div>
@@ -69,6 +72,8 @@ import { reactive, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
 
 import { useGetMatchChatHistory } from '#src/api/matchesApi.js';
+import BaseBody from '#src/components/base/baseBody.vue';
+import BaseCaption from '#src/components/base/baseCaption.vue';
 import BaseInput from '#src/components/base/baseInput.vue';
 import LoadingIcon from '#src/components/icons/loadingIcon.vue';
 import PaperAirplaneIcon from '#src/components/icons/paperAirplaneIcon.vue';
@@ -146,14 +151,14 @@ const sendRefereeMessage = () => {
 
 const usernameColorByRole = (author: string) => {
   if (author === 'BanchoBot') {
-    return 'text-pink-400 font-bold';
+    return 'text-pink-400';
   }
 
   if (author === user.name) {
-    return 'text-yellow-400 font-bold';
+    return 'text-yellow-400';
   }
 
-  return 'font-bold';
+  return '';
 };
 </script>
 

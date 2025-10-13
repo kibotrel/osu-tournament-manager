@@ -9,11 +9,11 @@
     v-else-if="!match || match.endsAt"
     class="flex min-h-screen items-center justify-center"
   >
-    <p>Match not found.</p>
+    <BaseBody>Match not found.</BaseBody>
   </div>
   <div v-else>
     <div class="my-4 flex justify-center">
-      <h1 class="">Match {{ match.gameMatchId }}</h1>
+      <BaseHeadline>Match {{ match.gameMatchId }}</BaseHeadline>
     </div>
     <MatchChatHistory />
     <div class="align-center mt-4 flex justify-center space-x-4">
@@ -56,7 +56,9 @@ import type { Router } from 'vue-router';
 import { useRoute } from 'vue-router';
 
 import { useGetMatch } from '#src/api/matchesApi.js';
+import BaseBody from '#src/components/base/baseBody.vue';
 import BaseButton from '#src/components/base/baseButton.vue';
+import BaseHeadline from '#src/components/base/baseHeadline.vue';
 import LoadingIcon from '#src/components/icons/loadingIcon.vue';
 import { useUserStore } from '#src/stores/userStore.js';
 import { defineWebsocketStore } from '#src/stores/webSocketStore.js';
@@ -86,7 +88,7 @@ watch(match, (newState, previousState) => {
   }
 });
 
-const startMatchPoint = async () => {
+const startMatchPoint = () => {
   sendMessage(
     { author: user.name, content: '!mp start 5' },
     WebSocketChannelMatchesEvent.ChatMessages,
