@@ -1,6 +1,6 @@
 <template>
   <div class="m-4">
-    <BaseHeadline>Design System</BaseHeadline>
+    <BaseHeadline variant="hero">Design System</BaseHeadline>
     <div class="my-4 space-y-2">
       <BaseHeadline variant="title">Headlines</BaseHeadline>
       <div class="space-y-1">
