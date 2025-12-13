@@ -55,7 +55,6 @@ import type { IconName } from '#src/components/base/baseIcon.vue';
 import BaseIcon from '#src/components/base/baseIcon.vue';
 
 const icons: IconName[] = [
-  'archiveBox',
   'arrowLeftStartOnRectangle',
   'arrowRightEndOnRectangle',
   'check',

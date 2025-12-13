@@ -6,7 +6,6 @@
 import { defineAsyncComponent } from 'vue';
 
 export type IconName =
-  | 'archiveBox'
   | 'arrowLeftStartOnRectangle'
   | 'arrowRightEndOnRectangle'
   | 'check'
