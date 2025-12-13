@@ -8,13 +8,13 @@ services:
   caddy:
     command:
       [
-        'caddy',
-        'run',
-        '--watch',
-        '--config',
-        '/etc/caddy/Caddyfile',
-        '--adapter',
-        'caddyfile',
+        "caddy",
+        "run",
+        "--watch",
+        "--config",
+        "/etc/caddy/Caddyfile",
+        "--adapter",
+        "caddyfile",
       ]
     container_name: caddy
     env_file:
@@ -53,7 +53,7 @@ services:
     env_file:
       - ./apps/server/.env
     healthcheck:
-      test: ['CMD-SHELL', 'pg_isready -U dev -d osu_tournament_manager']
+      test: ["CMD-SHELL", "pg_isready -U dev -d osu_tournament_manager"]
       interval: 1s
       timeout: 250ms
       retries: 10
@@ -127,18 +127,18 @@ services:
   redis:
     command:
       [
-        'redis-server',
-        '--appendonly',
-        'yes',
-        '--requirepass',
-        '${REDIS_PASSWORD}',
+        "redis-server",
+        "--appendonly",
+        "yes",
+        "--requirepass",
+        "${REDIS_PASSWORD}",
       ]
     container_name: redis
     environment:
       - REDISCLI_AUTH=${REDIS_PASSWORD}
       - REDIS_PASSWORD=${REDIS_PASSWORD}
     healthcheck:
-      test: ['CMD-SHELL', 'redis-cli ping | grep PONG']
+      test: ["CMD-SHELL", "redis-cli ping | grep PONG"]
       interval: 250ms
       timeout: 250ms
       retries: 10
@@ -164,7 +164,7 @@ services:
     healthcheck:
       interval: 250ms
       retries: 10
-      test: ['CMD', 'pnpm', 'healthcheck']
+      test: ["CMD", "pnpm", "healthcheck"]
       timeout: 1s
     networks:
       - web
