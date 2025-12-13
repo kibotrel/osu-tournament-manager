@@ -16,10 +16,12 @@
       <BaseHeadline>Match {{ match.gameMatchId }}</BaseHeadline>
     </div>
     <MatchChatHistory />
-    <div class="align-center mt-4 flex justify-center space-x-4">
+    <div
+      class="align-center mt-4 flex flex-col items-center justify-center gap-y-4"
+    >
       <BaseButton
         id="start-match-point-button"
-        class="w-32"
+        class="w-48"
         variant="success"
         @mousedown="startMatchPoint"
         @keydown.enter="startMatchPoint"
@@ -28,7 +30,7 @@
       </BaseButton>
       <BaseButton
         id="show-close-match-modal-button"
-        class="w-32"
+        class="w-48"
         variant="danger"
         @mousedown="isModalOpen = true"
         @keydown.enter="isModalOpen = true"
