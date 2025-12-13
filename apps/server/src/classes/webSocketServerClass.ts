@@ -2,7 +2,7 @@ import type { UUID } from 'node:crypto';
 import { randomUUID } from 'node:crypto';
 import type { Server } from 'node:http';
 
-import type { WebSocketMessage, WebSocketMessageMatch } from '@packages/shared';
+import type { WebSocketMatchMessage, WebSocketMessage } from '@packages/shared';
 import {
   HttpInternalServerError,
   HttpStatusCode,
@@ -139,7 +139,7 @@ export class WebSocketServer {
       !isBanchoMessage &&
       event === WebSocketChannelMatchesEvent.ChatMessages
     ) {
-      const chatMessage: WebSocketMessage<WebSocketMessageMatch> = JSON.parse(
+      const chatMessage: WebSocketMessage<WebSocketMatchMessage> = JSON.parse(
         message.toString(),
       );
 

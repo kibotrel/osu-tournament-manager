@@ -1,6 +1,6 @@
 import type { UnknownRecord } from './utilityTypes.js';
 
-export interface WebSocketMessageMatch {
+export interface WebSocketMatchMessage {
   author: string;
   content: string;
 }

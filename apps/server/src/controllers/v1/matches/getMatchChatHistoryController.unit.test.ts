@@ -1,8 +1,8 @@
 import type {
   GetMatchChatHistoryRequestParameters,
   GetMatchChatHistoryResponseBody,
+  WebSocketMatchMessage,
   WebSocketMessage,
-  WebSocketMessageMatch,
 } from '@packages/shared';
 import { HttpStatusCode } from '@packages/shared';
 import { matchedData } from 'express-validator';
@@ -42,7 +42,7 @@ describe('getMatchChatHistoryController', () => {
       GetMatchChatHistoryResponseBody
     >();
     const response = expressResponseMock<GetMatchChatHistoryResponseBody>();
-    const chatHistory: Array<WebSocketMessage<WebSocketMessageMatch>> = [
+    const chatHistory: Array<WebSocketMessage<WebSocketMatchMessage>> = [
       {
         message: { author: 'user1', content: 'hello' },
         timestamp: Date.now(),

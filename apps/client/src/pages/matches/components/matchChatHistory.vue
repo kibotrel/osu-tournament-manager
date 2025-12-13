@@ -63,7 +63,7 @@
 </template>
 
 <script setup lang="ts">
-import type { WebSocketMessageMatch } from '@packages/shared';
+import type { WebSocketMatchMessage } from '@packages/shared';
 import {
   WebSocketChannel,
   WebSocketChannelMatchesEvent,
@@ -89,7 +89,7 @@ const chatHistoryDiv = ref<HTMLElement | null>(null);
 const { scrollToBottom } = useScrollToBottomInElement(chatHistoryDiv);
 const { user } = useUserStore();
 const useWebSocketStore = defineWebsocketStore<
-  WebSocketMessageMatch,
+  WebSocketMatchMessage,
   WebSocketChannel.Matches
 >({
   channel: WebSocketChannel.Matches,
@@ -98,7 +98,7 @@ const useWebSocketStore = defineWebsocketStore<
 });
 const { history, isSocketReady } = storeToRefs(useWebSocketStore());
 const { sendMessage, setHistory } = useWebSocketStore();
-const refereeMessage = reactive<WebSocketMessageMatch>({
+const refereeMessage = reactive<WebSocketMatchMessage>({
   content: '',
   author: user.name,
 });

@@ -1,4 +1,4 @@
-import type { WebSocketMessage, WebSocketMessageMatch } from '@packages/shared';
+import type { WebSocketMatchMessage, WebSocketMessage } from '@packages/shared';
 import * as shared from '@packages/shared';
 import {
   HttpInternalServerError,
@@ -236,7 +236,7 @@ describe('getMatchChatHistoryService', () => {
 
   it('should return an array of chat messages if found', async () => {
     const gameMatchId = 123_456;
-    const chatHistory: Array<WebSocketMessage<WebSocketMessageMatch>> = [
+    const chatHistory: Array<WebSocketMessage<WebSocketMatchMessage>> = [
       {
         message: {
           author: 'user',

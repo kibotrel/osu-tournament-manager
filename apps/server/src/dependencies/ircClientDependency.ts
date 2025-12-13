@@ -3,7 +3,7 @@ import {
   BanchoClientEvent,
   BanchoPublicChannel,
 } from '@packages/bancho-client';
-import type { WebSocketMessage, WebSocketMessageMatch } from '@packages/shared';
+import type { WebSocketMatchMessage, WebSocketMessage } from '@packages/shared';
 import {
   WebSocketChannel,
   WebSocketChannelMatchesEvent,
@@ -52,7 +52,7 @@ banchoClient.on(
       user,
     });
 
-    const payload: WebSocketMessage<WebSocketMessageMatch> = {
+    const payload: WebSocketMessage<WebSocketMatchMessage> = {
       message: { author: user, content: message },
       timestamp: Date.now(),
       topic: `${WebSocketChannel.Matches}:${gameMatchIdFromBanchoChannel(channel)}:${WebSocketChannelMatchesEvent.ChatMessages}`,

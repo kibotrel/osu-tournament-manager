@@ -52,7 +52,7 @@
 </template>
 
 <script setup lang="ts">
-import type { WebSocketMessageMatch } from '@packages/shared';
+import type { WebSocketMatchMessage } from '@packages/shared';
 import {
   WebSocketChannel,
   WebSocketChannelMatchesEvent,
@@ -68,7 +68,7 @@ import { defineWebsocketStore } from '#src/stores/webSocketStore.js';
 
 const $router = inject<Router>('$router');
 const useWebSocketStore = defineWebsocketStore<
-  WebSocketMessageMatch,
+  WebSocketMatchMessage,
   WebSocketChannel.Matches
 >({
   channel: WebSocketChannel.Matches,
@@ -78,7 +78,7 @@ const useWebSocketStore = defineWebsocketStore<
 const { isPending, mutate: logout } = useLogout();
 const { user } = useUserStore();
 const { connect, disconnect, history, sendMessage } = useWebSocketStore();
-const message = reactive<WebSocketMessageMatch>({
+const message = reactive<WebSocketMatchMessage>({
   content: '',
   author: user.name,
 });

@@ -1,4 +1,4 @@
-import type { WebSocketMessage, WebSocketMessageMatch } from '@packages/shared';
+import type { WebSocketMatchMessage, WebSocketMessage } from '@packages/shared';
 import {
   HttpInternalServerError,
   HttpNotFoundError,
@@ -71,7 +71,7 @@ export const getMatchChatHistoryService = async (
 ) => {
   const cacheHistory = await getMatchChatHistoryFromCache(gameMatchId);
 
-  return cacheHistory.map<WebSocketMessage<WebSocketMessageMatch>>((entry) => {
+  return cacheHistory.map<WebSocketMessage<WebSocketMatchMessage>>((entry) => {
     return JSON.parse(entry);
   });
 };
