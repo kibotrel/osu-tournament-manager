@@ -56,6 +56,7 @@ import BaseIcon from '#src/components/base/baseIcon.vue';
 
 const icons: IconName[] = [
   'arrowLeftStartOnRectangle',
+  'arrowPath',
   'arrowRightEndOnRectangle',
   'check',
   'chevronDoubleDown',

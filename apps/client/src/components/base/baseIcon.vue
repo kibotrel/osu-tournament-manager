@@ -7,6 +7,7 @@ import { defineAsyncComponent } from 'vue';
 
 export type IconName =
   | 'arrowLeftStartOnRectangle'
+  | 'arrowPath'
   | 'arrowRightEndOnRectangle'
   | 'check'
   | 'chevronDoubleDown'
