@@ -1,6 +1,6 @@
 <template>
   <component
-    :class="properties.variant"
+    :class="`body body--${properties.variant}`"
     :is="properties.isInline ? 'span' : 'p'"
   >
     <slot></slot>
@@ -24,11 +24,15 @@ const properties = withDefaults(defineProps<Properties>(), {
 <style scoped>
 @reference '#src/assets/styles/index.css';
 
-.base {
-  @apply text-base font-normal tracking-normal;
+.body {
+  @apply font-normal tracking-normal;
 }
 
-.small {
-  @apply text-sm font-normal tracking-normal;
+.body--base {
+  @apply text-base;
+}
+
+.body--small {
+  @apply text-sm;
 }
 </style>
