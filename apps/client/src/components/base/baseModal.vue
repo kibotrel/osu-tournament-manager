@@ -19,13 +19,13 @@
             @mousedown="emit('close:modal')"
           />
         </div>
-        <div>
+        <div class="border-primary-3">
           <slot name="header"> </slot>
         </div>
-        <div class="my-4">
+        <div class="flex-1 overflow-auto">
           <slot name="body"> </slot>
         </div>
-        <div>
+        <div class="mt-4 flex flex-row justify-end space-x-2">
           <slot name="footer"> </slot>
         </div>
       </div>
