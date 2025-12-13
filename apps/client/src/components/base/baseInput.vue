@@ -108,7 +108,7 @@ input:focus-visible {
 }
 
 input:focus-visible:not(.ghost) {
-  @apply ring-1 ring-yellow-400 outline-hidden;
+  @apply border-yellow-400 outline-hidden;
 }
 
 input:disabled {
