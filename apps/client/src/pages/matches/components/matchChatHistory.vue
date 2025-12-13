@@ -50,11 +50,12 @@
         @mousedown="sendRefereeMessage"
       >
         <PaperAirplaneIcon
-          :class="
+          :class="[
+            'h-6 w-6',
             !isSocketReady || !refereeMessage.content
               ? 'text-primary-2 cursor-not-allowed'
-              : 'hover:text-primary-1/80 cursor-pointer'
-          "
+              : 'hover:text-primary-1/80 cursor-pointer',
+          ]"
         />
       </div>
     </div>
