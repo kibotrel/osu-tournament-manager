@@ -50,13 +50,47 @@
 </template>
 
 <script setup lang="ts">
+import { OsuBeatmapModification } from '@packages/shared';
+
 import BaseBadge from '#src/components/base/baseBadge.vue';
 import BaseHeadline from '#src/components/base/baseHeadline.vue';
 import BaseModification from '#src/components/base/baseModification.vue';
 
-const baseMods = ['NM'];
-const increaseDifficultyMods = ['DT', 'FI', 'FL', 'HD', 'HR', 'NC', 'PF', 'SD'];
-const maniaMods = ['4K', '5K', '6K', '7K', '8K', '9K', 'MR'];
-const decreaseDifficultyMods = ['EZ', 'HT', 'NF'];
-const standardMods = ['RX', 'SO'];
+const baseMods = [
+  OsuBeatmapModification.NoModification,
+  OsuBeatmapModification.FreeModification,
+];
+const decreaseDifficultyMods = [
+  OsuBeatmapModification.Easy,
+  OsuBeatmapModification.HalfTime,
+  OsuBeatmapModification.NoFail,
+];
+const increaseDifficultyMods = [
+  OsuBeatmapModification.DoubleTime,
+  OsuBeatmapModification.FadeIn,
+  OsuBeatmapModification.Flashlight,
+  OsuBeatmapModification.HardRock,
+  OsuBeatmapModification.Hidden,
+  OsuBeatmapModification.Nightcore,
+  OsuBeatmapModification.Perfect,
+  OsuBeatmapModification.SuddenDeath,
+];
+const maniaMods = [
+  OsuBeatmapModification.Coop,
+  OsuBeatmapModification.OneKey,
+  OsuBeatmapModification.TwoKeys,
+  OsuBeatmapModification.ThreeKeys,
+  OsuBeatmapModification.FourKeys,
+  OsuBeatmapModification.FiveKeys,
+  OsuBeatmapModification.SixKeys,
+  OsuBeatmapModification.SevenKeys,
+  OsuBeatmapModification.EightKeys,
+  OsuBeatmapModification.NineKeys,
+  OsuBeatmapModification.Mirror,
+];
+const standardMods = [
+  OsuBeatmapModification.AutoPilot,
+  OsuBeatmapModification.Relax,
+  OsuBeatmapModification.SpunOut,
+];
 </script>

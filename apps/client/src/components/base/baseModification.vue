@@ -27,25 +27,18 @@
 </template>
 
 <script setup lang="ts">
+import type { OsuBeatmapModification } from '@packages/shared';
+import {
+  OsuBeatmapModificationAcronym,
+  isOsuBeatmapModificationDifficultyDecrease,
+  isOsuBeatmapModificationDifficultyIncrease,
+  isOsuBeatmapModificationManiaSpecific,
+  isOsuBeatmapModificationStandardSpecific,
+} from '@packages/shared';
 import { defineAsyncComponent, defineComponent, h } from 'vue';
 
-const baseMods = ['NM'];
-const increaseDifficultyMods = ['DT', 'FI', 'FL', 'HD', 'HR', 'NC', 'PF', 'SD'];
-const maniaMods = ['4K', '5K', '6K', '7K', '8K', '9K', 'MR'];
-const decreaseDifficultyMods = ['EZ', 'HT', 'NF'];
-const standardMods = ['RX', 'SO'];
-const mods = [
-  ...decreaseDifficultyMods,
-  ...increaseDifficultyMods,
-  ...baseMods,
-  ...maniaMods,
-  ...standardMods,
-] as const;
-
-type Modification = (typeof mods)[number];
-
 const properties = defineProps<{
-  mod: Modification;
+  mod: OsuBeatmapModification;
 }>();
 const FallbackComponent = defineComponent({
   name: 'FallbackModification',
@@ -55,19 +48,21 @@ const FallbackComponent = defineComponent({
       h(
         'div',
         { class: 'flex items-center justify-center text-sm text-semibold' },
-        properties.mod,
+        OsuBeatmapModificationAcronym[
+          properties.mod as OsuBeatmapModification
+        ] ?? properties.mod,
       );
   },
 });
 
 const getModificationBackgroundColor = () => {
-  if (increaseDifficultyMods.includes(properties.mod)) {
+  if (isOsuBeatmapModificationDifficultyIncrease(properties.mod)) {
     return 'increase-difficulty-background';
-  } else if (maniaMods.includes(properties.mod)) {
+  } else if (isOsuBeatmapModificationManiaSpecific(properties.mod)) {
     return 'mania-background';
-  } else if (decreaseDifficultyMods.includes(properties.mod)) {
+  } else if (isOsuBeatmapModificationDifficultyDecrease(properties.mod)) {
     return 'decrease-difficulty-background';
-  } else if (standardMods.includes(properties.mod)) {
+  } else if (isOsuBeatmapModificationStandardSpecific(properties.mod)) {
     return 'standard-background';
   } else {
     return 'misc-mod-background';
@@ -75,13 +70,13 @@ const getModificationBackgroundColor = () => {
 };
 
 const getModificationForegroundColor = () => {
-  if (increaseDifficultyMods.includes(properties.mod)) {
+  if (isOsuBeatmapModificationDifficultyIncrease(properties.mod)) {
     return 'increase-difficulty-foreground';
-  } else if (maniaMods.includes(properties.mod)) {
+  } else if (isOsuBeatmapModificationManiaSpecific(properties.mod)) {
     return 'mania-foreground';
-  } else if (decreaseDifficultyMods.includes(properties.mod)) {
+  } else if (isOsuBeatmapModificationDifficultyDecrease(properties.mod)) {
     return 'decrease-difficulty-foreground';
-  } else if (standardMods.includes(properties.mod)) {
+  } else if (isOsuBeatmapModificationStandardSpecific(properties.mod)) {
     return 'standard-foreground';
   } else {
     return 'misc-mod-foreground';
