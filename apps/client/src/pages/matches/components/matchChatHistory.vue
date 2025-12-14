@@ -1,6 +1,11 @@
 <template>
   <div class="border-primary-3 mx-auto mt-4 w-3/4 rounded-md border-2">
-    <div class="chat-history-container" ref="chatHistoryDiv" tabindex="-1">
+    <div
+      class="chat-history-container"
+      ref="chatHistoryDiv"
+      tabindex="-1"
+      @scroll="onScroll"
+    >
       <div
         v-if="isLoading"
         class="align-center flex h-full flex-col items-center justify-center"
@@ -78,7 +83,7 @@ import BaseCaption from '#src/components/base/baseCaption.vue';
 import BaseInput from '#src/components/base/baseInput.vue';
 import LoadingIcon from '#src/components/icons/loadingIcon.vue';
 import PaperAirplaneIcon from '#src/components/icons/paperAirplaneIcon.vue';
-import { useScrollToBottomInElement } from '#src/composables/useScrollToBottomInElementComposable.js';
+import { useScroll } from '#src/composables/useScrollComposable.js';
 import { useUserStore } from '#src/stores/userStore.js';
 import { defineWebsocketStore } from '#src/stores/webSocketStore.js';
 
@@ -86,7 +91,9 @@ const route = useRoute();
 const matchId = Number(route.params.gameMatchId);
 const { data: cacheHistory, isLoading } = useGetMatchChatHistory(matchId);
 const chatHistoryDiv = ref<HTMLElement | null>(null);
-const { scrollToBottom } = useScrollToBottomInElement(chatHistoryDiv);
+const { isAtBottom, onScroll, scrollToBottom } = useScroll(chatHistoryDiv, {
+  isInitiallyAtBottom: true,
+});
 const { user } = useUserStore();
 const useWebSocketStore = defineWebsocketStore<
   WebSocketMatchMessage,
@@ -106,7 +113,9 @@ const refereeMessage = reactive<WebSocketMatchMessage>({
 watch(
   history,
   () => {
-    scrollToBottom();
+    if (isAtBottom.value) {
+      scrollToBottom();
+    }
   },
   { deep: true, immediate: true },
 );
