@@ -10,13 +10,24 @@
     <div
       ref="drawer"
       v-show="properties.isDrawerOpen"
-      :class="properties.variant"
+      :class="[properties.variant, 'drawer']"
       :id="properties.id"
     >
-      <div>
-        <XMarkIcon
+      <div class="flex flex-row justify-between p-2">
+        <BaseIcon
           tabindex="0"
-          class="x-mark"
+          class="action-icon"
+          :name="
+            properties.variant === 'right'
+              ? 'chevronDoubleRight'
+              : 'chevronDoubleDown'
+          "
+          @keydown.enter="emit('close:drawer')"
+          @mousedown="emit('close:drawer')"
+        />
+        <EllipsisVerticalIcon
+          tabindex="0"
+          class="action-icon"
           @keydown.enter="emit('close:drawer')"
           @mousedown="emit('close:drawer')"
         />
@@ -37,8 +48,11 @@
 <script setup lang="ts">
 import { useTemplateRef } from 'vue';
 
-import XMarkIcon from '#src/components/icons/xMarkIcon.vue';
 import { usePopUpBehavior } from '#src/composables/usePopUpComposable.js';
+
+import EllipsisVerticalIcon from '../icons/ellipsisVerticalIcon.vue';
+
+import BaseIcon from './baseIcon.vue';
 
 interface Properties {
   id: string;
@@ -86,19 +100,23 @@ usePopUpBehavior({
   transform: translateY(100%);
 }
 
+.drawer {
+  @apply bg-primary-4 border-primary-3 fixed z-10 flex flex-col rounded-md border-2;
+}
+
 .right {
-  @apply bg-primary-4 border-primary-3 fixed top-0 right-0 z-10 flex h-full w-1/3 flex-col border-l-2 p-4;
+  @apply top-4 right-4 h-[calc(100%-2rem)] w-1/3;
 }
 
 .bottom {
-  @apply bg-primary-4 border-primary-3 fixed bottom-0 left-0 z-10 flex h-1/3 w-full flex-col border-t-2 p-4;
+  @apply bottom-4 left-4 h-1/2 w-[calc(100%-2rem)];
 }
 
-.x-mark {
-  @apply text-primary-1 hover:text-primary-1/90 active:text-primary-1/80 absolute right-0 mr-4 h-6 ring-0 outline-none hover:cursor-pointer;
+.action-icon {
+  @apply text-primary-2 hover:text-primary-2/80 active:text-primary-2/60 h-6 w-6 ring-0 outline-none hover:cursor-pointer;
 }
 
-.x-mark:focus-visible {
+.action-icon:focus-visible {
   @apply rounded-md ring-2 ring-yellow-400 outline-hidden;
 }
 </style>
