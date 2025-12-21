@@ -6,6 +6,7 @@ export enum BanchoClientEvent {
   BotSentMessage = 'bot_sent_message',
   ChannelMessage = 'channel_message',
   ChannelNotFound = 'channel_not_found',
+  ConcurrentMatchLimitReached = 'concurrent_match_limit_reached',
   MultiplayerChannelClosed = 'multiplayer_channel_closed',
   MultiplayerChannelInformationConditions = 'multiplayer_channel_information_conditions',
   MultiplayerChannelInformationCurrentlyPlaying = 'multiplayer_channel_information_currently_playing',
@@ -53,6 +54,7 @@ export enum BanchoCommand {
  */
 export enum BanchoBotCommonMessage {
   ClosedMatch = '^Closed the match$',
+  ConcurrentMatchLimitReached = '^You cannot create any more tournament matches. Please close any previous tournament matches you have open.$',
   CurrentlyPlaying = '^Beatmap: (?<url>\\S+) (?<beatmap>.+)$',
   GlobalActiveModifications = '^Active mods: (?<modifications>.+)$',
   InvitedUserToChannel = '^Invited (?<user>\\S+) to the room$',

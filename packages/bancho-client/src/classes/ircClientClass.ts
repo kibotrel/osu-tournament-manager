@@ -30,6 +30,7 @@ interface EmittedEvents {
     { channel: string; message: string; user: string },
   ];
   [BanchoClientEvent.ChannelNotFound]: [{ channel: string }];
+  [BanchoClientEvent.ConcurrentMatchLimitReached]: [];
   [BanchoClientEvent.MultiplayerChannelClosed]: [{ channel: string }];
   [BanchoClientEvent.MultiplayerChannelInformationConditions]: [
     { channel: string; teamMode: string; winCondition: string },

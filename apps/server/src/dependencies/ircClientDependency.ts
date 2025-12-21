@@ -32,6 +32,10 @@ banchoClient.on(BanchoClientEvent.BotJoinedChannel, ({ channel }) => {
 
 banchoClient.on(BanchoClientEvent.ChannelMessage, broadcastBanchoMessage);
 
+banchoClient.on(BanchoClientEvent.ConcurrentMatchLimitReached, () => {
+  logger.warn('[IRC] Concurrent match limit reached.');
+});
+
 banchoClient.on(
   BanchoClientEvent.MultiplayerChannelClosed,
   closeExpiredMultiplayerChannel,

@@ -75,7 +75,15 @@ export class IrcCommandPrivateMessage implements IrcCommand {
         pattern: BanchoBotCommonMessage.ClosedMatch,
         handler: this.handleMultiplayerChannelClosedEvent.bind(this),
       },
+      {
+        pattern: BanchoBotCommonMessage.ConcurrentMatchLimitReached,
+        handler: this.handleConcurrentMatchLimitReachedEvent.bind(this),
+      },
     ];
+  }
+
+  private handleConcurrentMatchLimitReachedEvent() {
+    this.banchoClient.emit(BanchoClientEvent.ConcurrentMatchLimitReached);
   }
 
   private handleMultiplayerChannelClosedEvent(payload: Payload) {
