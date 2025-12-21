@@ -7,6 +7,12 @@ export enum BanchoClientEvent {
   ChannelMessage = 'channel_message',
   ChannelNotFound = 'channel_not_found',
   MultiplayerChannelClosed = 'multiplayer_channel_closed',
+  MultiplayerChannelInformationConditions = 'multiplayer_channel_information_conditions',
+  MultiplayerChannelInformationCurrentlyPlaying = 'multiplayer_channel_information_currently_playing',
+  MultiplayerChannelInformationGlobalModifications = 'multiplayer_channel_information_global_modifications',
+  MultiplayerChannelInformationIdentity = 'multiplayer_channel_information_identity',
+  MultiplayerChannelInformationPlayerCount = 'multiplayer_channel_information_player_count',
+  MultiplayerChannelInformationSlot = 'multiplayer_channel_information_slot',
   RecipientNotFound = 'recipient_not_found',
   UserAlreadyInChannel = 'user_already_in_channel',
   UserDisconnected = 'user_disconnected',
@@ -42,10 +48,35 @@ export enum BanchoCommand {
   TransferHost = '!mp host',
 }
 
+/**
+ * List of messages that the Bancho bot can send in response to a command.
+ */
+export enum BanchoBotCommonMessage {
+  ClosedMatch = '^Closed the match$',
+  CurrentlyPlaying = '^Beatmap: (?<url>\\S+) (?<beatmap>.+)$',
+  GlobalActiveModifications = '^Active mods: (?<modifications>.+)$',
+  InvitedUserToChannel = '^Invited (?<user>\\S+) to the room$',
+  MatchConditions = '^Team mode: (?<teamMode>\\S+), Win condition: (?<winCondition>\\S+)$',
+  MatchSlot = '^Slot (?<slotNumber>\\d+)\\s+(?<status>Not Ready|Ready)\\s+https:\\/\\/osu\\.ppy\\.sh\\/u\\/(?<gameUserId>\\d+)\\s+(?<user>.+?)\\s*(\\[(?<attributes>.+)\\])?$',
+  PlayerCount = '^Players: (?<playerCount>\\d+)$',
+  RoomIdentification = '^Room name: (?<name>.+), History: (?<historyUrl>\\S+)$',
+  UserAlreadyInChannel = '^User is already in the room$',
+  UserNotFound = '^User not found$',
+}
+
 export enum BanchoUser {
   BanchoBot = 'BanchoBot',
 }
 
 export enum BanchoPublicChannel {
   Lobby = '#lobby',
+}
+
+export enum BanchoReadyStatus {
+  NotReady = 'Not Ready',
+  Ready = 'Ready',
+}
+
+export enum BanchoTerm {
+  Host = 'Host',
 }

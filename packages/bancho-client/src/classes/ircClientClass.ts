@@ -31,6 +31,32 @@ interface EmittedEvents {
   ];
   [BanchoClientEvent.ChannelNotFound]: [{ channel: string }];
   [BanchoClientEvent.MultiplayerChannelClosed]: [{ channel: string }];
+  [BanchoClientEvent.MultiplayerChannelInformationConditions]: [
+    { channel: string; teamMode: string; winCondition: string },
+  ];
+  [BanchoClientEvent.MultiplayerChannelInformationCurrentlyPlaying]: [
+    { beatmap: string; channel: string; url: string },
+  ];
+  [BanchoClientEvent.MultiplayerChannelInformationGlobalModifications]: [
+    { channel: string; modifications: string[] },
+  ];
+  [BanchoClientEvent.MultiplayerChannelInformationIdentity]: [
+    { channel: string; historyUrl: string; name: string },
+  ];
+  [BanchoClientEvent.MultiplayerChannelInformationPlayerCount]: [
+    { channel: string; playerCount: number },
+  ];
+  [BanchoClientEvent.MultiplayerChannelInformationSlot]: [
+    {
+      channel: string;
+      gameUserId: number;
+      isHost: boolean;
+      isReady: boolean;
+      modifications: string[];
+      slotNumber: number;
+      user: string;
+    },
+  ];
   [BanchoClientEvent.RecipientNotFound]: [{ recipient: string }];
   [BanchoClientEvent.UserAlreadyInChannel]: [];
   [BanchoClientEvent.UserDisconnected]: [{ user: string }];
@@ -44,6 +70,31 @@ interface EmittedEvents {
   ];
   [key: `${BanchoClientEvent.ChannelNotFound}:${string}`]: [];
   [key: `${BanchoClientEvent.MultiplayerChannelClosed}:${string}`]: [];
+  [
+    key: `${BanchoClientEvent.MultiplayerChannelInformationConditions}:${string}`
+  ]: [{ teamMode: string; winCondition: string }];
+  [
+    key: `${BanchoClientEvent.MultiplayerChannelInformationCurrentlyPlaying}:${string}`
+  ]: [{ beatmap: string; url: string }];
+  [
+    key: `${BanchoClientEvent.MultiplayerChannelInformationGlobalModifications}:${string}`
+  ]: [{ modifications: string[] }];
+  [
+    key: `${BanchoClientEvent.MultiplayerChannelInformationIdentity}:${string}`
+  ]: [{ historyUrl: string; name: string }];
+  [
+    key: `${BanchoClientEvent.MultiplayerChannelInformationPlayerCount}:${string}`
+  ]: [{ playerCount: number }];
+  [key: `${BanchoClientEvent.MultiplayerChannelInformationSlot}:${string}`]: [
+    {
+      gameUserId: number;
+      isHost: boolean;
+      isReady: boolean;
+      modifications: string[];
+      slotNumber: number;
+      user: string;
+    },
+  ];
   [key: `${BanchoClientEvent.RecipientNotFound}:${string}`]: [];
   [key: `${BanchoClientEvent.UserInvitedToChannel}:${string}:${string}`]: [];
   [key: `${BanchoClientEvent.UserJoinedChannel}:${string}`]: [{ user: string }];
