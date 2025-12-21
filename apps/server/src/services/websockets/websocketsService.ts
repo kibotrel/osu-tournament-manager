@@ -7,7 +7,6 @@ import {
   gameMatchIdFromBanchoChannel,
 } from '@packages/shared';
 
-// import { logger } from '#src/dependencies/loggerDependency.js';
 import { logger } from '#src/dependencies/loggerDependency.js';
 import { webSocketServer } from '#src/websocketServer.js';
 

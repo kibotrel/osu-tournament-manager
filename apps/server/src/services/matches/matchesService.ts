@@ -90,11 +90,11 @@ export const openMatchService = async (name: string) => {
       bestOf: 0,
       gameMatchId,
       isQualifierMatch: false,
-      mappoolId: 0,
+      mappoolId: 1,
       name,
       protectsPerTeam: 0,
       startsAt: new Date(),
-      tournamentId: 0,
+      tournamentId: 1,
     });
   } catch (error) {
     const usableError =

@@ -2,9 +2,9 @@ import type { InferInsertModel, InferSelectModel } from 'drizzle-orm';
 import { boolean, serial, timestamp, varchar } from 'drizzle-orm/pg-core';
 
 import {
-  scoreModeEnum,
   teamModeEnum,
   tournamentsSchema,
+  winConditionEnum,
 } from '#src/schemas/tournaments/tournamentsSchema.js';
 
 export const tournamentsTable = tournamentsSchema.table('tournaments', {
@@ -14,7 +14,7 @@ export const tournamentsTable = tournamentsSchema.table('tournaments', {
   id: serial('id').primaryKey(),
   includesQualifierStage: boolean('includesQualifierStage').notNull(),
   name: varchar('name', { length: 256 }).notNull(),
-  scoreMode: scoreModeEnum('scoreMode').notNull(),
+  winCondition: winConditionEnum('winCondition').notNull(),
   startsAt: timestamp('startsAt').notNull(),
   teamMode: teamModeEnum('teamMode').notNull(),
   updatedAt: timestamp('updatedAt')
