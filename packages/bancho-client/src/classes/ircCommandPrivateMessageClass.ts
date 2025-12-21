@@ -72,6 +72,10 @@ export class IrcCommandPrivateMessage implements IrcCommand {
         handler: this.handleUserAlreadyInChannelEvent.bind(this),
       },
       {
+        pattern: new RegExp(BanchoBotCommonMessage.MatchCreation),
+        handler: this.handleMultiplayerChannelCreation.bind(this),
+      },
+      {
         pattern: BanchoBotCommonMessage.ClosedMatch,
         handler: this.handleMultiplayerChannelClosedEvent.bind(this),
       },
@@ -94,6 +98,23 @@ export class IrcCommandPrivateMessage implements IrcCommand {
     });
     this.banchoClient.emit(
       `${BanchoClientEvent.MultiplayerChannelClosed}:${channel}`,
+    );
+  }
+
+  private handleMultiplayerChannelCreation(payload: Payload) {
+    const { message } = payload;
+    const match = message.match(BanchoBotCommonMessage.MatchCreation)!;
+    const { historyUrl, name } = match.groups!;
+    const data = { historyUrl, name };
+    const channel = `#mp_${historyUrl.split('/').at(-1)!}`;
+
+    this.banchoClient.emit(
+      BanchoClientEvent.MultiplayerChannelInformationIdentity,
+      { ...data, channel },
+    );
+    this.banchoClient.emit(
+      `${BanchoClientEvent.MultiplayerChannelInformationIdentity}:${channel}`,
+      data,
     );
   }
 

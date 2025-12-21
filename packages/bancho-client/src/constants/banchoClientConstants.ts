@@ -59,6 +59,7 @@ export enum BanchoBotCommonMessage {
   GlobalActiveModifications = '^Active mods: (?<modifications>.+)$',
   InvitedUserToChannel = '^Invited (?<user>\\S+) to the room$',
   MatchConditions = '^Team mode: (?<teamMode>\\S+), Win condition: (?<winCondition>\\S+)$',
+  MatchCreation = '^Created the tournament match (?<historyUrl>\\S+)\\s+(?<name>.+)$',
   MatchSlot = '^Slot (?<slotNumber>\\d+)\\s+(?<status>Not Ready|Ready)\\s+https:\\/\\/osu\\.ppy\\.sh\\/u\\/(?<gameUserId>\\d+)\\s+(?<user>.+?)\\s*(\\[(?<attributes>.+)\\])?$',
   PlayerCount = '^Players: (?<playerCount>\\d+)$',
   RoomIdentification = '^Room name: (?<name>.+), History: (?<historyUrl>\\S+)$',
