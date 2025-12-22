@@ -8,6 +8,7 @@ import {
   banchoChannelFromGameMatchId,
 } from '@packages/shared';
 
+import { baseMatchState } from '#src/constants/banchoConstants.js';
 import { banchoClient } from '#src/dependencies/ircClientDependency.js';
 import { createMatch } from '#src/queries/matches/createMatchQueries.js';
 import { getMatchByGameMatchId } from '#src/queries/matches/getMatchQueries.js';
@@ -16,6 +17,7 @@ import { openMultiplayerChannel } from '#src/services/bancho/multiplayerService.
 import {
   deleteMatchChatHistoryFromCache,
   getMatchChatHistoryFromCache,
+  getMatchStateFromCache,
   removeMatchFromCachedSet,
 } from '#src/services/cache/cacheService.js';
 import { webSocketServer } from '#src/websocketServer.js';
@@ -74,6 +76,16 @@ export const getMatchChatHistoryService = async (
   return cacheHistory.map<WebSocketMessage<WebSocketMatchMessage>>((entry) => {
     return JSON.parse(entry);
   });
+};
+
+export const getMatchStateService = async (gameMatchId: number | string) => {
+  const state = await getMatchStateFromCache(gameMatchId);
+
+  if (!state) {
+    return baseMatchState;
+  }
+
+  return state;
 };
 
 export const openMatchService = async (name: string) => {
