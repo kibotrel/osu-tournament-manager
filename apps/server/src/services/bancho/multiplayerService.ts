@@ -1,7 +1,6 @@
 import { gameMatchIdFromBanchoChannel } from '@packages/shared';
 
 import { banchoClient } from '#src/dependencies/ircClientDependency.js';
-import { logger } from '#src/dependencies/loggerDependency.js';
 import {
   addMatchToCachedSet,
   getAllOngoingMatchesFromCache,
@@ -32,16 +31,4 @@ export const joinAllOngoingMatches = async () => {
   });
 
   await Promise.all(promises);
-};
-
-export const closeExpiredMultiplayerChannel = async ({
-  channel,
-}: {
-  channel: string;
-}) => {
-  logger.debug(`[IRC] Match ${channel} closed.`);
-
-  await removeMatchFromCachedSet(channel);
-
-  // TODO: investigate if we need to broadcast a message to clients here
 };

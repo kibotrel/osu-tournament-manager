@@ -1,9 +1,20 @@
 import { BanchoClient, BanchoClientEvent } from '@packages/bancho-client';
 
 import { environmentConfig } from '#src/configs/environmentConfig.js';
-import { logger } from '#src/dependencies/loggerDependency.js';
-import { closeExpiredMultiplayerChannel } from '#src/services/bancho/multiplayerService.js';
-import { broadcastBanchoMessage } from '#src/services/websockets/websocketsService.js';
+import {
+  onBotConnected,
+  onBotDisconnected,
+  onBotJoinedChannel,
+  onChannelMessage,
+  onConcurrentMatchLimitReached,
+  onMultiplayerChannelClosed,
+  onMultiplayerChannelInformationConditions,
+  onMultiplayerChannelInformationCurrentlyPlaying,
+  onMultiplayerChannelInformationGlobalModifications,
+  onMultiplayerChannelInformationIdentity,
+  onMultiplayerChannelInformationPlayerCount,
+  onMultiplayerChannelInformationSlot,
+} from '#src/services/bancho/eventsService.js';
 
 const banchoClient = new BanchoClient({
   clientCredentials: {
@@ -16,100 +27,43 @@ const banchoClient = new BanchoClient({
   },
 });
 
-banchoClient.on(BanchoClientEvent.BotConnected, () => {
-  logger.debug('[IRC] Connected to the osu! server.');
+banchoClient.on(BanchoClientEvent.BotConnected, onBotConnected);
+banchoClient.on(BanchoClientEvent.BotDisconnected, () => {
+  onBotDisconnected(banchoClient);
 });
-
-banchoClient.on(BanchoClientEvent.BotDisconnected, async () => {
-  logger.debug('[IRC] Disconnected from osu! server');
-
-  await banchoClient.connect();
-});
-
-banchoClient.on(BanchoClientEvent.BotJoinedChannel, ({ channel }) => {
-  logger.debug(`[IRC] Joined ${channel}.`);
-});
-
-banchoClient.on(BanchoClientEvent.ChannelMessage, broadcastBanchoMessage);
-
-banchoClient.on(BanchoClientEvent.ConcurrentMatchLimitReached, () => {
-  logger.warn('[IRC] Concurrent match limit reached.');
-});
-
+banchoClient.on(BanchoClientEvent.BotJoinedChannel, onBotJoinedChannel);
+banchoClient.on(BanchoClientEvent.ChannelMessage, onChannelMessage);
+banchoClient.on(
+  BanchoClientEvent.ConcurrentMatchLimitReached,
+  onConcurrentMatchLimitReached,
+);
 banchoClient.on(
   BanchoClientEvent.MultiplayerChannelClosed,
-  closeExpiredMultiplayerChannel,
+  onMultiplayerChannelClosed,
 );
-
 banchoClient.on(
   BanchoClientEvent.MultiplayerChannelInformationIdentity,
-  ({ channel, name, historyUrl }) => {
-    logger.debug(`[IRC] channel ${channel} information updated`, {
-      historyUrl,
-      name,
-    });
-  },
+  onMultiplayerChannelInformationIdentity,
 );
-
 banchoClient.on(
   BanchoClientEvent.MultiplayerChannelInformationCurrentlyPlaying,
-  ({ beatmap, channel, url }) => {
-    logger.debug(
-      `[IRC] channel ${channel} is currently playing ${beatmap} (${url})`,
-    );
-  },
+  onMultiplayerChannelInformationCurrentlyPlaying,
 );
-
 banchoClient.on(
   BanchoClientEvent.MultiplayerChannelInformationConditions,
-  ({ channel, teamMode, winCondition }) => {
-    logger.debug(`[IRC] channel ${channel} conditions updated`, {
-      teamMode,
-      winCondition,
-    });
-  },
+  onMultiplayerChannelInformationConditions,
 );
-
 banchoClient.on(
   BanchoClientEvent.MultiplayerChannelInformationGlobalModifications,
-  ({ channel, modifications }) => {
-    logger.debug(`[IRC] channel ${channel} global modifications updated`, {
-      modifications,
-    });
-  },
+  onMultiplayerChannelInformationGlobalModifications,
 );
-
 banchoClient.on(
   BanchoClientEvent.MultiplayerChannelInformationPlayerCount,
-  ({ channel, playerCount }) => {
-    logger.debug(`[IRC] channel ${channel} player count updated`, {
-      playerCount,
-    });
-  },
+  onMultiplayerChannelInformationPlayerCount,
 );
-
 banchoClient.on(
   BanchoClientEvent.MultiplayerChannelInformationSlot,
-  ({
-    channel,
-    gameUserId,
-    isHost,
-    isReady,
-    modifications,
-    slotNumber,
-    user,
-  }) => {
-    logger.debug(
-      `[IRC] channel ${channel} slot ${slotNumber} information updated`,
-      {
-        gameUserId,
-        isHost,
-        isReady,
-        modifications,
-        user,
-      },
-    );
-  },
+  onMultiplayerChannelInformationSlot,
 );
 
 export { banchoClient };
