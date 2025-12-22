@@ -27,6 +27,10 @@ export class IrcCommandPrivateMessage implements IrcCommand {
     this.packetParts = packetParts;
     this.banchoBotEvents = [
       {
+        pattern: new RegExp(BanchoBotCommonMessage.ChangedBeatmap),
+        handler: this.handleMultiplayerChannelChangedBeatmap.bind(this),
+      },
+      {
         pattern: new RegExp(BanchoBotCommonMessage.InvitedUserToChannel),
         handler: this.handleUserInvitedToChannelEvent.bind(this),
       },
@@ -88,6 +92,22 @@ export class IrcCommandPrivateMessage implements IrcCommand {
 
   private handleConcurrentMatchLimitReachedEvent() {
     this.banchoClient.emit(BanchoClientEvent.ConcurrentMatchLimitReached);
+  }
+
+  private handleMultiplayerChannelChangedBeatmap(payload: Payload) {
+    const { channel, message } = payload;
+    const match = message.match(BanchoBotCommonMessage.ChangedBeatmap)!;
+    const { beatmap, url } = match.groups!;
+    const data = { beatmap, url };
+
+    this.banchoClient.emit(
+      BanchoClientEvent.MultiplayerChannelInformationCurrentlyPlaying,
+      { ...data, channel },
+    );
+    this.banchoClient.emit(
+      `${BanchoClientEvent.MultiplayerChannelInformationCurrentlyPlaying}:${channel}`,
+      data,
+    );
   }
 
   private handleMultiplayerChannelClosedEvent(payload: Payload) {

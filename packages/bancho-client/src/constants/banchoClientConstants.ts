@@ -53,6 +53,7 @@ export enum BanchoCommand {
  * List of messages that the Bancho bot can send in response to a command.
  */
 export enum BanchoBotCommonMessage {
+  ChangedBeatmap = '^Changed beatmap to (?<url>\\S+) (?<beatmap>.+)$',
   ClosedMatch = '^Closed the match$',
   ConcurrentMatchLimitReached = '^You cannot create any more tournament matches. Please close any previous tournament matches you have open.$',
   CurrentlyPlaying = '^Beatmap: (?<url>\\S+) (?<beatmap>.+)$',
