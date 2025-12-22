@@ -1,12 +1,16 @@
+import type { BanchoLobbyState } from '@packages/shared/dist/src/types/banchoTypes.js';
+
 import {
   CacheExpiry,
   CacheListTopic,
   CacheSetTopic,
+  CacheStringTopic,
 } from '#src/constants/cacheConstants.js';
 import { deleteListInCacheByKey } from '#src/queries/cache/deleteCacheQueries.js';
 import {
   getListFromCacheByKey,
   getSetFromCacheByKey,
+  getStringFromCacheByKey,
 } from '#src/queries/cache/getCacheQueries.js';
 import {
   addToListInCacheByKey,
@@ -50,6 +54,18 @@ export const getMatchChatHistoryFromCache = async (
   return await getListFromCacheByKey(
     `${CacheListTopic.MatchMessages}:${channel}`,
   );
+};
+
+export const getMatchStateFromCache = async (channel: number | string) => {
+  const matchState = await getStringFromCacheByKey(
+    `${CacheStringTopic.MatchState}:${channel}`,
+  );
+
+  if (!matchState) {
+    return null;
+  }
+
+  return JSON.parse(matchState) as BanchoLobbyState;
 };
 
 export const removeMatchFromCachedSet = async (channel: string) => {
