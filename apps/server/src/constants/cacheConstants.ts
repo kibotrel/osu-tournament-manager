@@ -8,6 +8,7 @@ export enum CacheExpiry {
 
 export enum CacheTopic {
   MatchMessages = 'match-messages',
+  MatchState = 'match-state',
   OpenMatches = 'open-matches',
   ServerMetrics = 'server-metrics',
 }
@@ -19,4 +20,8 @@ export enum CacheListTopic {
 
 export enum CacheSetTopic {
   OpenMatches = CacheTopic.OpenMatches,
+}
+
+export enum CacheStringTopic {
+  MatchState = CacheTopic.MatchState,
 }
