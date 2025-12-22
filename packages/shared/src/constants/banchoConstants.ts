@@ -1,13 +1,15 @@
-export enum BanchoScoreMode {
-  Accuracy = 'accuracy',
-  Combo = 'combo',
-  Score = 'score',
-  ScoreV2 = 'scoreV2',
+export const BANCHO_LOBBY_SIZE = 16;
+
+export enum BanchoWinCondition {
+  Accuracy = 'Accuracy',
+  Combo = 'Combo',
+  Score = 'Score',
+  ScoreV2 = 'ScoreV2',
 }
 
 export enum BanchoTeamMode {
-  HeadToHead = 'headToHead',
-  TagCoOp = 'tagCoOp',
-  TagTeamVs = 'tagTeamVs',
-  TeamVs = 'teamVs',
+  HeadToHead = 'HeadToHead',
+  TagCoOp = 'TagCoOp',
+  TagTeamVs = 'TagTeamVs',
+  TeamVs = 'TeamVs',
 }

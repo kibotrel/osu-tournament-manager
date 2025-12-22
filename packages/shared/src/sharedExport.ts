@@ -18,6 +18,7 @@ export * from '#src/types/api/v1/matches/closeMatchTypes.js';
 export * from '#src/types/api/v1/matches/createMatchTypes.js';
 export * from '#src/types/api/v1/matches/getMatchChatHistoryTypes.js';
 export * from '#src/types/api/v1/matches/getMatchTypes.js';
+export * from '#src/types/banchoTypes.js';
 export * from '#src/types/utilityTypes.js';
 export * from '#src/types/webSocketTypes.js';
 export * from '#src/validators/objectValidators.js';
