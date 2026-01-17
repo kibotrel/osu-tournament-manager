@@ -8,6 +8,8 @@ import type {
   GetMatchChatHistoryResponseData,
   GetMatchResponseBody,
   GetMatchResponseData,
+  GetMatchStateResponseBody,
+  GetMatchStateResponseData,
   NothingRecord,
 } from '@packages/shared';
 import { getRequest, postRequest } from '@packages/shared';
@@ -79,6 +81,20 @@ const getMatchChatHistory = async (gameMatchId: number | string) => {
   return response.data as GetMatchChatHistoryResponseData;
 };
 
+const getMatchState = async (gameMatchId: number | string) => {
+  const response = await getRequest<NothingRecord, GetMatchStateResponseBody>({
+    baseUrl,
+    endpoint: `/matches/${gameMatchId}/state`,
+    payload: {},
+  });
+
+  if (!response.isOk) {
+    throw new Error(JSON.stringify(response.data));
+  }
+
+  return response.data as GetMatchStateResponseData;
+};
+
 /**
  * Close an existing match and its corresponding channel on bancho.
  */
@@ -145,6 +161,23 @@ export const useGetMatchChatHistory = (
     enabled,
     queryFn: () => getMatchChatHistory(gameMatchId),
     queryKey: ['match', gameMatchId, 'chat-history'],
+    staleTime,
+  });
+};
+
+/**
+ * Fetch the lobby state of an existing match by its bancho channel id.
+ */
+export const useGetMatchState = (
+  gameMatchId: number | string,
+  options: { enabled?: boolean; staleTime?: number } = {},
+) => {
+  const { enabled = true, staleTime = 0 } = options;
+
+  return useQuery({
+    enabled,
+    queryFn: () => getMatchState(gameMatchId),
+    queryKey: ['match', gameMatchId, 'state'],
     staleTime,
   });
 };
