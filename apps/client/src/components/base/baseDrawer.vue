@@ -35,7 +35,7 @@
       <div>
         <slot name="header"> </slot>
       </div>
-      <div class="flex-1 overflow-auto">
+      <div class="mb-4 flex-1 overflow-auto">
         <slot name="body"> </slot>
       </div>
       <div>
@@ -105,11 +105,11 @@ usePopUpBehavior({
 }
 
 .right {
-  @apply top-4 right-4 h-[calc(100%-2rem)] w-1/3;
+  @apply top-4 right-4 h-[calc(100%-32px)] w-1/2;
 }
 
 .bottom {
-  @apply bottom-4 left-4 h-1/2 w-[calc(100%-2rem)];
+  @apply bottom-0 left-4 h-1/2 w-[calc(100%-32px)];
 }
 
 .action-icon {
