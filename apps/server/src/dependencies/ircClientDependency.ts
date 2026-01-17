@@ -14,6 +14,7 @@ import {
   onMultiplayerChannelInformationIdentity,
   onMultiplayerChannelInformationPlayerCount,
   onMultiplayerChannelInformationSlot,
+  onMultiplayerChannelNameUpdated,
 } from '#src/services/bancho/eventsService.js';
 
 const banchoClient = new BanchoClient({
@@ -64,6 +65,10 @@ banchoClient.on(
 banchoClient.on(
   BanchoClientEvent.MultiplayerChannelInformationSlot,
   onMultiplayerChannelInformationSlot,
+);
+banchoClient.on(
+  BanchoClientEvent.MultiplayerChannelNameUpdated,
+  onMultiplayerChannelNameUpdated,
 );
 
 export { banchoClient };

@@ -261,3 +261,29 @@ export const onMultiplayerChannelInformationSlot = ({
     },
   );
 };
+
+export const onMultiplayerChannelNameUpdated = async ({
+  channel,
+  name,
+}: {
+  channel: string;
+  name: string;
+}) => {
+  logger.debug(`[IRC] channel ${channel} name updated`, {
+    name,
+  });
+
+  const channelId = gameMatchIdFromBanchoChannel(channel);
+  const matchState = (await getMatchStateFromCache(channelId)) ?? {
+    ...baseMatchState,
+  };
+  const updatedMatchState: BanchoLobbyState = {
+    ...matchState,
+    name,
+  };
+
+  await setStringInCacheByKey({
+    key: `${CacheStringTopic.MatchState}:${channelId}`,
+    value: JSON.stringify(updatedMatchState),
+  });
+};
