@@ -15,6 +15,7 @@ export enum BanchoClientEvent {
   MultiplayerChannelInformationPlayerCount = 'multiplayer_channel_information_player_count',
   MultiplayerChannelInformationSlot = 'multiplayer_channel_information_slot',
   MultiplayerChannelNameUpdated = 'multiplayer_channel_name_updated',
+  MultiplayerPlayerJoinedSlot = 'multiplayer_player_joined_slot',
   RecipientNotFound = 'recipient_not_found',
   UserAlreadyInChannel = 'user_already_in_channel',
   UserDisconnected = 'user_disconnected',
@@ -67,6 +68,7 @@ export enum BanchoBotCommonMessage {
   RoomIdentification = '^Room name: (?<name>.+), History: (?<historyUrl>\\S+)$',
   RoomNameUpdated = '^Room name updated to "(?<name>.+)"$',
   UserAlreadyInChannel = '^User is already in the room$',
+  UserJoinedSlot = '^(?<user>\\S+) joined in slot (?<slotNumber>\\d+)\\.$',
   UserNotFound = '^User not found$',
 }
 

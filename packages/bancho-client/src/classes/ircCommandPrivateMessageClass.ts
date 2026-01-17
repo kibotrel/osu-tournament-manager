@@ -18,7 +18,7 @@ export class IrcCommandPrivateMessage implements IrcCommand {
   public readonly banchoClient: BanchoClient;
   public readonly packetParts: string[];
   private readonly banchoBotEvents: Array<{
-    pattern: RegExp | string;
+    pattern: RegExp;
     handler: (payload: Payload) => void;
   }> = [];
 
@@ -35,7 +35,7 @@ export class IrcCommandPrivateMessage implements IrcCommand {
         handler: this.handleUserInvitedToChannelEvent.bind(this),
       },
       {
-        pattern: BanchoBotCommonMessage.UserNotFound,
+        pattern: new RegExp(BanchoBotCommonMessage.UserNotFound),
         handler: this.handleUserNotFoundEvent.bind(this),
       },
       {
@@ -72,7 +72,7 @@ export class IrcCommandPrivateMessage implements IrcCommand {
         handler: this.handleMultiplayerChannelInformationSlotEvent.bind(this),
       },
       {
-        pattern: BanchoBotCommonMessage.UserAlreadyInChannel,
+        pattern: new RegExp(BanchoBotCommonMessage.UserAlreadyInChannel),
         handler: this.handleUserAlreadyInChannelEvent.bind(this),
       },
       {
@@ -84,12 +84,16 @@ export class IrcCommandPrivateMessage implements IrcCommand {
         handler: this.handleMultiplayerChannelCreation.bind(this),
       },
       {
-        pattern: BanchoBotCommonMessage.ClosedMatch,
+        pattern: new RegExp(BanchoBotCommonMessage.ClosedMatch),
         handler: this.handleMultiplayerChannelClosedEvent.bind(this),
       },
       {
-        pattern: BanchoBotCommonMessage.ConcurrentMatchLimitReached,
+        pattern: new RegExp(BanchoBotCommonMessage.ConcurrentMatchLimitReached),
         handler: this.handleConcurrentMatchLimitReachedEvent.bind(this),
+      },
+      {
+        pattern: new RegExp(BanchoBotCommonMessage.UserJoinedSlot),
+        handler: this.handleMultiplayerPlayerJoinedSlotEvent.bind(this),
       },
     ];
   }
@@ -284,6 +288,22 @@ export class IrcCommandPrivateMessage implements IrcCommand {
     );
   }
 
+  private handleMultiplayerPlayerJoinedSlotEvent(payload: Payload) {
+    const { channel, message } = payload;
+    const match = message.match(BanchoBotCommonMessage.UserJoinedSlot)!;
+    const { user, slotNumber } = match.groups!;
+    const data = { user, slotNumber: Number(slotNumber) };
+
+    this.banchoClient.emit(BanchoClientEvent.MultiplayerPlayerJoinedSlot, {
+      ...data,
+      channel,
+    });
+    this.banchoClient.emit(
+      `${BanchoClientEvent.MultiplayerPlayerJoinedSlot}:${channel}`,
+      data,
+    );
+  }
+
   private handleUserAlreadyInChannelEvent() {
     this.banchoClient.emit(BanchoClientEvent.UserAlreadyInChannel);
   }
@@ -308,11 +328,7 @@ export class IrcCommandPrivateMessage implements IrcCommand {
 
   private emitBanchoBotEvents(channel: string, message: string) {
     for (const { pattern, handler } of this.banchoBotEvents) {
-      if (
-        typeof pattern === 'string'
-          ? message === pattern
-          : pattern.test(message)
-      ) {
+      if (pattern.test(message)) {
         return handler({ channel, message });
       }
     }
