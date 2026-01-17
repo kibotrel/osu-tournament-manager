@@ -59,6 +59,9 @@ interface EmittedEvents {
     },
   ];
   [BanchoClientEvent.RecipientNotFound]: [{ recipient: string }];
+  [BanchoClientEvent.MultiplayerChannelNameUpdated]: [
+    { channel: string; name: string },
+  ];
   [BanchoClientEvent.UserAlreadyInChannel]: [];
   [BanchoClientEvent.UserDisconnected]: [{ user: string }];
   [BanchoClientEvent.UserInvitedToChannel]: [{ channel: string; user: string }];
@@ -95,6 +98,9 @@ interface EmittedEvents {
       slotNumber: number;
       user: string;
     },
+  ];
+  [key: `${BanchoClientEvent.MultiplayerChannelNameUpdated}:${string}`]: [
+    { name: string },
   ];
   [key: `${BanchoClientEvent.RecipientNotFound}:${string}`]: [];
   [key: `${BanchoClientEvent.UserInvitedToChannel}:${string}:${string}`]: [];

@@ -14,6 +14,7 @@ export enum BanchoClientEvent {
   MultiplayerChannelInformationIdentity = 'multiplayer_channel_information_identity',
   MultiplayerChannelInformationPlayerCount = 'multiplayer_channel_information_player_count',
   MultiplayerChannelInformationSlot = 'multiplayer_channel_information_slot',
+  MultiplayerChannelNameUpdated = 'multiplayer_channel_name_updated',
   RecipientNotFound = 'recipient_not_found',
   UserAlreadyInChannel = 'user_already_in_channel',
   UserDisconnected = 'user_disconnected',
@@ -64,6 +65,7 @@ export enum BanchoBotCommonMessage {
   MatchSlot = '^Slot (?<slotNumber>\\d+)\\s+(?<status>Not Ready|Ready)\\s+https:\\/\\/osu\\.ppy\\.sh\\/u\\/(?<gameUserId>\\d+)\\s+(?<user>.+?)\\s*(\\[(?<attributes>.+)\\])?$',
   PlayerCount = '^Players: (?<playerCount>\\d+)$',
   RoomIdentification = '^Room name: (?<name>.+), History: (?<historyUrl>\\S+)$',
+  RoomNameUpdated = '^Room name updated to "(?<name>.+)"$',
   UserAlreadyInChannel = '^User is already in the room$',
   UserNotFound = '^User not found$',
 }

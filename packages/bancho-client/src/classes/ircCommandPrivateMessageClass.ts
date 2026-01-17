@@ -76,6 +76,10 @@ export class IrcCommandPrivateMessage implements IrcCommand {
         handler: this.handleUserAlreadyInChannelEvent.bind(this),
       },
       {
+        pattern: new RegExp(BanchoBotCommonMessage.RoomNameUpdated),
+        handler: this.handleMultiplayerChannelNameUpdated.bind(this),
+      },
+      {
         pattern: new RegExp(BanchoBotCommonMessage.MatchCreation),
         handler: this.handleMultiplayerChannelCreation.bind(this),
       },
@@ -260,6 +264,22 @@ export class IrcCommandPrivateMessage implements IrcCommand {
     );
     this.banchoClient.emit(
       `${BanchoClientEvent.MultiplayerChannelInformationSlot}:${channel}`,
+      data,
+    );
+  }
+
+  private handleMultiplayerChannelNameUpdated(payload: Payload) {
+    const { channel, message } = payload;
+    const match = message.match(BanchoBotCommonMessage.RoomNameUpdated)!;
+    const { name } = match.groups!;
+    const data = { name };
+
+    this.banchoClient.emit(BanchoClientEvent.MultiplayerChannelNameUpdated, {
+      ...data,
+      channel,
+    });
+    this.banchoClient.emit(
+      `${BanchoClientEvent.MultiplayerChannelNameUpdated}:${channel}`,
       data,
     );
   }
