@@ -287,3 +287,17 @@ export const onMultiplayerChannelNameUpdated = async ({
     value: JSON.stringify(updatedMatchState),
   });
 };
+
+export const onMultiplayerPlayerJoinedSlot = ({
+  channel,
+  slotNumber,
+  user,
+}: {
+  channel: string;
+  slotNumber: number;
+  user: string;
+}) => {
+  logger.debug(
+    `[IRC] channel ${channel} player ${user} joined slot ${slotNumber}`,
+  );
+};
