@@ -8,11 +8,11 @@
       [
         {
           "autoExecuteCommands": true,
-          "color": "terminal.ansiMagenta",
+          "color": "terminal.ansiBlue",
           "commands": [
             "docker logs -f server"
           ],
-          "icon": "search",
+          "icon": "output",
           "name": "server:logs"
         },
         {
@@ -20,18 +20,18 @@
           "commands": [
             "docker exec -it server /bin/sh"
           ],
-          "icon": "keyboard",
+          "icon": "terminal",
           "name": "server:shell"
         }
       ],
       [
         {
           "autoExecuteCommands": true,
-          "color": "terminal.ansiMagenta",
+          "color": "terminal.ansiGreen",
           "commands": [
             "docker logs -f client"
           ],
-          "icon": "search",
+          "icon": "output",
           "name": "client:logs"
         },
         {
@@ -39,13 +39,14 @@
           "commands": [
             "docker exec -it client /bin/sh"
           ],
-          "icon": "keyboard",
+          "icon": "terminal",
           "name": "client:shell"
         }
       ],
       {
+        "color": "terminal.ansiYellow",
         "focus": true,
-        "icon": "keyboard",
+        "icon": "home",
         "name": "host:shell"
       }
     ]
