@@ -37,6 +37,14 @@
       >
         Close Match
       </BaseButton>
+      <BaseButton
+        id="show-match-information-drawer-button"
+        class="w-48"
+        @mousedown="isMatchInformationDrawerOpen = true"
+        @keydown.enter="isMatchInformationDrawerOpen = true"
+      >
+        Match information
+      </BaseButton>
     </div>
     <MatchCloseModal
       :isModalOpen="isModalOpen"
@@ -44,6 +52,12 @@
       :matchName="match.name"
       @close:modal="isModalOpen = false"
       @close:match="redirectToMatchCreationPage"
+    />
+    <MatchDrawer
+      id="match-information-drawer"
+      matchName="MWC4K2025 - RO32: Philippines VS France"
+      :isDrawerOpen="isMatchInformationDrawerOpen"
+      @close:drawer="isMatchInformationDrawerOpen = false"
     />
   </div>
 </template>
@@ -67,11 +81,13 @@ import { defineWebsocketStore } from '#src/stores/webSocketStore.js';
 
 import MatchChatHistory from './components/matchChatHistory.vue';
 import MatchCloseModal from './components/matchCloseModal.vue';
+import MatchDrawer from './components/matchDrawer.vue';
 
 const route = useRoute();
 const router = inject<Router>('$router');
 const matchId = Number(route.params.gameMatchId);
 const isModalOpen = ref(false);
+const isMatchInformationDrawerOpen = ref(false);
 const { data: match, isLoading: isMatchLoading } = useGetMatch(matchId);
 const { user } = useUserStore();
 const useWebSocketStore = defineWebsocketStore<
