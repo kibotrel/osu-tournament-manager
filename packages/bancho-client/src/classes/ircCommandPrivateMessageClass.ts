@@ -161,8 +161,8 @@ export class IrcCommandPrivateMessage implements IrcCommand {
   private handleMultiplayerChannelHostChangedEvent(payload: Payload) {
     const { channel, message } = payload;
     const match = message.match(BanchoBotCommonMessage.MatchNewHost)!;
-    const { newHost } = match.groups!;
-    const data = { newHost };
+    const { user } = match.groups!;
+    const data = { newHost: user };
 
     this.banchoClient.emit(BanchoClientEvent.MultiplayerChannelHostChanged, {
       ...data,
