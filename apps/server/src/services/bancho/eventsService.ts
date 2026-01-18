@@ -300,6 +300,16 @@ export const onMultiplayerPlayerJoinedSlot = ({
   logger.debug(`[IRC] ${user} joined channel ${channel} in slot ${slotNumber}`);
 };
 
+export const onMultiplayerPayerLeftRoom = ({
+  channel,
+  user,
+}: {
+  channel: string;
+  user: string;
+}) => {
+  logger.debug(`[IRC] ${user} left channel ${channel}`);
+};
+
 export const onMultiplayerPlayerMovedSlot = ({
   channel,
   slotNumber,

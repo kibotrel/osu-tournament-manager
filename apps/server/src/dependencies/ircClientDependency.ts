@@ -15,7 +15,9 @@ import {
   onMultiplayerChannelInformationPlayerCount,
   onMultiplayerChannelInformationSlot,
   onMultiplayerChannelNameUpdated,
+  onMultiplayerPayerLeftRoom,
   onMultiplayerPlayerJoinedSlot,
+  onMultiplayerPlayerMovedSlot,
 } from '#src/services/bancho/eventsService.js';
 
 const banchoClient = new BanchoClient({
@@ -75,6 +77,11 @@ banchoClient.on(
   BanchoClientEvent.MultiplayerPlayerJoinedSlot,
   onMultiplayerPlayerJoinedSlot,
 );
+banchoClient.on(
+  BanchoClientEvent.MultiplayerPayerLeftRoom,
+  onMultiplayerPayerLeftRoom,
+);
+
 banchoClient.on(
   BanchoClientEvent.MultiplayerPlayerMovedSlot,
   onMultiplayerPlayerMovedSlot,
