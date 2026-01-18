@@ -39,10 +39,6 @@ export class IrcCommandPrivateMessage implements IrcCommand {
         handler: this.handleUserInvitedToChannelEvent.bind(this),
       },
       {
-        pattern: new RegExp(BanchoBotCommonMessage.UserNotFound),
-        handler: this.handleUserNotFoundEvent.bind(this),
-      },
-      {
         pattern: new RegExp(BanchoBotCommonMessage.UserJoinedSlot),
         handler: this.handleMultiplayerPlayerJoinedSlotEvent.bind(this),
       },
@@ -80,12 +76,20 @@ export class IrcCommandPrivateMessage implements IrcCommand {
         handler: this.handleMultiplayerChannelInformationSlotEvent.bind(this),
       },
       {
+        pattern: new RegExp(BanchoBotCommonMessage.UserLeftRoom),
+        handler: this.handleMultiplayerPayerLeftRoomEvent.bind(this),
+      },
+      {
         pattern: new RegExp(BanchoBotCommonMessage.UserAlreadyInChannel),
         handler: this.handleUserAlreadyInChannelEvent.bind(this),
       },
       {
-        pattern: new RegExp(BanchoBotCommonMessage.UserLeftRoom),
-        handler: this.handleMultiplayerPayerLeftRoomEvent.bind(this),
+        pattern: new RegExp(BanchoBotCommonMessage.UserNotFound),
+        handler: this.handleUserNotFoundEvent.bind(this),
+      },
+      {
+        pattern: new RegExp(BanchoBotCommonMessage.MatchNewHost),
+        handler: this.handleMultiplayerChannelHostChangedEvent.bind(this),
       },
       {
         pattern: new RegExp(BanchoBotCommonMessage.RoomNameUpdated),
@@ -150,6 +154,22 @@ export class IrcCommandPrivateMessage implements IrcCommand {
     );
     this.banchoClient.emit(
       `${BanchoClientEvent.MultiplayerChannelInformationIdentity}:${channel}`,
+      data,
+    );
+  }
+
+  private handleMultiplayerChannelHostChangedEvent(payload: Payload) {
+    const { channel, message } = payload;
+    const match = message.match(BanchoBotCommonMessage.MatchNewHost)!;
+    const { newHost } = match.groups!;
+    const data = { newHost };
+
+    this.banchoClient.emit(BanchoClientEvent.MultiplayerChannelHostChanged, {
+      ...data,
+      channel,
+    });
+    this.banchoClient.emit(
+      `${BanchoClientEvent.MultiplayerChannelHostChanged}:${channel}`,
       data,
     );
   }
