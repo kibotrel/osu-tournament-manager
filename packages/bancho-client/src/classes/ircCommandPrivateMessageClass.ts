@@ -31,12 +31,20 @@ export class IrcCommandPrivateMessage implements IrcCommand {
         handler: this.handleMultiplayerChannelChangedBeatmap.bind(this),
       },
       {
+        pattern: new RegExp(BanchoBotCommonMessage.UserMovedSlot),
+        handler: this.handleMultiplayerPlayerMovedSlotEvent.bind(this),
+      },
+      {
         pattern: new RegExp(BanchoBotCommonMessage.InvitedUserToChannel),
         handler: this.handleUserInvitedToChannelEvent.bind(this),
       },
       {
         pattern: new RegExp(BanchoBotCommonMessage.UserNotFound),
         handler: this.handleUserNotFoundEvent.bind(this),
+      },
+      {
+        pattern: new RegExp(BanchoBotCommonMessage.UserJoinedSlot),
+        handler: this.handleMultiplayerPlayerJoinedSlotEvent.bind(this),
       },
       {
         pattern: new RegExp(BanchoBotCommonMessage.RoomIdentification),
@@ -90,10 +98,6 @@ export class IrcCommandPrivateMessage implements IrcCommand {
       {
         pattern: new RegExp(BanchoBotCommonMessage.ConcurrentMatchLimitReached),
         handler: this.handleConcurrentMatchLimitReachedEvent.bind(this),
-      },
-      {
-        pattern: new RegExp(BanchoBotCommonMessage.UserJoinedSlot),
-        handler: this.handleMultiplayerPlayerJoinedSlotEvent.bind(this),
       },
     ];
   }
@@ -300,6 +304,22 @@ export class IrcCommandPrivateMessage implements IrcCommand {
     });
     this.banchoClient.emit(
       `${BanchoClientEvent.MultiplayerPlayerJoinedSlot}:${channel}`,
+      data,
+    );
+  }
+
+  private handleMultiplayerPlayerMovedSlotEvent(payload: Payload) {
+    const { channel, message } = payload;
+    const match = message.match(BanchoBotCommonMessage.UserMovedSlot)!;
+    const { user, slotNumber } = match.groups!;
+    const data = { user, slotNumber: Number(slotNumber) };
+
+    this.banchoClient.emit(BanchoClientEvent.MultiplayerPlayerMovedSlot, {
+      ...data,
+      channel,
+    });
+    this.banchoClient.emit(
+      `${BanchoClientEvent.MultiplayerPlayerMovedSlot}:${channel}`,
       data,
     );
   }

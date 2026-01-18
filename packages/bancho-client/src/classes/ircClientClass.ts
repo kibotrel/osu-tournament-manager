@@ -64,6 +64,9 @@ interface EmittedEvents {
   [BanchoClientEvent.MultiplayerPlayerJoinedSlot]: [
     { channel: string; user: string; slotNumber: number },
   ];
+  [BanchoClientEvent.MultiplayerPlayerMovedSlot]: [
+    { channel: string; user: string; slotNumber: number },
+  ];
   [BanchoClientEvent.RecipientNotFound]: [{ recipient: string }];
   [BanchoClientEvent.UserAlreadyInChannel]: [];
   [BanchoClientEvent.UserDisconnected]: [{ user: string }];
@@ -106,6 +109,9 @@ interface EmittedEvents {
     { name: string },
   ];
   [key: `${BanchoClientEvent.MultiplayerPlayerJoinedSlot}:${string}`]: [
+    { user: string; slotNumber: number },
+  ];
+  [key: `${BanchoClientEvent.MultiplayerPlayerMovedSlot}:${string}`]: [
     { user: string; slotNumber: number },
   ];
   [key: `${BanchoClientEvent.RecipientNotFound}:${string}`]: [];
