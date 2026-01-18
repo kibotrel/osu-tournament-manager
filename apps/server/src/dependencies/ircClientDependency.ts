@@ -75,5 +75,9 @@ banchoClient.on(
   BanchoClientEvent.MultiplayerPlayerJoinedSlot,
   onMultiplayerPlayerJoinedSlot,
 );
+banchoClient.on(
+  BanchoClientEvent.MultiplayerPlayerMovedSlot,
+  onMultiplayerPlayerMovedSlot,
+);
 
 export { banchoClient };

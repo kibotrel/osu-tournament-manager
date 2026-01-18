@@ -297,7 +297,19 @@ export const onMultiplayerPlayerJoinedSlot = ({
   slotNumber: number;
   user: string;
 }) => {
+  logger.debug(`[IRC] ${user} joined channel ${channel} in slot ${slotNumber}`);
+};
+
+export const onMultiplayerPlayerMovedSlot = ({
+  channel,
+  slotNumber,
+  user,
+}: {
+  channel: string;
+  slotNumber: number;
+  user: string;
+}) => {
   logger.debug(
-    `[IRC] channel ${channel} player ${user} joined slot ${slotNumber}`,
+    `[IRC] ${user} moved to slot ${slotNumber} in channel ${channel}`,
   );
 };
