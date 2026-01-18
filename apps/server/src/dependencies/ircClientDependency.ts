@@ -7,6 +7,7 @@ import {
   onBotJoinedChannel,
   onChannelMessage,
   onConcurrentMatchLimitReached,
+  onMultiplayerChannelAllPlayersReady,
   onMultiplayerChannelClosed,
   onMultiplayerChannelHostChanged,
   onMultiplayerChannelInformationConditions,
@@ -41,6 +42,10 @@ banchoClient.on(BanchoClientEvent.ChannelMessage, onChannelMessage);
 banchoClient.on(
   BanchoClientEvent.ConcurrentMatchLimitReached,
   onConcurrentMatchLimitReached,
+);
+banchoClient.on(
+  BanchoClientEvent.MultiplayerChannelAllPlayersReady,
+  onMultiplayerChannelAllPlayersReady,
 );
 banchoClient.on(
   BanchoClientEvent.MultiplayerChannelClosed,

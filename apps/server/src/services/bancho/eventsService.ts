@@ -31,7 +31,7 @@ import {
 import { joinAllOngoingMatches } from './multiplayerService.js';
 
 export const onBotConnected = async () => {
-  logger.debug('[IRC] Connected to the osu! server.');
+  logger.debug('[IRC] Connected to the osu! server');
 
   await joinAllOngoingMatches();
 };
@@ -43,7 +43,7 @@ export const onBotDisconnected = async (banchoClient: BanchoClient) => {
 };
 
 export const onBotJoinedChannel = ({ channel }: { channel: string }) => {
-  logger.debug(`[IRC] Joined ${channel}.`);
+  logger.debug(`[IRC] Joined ${channel}`);
 };
 
 export const onChannelMessage = ({
@@ -77,7 +77,15 @@ export const onChannelMessage = ({
 };
 
 export const onConcurrentMatchLimitReached = () => {
-  logger.warn('[IRC] Concurrent match limit reached.');
+  logger.warn('[IRC] Concurrent match limit reached');
+};
+
+export const onMultiplayerChannelAllPlayersReady = ({
+  channel,
+}: {
+  channel: string;
+}) => {
+  logger.debug(`[IRC] All players ready in match ${channel}`);
 };
 
 export const onMultiplayerChannelClosed = async ({
@@ -85,7 +93,7 @@ export const onMultiplayerChannelClosed = async ({
 }: {
   channel: string;
 }) => {
-  logger.debug(`[IRC] Match ${channel} closed.`);
+  logger.debug(`[IRC] Match ${channel} closed`);
 
   const channelId = gameMatchIdFromBanchoChannel(channel);
   const promises = [
