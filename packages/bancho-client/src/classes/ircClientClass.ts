@@ -31,6 +31,7 @@ interface EmittedEvents {
   ];
   [BanchoClientEvent.ChannelNotFound]: [{ channel: string }];
   [BanchoClientEvent.ConcurrentMatchLimitReached]: [];
+  [BanchoClientEvent.MultiplayerChannelAllPlayersReady]: [{ channel: string }];
   [BanchoClientEvent.MultiplayerChannelClosed]: [{ channel: string }];
   [BanchoClientEvent.MultiplayerChannelHostChanged]: [
     { channel: string; newHost: string },
@@ -85,6 +86,7 @@ interface EmittedEvents {
     { message: string; user: string },
   ];
   [key: `${BanchoClientEvent.ChannelNotFound}:${string}`]: [];
+  [key: `${BanchoClientEvent.MultiplayerChannelAllPlayersReady}:${string}`]: [];
   [key: `${BanchoClientEvent.MultiplayerChannelClosed}:${string}`]: [];
   [key: `${BanchoClientEvent.MultiplayerChannelHostChanged}:${string}`]: [
     { newHost: string },
