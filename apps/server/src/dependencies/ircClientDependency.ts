@@ -8,6 +8,7 @@ import {
   onChannelMessage,
   onConcurrentMatchLimitReached,
   onMultiplayerChannelClosed,
+  onMultiplayerChannelHostChanged,
   onMultiplayerChannelInformationConditions,
   onMultiplayerChannelInformationCurrentlyPlaying,
   onMultiplayerChannelInformationGlobalModifications,
@@ -46,6 +47,10 @@ banchoClient.on(
   onMultiplayerChannelClosed,
 );
 banchoClient.on(
+  BanchoClientEvent.MultiplayerChannelHostChanged,
+  onMultiplayerChannelHostChanged,
+);
+banchoClient.on(
   BanchoClientEvent.MultiplayerChannelInformationIdentity,
   onMultiplayerChannelInformationIdentity,
 );
@@ -81,7 +86,6 @@ banchoClient.on(
   BanchoClientEvent.MultiplayerPayerLeftRoom,
   onMultiplayerPayerLeftRoom,
 );
-
 banchoClient.on(
   BanchoClientEvent.MultiplayerPlayerMovedSlot,
   onMultiplayerPlayerMovedSlot,

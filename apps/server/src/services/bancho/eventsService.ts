@@ -98,6 +98,16 @@ export const onMultiplayerChannelClosed = async ({
   // TODO: investigate if we need to broadcast a message to clients here
 };
 
+export const onMultiplayerChannelHostChanged = ({
+  channel,
+  newHost,
+}: {
+  channel: string;
+  newHost: string;
+}) => {
+  logger.debug(`[IRC] ${newHost} is now host of channel ${channel}`);
+};
+
 export const onMultiplayerChannelInformationIdentity = async ({
   channel,
   historyUrl,
