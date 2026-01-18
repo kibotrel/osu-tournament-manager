@@ -143,15 +143,15 @@ export class WebSocketServer {
         message.toString(),
       );
 
+      addMatchMessageToCache({
+        channel: threadId,
+        message: message.toString(),
+      });
+
       banchoClient.sendPrivateMessage(chatMessage.message.content, {
         recipient: banchoChannelFromGameMatchId(Number(threadId)),
       });
     }
-
-    addMatchMessageToCache({
-      channel: threadId,
-      message: message.toString(),
-    });
 
     for (const webSocketId of uniqueWebSocketIds) {
       const webSocket = this.webSocketClients.get(webSocketId);
