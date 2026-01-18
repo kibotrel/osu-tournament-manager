@@ -116,6 +116,14 @@ export const onMultiplayerChannelHostChanged = ({
   logger.debug(`[IRC] ${newHost} is now host of channel ${channel}`);
 };
 
+export const onMultiplayerChannelHostCleared = ({
+  channel,
+}: {
+  channel: string;
+}) => {
+  logger.debug(`[IRC] Host cleared in channel ${channel}`);
+};
+
 export const onMultiplayerChannelInformationIdentity = async ({
   channel,
   historyUrl,

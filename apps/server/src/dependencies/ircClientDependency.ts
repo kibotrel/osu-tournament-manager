@@ -10,6 +10,7 @@ import {
   onMultiplayerChannelAllPlayersReady,
   onMultiplayerChannelClosed,
   onMultiplayerChannelHostChanged,
+  onMultiplayerChannelHostCleared,
   onMultiplayerChannelInformationConditions,
   onMultiplayerChannelInformationCurrentlyPlaying,
   onMultiplayerChannelInformationGlobalModifications,
@@ -54,6 +55,10 @@ banchoClient.on(
 banchoClient.on(
   BanchoClientEvent.MultiplayerChannelHostChanged,
   onMultiplayerChannelHostChanged,
+);
+banchoClient.on(
+  BanchoClientEvent.MultiplayerChannelHostCleared,
+  onMultiplayerChannelHostCleared,
 );
 banchoClient.on(
   BanchoClientEvent.MultiplayerChannelInformationIdentity,
