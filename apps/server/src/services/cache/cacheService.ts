@@ -6,7 +6,10 @@ import {
   CacheSetTopic,
   CacheStringTopic,
 } from '#src/constants/cacheConstants.js';
-import { deleteListInCacheByKey } from '#src/queries/cache/deleteCacheQueries.js';
+import {
+  deleteListInCacheByKey,
+  deleteStringInCacheByKey,
+} from '#src/queries/cache/deleteCacheQueries.js';
 import {
   getListFromCacheByKey,
   getSetFromCacheByKey,
@@ -16,6 +19,7 @@ import {
   addToListInCacheByKey,
   addToSetInCacheByKey,
   removeFromSetInCacheByKey,
+  setStringInCacheByKey,
 } from '#src/queries/cache/updateCacheQueries.js';
 
 export const addMatchMessageToCache = async (options: {
@@ -42,6 +46,10 @@ export const deleteMatchChatHistoryFromCache = async (
   channel: number | string,
 ) => {
   await deleteListInCacheByKey(`${CacheListTopic.MatchMessages}:${channel}`);
+};
+
+export const deleteMatchStateFromCache = async (channel: number | string) => {
+  await deleteStringInCacheByKey(`${CacheStringTopic.MatchState}:${channel}`);
 };
 
 export const getAllOngoingMatchesFromCache = async () => {
@@ -72,5 +80,17 @@ export const removeMatchFromCachedSet = async (channel: string) => {
   await removeFromSetInCacheByKey({
     key: CacheSetTopic.OpenMatches,
     value: channel,
+  });
+};
+
+export const setMatchStateInCache = async (options: {
+  channel: number | string;
+  state: BanchoLobbyState;
+}) => {
+  const { channel, state } = options;
+
+  await setStringInCacheByKey({
+    key: `${CacheStringTopic.MatchState}:${channel}`,
+    value: JSON.stringify(state),
   });
 };
