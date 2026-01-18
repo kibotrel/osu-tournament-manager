@@ -36,6 +36,7 @@ interface EmittedEvents {
   [BanchoClientEvent.MultiplayerChannelHostChanged]: [
     { channel: string; newHost: string },
   ];
+  [BanchoClientEvent.MultiplayerChannelHostCleared]: [{ channel: string }];
   [BanchoClientEvent.MultiplayerChannelInformationConditions]: [
     { channel: string; teamMode: string; winCondition: string },
   ];
@@ -91,6 +92,7 @@ interface EmittedEvents {
   [key: `${BanchoClientEvent.MultiplayerChannelHostChanged}:${string}`]: [
     { newHost: string },
   ];
+  [key: `${BanchoClientEvent.MultiplayerChannelHostCleared}:${string}`]: [];
   [
     key: `${BanchoClientEvent.MultiplayerChannelInformationConditions}:${string}`
   ]: [{ teamMode: string; winCondition: string }];

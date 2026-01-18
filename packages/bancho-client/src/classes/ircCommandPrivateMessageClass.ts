@@ -96,6 +96,10 @@ export class IrcCommandPrivateMessage implements IrcCommand {
         handler: this.handleMultiplayerChannelHostChangedEvent.bind(this),
       },
       {
+        pattern: new RegExp(BanchoBotCommonMessage.ClearHost),
+        handler: this.handleMultiplayerChannelHostClearedEvent.bind(this),
+      },
+      {
         pattern: new RegExp(BanchoBotCommonMessage.RoomNameUpdated),
         handler: this.handleMultiplayerChannelNameUpdated.bind(this),
       },
@@ -187,6 +191,17 @@ export class IrcCommandPrivateMessage implements IrcCommand {
     this.banchoClient.emit(
       `${BanchoClientEvent.MultiplayerChannelHostChanged}:${channel}`,
       data,
+    );
+  }
+
+  private handleMultiplayerChannelHostClearedEvent(payload: Payload) {
+    const { channel } = payload;
+
+    this.banchoClient.emit(BanchoClientEvent.MultiplayerChannelHostCleared, {
+      channel,
+    });
+    this.banchoClient.emit(
+      `${BanchoClientEvent.MultiplayerChannelHostCleared}:${channel}`,
     );
   }
 

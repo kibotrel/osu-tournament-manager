@@ -10,6 +10,7 @@ export enum BanchoClientEvent {
   MultiplayerChannelAllPlayersReady = 'multiplayer_channel_all_players_ready',
   MultiplayerChannelClosed = 'multiplayer_channel_closed',
   MultiplayerChannelHostChanged = 'multiplayer_channel_host_changed',
+  MultiplayerChannelHostCleared = 'multiplayer_channel_host_cleared',
   MultiplayerChannelInformationConditions = 'multiplayer_channel_information_conditions',
   MultiplayerChannelInformationCurrentlyPlaying = 'multiplayer_channel_information_currently_playing',
   MultiplayerChannelInformationGlobalModifications = 'multiplayer_channel_information_global_modifications',
@@ -60,6 +61,7 @@ export enum BanchoCommand {
  */
 export enum BanchoBotCommonMessage {
   ChangedBeatmap = '^Changed beatmap to (?<url>\\S+) (?<beatmap>.+)$',
+  ClearHost = '^Cleared match host$',
   ClosedMatch = '^Closed the match$',
   ConcurrentMatchLimitReached = '^You cannot create any more tournament matches. Please close any previous tournament matches you have open.$',
   CurrentlyPlaying = '^Beatmap: (?<url>\\S+) (?<beatmap>.+)$',
