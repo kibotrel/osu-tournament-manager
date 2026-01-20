@@ -55,8 +55,8 @@
     />
     <MatchDrawer
       id="match-information-drawer"
-      matchName="MWC4K2025 - RO32: Philippines VS France"
       :isDrawerOpen="isMatchInformationDrawerOpen"
+      :sendBanchoMessage="sendMessage"
       @close:drawer="isMatchInformationDrawerOpen = false"
     />
   </div>

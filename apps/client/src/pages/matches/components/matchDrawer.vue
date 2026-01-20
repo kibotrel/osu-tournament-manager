@@ -39,7 +39,7 @@
     <template #body>
       <div class="h-full p-4">
         <div v-if="tab === 'status'" class="h-full">
-          <MatchLobbyStatus />
+          <MatchLobbyStatus :sendBanchoMessage="sendBanchoMessage" />
         </div>
         <div
           v-else
@@ -53,7 +53,10 @@
 </template>
 
 <script setup lang="ts">
-import type { WebSocketMatchLobbyState } from '@packages/shared';
+import type {
+  WebSocketMatchLobbyState,
+  WebSocketMatchMessage,
+} from '@packages/shared';
 import {
   WebSocketChannel,
   WebSocketChannelMatchesEvent,
@@ -77,7 +80,10 @@ type Tab = 'commands' | 'settings' | 'status' | 'timeline';
 
 interface Properties {
   isDrawerOpen: boolean;
-  matchName: string;
+  sendBanchoMessage: (
+    message: WebSocketMatchMessage,
+    event: WebSocketChannelMatchesEvent,
+  ) => void;
 }
 
 const route = useRoute();

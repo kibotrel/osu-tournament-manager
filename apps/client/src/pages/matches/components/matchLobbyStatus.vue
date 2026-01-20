@@ -6,7 +6,13 @@
           <BaseBody variant="base" class="text-primary-2"
             >{{ match.playerCount }} / 16 Players</BaseBody
           >
-          <BaseButton id="refresh-lobby-state" variant="primary" class="w-32">
+          <BaseButton
+            class="w-32"
+            id="refresh-lobby-state"
+            variant="primary"
+            @keydown.enter="refreshLobbyState"
+            @mousedown="refreshLobbyState"
+          >
             <template #default> Refresh </template>
             <template #icon>
               <ArrowPathIcon class="text-primary-4 h-6 w-6" />
@@ -66,6 +72,8 @@
 </template>
 
 <script setup lang="ts">
+import type { WebSocketMatchMessage } from '@packages/shared';
+import { WebSocketChannelMatchesEvent } from '@packages/shared';
 import { storeToRefs } from 'pinia';
 
 import BaseBadge from '#src/components/base/baseBadge.vue';
@@ -76,5 +84,20 @@ import ArrowPathIcon from '#src/components/icons/arrowPathIcon.vue';
 import CrownIcon from '#src/components/icons/crownIcon.vue';
 import { useMatchStore } from '#src/stores/matchStore.js';
 
+interface Properties {
+  sendBanchoMessage: (
+    message: WebSocketMatchMessage,
+    event: WebSocketChannelMatchesEvent,
+  ) => void;
+}
+
 const { match } = storeToRefs(useMatchStore());
+const properties = defineProps<Properties>();
+
+const refreshLobbyState = () => {
+  properties.sendBanchoMessage(
+    { author: 'DemonWaves', content: '!mp settings' },
+    WebSocketChannelMatchesEvent.ChatMessages,
+  );
+};
 </script>
