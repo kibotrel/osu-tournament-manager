@@ -11,14 +11,14 @@
       fill="currentColor"
     />
     <clipPath>
-      <rect width="120" height="84" fill="currentColor" />
+      <rect fill="currentColor" height="84" width="120" />
     </clipPath>
     <clipPath>
       <rect
-        width="120"
-        height="120"
         fill="currentColor"
+        height="120"
         transform="translate(0 -18)"
+        width="120"
       />
     </clipPath>
   </svg>

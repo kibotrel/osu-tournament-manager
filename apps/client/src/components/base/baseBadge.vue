@@ -1,40 +1,40 @@
 <template>
   <BaseBody
-    v-if="properties.variant === 'base'"
-    :class="['badge badge--base', `badge--${properties.color}`]"
+    v-if="variant === 'base'"
     variant="small"
-    :isInline="properties.isInline"
+    :class="['badge badge--base', `badge--${color}`]"
+    :isInline
   >
     <div class="flex items-center justify-center gap-1 px-2">
       <BaseIcon
-        v-if="properties.icon && properties.icon.side === 'left'"
-        :name="properties.icon.name"
+        v-if="icon?.side === 'left'"
         class="h-4 w-4"
+        :name="icon.name"
       />
       <slot />
       <BaseIcon
-        v-if="properties.icon && properties.icon.side === 'right'"
-        :name="properties.icon.name"
+        v-if="icon?.side === 'right'"
         class="h-3 w-3"
+        :name="icon.name"
       />
     </div>
   </BaseBody>
   <BaseCaption
     v-else
-    :class="['badge badge--small', `badge--${properties.color}`]"
-    :isInline="properties.isInline"
+    :class="['badge badge--small', `badge--${color}`]"
+    :isInline
   >
     <div class="flex items-center justify-center gap-1 px-2">
       <BaseIcon
-        v-if="properties.icon && properties.icon.side === 'left'"
-        :name="properties.icon.name"
+        v-if="icon?.side === 'left'"
         class="h-3 w-3"
+        :name="icon.name"
       />
       <slot />
       <BaseIcon
-        v-if="properties.icon && properties.icon.side === 'right'"
-        :name="properties.icon.name"
+        v-if="icon?.side === 'right'"
         class="h-3 w-3"
+        :name="icon.name"
       />
     </div>
   </BaseCaption>
@@ -56,10 +56,7 @@ interface Properties {
   variant?: BadgeVariant;
 }
 
-const properties = withDefaults(defineProps<Properties>(), {
-  isInline: false,
-  variant: 'base',
-});
+withDefaults(defineProps<Properties>(), { isInline: false, variant: 'base' });
 </script>
 
 <style scoped>

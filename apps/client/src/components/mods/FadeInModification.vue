@@ -7,92 +7,92 @@
     :class="[$attrs.class]"
   >
     <line
+      stroke="currentColor"
+      stroke-linecap="round"
+      stroke-width="6"
       x1="86.3959"
       y1="64.0566"
       x2="34.7074"
       y2="64.0566"
-      stroke="currentColor"
-      stroke-width="6"
-      stroke-linecap="round"
     />
     <line
+      stroke="currentColor"
+      stroke-linecap="round"
+      stroke-width="6"
       x1="44.8079"
       y1="49.6821"
       x2="34.7075"
       y2="49.6821"
-      stroke="currentColor"
-      stroke-width="6"
-      stroke-linecap="round"
     />
     <line
+      stroke="currentColor"
+      stroke-linecap="round"
+      stroke-width="6"
       x1="86.3959"
       y1="49.6821"
       x2="76.2955"
       y2="49.6821"
-      stroke="currentColor"
-      stroke-width="6"
-      stroke-linecap="round"
     />
     <line
+      stroke="currentColor"
+      stroke-linecap="round"
+      stroke-width="6"
       x1="65.6018"
       y1="49.6821"
       x2="55.5014"
       y2="49.6821"
-      stroke="currentColor"
-      stroke-width="6"
-      stroke-linecap="round"
     />
     <path
       d="M37.7148 36.1646L35.6913 36.1645"
       stroke="currentColor"
-      stroke-width="6"
       stroke-linecap="round"
+      stroke-width="6"
     />
     <path
       d="M37.7148 21.7905L35.6913 21.7904"
       stroke="currentColor"
-      stroke-width="6"
       stroke-linecap="round"
+      stroke-width="6"
     />
     <path
       d="M61.5636 21.7905L59.5401 21.7904"
       stroke="currentColor"
-      stroke-width="6"
       stroke-linecap="round"
+      stroke-width="6"
     />
     <path
       d="M84.9001 21.7905L82.8766 21.7904"
       stroke="currentColor"
-      stroke-width="6"
       stroke-linecap="round"
+      stroke-width="6"
     />
     <path
       d="M53.4434 36.1646L51.4198 36.1646"
       stroke="currentColor"
-      stroke-width="6"
       stroke-linecap="round"
+      stroke-width="6"
     />
     <path
       d="M69.1716 36.1646L67.1481 36.1646"
       stroke="currentColor"
-      stroke-width="6"
       stroke-linecap="round"
+      stroke-width="6"
     />
     <path
       d="M84.9001 36.1646L82.8766 36.1646"
       stroke="currentColor"
-      stroke-width="6"
       stroke-linecap="round"
+      stroke-width="6"
     />
     <clipPath id="clip0_18898_7941">
-      <rect width="120" height="84" fill="currentColor" />
+      <rect fill="currentColor" height="84" width="120" />
     </clipPath>
     <clipPath id="clip1_18898_7941">
       <rect
-        width="120"
-        height="120"
         fill="currentColor"
+        height="120"
         transform="translate(0 -18)"
+        width="120"
       />
     </clipPath>
   </svg>

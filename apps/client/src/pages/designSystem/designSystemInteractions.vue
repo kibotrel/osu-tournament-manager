@@ -32,19 +32,19 @@
         </BaseButton>
       </div>
       <div class="flex flex-row space-x-2">
-        <BaseButton class="w-32" variant="secondary" id="button-secondary">
+        <BaseButton class="w-32" id="button-secondary" variant="secondary">
           Secondary
         </BaseButton>
-        <BaseButton class="w-32" variant="ghost" id="button-ghost">
+        <BaseButton class="w-32" id="button-ghost" variant="ghost">
           Ghost
         </BaseButton>
-        <BaseButton class="w-32" variant="success" id="button-success">
+        <BaseButton class="w-32" id="button-success" variant="success">
           Success
         </BaseButton>
-        <BaseButton class="w-32" variant="warning" id="button-warning">
+        <BaseButton class="w-32" id="button-warning" variant="warning">
           Warning
         </BaseButton>
-        <BaseButton class="w-32" variant="danger" id="button-danger">
+        <BaseButton class="w-32" id="button-danger" variant="danger">
           Danger
         </BaseButton>
       </div>
@@ -113,7 +113,7 @@ import BaseHeadline from '#src/components/base/baseHeadline.vue';
 import BaseIcon from '#src/components/base/baseIcon.vue';
 import BaseInput from '#src/components/base/baseInput.vue';
 
-const stringInputValue = ref('');
 const numberInputValue = ref('');
 const stringErrorValue = ref('Wrong input');
+const stringInputValue = ref('');
 </script>

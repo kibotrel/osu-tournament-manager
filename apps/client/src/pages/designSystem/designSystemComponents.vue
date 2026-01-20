@@ -26,24 +26,24 @@
         <BaseModification
           v-for="mod in increaseDifficultyMods"
           :key="mod"
-          :mod="mod"
+          :mod
         />
       </div>
       <div class="flex flex-row items-center space-x-2">
         <BaseModification
           v-for="mod in decreaseDifficultyMods"
           :key="mod"
-          :mod="mod"
+          :mod
         />
       </div>
       <div class="flex flex-row items-center space-x-2">
-        <BaseModification v-for="mod in maniaMods" :key="mod" :mod="mod" />
+        <BaseModification v-for="mod in maniaMods" :key="mod" :mod />
       </div>
       <div class="flex flex-row items-center space-x-2">
-        <BaseModification v-for="mod in standardMods" :key="mod" :mod="mod" />
+        <BaseModification v-for="mod in standardMods" :key="mod" :mod />
       </div>
       <div class="flex flex-row items-center space-x-2">
-        <BaseModification v-for="mod in baseMods" :key="mod" :mod="mod" />
+        <BaseModification v-for="mod in baseMods" :key="mod" :mod />
       </div>
     </div>
   </div>

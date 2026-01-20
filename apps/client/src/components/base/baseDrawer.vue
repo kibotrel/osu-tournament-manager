@@ -1,33 +1,26 @@
 <template>
   <Transition name="backdrop">
     <div
-      v-show="properties.isDrawerOpen"
       class="fixed inset-0 z-10 bg-black/50"
+      v-show="isDrawerOpen"
       @mousedown="emit('close:drawer')"
     ></div>
   </Transition>
-  <Transition :name="`drawer-${properties.variant}`">
-    <div
-      ref="drawer"
-      v-show="properties.isDrawerOpen"
-      :class="[properties.variant, 'drawer']"
-      :id="properties.id"
-    >
+  <Transition :name="`drawer-${variant}`">
+    <div ref="drawer" v-show="isDrawerOpen" :class="[variant, 'drawer']" :id>
       <div class="flex flex-row justify-between p-2">
         <BaseIcon
-          tabindex="0"
           class="action-icon"
+          tabindex="0"
           :name="
-            properties.variant === 'right'
-              ? 'chevronDoubleRight'
-              : 'chevronDoubleDown'
+            variant === 'right' ? 'chevronDoubleRight' : 'chevronDoubleDown'
           "
           @keydown.enter="emit('close:drawer')"
           @mousedown="emit('close:drawer')"
         />
         <EllipsisVerticalIcon
-          tabindex="0"
           class="action-icon"
+          tabindex="0"
           @keydown.enter="emit('close:drawer')"
           @mousedown="emit('close:drawer')"
         />
@@ -62,8 +55,8 @@ interface Properties {
 
 const emit = defineEmits(['close:drawer']);
 const drawer = useTemplateRef<HTMLDivElement>('drawer');
-const properties = defineProps<Properties>();
 
+defineProps<Properties>();
 usePopUpBehavior({
   element: drawer,
   onEscape: () => emit('close:drawer'),

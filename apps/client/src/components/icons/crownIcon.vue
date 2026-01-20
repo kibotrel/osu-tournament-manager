@@ -1,8 +1,8 @@
 <template>
   <svg
-    xmlns="http://www.w3.org/2000/svg"
-    viewBox="0 0 512 512"
     fill="currentColor"
+    viewBox="0 0 512 512"
+    xmlns="http://www.w3.org/2000/svg"
   >
     <path
       d="M512,152.469c0-21.469-17.422-38.875-38.891-38.875c-21.484,0-38.906,17.406-38.906,38.875

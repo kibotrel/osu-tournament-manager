@@ -2,7 +2,7 @@
   <BaseDrawer
     id="match-information-drawer"
     variant="right"
-    :isDrawerOpen="properties.isDrawerOpen"
+    :isDrawerOpen
     @close:drawer="emit('close:drawer')"
   >
     <template #header>
@@ -113,6 +113,8 @@ watch(lastMessage, (newMessage) => {
 });
 
 const emit = defineEmits(['close:drawer']);
-const properties = defineProps<Properties>();
+
+defineProps<Properties>();
+
 const tab = ref<Tab>('status');
 </script>

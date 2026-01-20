@@ -1,5 +1,5 @@
 <template>
-  <hr :class="properties.variant" />
+  <hr :class="variant" />
 </template>
 
 <script setup lang="ts">
@@ -9,7 +9,7 @@ interface Properties {
   variant?: SeparatorVariant;
 }
 
-const properties = withDefaults(defineProps<Properties>(), {
+withDefaults(defineProps<Properties>(), {
   variant: 'primary',
 });
 </script>

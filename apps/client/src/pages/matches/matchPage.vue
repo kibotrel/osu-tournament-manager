@@ -20,38 +20,38 @@
       class="align-center mt-4 flex flex-col items-center justify-center gap-y-4"
     >
       <BaseButton
-        id="start-match-point-button"
         class="w-48"
+        id="start-match-point-button"
         variant="success"
-        @mousedown="startMatchPoint"
         @keydown.enter="startMatchPoint"
+        @mousedown="startMatchPoint"
       >
         Start
       </BaseButton>
       <BaseButton
-        id="show-close-match-modal-button"
         class="w-48"
+        id="show-close-match-modal-button"
         variant="danger"
-        @mousedown="isModalOpen = true"
         @keydown.enter="isModalOpen = true"
+        @mousedown="isModalOpen = true"
       >
         Close Match
       </BaseButton>
       <BaseButton
-        id="show-match-information-drawer-button"
         class="w-48"
-        @mousedown="isMatchInformationDrawerOpen = true"
+        id="show-match-information-drawer-button"
         @keydown.enter="isMatchInformationDrawerOpen = true"
+        @mousedown="isMatchInformationDrawerOpen = true"
       >
         Match information
       </BaseButton>
     </div>
     <MatchCloseModal
-      :isModalOpen="isModalOpen"
+      :isModalOpen
       :matchId="match.gameMatchId"
       :matchName="match.name"
-      @close:modal="isModalOpen = false"
       @close:match="redirectToMatchCreationPage"
+      @close:modal="isModalOpen = false"
     />
     <MatchDrawer
       id="match-information-drawer"

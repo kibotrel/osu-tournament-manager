@@ -6,8 +6,8 @@
       :id="`tab-${tab.value}`"
       :key="tab.value"
       :tabindex="selected === tab.value ? -1 : 0"
-      @mousedown="selectTab(tab.value)"
       @keydown.enter="selectTab(tab.value)"
+      @mousedown="selectTab(tab.value)"
     >
       <BaseIcon v-if="tab.icon" :name="tab.icon" class="h-6 w-6" />
       <BaseHeadline variant="subtitle">{{ tab.label }}</BaseHeadline>

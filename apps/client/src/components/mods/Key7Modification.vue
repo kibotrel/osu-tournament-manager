@@ -9,31 +9,31 @@
     <path
       d="M29.8195 27.5293H53.1012C55.0415 27.5293 56.6145 29.1022 56.6145 31.0426V31.0426C56.6145 32.2582 55.986 33.3874 54.953 34.0282L31.0674 48.8433C29.0448 50.0978 27.8145 52.3087 27.8145 54.6888V54.6888"
       stroke="currentColor"
-      stroke-width="6"
       stroke-linecap="round"
       stroke-linejoin="round"
+      stroke-width="6"
     />
     <path
       d="M65.1646 27.5293V27.5293C67.5806 27.5293 69.5392 29.4879 69.5392 31.904V52.3192C69.5392 54.5339 71.3346 56.3293 73.5494 56.3293V56.3293"
       stroke="currentColor"
-      stroke-width="6"
       stroke-linecap="round"
+      stroke-width="6"
     />
     <path
       d="M86.1937 27.6299H88.7948C90.6132 27.6299 92.0874 29.104 92.0874 30.9224V30.9224C92.0874 32.0376 91.5228 33.0771 90.5874 33.6842L77.9967 41.8561M77.9967 41.8561H69.7319M77.9967 41.8561L92.0874 51.2724"
       stroke="currentColor"
-      stroke-width="6"
       stroke-linecap="round"
+      stroke-width="6"
     />
     <clipPath>
-      <rect width="120" height="84" fill="currentColor" />
+      <rect fill="currentColor" height="84" width="120" />
     </clipPath>
     <clipPath>
       <rect
-        width="120"
-        height="120"
         fill="currentColor"
+        height="120"
         transform="translate(0 -18)"
+        width="120"
       />
     </clipPath>
   </svg>

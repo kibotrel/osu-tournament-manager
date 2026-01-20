@@ -1,10 +1,10 @@
 <template>
   <svg
-    viewBox="0 0 24 24"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
     stroke="currentColor"
     stroke-width="1.5"
+    viewBox="0 0 24 24"
   >
     <path
       d="M10 4L11.9505 3.02477C11.9816 3.00918 12.0184 3.00918 12.0495 3.02477V3.02477L14 4"

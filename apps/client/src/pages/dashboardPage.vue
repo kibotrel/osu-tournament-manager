@@ -7,14 +7,15 @@
     <BaseButton
       class="w-24"
       id="logout-button"
-      @mousedown="logout"
       :isLoading="isPending"
+      @mousedown="logout"
     >
       Logout
     </BaseButton>
     <input
-      type="text"
+      class="my-2 rounded-md border border-gray-300 bg-inherit p-2"
       placeholder="Enter message..."
+      type="text"
       v-model="message.content"
       @keydown.enter="
         () => {
@@ -22,7 +23,6 @@
           message.content = '';
         }
       "
-      class="my-2 rounded-md border border-gray-300 bg-inherit p-2"
     />
     <div class="mt-2 flex gap-2">
       <BaseButton id="connect-button" @mousedown="connect">Connect</BaseButton>

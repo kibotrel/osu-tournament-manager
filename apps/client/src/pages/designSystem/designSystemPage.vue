@@ -4,8 +4,8 @@
     <BaseTabList
       class="my-4"
       id="design-system-page-tab-list"
-      :tabs="tabs"
       v-model="tab"
+      :tabs
     />
     <div v-if="tab === 'texts'">
       <DesignSystemTexts />

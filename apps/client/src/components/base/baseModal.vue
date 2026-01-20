@@ -3,18 +3,18 @@
     <div
       class="fixed inset-0 z-11 flex items-center justify-center bg-black/50"
       ref="modal"
-      v-show="properties.isModalOpen"
+      v-show="isModalOpen"
       @mousedown="emit('close:modal')"
     >
       <div
         class="bg-primary-4 border-primary-3 relative w-1/3 rounded-md border-2 p-4"
-        :id="properties.id"
+        :id
         @mousedown.stop
       >
         <div>
           <XMarkIcon
-            tabindex="0"
             class="x-mark"
+            tabindex="0"
             @keydown.enter="emit('close:modal')"
             @mousedown="emit('close:modal')"
           />
@@ -40,11 +40,12 @@ import XMarkIcon from '#src/components/icons/xMarkIcon.vue';
 import { usePopUpBehavior } from '#src/composables/usePopUpComposable.js';
 
 interface Properties {
-  isModalOpen: boolean;
   id: string;
+  isModalOpen: boolean;
 }
 
-const properties = defineProps<Properties>();
+defineProps<Properties>();
+
 const emit = defineEmits(['close:modal']);
 const modal = useTemplateRef<HTMLDivElement>('modal');
 

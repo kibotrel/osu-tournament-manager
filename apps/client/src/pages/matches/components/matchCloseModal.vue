@@ -1,7 +1,7 @@
 <template>
   <BaseModal
     id="close-match-modal"
-    :isModalOpen="isModalOpen"
+    :isModalOpen
     @close:modal="emit('close:modal')"
   >
     <template #header>
@@ -11,9 +11,8 @@
       <div class="space-y-2">
         <BaseBody>
           You are about to close the match
-          <MatchNameCopy :matchName="properties.matchName" />. This action
-          cannot be undone. To confirm, please type the match name exactly as
-          shown above.
+          <MatchNameCopy :matchName="matchName" />. This action cannot be
+          undone. To confirm, please type the match name exactly as shown above.
         </BaseBody>
         <BaseInput
           id="match-name-confirmation"
@@ -30,7 +29,7 @@
           id="close-match-button"
           variant="danger"
           :isLoading="isPending"
-          :isDisabled="properties.matchName !== confirmationMatchName"
+          :isDisabled="matchName !== confirmationMatchName"
           @keydown.enter="handleCloseMatch"
           @mousedown="handleCloseMatch"
         >

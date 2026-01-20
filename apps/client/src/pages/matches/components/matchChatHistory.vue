@@ -19,8 +19,8 @@
         <div :class="detectMarginBetweenMessages(index)">
           <div v-if="shouldDisplayUsername(index)">
             <BaseBody
-              :class="['font-bold!', usernameColorByRole(entry.message.author)]"
               isInline
+              :class="['font-bold!', usernameColorByRole(entry.message.author)]"
             >
               {{ entry.message.author }}
             </BaseBody>
@@ -42,11 +42,11 @@
     </div>
     <div class="border-primary-3 flex flex-row items-center border-t-2">
       <BaseInput
+        class="flex-1"
         id="message-input"
         placeholder="Type your message..."
-        class="flex-1"
-        variant="ghost"
         v-model="refereeMessage.content"
+        variant="ghost"
         :isDisabled="!isSocketReady"
         @keydown.enter="sendRefereeMessage"
       />

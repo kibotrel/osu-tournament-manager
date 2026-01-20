@@ -1,5 +1,5 @@
 <template>
-  <a :href="properties.link" :rel="relation" target="_blank">
+  <a target="_blank" :href="link" :rel="relation">
     <slot> Link </slot>
   </a>
 </template>

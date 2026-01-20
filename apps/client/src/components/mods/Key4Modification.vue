@@ -2,9 +2,9 @@
   <svg
     fill="none"
     stroke="currentColor"
-    stroke-width="6"
     stroke-linecap="round"
     stroke-linejoin="round"
+    stroke-width="6"
     v-bind="$attrs"
     viewBox="0 0 120 84"
     xmlns="http://www.w3.org/2000/svg"
@@ -21,10 +21,10 @@
       d="M86.6675 27.6299H89.2687C91.0871 27.6299 92.5612 29.104 92.5612 30.9224V30.9224C92.5612 32.0376 91.9967 33.0771 91.0612 33.6842L78.4705 41.8561M78.4705 41.8561H70.2058M78.4705 41.8561L92.5612 51.2724"
     />
     <clipPath>
-      <rect width="120" height="84" />
+      <rect height="84" width="120" />
     </clipPath>
     <clipPath>
-      <rect width="120" height="120" transform="translate(0 -18)" />
+      <rect height="120" transform="translate(0 -18)" width="120" />
     </clipPath>
   </svg>
 </template>
