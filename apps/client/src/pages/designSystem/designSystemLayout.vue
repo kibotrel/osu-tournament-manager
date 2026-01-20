@@ -32,22 +32,6 @@
         >
           Right
         </BaseButton>
-        <div>
-          <BaseButton
-            class="w-32"
-            id="temporary-drawer"
-            @keydown.enter="temporary = true"
-            @mousedown="temporary = true"
-          >
-            Temporary
-          </BaseButton>
-          <MatchDrawer
-            id="match-information-drawer"
-            matchName="MWC4K2025 - RO32: Philippines VS France"
-            :isDrawerOpen="temporary"
-            @close:drawer="temporary = false"
-          />
-        </div>
       </div>
     </div>
     <div class="space-y-2">
@@ -177,11 +161,8 @@ import BaseModal from '#src/components/base/baseModal.vue';
 import BaseSeparator from '#src/components/base/baseSeparator.vue';
 import BaseTabList from '#src/components/base/baseTabList.vue';
 
-import MatchDrawer from '../matches/components/matchDrawer.vue';
-
 const isModalOpen = ref(false);
 const isBottomDrawerOpen = ref(false);
 const isRightDrawerOpen = ref(false);
-const temporary = ref(false);
 const selectedTab = ref('tab1');
 </script>
