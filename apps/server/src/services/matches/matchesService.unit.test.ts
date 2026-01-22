@@ -302,11 +302,11 @@ describe('openMatchService', () => {
       endsAt: null,
       id: 1,
       isQualifierMatch: false,
-      mappoolId: 0,
+      mappoolId: 1,
       name,
       protectsPerTeam: 0,
       startsAt: new Date(),
-      tournamentId: 0,
+      tournamentId: 1,
     };
 
     openMultiplayerChannelMock.mockResolvedValueOnce({ gameMatchId });
@@ -320,11 +320,11 @@ describe('openMatchService', () => {
       bestOf: 0,
       gameMatchId,
       isQualifierMatch: false,
-      mappoolId: 0,
+      mappoolId: 1,
       name,
       protectsPerTeam: 0,
       startsAt: expect.any(Date),
-      tournamentId: 0,
+      tournamentId: 1,
     });
     expect(banchoChannelFromGameMatchIdSpy).not.toHaveBeenCalled();
     expect(banchoClient.closeMultiplayerChannel).not.toHaveBeenCalled();
@@ -400,11 +400,11 @@ describe('openMatchService', () => {
       bestOf: 0,
       gameMatchId,
       isQualifierMatch: false,
-      mappoolId: 0,
+      mappoolId: 1,
       name,
       protectsPerTeam: 0,
       startsAt: expect.any(Date),
-      tournamentId: 0,
+      tournamentId: 1,
     });
     expect(banchoChannelFromGameMatchIdSpy).toHaveBeenCalledWith(gameMatchId);
     expect(banchoClient.closeMultiplayerChannel).toHaveBeenCalledWith(
