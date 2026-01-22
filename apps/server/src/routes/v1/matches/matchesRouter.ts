@@ -5,7 +5,7 @@ import { closeMatchController } from '#src/controllers/v1/matches/closeMatchCont
 import { createMatchController } from '#src/controllers/v1/matches/createMatchController.js';
 import { getMatchChatHistoryController } from '#src/controllers/v1/matches/getMatchChatHistoryController.js';
 import { getMatchController } from '#src/controllers/v1/matches/getMatchController.js';
-import { getMatchStateHistoryController } from '#src/controllers/v1/matches/getMatchStateController.js';
+import { getMatchStateController } from '#src/controllers/v1/matches/getMatchStateController.js';
 import { validateRequest } from '#src/middlewares/requestValidatorMiddleware.js';
 import { isAuthenticated } from '#src/middlewares/sessionMiddleware.js';
 import { closeMatchValidators } from '#src/validators/v1/matches/closeMatchValidators.js';
@@ -37,7 +37,7 @@ matchesRouter.get(
   '/:gameMatchId/state',
   getMatchStateValidators(),
   validateRequest,
-  getMatchStateHistoryController,
+  getMatchStateController,
 );
 matchesRouter.post(
   '/:gameMatchId/close',

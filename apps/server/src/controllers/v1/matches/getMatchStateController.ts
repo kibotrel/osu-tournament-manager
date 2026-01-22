@@ -9,7 +9,7 @@ import { matchedData } from 'express-validator';
 
 import { getMatchStateService } from '#src/services/matches/matchesService.js';
 
-export const getMatchStateHistoryController: RequestHandler<
+export const getMatchStateController: RequestHandler<
   GetMatchStateRequestParameters,
   GetMatchStateResponseBody,
   never,
