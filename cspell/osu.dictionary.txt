@@ -4,6 +4,7 @@ beatmap
 Beatmap
 clearhost
 Freemod
+Kurokotei
 mappool
 Mappool
 mappools
