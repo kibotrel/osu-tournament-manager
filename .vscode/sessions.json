@@ -48,6 +48,14 @@
         "focus": true,
         "icon": "home",
         "name": "host:shell"
+      },
+      {
+        "autoExecuteCommands": true,
+        "commands": [
+          "opencode"
+        ],
+        "icon": "robot",
+        "name": "opencode"
       }
     ]
   }
