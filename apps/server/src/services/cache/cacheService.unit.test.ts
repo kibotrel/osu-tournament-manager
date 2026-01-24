@@ -1,6 +1,9 @@
 import { describe, expect, it, vi } from 'vitest';
 
-import { deleteListInCacheByKey } from '#src/queries/cache/deleteCacheQueries.js';
+import {
+  deleteListInCacheByKey,
+  deleteStringInCacheByKey,
+} from '#src/queries/cache/deleteCacheQueries.js';
 import {
   getListFromCacheByKey,
   getSetFromCacheByKey,
@@ -15,6 +18,7 @@ import {
   addMatchMessageToCache,
   addMatchToCachedSet,
   deleteMatchChatHistoryFromCache,
+  deleteMatchStateFromCache,
   getAllOngoingMatchesFromCache,
   getMatchChatHistoryFromCache,
   removeMatchFromCachedSet,
@@ -31,6 +35,7 @@ vi.mock('#src/queries/cache/deleteCacheQueries.js', () => {
   return {
     deleteListInCacheByKey: vi.fn(),
     deleteSetInCacheByKey: vi.fn(),
+    deleteStringInCacheByKey: vi.fn(),
   };
 });
 
@@ -82,6 +87,19 @@ describe('deleteMatchChatHistoryFromCache', () => {
 
     expect(mockedDeleteListInCacheByKey).toHaveBeenCalledWith(
       `match-messages:${channel}`,
+    );
+  });
+});
+
+describe('deleteMatchStateFromCache', () => {
+  it('should call deleteStringInCacheByKey with correct parameters', async () => {
+    const channel = 'test-channel';
+    const mockedDeleteStringInCacheByKey = vi.mocked(deleteStringInCacheByKey);
+
+    await deleteMatchStateFromCache(channel);
+
+    expect(mockedDeleteStringInCacheByKey).toHaveBeenCalledWith(
+      `match-state:${channel}`,
     );
   });
 });
