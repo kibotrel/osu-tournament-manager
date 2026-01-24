@@ -7,6 +7,7 @@ import {
 import {
   getListFromCacheByKey,
   getSetFromCacheByKey,
+  getStringFromCacheByKey,
 } from '#src/queries/cache/getCacheQueries.js';
 import {
   addToListInCacheByKey,
@@ -21,6 +22,7 @@ import {
   deleteMatchStateFromCache,
   getAllOngoingMatchesFromCache,
   getMatchChatHistoryFromCache,
+  getMatchStateFromCache,
   removeMatchFromCachedSet,
 } from './cacheService.js';
 
@@ -28,6 +30,7 @@ vi.mock('#src/queries/cache/getCacheQueries.js', () => {
   return {
     getListFromCacheByKey: vi.fn(),
     getSetFromCacheByKey: vi.fn(),
+    getStringFromCacheByKey: vi.fn(),
   };
 });
 
@@ -123,6 +126,19 @@ describe('getMatchChatHistoryFromCache', () => {
 
     expect(mockedGetListFromCacheByKey).toHaveBeenCalledWith(
       `match-messages:${channel}`,
+    );
+  });
+});
+
+describe('getMatchStateFromCache', () => {
+  it('should call getStringFromCacheByKey with correct parameters', async () => {
+    const channel = 'test-channel';
+    const mockedGetListFromCacheByKey = vi.mocked(getStringFromCacheByKey);
+
+    await getMatchStateFromCache(channel);
+
+    expect(mockedGetListFromCacheByKey).toHaveBeenCalledWith(
+      `match-state:${channel}`,
     );
   });
 });
