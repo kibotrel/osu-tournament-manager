@@ -19,6 +19,7 @@ import { openMultiplayerChannel } from '#src/services/bancho/multiplayerService.
 import {
   deleteMatchChatHistoryFromCache,
   getMatchChatHistoryFromCache,
+  getMatchStateFromCache,
   removeMatchFromCachedSet,
 } from '#src/services/cache/cacheService.js';
 import { webSocketServer } from '#src/websocketServer.js';
@@ -27,6 +28,7 @@ import {
   closeMatchService,
   getMatchChatHistoryService,
   getMatchService,
+  getMatchStateService,
   openMatchService,
 } from './matchesService.js';
 
@@ -38,6 +40,7 @@ vi.mock('#src/services/cache/cacheService.js', () => {
   return {
     deleteMatchChatHistoryFromCache: vi.fn(),
     getMatchChatHistoryFromCache: vi.fn(),
+    getMatchStateFromCache: vi.fn(),
     removeMatchFromCachedSet: vi.fn(),
   };
 });
@@ -277,6 +280,61 @@ describe('getMatchChatHistoryService', () => {
     expect(getMatchChatHistoryFromCache).toHaveBeenCalledWith(gameMatchId);
     expect(Array.isArray(result)).toBe(true);
     expect(result).toHaveLength(0);
+  });
+});
+
+describe('getMatchStateService', () => {
+  it('should return match state from cache if found', async () => {
+    const gameMatchId = 1;
+    const cachedState: shared.BanchoLobbyState = {
+      globalModifications: [],
+      playerCount: 2,
+      slots: [
+        {
+          isHost: true,
+          isReady: true,
+          player: 'player1',
+          selectedModifications: [],
+        },
+        {
+          isHost: false,
+          isReady: false,
+          player: 'player2',
+          selectedModifications: [],
+        },
+      ],
+    };
+    const getMatchStateFromCacheMock = vi.mocked(getMatchStateFromCache);
+
+    getMatchStateFromCacheMock.mockResolvedValueOnce(cachedState);
+
+    const result = await getMatchStateService(gameMatchId);
+
+    expect(getMatchStateFromCacheMock).toHaveBeenCalledWith(gameMatchId);
+    expect(result).toEqual(cachedState);
+  });
+
+  it('should return base match state if no state found in cache', async () => {
+    const gameMatchId = 1;
+    const getMatchStateFromCacheMock = vi.mocked(getMatchStateFromCache);
+
+    getMatchStateFromCacheMock.mockResolvedValueOnce(null);
+
+    const result = await getMatchStateService(gameMatchId);
+
+    expect(getMatchStateFromCacheMock).toHaveBeenCalledWith(gameMatchId);
+    expect(result).toEqual({
+      globalModifications: [],
+      playerCount: 0,
+      slots: Array.from({ length: 16 }, () => {
+        return {
+          isHost: false,
+          isReady: false,
+          player: null,
+          selectedModifications: [],
+        };
+      }),
+    });
   });
 });
 
