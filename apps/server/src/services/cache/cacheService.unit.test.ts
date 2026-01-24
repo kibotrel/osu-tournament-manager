@@ -1,3 +1,4 @@
+import type { BanchoLobbyState } from '@packages/shared';
 import { describe, expect, it, vi } from 'vitest';
 
 import {
@@ -13,6 +14,7 @@ import {
   addToListInCacheByKey,
   addToSetInCacheByKey,
   removeFromSetInCacheByKey,
+  setStringInCacheByKey,
 } from '#src/queries/cache/updateCacheQueries.js';
 
 import {
@@ -24,6 +26,7 @@ import {
   getMatchChatHistoryFromCache,
   getMatchStateFromCache,
   removeMatchFromCachedSet,
+  setMatchStateInCache,
 } from './cacheService.js';
 
 vi.mock('#src/queries/cache/getCacheQueries.js', () => {
@@ -46,6 +49,7 @@ vi.mock('#src/queries/cache/updateCacheQueries.js', () => {
   return {
     addToListInCacheByKey: vi.fn(),
     addToSetInCacheByKey: vi.fn(),
+    setStringInCacheByKey: vi.fn(),
     removeFromListInCacheByKey: vi.fn(),
     removeFromSetInCacheByKey: vi.fn(),
   };
@@ -155,6 +159,25 @@ describe('removeMatchFromCachedSet', () => {
     expect(mockedRemoveFromSetInCacheByKey).toHaveBeenCalledWith({
       key: 'open-matches',
       value: channel,
+    });
+  });
+});
+
+describe('setMatchStateInCache', () => {
+  it('should call setStringInCacheByKey with correct parameters', async () => {
+    const channel = 'test-channel';
+    const state: BanchoLobbyState = {
+      globalModifications: [],
+      playerCount: 0,
+      slots: [],
+    };
+    const mockedSetStringInCacheByKey = vi.mocked(setStringInCacheByKey);
+
+    await setMatchStateInCache({ channel: 'test-channel', state });
+
+    expect(mockedSetStringInCacheByKey).toHaveBeenCalledWith({
+      key: `match-state:${channel}`,
+      value: JSON.stringify(state),
     });
   });
 });
