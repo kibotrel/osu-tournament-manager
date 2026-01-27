@@ -33,9 +33,7 @@ const banchoClient = new BanchoClient({
 });
 
 banchoClient.on(BanchoClientEvent.BotConnected, onBotConnected);
-banchoClient.on(BanchoClientEvent.BotDisconnected, () => {
-  onBotDisconnected(banchoClient);
-});
+banchoClient.on(BanchoClientEvent.BotDisconnected, onBotDisconnected);
 banchoClient.on(BanchoClientEvent.BotJoinedChannel, onBotJoinedChannel);
 banchoClient.on(BanchoClientEvent.ChannelMessage, onChannelMessage);
 banchoClient.on(
