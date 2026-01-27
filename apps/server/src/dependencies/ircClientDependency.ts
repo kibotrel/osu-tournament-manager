@@ -1,6 +1,7 @@
 import { BanchoClient, BanchoClientEvent } from '@packages/bancho-client';
 
 import { environmentConfig } from '#src/configs/environmentConfig.js';
+import { sequencer } from '#src/dependencies/sequencerDependency.js';
 import { onBotConnected } from '#src/services/bancho/events/onBotConnectedEvent.js';
 import { onBotDisconnected } from '#src/services/bancho/events/onBotDisconnectedEvent.js';
 import { onBotJoinedChannel } from '#src/services/bancho/events/onBotJoinedChannelEvent.js';
@@ -20,6 +21,21 @@ import { onMultiplayerChannelNameUpdated } from '#src/services/bancho/events/onM
 import { onMultiplayerPayerLeftRoom } from '#src/services/bancho/events/onMultiplayerPayerLeftRoomEvent.js';
 import { onMultiplayerPlayerJoinedSlot } from '#src/services/bancho/events/onMultiplayerPlayerJoinedSlotEvent.js';
 import { onMultiplayerPlayerMovedSlot } from '#src/services/bancho/events/onMultiplayerPlayerMovedSlotEvent.js';
+
+const enqueueChannelEvent = <T extends { channel: string }>(
+  handler: (options: T) => Promise<void> | void,
+) => {
+  return (options: T) => {
+    const { channel } = options;
+
+    sequencer.enqueueTask(
+      async () => {
+        await handler(options);
+      },
+      { name: handler.name, queueId: channel },
+    );
+  };
+};
 
 const banchoClient = new BanchoClient({
   clientCredentials: {
@@ -42,59 +58,59 @@ banchoClient.on(
 );
 banchoClient.on(
   BanchoClientEvent.MultiplayerChannelAllPlayersReady,
-  onMultiplayerChannelAllPlayersReady,
+  enqueueChannelEvent(onMultiplayerChannelAllPlayersReady),
 );
 banchoClient.on(
   BanchoClientEvent.MultiplayerChannelClosed,
-  onMultiplayerChannelClosed,
+  enqueueChannelEvent(onMultiplayerChannelClosed),
 );
 banchoClient.on(
   BanchoClientEvent.MultiplayerChannelHostChanged,
-  onMultiplayerChannelHostChanged,
+  enqueueChannelEvent(onMultiplayerChannelHostChanged),
 );
 banchoClient.on(
   BanchoClientEvent.MultiplayerChannelHostCleared,
-  onMultiplayerChannelHostCleared,
+  enqueueChannelEvent(onMultiplayerChannelHostCleared),
 );
 banchoClient.on(
   BanchoClientEvent.MultiplayerChannelInformationIdentity,
-  onMultiplayerChannelInformationIdentity,
+  enqueueChannelEvent(onMultiplayerChannelInformationIdentity),
 );
 banchoClient.on(
   BanchoClientEvent.MultiplayerChannelInformationCurrentlyPlaying,
-  onMultiplayerChannelInformationCurrentlyPlaying,
+  enqueueChannelEvent(onMultiplayerChannelInformationCurrentlyPlaying),
 );
 banchoClient.on(
   BanchoClientEvent.MultiplayerChannelInformationConditions,
-  onMultiplayerChannelInformationConditions,
+  enqueueChannelEvent(onMultiplayerChannelInformationConditions),
 );
 banchoClient.on(
   BanchoClientEvent.MultiplayerChannelInformationGlobalModifications,
-  onMultiplayerChannelInformationGlobalModifications,
+  enqueueChannelEvent(onMultiplayerChannelInformationGlobalModifications),
 );
 banchoClient.on(
   BanchoClientEvent.MultiplayerChannelInformationPlayerCount,
-  onMultiplayerChannelInformationPlayerCount,
+  enqueueChannelEvent(onMultiplayerChannelInformationPlayerCount),
 );
 banchoClient.on(
   BanchoClientEvent.MultiplayerChannelInformationSlot,
-  onMultiplayerChannelInformationSlot,
+  enqueueChannelEvent(onMultiplayerChannelInformationSlot),
 );
 banchoClient.on(
   BanchoClientEvent.MultiplayerChannelNameUpdated,
-  onMultiplayerChannelNameUpdated,
+  enqueueChannelEvent(onMultiplayerChannelNameUpdated),
 );
 banchoClient.on(
   BanchoClientEvent.MultiplayerPlayerJoinedSlot,
-  onMultiplayerPlayerJoinedSlot,
+  enqueueChannelEvent(onMultiplayerPlayerJoinedSlot),
 );
 banchoClient.on(
   BanchoClientEvent.MultiplayerPayerLeftRoom,
-  onMultiplayerPayerLeftRoom,
+  enqueueChannelEvent(onMultiplayerPayerLeftRoom),
 );
 banchoClient.on(
   BanchoClientEvent.MultiplayerPlayerMovedSlot,
-  onMultiplayerPlayerMovedSlot,
+  enqueueChannelEvent(onMultiplayerPlayerMovedSlot),
 );
 
 export { banchoClient };
