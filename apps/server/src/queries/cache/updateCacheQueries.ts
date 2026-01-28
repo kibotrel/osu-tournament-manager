@@ -3,6 +3,7 @@ import type {
   AddToCacheOptions,
   CacheListKey,
   CacheSetKey,
+  CacheStringKey,
 } from '#src/@types/cache/cacheTypes.js';
 import { cache } from '#src/dependencies/cacheDependency.js';
 
@@ -51,5 +52,17 @@ export const removeFromSetInCacheByKey = async (
     await cache.multi().sRem(key, value).expire(key, expiryInSeconds).exec();
   } else {
     await cache.sRem(key, value);
+  }
+};
+
+export const setStringInCacheByKey = async (
+  options: AddToCacheOptions<CacheStringKey>,
+) => {
+  const { expiryInSeconds, key, value } = options;
+
+  if (expiryInSeconds) {
+    await cache.multi().set(key, value).expire(key, expiryInSeconds).exec();
+  } else {
+    await cache.set(key, value);
   }
 };

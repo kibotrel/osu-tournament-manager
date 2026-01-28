@@ -1,0 +1,30 @@
+<template>
+  <svg
+    fill="none"
+    stroke="currentColor"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    stroke-width="6"
+    v-bind="$attrs"
+    viewBox="0 0 120 84"
+    xmlns="http://www.w3.org/2000/svg"
+    :class="[$attrs.class]"
+  >
+    <path
+      d="M28.2886 27.5293V32.8154C28.2886 36.8422 31.5529 40.1065 35.5797 40.1065H49.7974C53.8242 40.1065 57.0886 43.3709 57.0886 47.3977V53.0483"
+    />
+    <path d="M57.0884 27.5293V34.6382" />
+    <path
+      d="M65.6384 27.5293V27.5293C68.0545 27.5293 70.0131 29.4879 70.0131 31.904V52.3192C70.0131 54.5339 71.8085 56.3293 74.0232 56.3293V56.3293"
+    />
+    <path
+      d="M86.6675 27.6299H89.2687C91.0871 27.6299 92.5612 29.104 92.5612 30.9224V30.9224C92.5612 32.0376 91.9967 33.0771 91.0612 33.6842L78.4705 41.8561M78.4705 41.8561H70.2058M78.4705 41.8561L92.5612 51.2724"
+    />
+    <clipPath>
+      <rect height="84" width="120" />
+    </clipPath>
+    <clipPath>
+      <rect height="120" transform="translate(0 -18)" width="120" />
+    </clipPath>
+  </svg>
+</template>

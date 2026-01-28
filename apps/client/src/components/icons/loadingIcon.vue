@@ -1,7 +1,6 @@
 <template>
   <svg viewBox="0 0 40 40" height="40" width="40" overflow="visible">
     <circle
-      :stroke-width="properties.strokeWidth"
       cx="20"
       cy="20"
       fill="none"
@@ -9,9 +8,9 @@
       path-length="100"
       r="17.5"
       stroke="currentColor"
+      :stroke-width
     />
     <circle
-      :stroke-width="properties.strokeWidth"
       cx="20"
       cy="20"
       fill="none"
@@ -21,6 +20,7 @@
       stroke-dasharray="25, 75"
       stroke-dashoffset="0"
       stroke-linecap="round"
+      :stroke-width
     />
   </svg>
 </template>
@@ -30,7 +30,7 @@ interface Properties {
   strokeWidth?: string;
 }
 
-const properties = withDefaults(defineProps<Properties>(), {
+withDefaults(defineProps<Properties>(), {
   strokeWidth: '3px',
 });
 </script>

@@ -1,0 +1,66 @@
+<template>
+  <svg
+    fill="none"
+    v-bind="$attrs"
+    viewBox="0 0 120 84"
+    xmlns="http://www.w3.org/2000/svg"
+    :class="[$attrs.class]"
+  >
+    <rect
+      height="48"
+      x="43.6318"
+      y="12.5293"
+      rx="9"
+      stroke="currentColor"
+      stroke-width="6"
+      width="32.4"
+    />
+    <line
+      stroke="currentColor"
+      stroke-linecap="round"
+      stroke-width="6"
+      x1="60.4318"
+      x2="60.4318"
+      y1="62.9292"
+      y2="72.5292"
+    />
+    <line
+      stroke="currentColor"
+      stroke-linecap="round"
+      stroke-width="6"
+      x1="68.2318"
+      x2="62.8745"
+      y1="40.1718"
+      y2="45.5292"
+    />
+    <line
+      stroke="currentColor"
+      stroke-linecap="round"
+      stroke-width="6"
+      x1="57.4318"
+      x2="52.0745"
+      y1="20.9716"
+      y2="26.329"
+    />
+    <line
+      stroke="currentColor"
+      stroke-linecap="round"
+      stroke-width="6"
+      x1="56.2318"
+      x2="56.8745"
+      y1="52.1718"
+      y2="51.5292"
+    />
+    <clipPath>
+      <rect fill="currentColor" height="84" width="120" />
+    </clipPath>
+    <clipPath>
+      <rect
+        fill="currentColor"
+        height="120"
+        transform="translate(0 -18)"
+        width="120"
+      />
+    </clipPath>
+  </svg>
+</template>

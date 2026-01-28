@@ -28,7 +28,7 @@ const router = createRouter({
       path: '/design-system',
       name: 'design-system',
       component: () => {
-        return import('#src/pages/designSystemPage.vue');
+        return import('#src/pages/designSystem/designSystemPage.vue');
       },
     },
     {

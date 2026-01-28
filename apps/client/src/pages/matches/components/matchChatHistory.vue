@@ -1,6 +1,11 @@
 <template>
   <div class="border-primary-3 mx-auto mt-4 w-3/4 rounded-md border-2">
-    <div class="chat-history-container" ref="chatHistoryDiv" tabindex="-1">
+    <div
+      class="chat-history-container"
+      ref="chatHistoryDiv"
+      tabindex="-1"
+      @scroll="onScroll"
+    >
       <div
         v-if="isLoading"
         class="align-center flex h-full flex-col items-center justify-center"
@@ -14,8 +19,8 @@
         <div :class="detectMarginBetweenMessages(index)">
           <div v-if="shouldDisplayUsername(index)">
             <BaseBody
-              :class="['font-bold!', usernameColorByRole(entry.message.author)]"
               isInline
+              :class="['font-bold!', usernameColorByRole(entry.message.author)]"
             >
               {{ entry.message.author }}
             </BaseBody>
@@ -37,11 +42,11 @@
     </div>
     <div class="border-primary-3 flex flex-row items-center border-t-2">
       <BaseInput
+        class="flex-1"
         id="message-input"
         placeholder="Type your message..."
-        class="flex-1"
-        variant="ghost"
         v-model="refereeMessage.content"
+        variant="ghost"
         :isDisabled="!isSocketReady"
         @keydown.enter="sendRefereeMessage"
       />
@@ -50,11 +55,12 @@
         @mousedown="sendRefereeMessage"
       >
         <PaperAirplaneIcon
-          :class="
+          :class="[
+            'h-6 w-6',
             !isSocketReady || !refereeMessage.content
               ? 'text-primary-2 cursor-not-allowed'
-              : 'hover:text-primary-1/80 cursor-pointer'
-          "
+              : 'hover:text-primary-1/80 cursor-pointer',
+          ]"
         />
       </div>
     </div>
@@ -62,7 +68,7 @@
 </template>
 
 <script setup lang="ts">
-import type { WebSocketMessageMatch } from '@packages/shared';
+import type { WebSocketMatchMessage } from '@packages/shared';
 import {
   WebSocketChannel,
   WebSocketChannelMatchesEvent,
@@ -77,7 +83,7 @@ import BaseCaption from '#src/components/base/baseCaption.vue';
 import BaseInput from '#src/components/base/baseInput.vue';
 import LoadingIcon from '#src/components/icons/loadingIcon.vue';
 import PaperAirplaneIcon from '#src/components/icons/paperAirplaneIcon.vue';
-import { useScrollToBottomInElement } from '#src/composables/useScrollToBottomInElementComposable.js';
+import { useScroll } from '#src/composables/useScrollComposable.js';
 import { useUserStore } from '#src/stores/userStore.js';
 import { defineWebsocketStore } from '#src/stores/webSocketStore.js';
 
@@ -85,10 +91,12 @@ const route = useRoute();
 const matchId = Number(route.params.gameMatchId);
 const { data: cacheHistory, isLoading } = useGetMatchChatHistory(matchId);
 const chatHistoryDiv = ref<HTMLElement | null>(null);
-const { scrollToBottom } = useScrollToBottomInElement(chatHistoryDiv);
+const { isAtBottom, onScroll, scrollToBottom } = useScroll(chatHistoryDiv, {
+  isInitiallyAtBottom: true,
+});
 const { user } = useUserStore();
 const useWebSocketStore = defineWebsocketStore<
-  WebSocketMessageMatch,
+  WebSocketMatchMessage,
   WebSocketChannel.Matches
 >({
   channel: WebSocketChannel.Matches,
@@ -97,7 +105,7 @@ const useWebSocketStore = defineWebsocketStore<
 });
 const { history, isSocketReady } = storeToRefs(useWebSocketStore());
 const { sendMessage, setHistory } = useWebSocketStore();
-const refereeMessage = reactive<WebSocketMessageMatch>({
+const refereeMessage = reactive<WebSocketMatchMessage>({
   content: '',
   author: user.name,
 });
@@ -105,7 +113,9 @@ const refereeMessage = reactive<WebSocketMessageMatch>({
 watch(
   history,
   () => {
-    scrollToBottom();
+    if (isAtBottom.value) {
+      scrollToBottom();
+    }
   },
   { deep: true, immediate: true },
 );

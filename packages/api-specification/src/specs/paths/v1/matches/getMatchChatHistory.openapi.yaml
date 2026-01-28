@@ -31,13 +31,11 @@ responses:
                     type: string
                 type: object
               timestamp:
-                example: 2025-10-05T00:31:21
+                example: 2025-10-05T00:31:21Z
                 format: date-time
                 type: string
             type: object
           type: array
-
-
     description: Chat history of an the ongoing given match.
   400:
     content:

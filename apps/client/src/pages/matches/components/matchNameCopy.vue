@@ -2,9 +2,8 @@
   "<BaseBody
     isInline
     :class="isSupported ? 'copy' : ''"
-    @mousedown="copy(properties.matchName)"
-  >
-    {{ properties.matchName }} </BaseBody
+    @mousedown="copy(matchName)"
+    >{{ matchName }}</BaseBody
   >"
 </template>
 

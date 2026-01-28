@@ -1,35 +1,30 @@
 <template>
   <div v-bind="$attrs" :class="[$attrs.class, 'min-w-0']">
     <label
-      v-if="properties.label"
+      v-if="label"
       :class="[
         'mb-1 block text-sm',
-        !properties.isDisabled && properties.errorMessage ? 'error' : '',
+        !isDisabled && errorMessage ? 'error' : '',
       ]"
-      :for="properties.id"
+      :for="id"
     >
-      <BaseBody variant="small" isInline class="font-semibold!">
-        {{ properties.label }}
+      <BaseBody class="font-semibold!" isInline variant="small">
+        {{ label }}
       </BaseBody>
-      <BaseBody
-        v-if="properties.isRequired"
-        isInline
-        variant="small"
-        class="text-red-400"
-      >
+      <BaseBody v-if="isRequired" class="text-red-400" isInline variant="small">
         *
       </BaseBody>
     </label>
     <input
-      v-if="properties.type === 'number'"
+      v-if="type === 'number'"
       inputmode="numeric"
       min="0"
       type="number"
-      :class="[properties.errorMessage ? 'error' : '', properties.variant]"
-      :disabled="properties.isDisabled"
-      :id="properties.id"
-      :autocomplete="properties.doAutoComplete ? 'on' : 'off'"
-      :placeholder="properties.placeholder"
+      :autocomplete="doAutoComplete ? 'on' : 'off'"
+      :class="[errorMessage ? 'error' : '', variant]"
+      :disabled="isDisabled"
+      :id
+      :placeholder
       :value="modelValue"
       @blur="emit('blur')"
       @input="handleInput"
@@ -37,18 +32,18 @@
     />
     <input
       v-else
-      :class="[properties.errorMessage ? 'error' : '', properties.variant]"
-      :disabled="properties.isDisabled"
-      :id="properties.id"
-      :autocomplete="properties.doAutoComplete ? 'on' : 'off'"
-      :placeholder="properties.placeholder"
+      :autocomplete="doAutoComplete ? 'on' : 'off'"
+      :class="[errorMessage ? 'error' : '', variant]"
+      :disabled="isDisabled"
+      :id
+      :placeholder
       :value="modelValue"
       @blur="emit('blur')"
       @input="handleInput"
     />
-    <div v-if="properties.errorMessage" class="mt-1 flex flex-row">
+    <div v-if="errorMessage" class="mt-1 flex flex-row">
       <BaseBody variant="small" class="text-red-400">
-        {{ properties.errorMessage }}
+        {{ errorMessage }}
       </BaseBody>
     </div>
   </div>
@@ -73,7 +68,8 @@ interface Properties {
 }
 
 const emit = defineEmits(['blur', 'update:modelValue']);
-const properties = withDefaults(defineProps<Properties>(), {
+
+withDefaults(defineProps<Properties>(), {
   doAutoComplete: false,
   isDisabled: false,
   isRequired: false,
@@ -108,7 +104,7 @@ input:focus-visible {
 }
 
 input:focus-visible:not(.ghost) {
-  @apply ring-1 ring-yellow-400 outline-hidden;
+  @apply border-yellow-400 outline-hidden;
 }
 
 input:disabled {

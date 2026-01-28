@@ -71,6 +71,7 @@ describe('joinAllOngoingMatches', () => {
     }
 
     expect(spyPromiseAll).toHaveBeenCalled();
+    expect(spyPromiseAll.mock.calls[0][0]).toHaveLength(2);
   });
 
   it('should not attempt to join any channels if there are no ongoing matches', async () => {
