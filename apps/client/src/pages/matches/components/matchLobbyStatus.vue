@@ -49,7 +49,10 @@
             <div>
               <BaseModification
                 class="mr-1"
-                v-for="(modification, index) in slot.selectedModifications"
+                v-for="(modification, index) in [
+                  ...match.globalModifications,
+                  ...slot.selectedModifications,
+                ]"
                 :key="index"
                 :mod="modification"
               />
