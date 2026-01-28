@@ -30,6 +30,7 @@
               {
                 'border-b-2': index < match.slots.length - 1,
                 'border-t-2': index > 0,
+                'hover:bg-primary-3/30': slot.player,
               },
             ]"
           >
