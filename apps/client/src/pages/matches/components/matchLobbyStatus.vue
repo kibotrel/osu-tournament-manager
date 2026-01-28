@@ -106,7 +106,7 @@ const properties = defineProps<Properties>();
 
 const refreshLobbyState = () => {
   properties.sendBanchoMessage(
-    { author: 'DemonWaves', content: '!mp settings' },
+    { author: user.name, content: BanchoCommand.GetMatchSettings },
     WebSocketChannelMatchesEvent.ChatMessages,
   );
 };

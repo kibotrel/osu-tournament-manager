@@ -64,6 +64,7 @@
 <script setup lang="ts">
 import type { WebSocketMatchMessage } from '@packages/shared';
 import {
+  BanchoCommand,
   WebSocketChannel,
   WebSocketChannelMatchesEvent,
 } from '@packages/shared';
@@ -108,7 +109,7 @@ watch(match, (newState, previousState) => {
 
 const startMatchPoint = () => {
   sendMessage(
-    { author: user.name, content: '!mp start 5' },
+    { author: user.name, content: `${BanchoCommand.StartMatch} 5` },
     WebSocketChannelMatchesEvent.ChatMessages,
   );
 };
