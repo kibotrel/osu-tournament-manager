@@ -1,26 +1,26 @@
-import type { WebSocketMatchMessage, WebSocketMessage } from '@packages/shared';
+import type {
+  HttpError,
+  WebSocketMatchMessage,
+  WebSocketMessage,
+} from '@packages/shared';
 import {
   HttpInternalServerError,
   HttpNotFoundError,
   HttpUnprocessableContentError,
-  WebSocketChannel,
-  WebSocketChannelMatchesEvent,
   banchoChannelFromGameMatchId,
 } from '@packages/shared';
 
 import { baseMatchState } from '#src/constants/banchoConstants.js';
 import { banchoClient } from '#src/dependencies/ircClientDependency.js';
+import { logger } from '#src/dependencies/loggerDependency.js';
 import { createMatch } from '#src/queries/matches/createMatchQueries.js';
 import { getMatchByGameMatchId } from '#src/queries/matches/getMatchQueries.js';
-import { patchMatchById } from '#src/queries/matches/updateMatchQueries.js';
 import { openMultiplayerChannel } from '#src/services/bancho/multiplayerService.js';
 import {
-  deleteMatchChatHistoryFromCache,
   getMatchChatHistoryFromCache,
   getMatchStateFromCache,
   removeMatchFromCachedSet,
 } from '#src/services/cache/cacheService.js';
-import { webSocketServer } from '#src/websocketServer.js';
 
 export const closeMatchService = async (gameMatchId: number) => {
   const match = await getMatchByGameMatchId(gameMatchId, {
@@ -39,18 +39,13 @@ export const closeMatchService = async (gameMatchId: number) => {
 
   const channel = banchoChannelFromGameMatchId(match.gameMatchId);
 
-  await banchoClient.closeMultiplayerChannel(channel);
-
-  const promises = [
-    removeMatchFromCachedSet(channel),
-    deleteMatchChatHistoryFromCache(match.gameMatchId),
-    patchMatchById(match.id, { endsAt: new Date() }),
-    webSocketServer.disconnectAllTopicSubscribers(
-      `${WebSocketChannel.Matches}:${match.gameMatchId}:${WebSocketChannelMatchesEvent.ChatMessages}`,
-    ),
-  ];
-
-  await Promise.all(promises);
+  try {
+    await banchoClient.closeMultiplayerChannel(channel);
+  } catch (error) {
+    logger.warn(`Failed to close channel #mp-${gameMatchId}`, {
+      error: error as HttpError,
+    });
+  }
 
   // TODO: implement detection about wether or nor the match was actually played, cancelled, forfeited etc.
   return { status: 'closed' as const };

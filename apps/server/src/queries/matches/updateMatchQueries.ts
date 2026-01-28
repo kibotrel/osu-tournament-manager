@@ -15,3 +15,15 @@ export const patchMatchById = async (
 
   return { success: rowCount === 1 };
 };
+
+export const patchMatchByGameMatchId = async (
+  gameMatchId: number,
+  options: Partial<Omit<InsertMatch, 'id' | 'createdAt' | 'updatedAt'>>,
+) => {
+  const { rowCount } = await database
+    .update(matchesTable)
+    .set(options)
+    .where(eq(matchesTable.gameMatchId, gameMatchId));
+
+  return { success: rowCount === 1 };
+};
