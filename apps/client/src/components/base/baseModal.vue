@@ -2,12 +2,11 @@
   <Transition name="modal">
     <div
       class="fixed inset-0 z-11 flex items-center justify-center bg-black/50"
-      ref="modal"
       v-show="isModalOpen"
-      @mousedown="emit('close:modal')"
     >
       <div
         class="bg-primary-4 border-primary-3 relative w-1/3 rounded-md border-2 p-4"
+        ref="modal"
         :id
         @mousedown.stop
       >
@@ -49,7 +48,7 @@ defineProps<Properties>();
 const emit = defineEmits(['close:modal']);
 const modal = useTemplateRef<HTMLDivElement>('modal');
 
-usePopUpBehavior({ element: modal, onEscape: () => emit('close:modal') });
+usePopUpBehavior({ element: modal, onClose: () => emit('close:modal') });
 </script>
 
 <style scoped>

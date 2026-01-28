@@ -29,10 +29,10 @@ const trapFocus = async (target: HTMLElement) => {
 
 export const usePopUpBehavior = ({
   element,
-  onEscape,
+  onClose,
 }: {
   element: Readonly<ShallowRef<HTMLElement | null>>;
-  onEscape: () => void;
+  onClose: () => void;
 }) => {
   const isElementVisible = shallowRef(false);
 
@@ -44,7 +44,19 @@ export const usePopUpBehavior = ({
     event.stopPropagation();
 
     if (event.key === 'Escape' && isTopElement(element)) {
-      onEscape();
+      onClose();
+    }
+  };
+
+  const closeOnClickOutside = (event: MouseEvent) => {
+    if (!isTopElement(element)) {
+      return;
+    }
+
+    const target = event.target as Node;
+
+    if (element && element.value && !element.value.contains(target)) {
+      onClose();
     }
   };
 
@@ -80,11 +92,14 @@ export const usePopUpBehavior = ({
       elementStack.push(element);
       window.addEventListener('keydown', closeOnEscape);
       window.addEventListener('keydown', tabNavigation);
+      window.addEventListener('mousedown', closeOnClickOutside);
+
       await trapFocus(element.value);
     } else {
       elementStack.pop();
       window.removeEventListener('keydown', closeOnEscape);
       window.removeEventListener('keydown', tabNavigation);
+      window.removeEventListener('mousedown', closeOnClickOutside);
 
       await nextTick();
 
@@ -100,6 +115,7 @@ export const usePopUpBehavior = ({
     elementStack.pop();
     window.removeEventListener('keydown', closeOnEscape);
     window.removeEventListener('keydown', tabNavigation);
+    window.removeEventListener('mousedown', closeOnClickOutside);
 
     await nextTick();
 

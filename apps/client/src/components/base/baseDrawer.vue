@@ -1,10 +1,6 @@
 <template>
   <Transition name="backdrop">
-    <div
-      class="fixed inset-0 z-10 bg-black/50"
-      v-show="isDrawerOpen"
-      @mousedown="emit('close:drawer')"
-    ></div>
+    <div class="fixed inset-0 z-10 bg-black/50" v-show="isDrawerOpen"></div>
   </Transition>
   <Transition :name="`drawer-${variant}`">
     <div ref="drawer" v-show="isDrawerOpen" :class="[variant, 'drawer']" :id>
@@ -59,7 +55,7 @@ const drawer = useTemplateRef<HTMLDivElement>('drawer');
 defineProps<Properties>();
 usePopUpBehavior({
   element: drawer,
-  onEscape: () => emit('close:drawer'),
+  onClose: () => emit('close:drawer'),
 });
 </script>
 
