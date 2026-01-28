@@ -26,14 +26,17 @@ export const onMultiplayerChannelInformationGlobalModifications = async ({
     modifications,
   });
 
-  const isNightcoreEnabled = modifications.includes(
-    OsuBeatmapModification.Nightcore,
-  );
-  const sanitizedModifications = isNightcoreEnabled
-    ? modifications.filter((modification) => {
-        return modification !== OsuBeatmapModification.DoubleTime;
-      })
-    : modifications;
+  const filteredOutModifications = new Set([
+    OsuBeatmapModification.FreeModification,
+  ]);
+
+  if (modifications.includes(OsuBeatmapModification.Nightcore)) {
+    filteredOutModifications.add(OsuBeatmapModification.DoubleTime);
+  }
+
+  const sanitizedModifications = modifications.filter((modification) => {
+    return !filteredOutModifications.has(modification);
+  });
   const channelId = gameMatchIdFromBanchoChannel(channel);
   const oldMatchState = await getMatchStateService(channelId);
   const newMatchState: BanchoLobbyState = {
