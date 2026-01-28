@@ -1,9 +1,5 @@
 <template>
-  <button
-    :class="properties.variant"
-    :disabled="properties.isLoading || properties.isDisabled"
-    :id="properties.id"
-  >
+  <button :class="variant" :disabled="isLoading || isDisabled" :id>
     <div v-if="isLoading">
       <LoadingIcon class="h-6 w-6" />
     </div>
@@ -39,12 +35,12 @@ interface Properties {
   isLoading?: boolean;
   variant?: ButtonVariant;
 }
-
-const properties = withDefaults(defineProps<Properties>(), {
+withDefaults(defineProps<Properties>(), {
   isDisabled: false,
   isLoading: false,
   variant: 'primary',
 });
+
 const slots = useSlots();
 </script>
 

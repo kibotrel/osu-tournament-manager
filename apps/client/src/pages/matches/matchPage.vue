@@ -16,38 +16,55 @@
       <BaseHeadline>Match {{ match.gameMatchId }}</BaseHeadline>
     </div>
     <MatchChatHistory />
-    <div class="align-center mt-4 flex justify-center space-x-4">
+    <div
+      class="align-center mt-4 flex flex-col items-center justify-center gap-y-4"
+    >
       <BaseButton
+        class="w-48"
         id="start-match-point-button"
-        class="w-32"
         variant="success"
-        @mousedown="startMatchPoint"
         @keydown.enter="startMatchPoint"
+        @mousedown="startMatchPoint"
       >
         Start
       </BaseButton>
       <BaseButton
+        class="w-48"
         id="show-close-match-modal-button"
-        class="w-32"
         variant="danger"
-        @mousedown="isModalOpen = true"
         @keydown.enter="isModalOpen = true"
+        @mousedown="isModalOpen = true"
       >
         Close Match
       </BaseButton>
+      <BaseButton
+        class="w-48"
+        id="show-match-information-drawer-button"
+        @keydown.enter="isMatchInformationDrawerOpen = true"
+        @mousedown="isMatchInformationDrawerOpen = true"
+      >
+        Match information
+      </BaseButton>
     </div>
     <MatchCloseModal
-      :isModalOpen="isModalOpen"
+      :isModalOpen
       :matchId="match.gameMatchId"
       :matchName="match.name"
-      @close:modal="isModalOpen = false"
       @close:match="redirectToMatchCreationPage"
+      @close:modal="isModalOpen = false"
+    />
+    <MatchDrawer
+      id="match-information-drawer"
+      :isDrawerOpen="isMatchInformationDrawerOpen"
+      :sendBanchoMessage="sendMessage"
+      @close:drawer="isMatchInformationDrawerOpen = false"
     />
   </div>
 </template>
 <script setup lang="ts">
-import type { WebSocketMessageMatch } from '@packages/shared';
+import type { WebSocketMatchMessage } from '@packages/shared';
 import {
+  BanchoCommand,
   WebSocketChannel,
   WebSocketChannelMatchesEvent,
 } from '@packages/shared';
@@ -65,15 +82,17 @@ import { defineWebsocketStore } from '#src/stores/webSocketStore.js';
 
 import MatchChatHistory from './components/matchChatHistory.vue';
 import MatchCloseModal from './components/matchCloseModal.vue';
+import MatchDrawer from './components/matchDrawer.vue';
 
 const route = useRoute();
 const router = inject<Router>('$router');
 const matchId = Number(route.params.gameMatchId);
 const isModalOpen = ref(false);
+const isMatchInformationDrawerOpen = ref(false);
 const { data: match, isLoading: isMatchLoading } = useGetMatch(matchId);
 const { user } = useUserStore();
 const useWebSocketStore = defineWebsocketStore<
-  WebSocketMessageMatch,
+  WebSocketMatchMessage,
   WebSocketChannel.Matches
 >({
   channel: WebSocketChannel.Matches,
@@ -90,7 +109,7 @@ watch(match, (newState, previousState) => {
 
 const startMatchPoint = () => {
   sendMessage(
-    { author: user.name, content: '!mp start 5' },
+    { author: user.name, content: `${BanchoCommand.StartMatch} 5` },
     WebSocketChannelMatchesEvent.ChatMessages,
   );
 };

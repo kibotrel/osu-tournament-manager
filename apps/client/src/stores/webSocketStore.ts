@@ -32,6 +32,7 @@ interface WebSocketStoreOptions<
 > {
   channel: Channel;
   events: Array<WebSocketChannelEventsMap[Channel]>;
+  keepHistory?: boolean;
   threadId?: string;
 }
 
@@ -46,7 +47,7 @@ export const defineWebsocketStore = <
 >(
   options: WebSocketStoreOptions<ChannelType>,
 ) => {
-  const { channel, threadId, events } = options;
+  const { channel, events, keepHistory = true, threadId } = options;
   /**
    * Since user could be in multiple threads at the same time, we need to create a unique store name
    * for each thread to avoid conflicts.
@@ -57,12 +58,13 @@ export const defineWebsocketStore = <
     urnParts.push(threadId);
   }
 
-  const storeName = formatList(urnParts, {
+  const storeName = formatList([...urnParts, events.join('+')], {
     removeEmpty: true,
     separator: ':',
   });
 
   return defineStore(storeName, () => {
+    const lastMessage = ref<WebSocketMessage<MessageType> | null>(null);
     const history = ref<Array<WebSocketMessage<MessageType>>>([]);
     const isRetryingConnection = ref(false);
     const isSocketReady = ref(false);
@@ -142,7 +144,13 @@ export const defineWebsocketStore = <
         return sendPongMessageToServer();
       }
 
-      history.value.push(JSON.parse(message.data));
+      const parsedMessage = JSON.parse(message.data);
+
+      if (keepHistory) {
+        history.value.push(parsedMessage);
+      }
+
+      lastMessage.value = parsedMessage;
     };
 
     const onOpenEvent = () => {
@@ -199,6 +207,7 @@ export const defineWebsocketStore = <
       disconnect,
       history,
       isSocketReady,
+      lastMessage,
       sendMessage,
       setHistory,
     };

@@ -10,12 +10,13 @@ export const allowedHttpMethodsOnResource: Record<
   string,
   Array<'DELETE' | 'GET' | 'PATCH' | 'POST' | 'PUT'>
 > = {
-  '/api/v1/authentication/logout': ['GET'],
   '/api/v1/authentication/login': ['POST'],
+  '/api/v1/authentication/logout': ['GET'],
   '/api/v1/matches': ['POST'],
   '/api/v1/matches/x': ['GET'],
   '/api/v1/matches/x/chat-history': ['GET'],
   '/api/v1/matches/x/close': ['POST'],
+  '/api/v1/matches/x/state': ['GET'],
   '/api/v1/public/health': ['GET'],
 };
 

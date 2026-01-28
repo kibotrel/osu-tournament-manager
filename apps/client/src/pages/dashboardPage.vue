@@ -7,14 +7,15 @@
     <BaseButton
       class="w-24"
       id="logout-button"
-      @mousedown="logout"
       :isLoading="isPending"
+      @mousedown="logout"
     >
       Logout
     </BaseButton>
     <input
-      type="text"
+      class="my-2 rounded-md border border-gray-300 bg-inherit p-2"
       placeholder="Enter message..."
+      type="text"
       v-model="message.content"
       @keydown.enter="
         () => {
@@ -22,7 +23,6 @@
           message.content = '';
         }
       "
-      class="my-2 rounded-md border border-gray-300 bg-inherit p-2"
     />
     <div class="mt-2 flex gap-2">
       <BaseButton id="connect-button" @mousedown="connect">Connect</BaseButton>
@@ -52,7 +52,7 @@
 </template>
 
 <script setup lang="ts">
-import type { WebSocketMessageMatch } from '@packages/shared';
+import type { WebSocketMatchMessage } from '@packages/shared';
 import {
   WebSocketChannel,
   WebSocketChannelMatchesEvent,
@@ -68,7 +68,7 @@ import { defineWebsocketStore } from '#src/stores/webSocketStore.js';
 
 const $router = inject<Router>('$router');
 const useWebSocketStore = defineWebsocketStore<
-  WebSocketMessageMatch,
+  WebSocketMatchMessage,
   WebSocketChannel.Matches
 >({
   channel: WebSocketChannel.Matches,
@@ -78,7 +78,7 @@ const useWebSocketStore = defineWebsocketStore<
 const { isPending, mutate: logout } = useLogout();
 const { user } = useUserStore();
 const { connect, disconnect, history, sendMessage } = useWebSocketStore();
-const message = reactive<WebSocketMessageMatch>({
+const message = reactive<WebSocketMatchMessage>({
   content: '',
   author: user.name,
 });

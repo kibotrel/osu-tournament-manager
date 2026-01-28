@@ -17,10 +17,10 @@
           class="mt-8 w-32"
           id="create-match-button"
           variant="success"
-          @mousedown="handleCreateMatch"
-          @keydown.enter="handleCreateMatch"
           :isDisabled="matchName.length === 0"
           :isLoading="isPending || !isIdle"
+          @keydown.enter="handleCreateMatch"
+          @mousedown="handleCreateMatch"
         >
           <template #default> Create </template>
           <template #icon>

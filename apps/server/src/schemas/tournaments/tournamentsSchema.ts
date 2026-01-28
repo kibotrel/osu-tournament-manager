@@ -1,18 +1,18 @@
-import { TournamentScoreMode, TournamentTeamMode } from '@packages/shared';
+import { BanchoTeamMode, BanchoWinCondition } from '@packages/shared';
 import { pgSchema } from 'drizzle-orm/pg-core';
 
 export const tournamentsSchema = pgSchema('tournaments');
 
-export const scoreModeEnum = tournamentsSchema.enum('scoreMode', [
-  TournamentScoreMode.Accuracy,
-  TournamentScoreMode.Combo,
-  TournamentScoreMode.Score,
-  TournamentScoreMode.ScoreV2,
+export const winConditionEnum = tournamentsSchema.enum('winConditionEnum', [
+  BanchoWinCondition.Accuracy,
+  BanchoWinCondition.Combo,
+  BanchoWinCondition.Score,
+  BanchoWinCondition.ScoreV2,
 ]);
 
 export const teamModeEnum = tournamentsSchema.enum('teamMode', [
-  TournamentTeamMode.HeadToHead,
-  TournamentTeamMode.TagCoOp,
-  TournamentTeamMode.TagTeamVs,
-  TournamentTeamMode.TeamVs,
+  BanchoTeamMode.HeadToHead,
+  BanchoTeamMode.TagCoOp,
+  BanchoTeamMode.TagTeamVs,
+  BanchoTeamMode.TeamVs,
 ]);
