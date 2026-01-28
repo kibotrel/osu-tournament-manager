@@ -1,19 +1,6 @@
 <template>
   <div class="space-y-4">
     <div class="space-y-2">
-      <BaseHeadline variant="title">Modals</BaseHeadline>
-      <div class="flex flex-row space-x-2">
-        <BaseButton
-          class="w-32"
-          id="base-modal"
-          @keydown.enter="isModalOpen = true"
-          @mousedown="isModalOpen = true"
-        >
-          Base
-        </BaseButton>
-      </div>
-    </div>
-    <div class="space-y-2">
       <BaseHeadline variant="title">Drawers</BaseHeadline>
       <div class="flex flex-row space-x-2">
         <BaseButton
@@ -32,6 +19,38 @@
         >
           Right
         </BaseButton>
+      </div>
+    </div>
+    <div class="space-y-2">
+      <BaseHeadline variant="title">Dropdowns</BaseHeadline>
+      <div class="flex flex-row items-center space-x-2">
+        <BaseDropdown
+          id="dropdown"
+          v-model="isDropdownOpen"
+          :items="dropdownItems"
+          @keydown.enter="isDropdownOpen = true"
+          @mousedown="isDropdownOpen = true"
+        />
+      </div>
+    </div>
+    <div class="space-y-2">
+      <BaseHeadline variant="title">Modals</BaseHeadline>
+      <div class="flex flex-row space-x-2">
+        <BaseButton
+          class="w-32"
+          id="base-modal"
+          @keydown.enter="isModalOpen = true"
+          @mousedown="isModalOpen = true"
+        >
+          Base
+        </BaseButton>
+      </div>
+    </div>
+    <div class="space-y-2">
+      <BaseHeadline variant="title">Separators</BaseHeadline>
+      <div class="w-96 space-y-4">
+        <BaseSeparator />
+        <BaseSeparator variant="dashed" />
       </div>
     </div>
     <div class="space-y-2">
@@ -54,13 +73,6 @@
             { icon: 'cubeTransparent', label: 'Icon', value: 'tab3' },
           ]"
         />
-      </div>
-    </div>
-    <div class="space-y-2">
-      <BaseHeadline variant="title">Separators</BaseHeadline>
-      <div class="w-96 space-y-4">
-        <BaseSeparator />
-        <BaseSeparator variant="dashed" />
       </div>
     </div>
     <BaseModal
@@ -156,6 +168,8 @@ import { ref } from 'vue';
 import BaseBody from '#src/components/base/baseBody.vue';
 import BaseButton from '#src/components/base/baseButton.vue';
 import BaseDrawer from '#src/components/base/baseDrawer.vue';
+import type { DropdownItem } from '#src/components/base/baseDropdown.vue';
+import BaseDropdown from '#src/components/base/baseDropdown.vue';
 import BaseHeadline from '#src/components/base/baseHeadline.vue';
 import BaseModal from '#src/components/base/baseModal.vue';
 import BaseSeparator from '#src/components/base/baseSeparator.vue';
@@ -163,6 +177,30 @@ import BaseTabList from '#src/components/base/baseTabList.vue';
 
 const isModalOpen = ref(false);
 const isBottomDrawerOpen = ref(false);
+const isDropdownOpen = ref(false);
 const isRightDrawerOpen = ref(false);
 const selectedTab = ref('tab1');
+const dropdownItems: DropdownItem[] = [
+  {
+    id: 'option-1',
+    label: 'Option 1',
+    onSelect: () => {
+      console.log('Option 1');
+    },
+  },
+  {
+    id: 'option-2',
+    label: 'Option 2',
+    onSelect: () => {
+      console.log('Option 2');
+    },
+  },
+  {
+    id: 'option-3',
+    label: 'Option 3',
+    onSelect: () => {
+      console.log('Option 3');
+    },
+  },
+];
 </script>
