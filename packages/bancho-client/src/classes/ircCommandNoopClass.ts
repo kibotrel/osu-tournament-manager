@@ -17,7 +17,6 @@ export class IrcCommandNoop implements IrcCommand {
     this.packetParts = packetParts;
   }
 
-  // TODO: Implement events captured by this class in the future.
   public handleCommand() {
     /**
      * Temporary catch-all logger to see what commands could be implemented

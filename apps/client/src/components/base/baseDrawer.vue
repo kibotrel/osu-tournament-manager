@@ -1,22 +1,22 @@
 <template>
   <Transition name="backdrop">
-    <div
-      v-show="properties.isDrawerOpen"
-      class="fixed inset-0 z-10 bg-black/50"
-      @mousedown="emit('close:drawer')"
-    ></div>
+    <div class="fixed inset-0 z-10 bg-black/50" v-show="isDrawerOpen"></div>
   </Transition>
-  <Transition :name="`drawer-${properties.variant}`">
-    <div
-      ref="drawer"
-      v-show="properties.isDrawerOpen"
-      :class="properties.variant"
-      :id="properties.id"
-    >
-      <div>
-        <XMarkIcon
+  <Transition :name="`drawer-${variant}`">
+    <div ref="drawer" v-show="isDrawerOpen" :class="[variant, 'drawer']" :id>
+      <div class="flex flex-row justify-between p-2">
+        <BaseIcon
+          class="action-icon"
           tabindex="0"
-          class="x-mark"
+          :name="
+            variant === 'right' ? 'chevronDoubleRight' : 'chevronDoubleDown'
+          "
+          @keydown.enter="emit('close:drawer')"
+          @mousedown="emit('close:drawer')"
+        />
+        <EllipsisVerticalIcon
+          class="action-icon"
+          tabindex="0"
           @keydown.enter="emit('close:drawer')"
           @mousedown="emit('close:drawer')"
         />
@@ -24,7 +24,7 @@
       <div>
         <slot name="header"> </slot>
       </div>
-      <div class="flex-1 overflow-auto">
+      <div class="mb-4 flex-1 overflow-auto">
         <slot name="body"> </slot>
       </div>
       <div>
@@ -37,8 +37,11 @@
 <script setup lang="ts">
 import { useTemplateRef } from 'vue';
 
-import XMarkIcon from '#src/components/icons/xMarkIcon.vue';
 import { usePopUpBehavior } from '#src/composables/usePopUpComposable.js';
+
+import EllipsisVerticalIcon from '../icons/ellipsisVerticalIcon.vue';
+
+import BaseIcon from './baseIcon.vue';
 
 interface Properties {
   id: string;
@@ -48,11 +51,11 @@ interface Properties {
 
 const emit = defineEmits(['close:drawer']);
 const drawer = useTemplateRef<HTMLDivElement>('drawer');
-const properties = defineProps<Properties>();
 
+defineProps<Properties>();
 usePopUpBehavior({
   element: drawer,
-  onEscape: () => emit('close:drawer'),
+  onClose: () => emit('close:drawer'),
 });
 </script>
 
@@ -86,19 +89,23 @@ usePopUpBehavior({
   transform: translateY(100%);
 }
 
+.drawer {
+  @apply bg-primary-4 border-primary-3 fixed z-10 flex flex-col rounded-md border-2;
+}
+
 .right {
-  @apply bg-primary-4 border-primary-3 fixed top-0 right-0 z-10 flex h-full w-1/3 flex-col border-l-2 p-4;
+  @apply top-4 right-4 h-[calc(100%-32px)] w-1/2;
 }
 
 .bottom {
-  @apply bg-primary-4 border-primary-3 fixed bottom-0 left-0 z-10 flex h-1/3 w-full flex-col border-t-2 p-4;
+  @apply bottom-0 left-4 h-1/2 w-[calc(100%-32px)];
 }
 
-.x-mark {
-  @apply text-primary-1 hover:text-primary-1/90 active:text-primary-1/80 absolute right-0 mr-4 h-6 ring-0 outline-none hover:cursor-pointer;
+.action-icon {
+  @apply text-primary-2 hover:text-primary-2/80 active:text-primary-2/60 h-6 w-6 ring-0 outline-none hover:cursor-pointer;
 }
 
-.x-mark:focus-visible {
+.action-icon:focus-visible {
   @apply rounded-md ring-2 ring-yellow-400 outline-hidden;
 }
 </style>

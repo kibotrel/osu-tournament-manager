@@ -1,8 +1,5 @@
 <template>
-  <component
-    :is="properties.variant === 'subtitle' ? 'h2' : 'h1'"
-    :class="properties.variant"
-  >
+  <component :class="variant" :is="variant === 'subtitle' ? 'h2' : 'h1'">
     <slot></slot>
   </component>
 </template>
@@ -14,9 +11,7 @@ interface Properties {
   variant?: HeadlineVariant;
 }
 
-const properties = withDefaults(defineProps<Properties>(), {
-  variant: 'title',
-});
+withDefaults(defineProps<Properties>(), { variant: 'title' });
 </script>
 
 <style scoped>

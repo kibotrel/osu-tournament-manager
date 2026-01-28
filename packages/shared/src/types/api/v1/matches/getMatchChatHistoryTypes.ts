@@ -1,8 +1,8 @@
 import type { ErrorReport } from '#src/classes/httpErrorReportClass.js';
 import type {
   StringRecord,
+  WebSocketMatchMessage,
   WebSocketMessage,
-  WebSocketMessageMatch,
 } from '#src/sharedExport.js';
 
 export interface GetMatchChatHistoryRequestParameters extends StringRecord {
@@ -10,7 +10,7 @@ export interface GetMatchChatHistoryRequestParameters extends StringRecord {
 }
 
 export interface GetMatchChatHistoryResponseData {
-  history: Array<WebSocketMessage<WebSocketMessageMatch>>;
+  history: Array<WebSocketMessage<WebSocketMatchMessage>>;
 }
 
 export type GetMatchChatHistoryResponseBody =

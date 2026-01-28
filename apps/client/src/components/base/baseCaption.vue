@@ -1,8 +1,5 @@
 <template>
-  <component
-    :is="properties.isInline ? 'span' : 'p'"
-    :class="properties.variant"
-  >
+  <component :class="variant" :is="isInline ? 'span' : 'p'">
     <slot></slot>
   </component>
 </template>
@@ -15,10 +12,7 @@ interface Properties {
   variant?: BodyVariant;
 }
 
-const properties = withDefaults(defineProps<Properties>(), {
-  isInline: false,
-  variant: 'base',
-});
+withDefaults(defineProps<Properties>(), { isInline: false, variant: 'base' });
 </script>
 
 <style scoped>

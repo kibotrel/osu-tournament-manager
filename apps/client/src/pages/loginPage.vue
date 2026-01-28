@@ -1,16 +1,16 @@
 <template>
   <div class="flex min-h-screen items-center justify-center">
     <div class="border-primary-3 w-1/4 rounded-md border-2 p-8 text-center">
-      <BaseHeadline variant="hero" class="mb-2">Welcome</BaseHeadline>
+      <BaseHeadline class="mb-2" variant="hero">Welcome</BaseHeadline>
       <BaseBody class="text-primary-2">
         To get access to this webapp, please login with your osu! account.
       </BaseBody>
       <BaseButton
         class="m-auto mt-8 w-32"
         id="login-button"
-        @mousedown="redirectToOsuAuthPage()"
-        @keydown.enter="redirectToOsuAuthPage()"
         :isLoading="isLoginButtonLoading"
+        @keydown.enter="redirectToOsuAuthPage()"
+        @mousedown="redirectToOsuAuthPage()"
       >
         <template #default> Login </template>
         <template #icon>

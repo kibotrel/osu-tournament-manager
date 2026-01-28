@@ -6,7 +6,21 @@ export enum BanchoClientEvent {
   BotSentMessage = 'bot_sent_message',
   ChannelMessage = 'channel_message',
   ChannelNotFound = 'channel_not_found',
+  ConcurrentMatchLimitReached = 'concurrent_match_limit_reached',
+  MultiplayerChannelAllPlayersReady = 'multiplayer_channel_all_players_ready',
   MultiplayerChannelClosed = 'multiplayer_channel_closed',
+  MultiplayerChannelHostChanged = 'multiplayer_channel_host_changed',
+  MultiplayerChannelHostCleared = 'multiplayer_channel_host_cleared',
+  MultiplayerChannelInformationConditions = 'multiplayer_channel_information_conditions',
+  MultiplayerChannelInformationCurrentlyPlaying = 'multiplayer_channel_information_currently_playing',
+  MultiplayerChannelInformationGlobalModifications = 'multiplayer_channel_information_global_modifications',
+  MultiplayerChannelInformationIdentity = 'multiplayer_channel_information_identity',
+  MultiplayerChannelInformationPlayerCount = 'multiplayer_channel_information_player_count',
+  MultiplayerChannelInformationSlot = 'multiplayer_channel_information_slot',
+  MultiplayerChannelNameUpdated = 'multiplayer_channel_name_updated',
+  MultiplayerPlayerJoinedSlot = 'multiplayer_player_joined_slot',
+  MultiplayerPayerLeftRoom = 'multiplayer_player_left_room',
+  MultiplayerPlayerMovedSlot = 'multiplayer_player_moved_slot',
   RecipientNotFound = 'recipient_not_found',
   UserAlreadyInChannel = 'user_already_in_channel',
   UserDisconnected = 'user_disconnected',
@@ -17,29 +31,29 @@ export enum BanchoClientEvent {
 }
 
 /**
- * Commands that can be used to manage a tournament match.
- * See [the osu! Tournament management commands wiki](https://osu.ppy.sh/wiki/en/osu%21_tournament_client/osu%21tourney/Tournament_management_commands)
- * for more information.
+ * List of messages that the Bancho bot can send in response to a command.
  */
-export enum BanchoCommand {
-  AbortMatch = '!mp abort',
-  AbortTimer = '!mp aborttimer',
-  ClearHost = '!mp clearhost',
-  CloseMatch = '!mp close',
-  CreateTournamentMatch = '!mp make',
-  GetMatchSettings = '!mp settings',
-  InvitePlayer = '!mp invite',
-  KickPlayer = '!mp kick',
-  LockMatchState = '!mp lock',
-  MovePlayer = '!mp move',
-  SetBeatmap = '!mp map',
-  SetLobbySize = '!mp size',
-  SetMatchProperty = '!mp set',
-  SetMods = '!mp mods',
-  SetPlayerTeam = '!mp team',
-  StartMatch = '!mp start',
-  StartTimer = '!mp timer',
-  TransferHost = '!mp host',
+export enum BanchoBotCommonMessage {
+  ChangedBeatmap = '^Changed beatmap to (?<url>\\S+) (?<beatmap>.+)$',
+  ClearHost = '^Cleared match host$',
+  ClosedMatch = '^Closed the match$',
+  ConcurrentMatchLimitReached = '^You cannot create any more tournament matches. Please close any previous tournament matches you have open.$',
+  CurrentlyPlaying = '^Beatmap: (?<url>\\S+) (?<beatmap>.+)$',
+  GlobalActiveModifications = '^Active mods: (?<modifications>.+)$',
+  InvitedUserToChannel = '^Invited (?<user>\\S+) to the room$',
+  MatchAllPlayersReady = '^All players are ready$',
+  MatchConditions = '^Team mode: (?<teamMode>\\S+), Win condition: (?<winCondition>\\S+)$',
+  MatchCreation = '^Created the tournament match (?<historyUrl>\\S+)\\s+(?<name>.+)$',
+  MatchNewHost = '^(?<user>\\S+) became the host\\.$',
+  MatchSlot = '^Slot (?<slotNumber>\\d+)\\s+(?<status>Not Ready|Ready)\\s+https:\\/\\/osu\\.ppy\\.sh\\/u\\/(?<gameUserId>\\d+)\\s+(?<user>.+?)\\s*(\\[(?<attributes>.+)\\])?$',
+  PlayerCount = '^Players: (?<playerCount>\\d+)$',
+  RoomIdentification = '^Room name: (?<name>.+), History: (?<historyUrl>\\S+)$',
+  RoomNameUpdated = '^Room name updated to "(?<name>.+)"$',
+  UserAlreadyInChannel = '^User is already in the room$',
+  UserJoinedSlot = '^(?<user>\\S+) joined in slot (?<slotNumber>\\d+)\\.$',
+  UserLeftRoom = '^(?<user>\\S+) left the game\\.$',
+  UserMovedSlot = '^(?<user>\\S+) moved to slot (?<slotNumber>\\d+)$',
+  UserNotFound = '^User not found$',
 }
 
 export enum BanchoUser {
@@ -48,4 +62,13 @@ export enum BanchoUser {
 
 export enum BanchoPublicChannel {
   Lobby = '#lobby',
+}
+
+export enum BanchoReadyStatus {
+  NotReady = 'Not Ready',
+  Ready = 'Ready',
+}
+
+export enum BanchoTerm {
+  Host = 'Host',
 }

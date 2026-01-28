@@ -1,4 +1,4 @@
-import type { WebSocketMessage, WebSocketMessageMatch } from '@packages/shared';
+import type { WebSocketMatchMessage, WebSocketMessage } from '@packages/shared';
 import * as shared from '@packages/shared';
 import {
   HttpInternalServerError,
@@ -13,20 +13,19 @@ import {
   getMatchByGameMatchId,
   getMatchById,
 } from '#src/queries/matches/getMatchQueries.js';
-import { patchMatchById } from '#src/queries/matches/updateMatchQueries.js';
 import type { SelectMatch } from '#src/schemas/matches/matchesTable.js';
 import { openMultiplayerChannel } from '#src/services/bancho/multiplayerService.js';
 import {
-  deleteMatchChatHistoryFromCache,
   getMatchChatHistoryFromCache,
+  getMatchStateFromCache,
   removeMatchFromCachedSet,
 } from '#src/services/cache/cacheService.js';
-import { webSocketServer } from '#src/websocketServer.js';
 
 import {
   closeMatchService,
   getMatchChatHistoryService,
   getMatchService,
+  getMatchStateService,
   openMatchService,
 } from './matchesService.js';
 
@@ -38,16 +37,13 @@ vi.mock('#src/services/cache/cacheService.js', () => {
   return {
     deleteMatchChatHistoryFromCache: vi.fn(),
     getMatchChatHistoryFromCache: vi.fn(),
+    getMatchStateFromCache: vi.fn(),
     removeMatchFromCachedSet: vi.fn(),
   };
 });
 
 vi.mock('#src/websocketServer.js', () => {
-  return {
-    webSocketServer: {
-      disconnectAllTopicSubscribers: vi.fn(),
-    },
-  };
+  return { webSocketServer: { disconnectAllTopicSubscribers: vi.fn() } };
 });
 
 vi.mock('#src/queries/matches/updateMatchQueries.js', () => {
@@ -78,12 +74,7 @@ describe('closeMatchService', () => {
       shared,
       'banchoChannelFromGameMatchId',
     );
-    const promiseAllSpy = vi.spyOn(Promise, 'all');
-    const match = {
-      gameMatchId: 123_456,
-      id,
-      endsAt: null,
-    };
+    const match = { gameMatchId: 123_456, id, endsAt: null };
 
     getMatchByGameMatchIdMock.mockResolvedValueOnce(match as SelectMatch);
 
@@ -98,21 +89,6 @@ describe('closeMatchService', () => {
     expect(banchoClient.closeMultiplayerChannel).toHaveBeenCalledWith(
       `#mp_${match.gameMatchId}`,
     );
-    expect(removeMatchFromCachedSet).toHaveBeenCalledWith(
-      `#mp_${match.gameMatchId}`,
-    );
-    expect(patchMatchById).toHaveBeenCalledWith(
-      id,
-      expect.objectContaining({ endsAt: expect.any(Date) }),
-    );
-    expect(deleteMatchChatHistoryFromCache).toHaveBeenCalledWith(
-      match.gameMatchId,
-    );
-    expect(webSocketServer.disconnectAllTopicSubscribers).toHaveBeenCalledWith(
-      `matches:${match.gameMatchId}:chat-messages`,
-    );
-    expect(promiseAllSpy).toHaveBeenCalled();
-    expect(promiseAllSpy.mock.calls?.at(0)?.at(0)).toHaveLength(4);
     expect(status).toBe('closed');
   });
 
@@ -123,7 +99,6 @@ describe('closeMatchService', () => {
       shared,
       'banchoChannelFromGameMatchId',
     );
-    const promiseAllSpy = vi.spyOn(Promise, 'all');
 
     getMatchByIdMock.mockResolvedValueOnce(null);
 
@@ -142,9 +117,6 @@ describe('closeMatchService', () => {
 
     expect(banchoChannelFromGameMatchIdSpy).not.toHaveBeenCalled();
     expect(banchoClient.closeMultiplayerChannel).not.toHaveBeenCalled();
-    expect(removeMatchFromCachedSet).not.toHaveBeenCalled();
-    expect(patchMatchById).not.toHaveBeenCalled();
-    expect(promiseAllSpy).not.toHaveBeenCalled();
   });
 
   it('should throw HttpUnprocessableContentError if match already closed', async () => {
@@ -154,12 +126,7 @@ describe('closeMatchService', () => {
       shared,
       'banchoChannelFromGameMatchId',
     );
-    const promiseAllSpy = vi.spyOn(Promise, 'all');
-    const match = {
-      gameMatchId: 123_456,
-      id,
-      endsAt: new Date(),
-    };
+    const match = { gameMatchId: 123_456, id, endsAt: new Date() };
 
     getMatchByGameMatchIdMock.mockResolvedValueOnce(match as SelectMatch);
 
@@ -178,9 +145,6 @@ describe('closeMatchService', () => {
 
     expect(banchoChannelFromGameMatchIdSpy).not.toHaveBeenCalled();
     expect(banchoClient.closeMultiplayerChannel).not.toHaveBeenCalled();
-    expect(removeMatchFromCachedSet).not.toHaveBeenCalled();
-    expect(patchMatchById).not.toHaveBeenCalled();
-    expect(promiseAllSpy).not.toHaveBeenCalled();
   });
 });
 
@@ -236,7 +200,7 @@ describe('getMatchChatHistoryService', () => {
 
   it('should return an array of chat messages if found', async () => {
     const gameMatchId = 123_456;
-    const chatHistory: Array<WebSocketMessage<WebSocketMessageMatch>> = [
+    const chatHistory: Array<WebSocketMessage<WebSocketMatchMessage>> = [
       {
         message: {
           author: 'user',
@@ -280,6 +244,61 @@ describe('getMatchChatHistoryService', () => {
   });
 });
 
+describe('getMatchStateService', () => {
+  it('should return match state from cache if found', async () => {
+    const gameMatchId = 1;
+    const cachedState: shared.BanchoLobbyState = {
+      globalModifications: [],
+      playerCount: 2,
+      slots: [
+        {
+          isHost: true,
+          isReady: true,
+          player: 'player1',
+          selectedModifications: [],
+        },
+        {
+          isHost: false,
+          isReady: false,
+          player: 'player2',
+          selectedModifications: [],
+        },
+      ],
+    };
+    const getMatchStateFromCacheMock = vi.mocked(getMatchStateFromCache);
+
+    getMatchStateFromCacheMock.mockResolvedValueOnce(cachedState);
+
+    const result = await getMatchStateService(gameMatchId);
+
+    expect(getMatchStateFromCacheMock).toHaveBeenCalledWith(gameMatchId);
+    expect(result).toEqual(cachedState);
+  });
+
+  it('should return base match state if no state found in cache', async () => {
+    const gameMatchId = 1;
+    const getMatchStateFromCacheMock = vi.mocked(getMatchStateFromCache);
+
+    getMatchStateFromCacheMock.mockResolvedValueOnce(null);
+
+    const result = await getMatchStateService(gameMatchId);
+
+    expect(getMatchStateFromCacheMock).toHaveBeenCalledWith(gameMatchId);
+    expect(result).toEqual({
+      globalModifications: [],
+      playerCount: 0,
+      slots: Array.from({ length: 16 }, () => {
+        return {
+          isHost: false,
+          isReady: false,
+          player: null,
+          selectedModifications: [],
+        };
+      }),
+    });
+  });
+});
+
 describe('openMatchService', () => {
   afterEach(() => {
     vi.clearAllMocks();
@@ -302,11 +321,11 @@ describe('openMatchService', () => {
       endsAt: null,
       id: 1,
       isQualifierMatch: false,
-      mappoolId: 0,
+      mappoolId: 1,
       name,
       protectsPerTeam: 0,
       startsAt: new Date(),
-      tournamentId: 0,
+      tournamentId: 1,
     };
 
     openMultiplayerChannelMock.mockResolvedValueOnce({ gameMatchId });
@@ -320,11 +339,11 @@ describe('openMatchService', () => {
       bestOf: 0,
       gameMatchId,
       isQualifierMatch: false,
-      mappoolId: 0,
+      mappoolId: 1,
       name,
       protectsPerTeam: 0,
       startsAt: expect.any(Date),
-      tournamentId: 0,
+      tournamentId: 1,
     });
     expect(banchoChannelFromGameMatchIdSpy).not.toHaveBeenCalled();
     expect(banchoClient.closeMultiplayerChannel).not.toHaveBeenCalled();
@@ -400,11 +419,11 @@ describe('openMatchService', () => {
       bestOf: 0,
       gameMatchId,
       isQualifierMatch: false,
-      mappoolId: 0,
+      mappoolId: 1,
       name,
       protectsPerTeam: 0,
       startsAt: expect.any(Date),
-      tournamentId: 0,
+      tournamentId: 1,
     });
     expect(banchoChannelFromGameMatchIdSpy).toHaveBeenCalledWith(gameMatchId);
     expect(banchoClient.closeMultiplayerChannel).toHaveBeenCalledWith(
