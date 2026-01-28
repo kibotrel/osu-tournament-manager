@@ -24,7 +24,7 @@
         <div v-for="(slot, index) in match.slots" :key="index">
           <div
             :class="[
-              'border-primary-4 grid grid-cols-[0.5rem_1fr_1fr_5rem] items-center',
+              'border-primary-4 grid grid-cols-[0.5rem_1fr_1fr_5rem_2em] items-center',
               {
                 'border-b-2': index < match.slots.length - 1,
                 'border-t-2': index > 0,
@@ -67,6 +67,9 @@
                 Ready
               </BaseBadge>
             </div>
+            <div class="flex" v-if="slot.player">
+              <BaseDropdown :items="quickActionsForPlayer(slot.player)" />
+            </div>
           </div>
         </div>
       </div>
@@ -76,16 +79,19 @@
 
 <script setup lang="ts">
 import type { WebSocketMatchMessage } from '@packages/shared';
-import { WebSocketChannelMatchesEvent } from '@packages/shared';
+import { BanchoCommand, WebSocketChannelMatchesEvent } from '@packages/shared';
 import { storeToRefs } from 'pinia';
 
 import BaseBadge from '#src/components/base/baseBadge.vue';
 import BaseBody from '#src/components/base/baseBody.vue';
 import BaseButton from '#src/components/base/baseButton.vue';
+import type { DropdownItem } from '#src/components/base/baseDropdown.vue';
+import BaseDropdown from '#src/components/base/baseDropdown.vue';
 import BaseModification from '#src/components/base/baseModification.vue';
 import ArrowPathIcon from '#src/components/icons/arrowPathIcon.vue';
 import CrownIcon from '#src/components/icons/crownIcon.vue';
 import { useMatchStore } from '#src/stores/matchStore.js';
+import { useUserStore } from '#src/stores/userStore.js';
 
 interface Properties {
   sendBanchoMessage: (
@@ -94,6 +100,7 @@ interface Properties {
   ) => void;
 }
 
+const { user } = useUserStore();
 const { match } = storeToRefs(useMatchStore());
 const properties = defineProps<Properties>();
 
@@ -102,5 +109,36 @@ const refreshLobbyState = () => {
     { author: 'DemonWaves', content: '!mp settings' },
     WebSocketChannelMatchesEvent.ChatMessages,
   );
+};
+
+const quickActionsForPlayer = (player: string): DropdownItem[] => {
+  return [
+    {
+      id: 'transfer-host',
+      label: 'Host',
+      onSelect: () => {
+        properties.sendBanchoMessage(
+          {
+            author: user.name,
+            content: `${BanchoCommand.TransferHost} ${player}`,
+          },
+          WebSocketChannelMatchesEvent.ChatMessages,
+        );
+      },
+    },
+    {
+      id: 'kick-player',
+      label: 'Kick',
+      onSelect: () => {
+        properties.sendBanchoMessage(
+          {
+            author: user.name,
+            content: `${BanchoCommand.KickPlayer} ${player}`,
+          },
+          WebSocketChannelMatchesEvent.ChatMessages,
+        );
+      },
+    },
+  ];
 };
 </script>
