@@ -11,10 +11,13 @@ import {
   WebSocketClosureCode,
   WebSocketClosureReason,
   WebSocketEvent,
+  exponentialBackoffDelay,
   formatList,
   isBinaryObject,
+  sleep,
 } from '@packages/shared';
 import { defineStore } from 'pinia';
+import type { UnwrapRef } from 'vue';
 import { ref } from 'vue';
 
 import { baseWebSocketUrl } from '#src/api/apiConstants.js';
@@ -29,6 +32,7 @@ interface WebSocketStoreOptions<
 > {
   channel: Channel;
   events: Array<WebSocketChannelEventsMap[Channel]>;
+  keepHistory?: boolean;
   threadId?: string;
 }
 
@@ -43,7 +47,7 @@ export const defineWebsocketStore = <
 >(
   options: WebSocketStoreOptions<ChannelType>,
 ) => {
-  const { channel, threadId, events } = options;
+  const { channel, events, keepHistory = true, threadId } = options;
   /**
    * Since user could be in multiple threads at the same time, we need to create a unique store name
    * for each thread to avoid conflicts.
@@ -54,13 +58,16 @@ export const defineWebsocketStore = <
     urnParts.push(threadId);
   }
 
-  const storeName = formatList(urnParts, {
+  const storeName = formatList([...urnParts, events.join('+')], {
     removeEmpty: true,
     separator: ':',
   });
 
   return defineStore(storeName, () => {
+    const lastMessage = ref<WebSocketMessage<MessageType> | null>(null);
     const history = ref<Array<WebSocketMessage<MessageType>>>([]);
+    const isRetryingConnection = ref(false);
+    const isSocketReady = ref(false);
     const socket = ref<ExtendedWebSocket | undefined>(undefined);
 
     const connect = () => {
@@ -69,9 +76,6 @@ export const defineWebsocketStore = <
           WebSocketClosureCode.Normal,
           WebSocketClosureReason.Reconnecting,
         );
-
-        clearTimeout(socket.value.pongTimeout);
-        history.value.splice(0, history.value.length);
       }
 
       const endpoint = formatList(urnParts, {
@@ -98,20 +102,40 @@ export const defineWebsocketStore = <
         WebSocketClosureCode.Normal,
         WebSocketClosureReason.FinishedCommunicating,
       );
-
-      clearTimeout(socket.value.pongTimeout);
-      history.value.splice(0, history.value.length);
-      socket.value = undefined;
     };
 
-    const onCloseEvent = () => {
-      return () => {
-        clearTimeout(socket.value?.pongTimeout);
-        socket.value = undefined;
-      };
+    const onCloseEvent = async (event: CloseEvent) => {
+      clearTimeout(socket.value?.pongTimeout);
+      isSocketReady.value = false;
+      socket.value = undefined;
+
+      if (
+        [
+          WebSocketClosureReason.NotResponding,
+          WebSocketClosureReason.ServerShutdown,
+        ].includes(event.reason as WebSocketClosureReason)
+      ) {
+        // TODO: Show a message to the user indicating that websocket connection was lost and that we're attempting to re-establish it.
+        isRetryingConnection.value = true;
+
+        for (let attempt = 0; attempt < 5; attempt++) {
+          connect();
+          await sleep(exponentialBackoffDelay({ attempt }));
+
+          if (isSocketReady.value) {
+            break;
+          }
+        }
+
+        isRetryingConnection.value = false;
+        // TODO: Show a message to the user indicating that websocket connection couldn't be re-established.
+      }
     };
 
     const onErrorEvent = () => {
+      if (!isSocketReady.value) {
+        socket.value = undefined;
+      }
       // TODO: Show a message to the user in a toast for example.
     };
 
@@ -120,11 +144,22 @@ export const defineWebsocketStore = <
         return sendPongMessageToServer();
       }
 
-      history.value.push(JSON.parse(message.data));
+      const parsedMessage = JSON.parse(message.data);
+
+      if (keepHistory) {
+        history.value.push(parsedMessage);
+      }
+
+      lastMessage.value = parsedMessage;
     };
 
     const onOpenEvent = () => {
-      // TODO: Fetch data from server to backfill the messages array.
+      if (isRetryingConnection.value) {
+        isRetryingConnection.value = false;
+        // TODO: Show a message to the user indicating that connection was re-established.
+      }
+
+      isSocketReady.value = true;
     };
 
     const sendMessage = (
@@ -161,6 +196,20 @@ export const defineWebsocketStore = <
       socket.value.send(new Uint8Array([WEBSOCKET_PONG_PAYLOAD]));
     };
 
-    return { connect, disconnect, history, sendMessage, socket };
+    const setHistory = (
+      newHistory: Array<WebSocketMessage<UnwrapRef<MessageType>>>,
+    ) => {
+      history.value.splice(0, history.value.length, ...newHistory);
+    };
+
+    return {
+      connect,
+      disconnect,
+      history,
+      isSocketReady,
+      lastMessage,
+      sendMessage,
+      setHistory,
+    };
   });
 };

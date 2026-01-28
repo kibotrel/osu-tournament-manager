@@ -1,29 +1,74 @@
+import type { BanchoLobbyState } from '@packages/shared';
 import { describe, expect, it, vi } from 'vitest';
 
-import { CacheSetTopic } from '#src/constants/cacheConstants.js';
-import { getSetFromCacheByKey } from '#src/queries/cache/getCacheQueries.js';
 import {
+  deleteListInCacheByKey,
+  deleteStringInCacheByKey,
+} from '#src/queries/cache/deleteCacheQueries.js';
+import {
+  getListFromCacheByKey,
+  getSetFromCacheByKey,
+  getStringFromCacheByKey,
+} from '#src/queries/cache/getCacheQueries.js';
+import {
+  addToListInCacheByKey,
   addToSetInCacheByKey,
   removeFromSetInCacheByKey,
+  setStringInCacheByKey,
 } from '#src/queries/cache/updateCacheQueries.js';
 
 import {
+  addMatchMessageToCache,
   addMatchToCachedSet,
+  deleteMatchChatHistoryFromCache,
+  deleteMatchStateFromCache,
   getAllOngoingMatchesFromCache,
+  getMatchChatHistoryFromCache,
+  getMatchStateFromCache,
   removeMatchFromCachedSet,
+  setMatchStateInCache,
 } from './cacheService.js';
+
+vi.mock('#src/queries/cache/getCacheQueries.js', () => {
+  return {
+    getListFromCacheByKey: vi.fn(),
+    getSetFromCacheByKey: vi.fn(),
+    getStringFromCacheByKey: vi.fn(),
+  };
+});
+
+vi.mock('#src/queries/cache/deleteCacheQueries.js', () => {
+  return {
+    deleteListInCacheByKey: vi.fn(),
+    deleteSetInCacheByKey: vi.fn(),
+    deleteStringInCacheByKey: vi.fn(),
+  };
+});
 
 vi.mock('#src/queries/cache/updateCacheQueries.js', () => {
   return {
+    addToListInCacheByKey: vi.fn(),
     addToSetInCacheByKey: vi.fn(),
+    setStringInCacheByKey: vi.fn(),
+    removeFromListInCacheByKey: vi.fn(),
     removeFromSetInCacheByKey: vi.fn(),
   };
 });
 
-vi.mock('#src/queries/cache/getCacheQueries.js', () => {
-  return {
-    getSetFromCacheByKey: vi.fn(),
-  };
+describe('addMatchMessageToCache', () => {
+  it('should call addToListInCacheByKey with correct parameters', async () => {
+    const channel = 'test-channel';
+    const message = 'test-message';
+    const mockedAddToListInCacheByKey = vi.mocked(addToListInCacheByKey);
+
+    await addMatchMessageToCache({ channel, message });
+
+    expect(mockedAddToListInCacheByKey).toHaveBeenCalledWith({
+      expiryInSeconds: 3600,
+      key: `match-messages:${channel}`,
+      value: message,
+    });
+  });
 });
 
 describe('addMatchToCachedSet', () => {
@@ -34,9 +79,35 @@ describe('addMatchToCachedSet', () => {
     await addMatchToCachedSet(channel);
 
     expect(mockedAddToSetInCacheByKey).toHaveBeenCalledWith({
-      key: CacheSetTopic.OpenMatches,
+      key: 'open-matches',
       value: channel,
     });
+  });
+});
+
+describe('deleteMatchChatHistoryFromCache', () => {
+  it('should call deleteListInCacheByKey with correct parameters', async () => {
+    const channel = 'test-channel';
+    const mockedDeleteListInCacheByKey = vi.mocked(deleteListInCacheByKey);
+
+    await deleteMatchChatHistoryFromCache(channel);
+
+    expect(mockedDeleteListInCacheByKey).toHaveBeenCalledWith(
+      `match-messages:${channel}`,
+    );
+  });
+});
+
+describe('deleteMatchStateFromCache', () => {
+  it('should call deleteStringInCacheByKey with correct parameters', async () => {
+    const channel = 'test-channel';
+    const mockedDeleteStringInCacheByKey = vi.mocked(deleteStringInCacheByKey);
+
+    await deleteMatchStateFromCache(channel);
+
+    expect(mockedDeleteStringInCacheByKey).toHaveBeenCalledWith(
+      `match-state:${channel}`,
+    );
   });
 });
 
@@ -46,8 +117,32 @@ describe('getAllOngoingMatchesFromCache', () => {
 
     await getAllOngoingMatchesFromCache();
 
-    expect(mockedGetSetFromCacheByKey).toHaveBeenCalledWith(
-      CacheSetTopic.OpenMatches,
+    expect(mockedGetSetFromCacheByKey).toHaveBeenCalledWith('open-matches');
+  });
+});
+
+describe('getMatchChatHistoryFromCache', () => {
+  it('should call getListFromCacheByKey with correct parameters', async () => {
+    const channel = 'test-channel';
+    const mockedGetListFromCacheByKey = vi.mocked(getListFromCacheByKey);
+
+    await getMatchChatHistoryFromCache(channel);
+
+    expect(mockedGetListFromCacheByKey).toHaveBeenCalledWith(
+      `match-messages:${channel}`,
+    );
+  });
+});
+
+describe('getMatchStateFromCache', () => {
+  it('should call getStringFromCacheByKey with correct parameters', async () => {
+    const channel = 'test-channel';
+    const mockedGetListFromCacheByKey = vi.mocked(getStringFromCacheByKey);
+
+    await getMatchStateFromCache(channel);
+
+    expect(mockedGetListFromCacheByKey).toHaveBeenCalledWith(
+      `match-state:${channel}`,
     );
   });
 });
@@ -62,8 +157,27 @@ describe('removeMatchFromCachedSet', () => {
     await removeMatchFromCachedSet(channel);
 
     expect(mockedRemoveFromSetInCacheByKey).toHaveBeenCalledWith({
-      key: CacheSetTopic.OpenMatches,
+      key: 'open-matches',
       value: channel,
+    });
+  });
+});
+
+describe('setMatchStateInCache', () => {
+  it('should call setStringInCacheByKey with correct parameters', async () => {
+    const channel = 'test-channel';
+    const state: BanchoLobbyState = {
+      globalModifications: [],
+      playerCount: 0,
+      slots: [],
+    };
+    const mockedSetStringInCacheByKey = vi.mocked(setStringInCacheByKey);
+
+    await setMatchStateInCache({ channel: 'test-channel', state });
+
+    expect(mockedSetStringInCacheByKey).toHaveBeenCalledWith({
+      key: `match-state:${channel}`,
+      value: JSON.stringify(state),
     });
   });
 });

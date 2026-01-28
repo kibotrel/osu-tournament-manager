@@ -14,10 +14,10 @@ export const closeMatchController: RequestHandler<
   never,
   never
 > = async (request, response, next) => {
-  const { id } = matchedData<CloseMatchRequestParameters>(request);
+  const { gameMatchId } = matchedData<CloseMatchRequestParameters>(request);
 
   try {
-    const { status } = await closeMatchService(Number(id));
+    const { status } = await closeMatchService(Number(gameMatchId));
 
     return response.status(HttpStatusCode.Ok).json({ status });
   } catch (error) {

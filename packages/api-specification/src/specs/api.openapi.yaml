@@ -17,12 +17,18 @@ paths:
   /matches:
     post:
       $ref: paths/v1/matches/createMatch.openapi.yaml
-  /matches/{id}:
+  /matches/{gameMatchId}:
     get:
       $ref: paths/v1/matches/getMatch.openapi.yaml
-  /matches/{id}/close:
+  /matches/{gameMatchId}/chat-history:
+    get:
+      $ref: paths/v1/matches/getMatchChatHistory.openapi.yaml
+  /matches/{gameMatchId}/close:
     post:
       $ref: paths/v1/matches/closeMatch.openapi.yaml
+  /matches/{gameMatchId}/state:
+    get:
+      $ref: paths/v1/matches/getMatchState.openapi.yaml
   /public/health:
     get:
       $ref: paths/v1/public/health.openapi.yaml

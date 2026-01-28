@@ -14,7 +14,18 @@ export const parseIrcMessage = (
     return new IrcCommandPing(banchoClient);
   }
 
-  const parts = message.split(':').filter(Boolean);
+  const messageStartIndex = message.indexOf(' :');
+  const parts: string[] = [];
+
+  if (messageStartIndex === -1) {
+    parts.push(message.replace(/^:/, ''));
+  } else {
+    const metadata = message.slice(0, messageStartIndex + 1).replace(/^:/, '');
+    const messageContent = message.slice(messageStartIndex + 2);
+
+    parts.push(metadata, messageContent);
+  }
+
   const [, command] = parts.at(0)?.split(' ') ?? [];
   const commandName = command as IrcKeyword;
 

@@ -1,5 +1,4 @@
 import {
-  type CloseMatchRequestParameters,
   type GetMatchRequestParameters,
   type GetMatchResponseBody,
   HttpStatusCode,
@@ -15,10 +14,10 @@ export const getMatchController: RequestHandler<
   never,
   never
 > = async (request, response, next) => {
-  const { id } = matchedData<CloseMatchRequestParameters>(request);
+  const { gameMatchId } = matchedData<GetMatchRequestParameters>(request);
 
   try {
-    const match = await getMatchService(Number(id));
+    const match = await getMatchService(Number(gameMatchId));
 
     return response.status(HttpStatusCode.Ok).json(match);
   } catch (error) {

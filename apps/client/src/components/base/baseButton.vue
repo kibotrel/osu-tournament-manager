@@ -1,9 +1,5 @@
 <template>
-  <button
-    :class="properties.variant"
-    :disabled="properties.isLoading || properties.isDisabled"
-    :id="properties.id"
-  >
+  <button :class="variant" :disabled="isLoading || isDisabled" :id>
     <div v-if="isLoading">
       <LoadingIcon class="h-6 w-6" />
     </div>
@@ -11,9 +7,9 @@
       <div v-if="slots.icon" class="mr-2 h-6 w-6">
         <slot name="icon" />
       </div>
-      <div>
+      <BaseBody>
         <slot> Button </slot>
-      </div>
+      </BaseBody>
     </div>
   </button>
 </template>
@@ -22,6 +18,8 @@
 import { useSlots } from 'vue';
 
 import LoadingIcon from '#src/components/icons/loadingIcon.vue';
+
+import BaseBody from './baseBody.vue';
 
 export type ButtonVariant =
   | 'danger'
@@ -37,12 +35,12 @@ interface Properties {
   isLoading?: boolean;
   variant?: ButtonVariant;
 }
-
-const properties = withDefaults(defineProps<Properties>(), {
+withDefaults(defineProps<Properties>(), {
   isDisabled: false,
   isLoading: false,
   variant: 'primary',
 });
+
 const slots = useSlots();
 </script>
 
@@ -64,9 +62,9 @@ button:focus-visible {
 }
 
 .danger {
-  @apply text-primary-1 cursor-pointer bg-red-600;
-  @apply hover:text-primary-1/90 hover:bg-red-600/90;
-  @apply active:text-primary-1/80 active:bg-red-600/80;
+  @apply text-primary-1 cursor-pointer bg-red-500;
+  @apply hover:text-primary-1/90 hover:bg-red-500/90;
+  @apply active:text-primary-1/80 active:bg-red-500/80;
 }
 
 .ghost {

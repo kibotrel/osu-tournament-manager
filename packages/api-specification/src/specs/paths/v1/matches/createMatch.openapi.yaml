@@ -20,14 +20,11 @@ responses:
       application/json:
         schema:
           properties:
-            avatarUrl:
-              example: https://a.ppy.sh/3909293?1555203556.jpeg
-              type: string
-            gameUserId:
-              example: 3909293
+            gameMatchId:
+              example: 119065801
               type: integer
             name:
-              example: DemonWaves
+              example: "MWC4K2025 RO32: Philippines VS France"
               type: string
           type: object
     description: New match created and channel opened on bancho.

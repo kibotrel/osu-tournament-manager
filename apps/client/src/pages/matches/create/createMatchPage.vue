@@ -1,9 +1,9 @@
 <template>
   <div class="flex min-h-screen items-center justify-center">
     <div class="border-primary-3 w-1/4 rounded-md border-2 p-8">
-      <h1 class="mb-8 text-center text-4xl font-semibold tracking-tight">
-        Create new match
-      </h1>
+      <BaseHeadline variant="hero" class="mb-8 text-center"
+        >Create a new match
+      </BaseHeadline>
       <BaseInput
         id="match-name"
         isRequired
@@ -17,10 +17,10 @@
           class="mt-8 w-32"
           id="create-match-button"
           variant="success"
-          @mousedown="handleCreateMatch"
-          @keydown.enter="handleCreateMatch"
           :isDisabled="matchName.length === 0"
-          :isLoading="isPending"
+          :isLoading="isPending || !isIdle"
+          @keydown.enter="handleCreateMatch"
+          @mousedown="handleCreateMatch"
         >
           <template #default> Create </template>
           <template #icon>
@@ -37,11 +37,12 @@ import { ref } from 'vue';
 
 import { useCreateMatch } from '#src/api/matchesApi.js';
 import BaseButton from '#src/components/base/baseButton.vue';
+import BaseHeadline from '#src/components/base/baseHeadline.vue';
 import BaseInput from '#src/components/base/baseInput.vue';
 import ArrowRightEndOnRectangleIcon from '#src/components/icons/arrowRightEndOnRectangleIcon.vue';
 
 const matchName = ref('');
-const { mutate: createMatch, isPending } = useCreateMatch();
+const { mutate: createMatch, isPending, isIdle } = useCreateMatch();
 
 const handleCreateMatch = () => {
   if (matchName.value.length === 0 || isPending.value) {

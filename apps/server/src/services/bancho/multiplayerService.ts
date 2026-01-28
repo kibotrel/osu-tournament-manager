@@ -1,7 +1,10 @@
+import { gameMatchIdFromBanchoChannel } from '@packages/shared';
+
 import { banchoClient } from '#src/dependencies/ircClientDependency.js';
 import {
   addMatchToCachedSet,
   getAllOngoingMatchesFromCache,
+  removeMatchFromCachedSet,
 } from '#src/services/cache/cacheService.js';
 
 export const openMultiplayerChannel = async (name: string) => {
@@ -9,13 +12,7 @@ export const openMultiplayerChannel = async (name: string) => {
 
   await addMatchToCachedSet(channel);
 
-  /**
-   * The channel returned by the IRC server is in the format #mp_<channelId>.
-   * Handling channelId throughout the application is easier.
-   */
-  const gameMatchId = channel.slice(4);
-
-  return { gameMatchId: Number(gameMatchId) };
+  return { gameMatchId: gameMatchIdFromBanchoChannel(channel) };
 };
 
 export const joinAllOngoingMatches = async () => {
@@ -25,8 +22,12 @@ export const joinAllOngoingMatches = async () => {
     return;
   }
 
-  const promises = ongoingMatches.map((channel) => {
-    banchoClient.joinChannel(channel);
+  const promises = ongoingMatches.map(async (channel) => {
+    try {
+      await banchoClient.joinChannel(channel);
+    } catch {
+      await removeMatchFromCachedSet(channel);
+    }
   });
 
   await Promise.all(promises);

@@ -1,20 +1,20 @@
 <template>
   <div class="flex min-h-screen items-center justify-center">
     <div class="border-primary-3 w-1/4 rounded-md border-2 p-8 text-center">
-      <h1 class="mb-2 text-4xl font-semibold tracking-tight">Welcome</h1>
-      <p class="text-primary-2">
+      <BaseHeadline class="mb-2" variant="hero">Welcome</BaseHeadline>
+      <BaseBody class="text-primary-2">
         To get access to this webapp, please login with your osu! account.
-      </p>
+      </BaseBody>
       <BaseButton
         class="m-auto mt-8 w-32"
         id="login-button"
-        @mousedown="redirectToOsuAuthPage()"
-        @keydown.enter="redirectToOsuAuthPage()"
         :isLoading="isLoginButtonLoading"
+        @keydown.enter="redirectToOsuAuthPage()"
+        @mousedown="redirectToOsuAuthPage()"
       >
         <template #default> Login </template>
         <template #icon>
-          <IdentificationIcon />
+          <IdentificationIcon class="text-primary-4 h-6 w-6" />
         </template>
       </BaseButton>
     </div>
@@ -24,7 +24,9 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 
+import BaseBody from '#src/components/base/baseBody.vue';
 import BaseButton from '#src/components/base/baseButton.vue';
+import BaseHeadline from '#src/components/base/baseHeadline.vue';
 import IdentificationIcon from '#src/components/icons/identificationIcon.vue';
 
 const baseUrl = import.meta.env.VITE_BASE_APP_URL;

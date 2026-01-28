@@ -1,9 +1,15 @@
 import { EventEmitter } from 'node:events';
 import { Socket } from 'node:net';
 
+import type {
+  BanchoTeamMode,
+  BanchoWinCondition,
+  OsuBeatmapModification,
+} from '@packages/shared';
+import { BanchoCommand } from '@packages/shared';
+
 import {
   BanchoClientEvent,
-  BanchoCommand,
   BanchoPublicChannel,
 } from '#src/constants/banchoClientConstants.js';
 import {
@@ -30,7 +36,55 @@ interface EmittedEvents {
     { channel: string; message: string; user: string },
   ];
   [BanchoClientEvent.ChannelNotFound]: [{ channel: string }];
+  [BanchoClientEvent.ConcurrentMatchLimitReached]: [];
+  [BanchoClientEvent.MultiplayerChannelAllPlayersReady]: [{ channel: string }];
   [BanchoClientEvent.MultiplayerChannelClosed]: [{ channel: string }];
+  [BanchoClientEvent.MultiplayerChannelHostChanged]: [
+    { channel: string; newHost: string },
+  ];
+  [BanchoClientEvent.MultiplayerChannelHostCleared]: [{ channel: string }];
+  [BanchoClientEvent.MultiplayerChannelInformationConditions]: [
+    {
+      channel: string;
+      teamMode: BanchoTeamMode;
+      winCondition: BanchoWinCondition;
+    },
+  ];
+  [BanchoClientEvent.MultiplayerChannelInformationCurrentlyPlaying]: [
+    { beatmap: string; channel: string; url: string },
+  ];
+  [BanchoClientEvent.MultiplayerChannelInformationGlobalModifications]: [
+    { channel: string; modifications: OsuBeatmapModification[] },
+  ];
+  [BanchoClientEvent.MultiplayerChannelInformationIdentity]: [
+    { channel: string; historyUrl: string; name: string },
+  ];
+  [BanchoClientEvent.MultiplayerChannelInformationPlayerCount]: [
+    { channel: string; playerCount: number },
+  ];
+  [BanchoClientEvent.MultiplayerChannelInformationSlot]: [
+    {
+      channel: string;
+      gameUserId: number;
+      isHost: boolean;
+      isReady: boolean;
+      modifications: OsuBeatmapModification[];
+      slotNumber: number;
+      user: string;
+    },
+  ];
+  [BanchoClientEvent.MultiplayerChannelNameUpdated]: [
+    { channel: string; name: string },
+  ];
+  [BanchoClientEvent.MultiplayerPlayerJoinedSlot]: [
+    { channel: string; user: string; slotNumber: number },
+  ];
+  [BanchoClientEvent.MultiplayerPayerLeftRoom]: [
+    { channel: string; user: string },
+  ];
+  [BanchoClientEvent.MultiplayerPlayerMovedSlot]: [
+    { channel: string; user: string; slotNumber: number },
+  ];
   [BanchoClientEvent.RecipientNotFound]: [{ recipient: string }];
   [BanchoClientEvent.UserAlreadyInChannel]: [];
   [BanchoClientEvent.UserDisconnected]: [{ user: string }];
@@ -43,7 +97,49 @@ interface EmittedEvents {
     { message: string; user: string },
   ];
   [key: `${BanchoClientEvent.ChannelNotFound}:${string}`]: [];
+  [key: `${BanchoClientEvent.MultiplayerChannelAllPlayersReady}:${string}`]: [];
   [key: `${BanchoClientEvent.MultiplayerChannelClosed}:${string}`]: [];
+  [key: `${BanchoClientEvent.MultiplayerChannelHostChanged}:${string}`]: [
+    { newHost: string },
+  ];
+  [key: `${BanchoClientEvent.MultiplayerChannelHostCleared}:${string}`]: [];
+  [
+    key: `${BanchoClientEvent.MultiplayerChannelInformationConditions}:${string}`
+  ]: [{ teamMode: BanchoTeamMode; winCondition: BanchoWinCondition }];
+  [
+    key: `${BanchoClientEvent.MultiplayerChannelInformationCurrentlyPlaying}:${string}`
+  ]: [{ beatmap: string; url: string }];
+  [
+    key: `${BanchoClientEvent.MultiplayerChannelInformationGlobalModifications}:${string}`
+  ]: [{ modifications: OsuBeatmapModification[] }];
+  [
+    key: `${BanchoClientEvent.MultiplayerChannelInformationIdentity}:${string}`
+  ]: [{ historyUrl: string; name: string }];
+  [
+    key: `${BanchoClientEvent.MultiplayerChannelInformationPlayerCount}:${string}`
+  ]: [{ playerCount: number }];
+  [key: `${BanchoClientEvent.MultiplayerChannelInformationSlot}:${string}`]: [
+    {
+      gameUserId: number;
+      isHost: boolean;
+      isReady: boolean;
+      modifications: OsuBeatmapModification[];
+      slotNumber: number;
+      user: string;
+    },
+  ];
+  [key: `${BanchoClientEvent.MultiplayerChannelNameUpdated}:${string}`]: [
+    { name: string },
+  ];
+  [key: `${BanchoClientEvent.MultiplayerPlayerJoinedSlot}:${string}`]: [
+    { user: string; slotNumber: number },
+  ];
+  [key: `${BanchoClientEvent.MultiplayerPayerLeftRoom}:${string}`]: [
+    { user: string },
+  ];
+  [key: `${BanchoClientEvent.MultiplayerPlayerMovedSlot}:${string}`]: [
+    { user: string; slotNumber: number },
+  ];
   [key: `${BanchoClientEvent.RecipientNotFound}:${string}`]: [];
   [key: `${BanchoClientEvent.UserInvitedToChannel}:${string}:${string}`]: [];
   [key: `${BanchoClientEvent.UserJoinedChannel}:${string}`]: [{ user: string }];
@@ -329,5 +425,9 @@ export class BanchoClient extends EventEmitter<EmittedEvents> {
     await this.sendIrcMessage(
       `${IrcKeyword.PrivateMessage} ${recipient} :${message}`,
     );
+  }
+
+  public get username(): string {
+    return this.clientCredentials.username;
   }
 }

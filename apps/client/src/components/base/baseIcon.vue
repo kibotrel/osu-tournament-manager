@@ -5,17 +5,32 @@
 <script setup lang="ts">
 import { defineAsyncComponent } from 'vue';
 
-export type IconNames =
-  | 'archiveBox'
+export type IconName =
   | 'arrowLeftStartOnRectangle'
+  | 'arrowPath'
   | 'arrowRightEndOnRectangle'
+  | 'check'
+  | 'chevronDoubleDown'
+  | 'chevronDoubleRight'
+  | 'clipboard'
+  | 'clock'
+  | 'commandLine'
+  | 'crown'
   | 'cubeTransparent'
+  | 'cursorArrowRays'
+  | 'ellipsisVertical'
+  | 'gear'
   | 'identification'
   | 'loading'
+  | 'paperAirplane'
+  | 'play'
+  | 'rectangleGroup'
+  | 'signal'
+  | 'text'
   | 'xMark';
 
 const properties = defineProps<{
-  name: IconNames;
+  name: IconName;
 }>();
 
 const svgComponent = () => {
