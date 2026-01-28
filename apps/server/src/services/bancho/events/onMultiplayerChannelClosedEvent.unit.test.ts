@@ -1,15 +1,25 @@
 import { describe, expect, it, vi } from 'vitest';
 
+import { patchMatchByGameMatchId } from '#src/queries/matches/updateMatchQueries.js';
 import {
   deleteMatchChatHistoryFromCache,
   deleteMatchStateFromCache,
   removeMatchFromCachedSet,
 } from '#src/services/cache/cacheService.js';
+import { webSocketServer } from '#src/websocketServer.js';
 
 import { onMultiplayerChannelClosed } from './onMultiplayerChannelClosedEvent.js';
 
 vi.mock('#src/dependencies/loggerDependency.js', () => {
   return { logger: { debug: vi.fn() } };
+});
+
+vi.mock('#src/queries/matches/updateMatchQueries.js', () => {
+  return { patchMatchByGameMatchId: vi.fn() };
+});
+
+vi.mock('#src/websocketServer.js', () => {
+  return { webSocketServer: { disconnectAllTopicSubscribers: vi.fn() } };
 });
 
 vi.mock('#src/services/cache/cacheService.js', () => {
@@ -30,9 +40,18 @@ describe('onMultiplayerChannelClosed', () => {
 
     expect(deleteMatchChatHistoryFromCache).toHaveBeenCalledWith(1);
     expect(deleteMatchStateFromCache).toHaveBeenCalledWith(1);
+    expect(patchMatchByGameMatchId).toHaveBeenCalledWith(1, {
+      endsAt: expect.any(Date),
+    });
     expect(removeMatchFromCachedSet).toHaveBeenCalledWith('#mp_1');
+    expect(webSocketServer.disconnectAllTopicSubscribers).toHaveBeenCalledWith(
+      'matches:1:chat-messages',
+    );
+    expect(webSocketServer.disconnectAllTopicSubscribers).toHaveBeenCalledWith(
+      'matches:1:lobby-state',
+    );
 
     expect(spyPromiseAll).toHaveBeenCalled();
-    expect(spyPromiseAll.mock.calls[0][0]).toHaveLength(3);
+    expect(spyPromiseAll.mock.calls[0][0]).toHaveLength(6);
   });
 });
