@@ -2,10 +2,10 @@ import { EventEmitter } from 'node:events';
 import { Socket } from 'node:net';
 
 import type { OsuBeatmapModification } from '@packages/shared';
+import { BanchoCommand } from '@packages/shared';
 
 import {
   BanchoClientEvent,
-  BanchoCommand,
   BanchoPublicChannel,
 } from '#src/constants/banchoClientConstants.js';
 import {
