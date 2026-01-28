@@ -123,4 +123,26 @@ describe('onMultiplayerChannelInformationGlobalModifications', () => {
       state: newMatchStateSpecialCaseNightcore,
     });
   });
+
+  it('should remove Freemod whenever it is enabled', async () => {
+    const setMatchStateInCacheMock = vi.mocked(setMatchStateInCache);
+    const getMatchStateServiceMock = vi.mocked(getMatchStateService);
+
+    getMatchStateServiceMock.mockResolvedValueOnce(mockOldMatchState);
+
+    await onMultiplayerChannelInformationGlobalModifications({
+      channel: '#mp_1',
+      modifications: [
+        OsuBeatmapModification.Hidden,
+        OsuBeatmapModification.DoubleTime,
+        OsuBeatmapModification.FreeModification,
+      ],
+    });
+
+    expect(getMatchStateServiceMock).toHaveBeenCalledWith(1);
+    expect(setMatchStateInCacheMock).toHaveBeenCalledWith({
+      channel: 1,
+      state: newMatchState,
+    });
+  });
 });
