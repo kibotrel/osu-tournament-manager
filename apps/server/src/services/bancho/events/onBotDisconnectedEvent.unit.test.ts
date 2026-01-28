@@ -1,5 +1,6 @@
-import { BanchoClient } from '@packages/bancho-client';
 import { describe, expect, it, vi } from 'vitest';
+
+import { banchoClient } from '#src/dependencies/ircClientDependency.js';
 
 import { onBotDisconnected } from './onBotDisconnectedEvent.js';
 
@@ -7,17 +8,16 @@ vi.mock('#src/dependencies/loggerDependency.js', () => {
   return { logger: { debug: vi.fn() } };
 });
 
-const mockBanchoClient = new BanchoClient({
-  clientCredentials: { username: 'bot', password: 'password' },
-  serverInformation: { host: 'irc.ppy.sh', port: 6667 },
+vi.mock('#src/dependencies/ircClientDependency.js', () => {
+  return { banchoClient: { connect: vi.fn() } };
 });
-
-mockBanchoClient.connect = vi.fn();
 
 describe('onBotDisconnected', () => {
   it('should reconnect to the server', async () => {
-    await onBotDisconnected(mockBanchoClient);
+    const mockedBanchoClient = vi.mocked(banchoClient);
 
-    expect(mockBanchoClient.connect).toHaveBeenCalled();
+    await onBotDisconnected();
+
+    expect(mockedBanchoClient.connect).toHaveBeenCalled();
   });
 });
