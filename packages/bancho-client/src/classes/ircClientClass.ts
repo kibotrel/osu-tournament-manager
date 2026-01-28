@@ -1,7 +1,11 @@
 import { EventEmitter } from 'node:events';
 import { Socket } from 'node:net';
 
-import type { OsuBeatmapModification } from '@packages/shared';
+import type {
+  BanchoTeamMode,
+  BanchoWinCondition,
+  OsuBeatmapModification,
+} from '@packages/shared';
 import { BanchoCommand } from '@packages/shared';
 
 import {
@@ -40,7 +44,11 @@ interface EmittedEvents {
   ];
   [BanchoClientEvent.MultiplayerChannelHostCleared]: [{ channel: string }];
   [BanchoClientEvent.MultiplayerChannelInformationConditions]: [
-    { channel: string; teamMode: string; winCondition: string },
+    {
+      channel: string;
+      teamMode: BanchoTeamMode;
+      winCondition: BanchoWinCondition;
+    },
   ];
   [BanchoClientEvent.MultiplayerChannelInformationCurrentlyPlaying]: [
     { beatmap: string; channel: string; url: string },
@@ -97,7 +105,7 @@ interface EmittedEvents {
   [key: `${BanchoClientEvent.MultiplayerChannelHostCleared}:${string}`]: [];
   [
     key: `${BanchoClientEvent.MultiplayerChannelInformationConditions}:${string}`
-  ]: [{ teamMode: string; winCondition: string }];
+  ]: [{ teamMode: BanchoTeamMode; winCondition: BanchoWinCondition }];
   [
     key: `${BanchoClientEvent.MultiplayerChannelInformationCurrentlyPlaying}:${string}`
   ]: [{ beatmap: string; url: string }];

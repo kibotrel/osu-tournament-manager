@@ -16,15 +16,14 @@ import { setMatchStateInCache } from '#src/services/cache/cacheService.js';
 import { getMatchStateService } from '#src/services/matches/matchesService.js';
 import { webSocketServer } from '#src/websocketServer.js';
 
-// TODO: teamMode and winCondition should be typed as BanchoTeamMode and BanchoWinCondition
 export const onMultiplayerChannelInformationConditions = async ({
   channel,
   teamMode,
   winCondition,
 }: {
   channel: string;
-  teamMode: string;
-  winCondition: string;
+  teamMode: BanchoTeamMode;
+  winCondition: BanchoWinCondition;
 }) => {
   logger.debug(`[IRC] channel ${channel} conditions updated`, {
     teamMode,
@@ -35,8 +34,8 @@ export const onMultiplayerChannelInformationConditions = async ({
   const oldMatchState = await getMatchStateService(channelId);
   const newMatchState: BanchoLobbyState = {
     ...oldMatchState,
-    teamMode: teamMode as BanchoTeamMode,
-    winCondition: winCondition as BanchoWinCondition,
+    teamMode,
+    winCondition,
   };
 
   await setMatchStateInCache({

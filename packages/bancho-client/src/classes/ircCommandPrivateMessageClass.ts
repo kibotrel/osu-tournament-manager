@@ -1,4 +1,8 @@
-import type { OsuBeatmapModification } from '@packages/shared';
+import type {
+  BanchoTeamMode,
+  BanchoWinCondition,
+  OsuBeatmapModification,
+} from '@packages/shared';
 
 import { BanchoClientEvent } from '#src/banchoClientExport.js';
 import type { BanchoClient } from '#src/classes/ircClientClass.js';
@@ -211,7 +215,10 @@ export class IrcCommandPrivateMessage implements IrcCommand {
     const { channel, message } = payload;
     const match = message.match(BanchoBotCommonMessage.MatchConditions)!;
     const { teamMode, winCondition } = match.groups!;
-    const data = { teamMode, winCondition };
+    const data = {
+      teamMode: teamMode as BanchoTeamMode,
+      winCondition: winCondition as BanchoWinCondition,
+    };
 
     this.banchoClient.emit(
       BanchoClientEvent.MultiplayerChannelInformationConditions,
