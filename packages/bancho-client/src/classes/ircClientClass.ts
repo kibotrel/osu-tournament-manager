@@ -1,6 +1,8 @@
 import { EventEmitter } from 'node:events';
 import { Socket } from 'node:net';
 
+import type { OsuBeatmapModification } from '@packages/shared';
+
 import {
   BanchoClientEvent,
   BanchoCommand,
@@ -44,7 +46,7 @@ interface EmittedEvents {
     { beatmap: string; channel: string; url: string },
   ];
   [BanchoClientEvent.MultiplayerChannelInformationGlobalModifications]: [
-    { channel: string; modifications: string[] },
+    { channel: string; modifications: OsuBeatmapModification[] },
   ];
   [BanchoClientEvent.MultiplayerChannelInformationIdentity]: [
     { channel: string; historyUrl: string; name: string },
@@ -58,7 +60,7 @@ interface EmittedEvents {
       gameUserId: number;
       isHost: boolean;
       isReady: boolean;
-      modifications: string[];
+      modifications: OsuBeatmapModification[];
       slotNumber: number;
       user: string;
     },
@@ -101,7 +103,7 @@ interface EmittedEvents {
   ]: [{ beatmap: string; url: string }];
   [
     key: `${BanchoClientEvent.MultiplayerChannelInformationGlobalModifications}:${string}`
-  ]: [{ modifications: string[] }];
+  ]: [{ modifications: OsuBeatmapModification[] }];
   [
     key: `${BanchoClientEvent.MultiplayerChannelInformationIdentity}:${string}`
   ]: [{ historyUrl: string; name: string }];
@@ -113,7 +115,7 @@ interface EmittedEvents {
       gameUserId: number;
       isHost: boolean;
       isReady: boolean;
-      modifications: string[];
+      modifications: OsuBeatmapModification[];
       slotNumber: number;
       user: string;
     },

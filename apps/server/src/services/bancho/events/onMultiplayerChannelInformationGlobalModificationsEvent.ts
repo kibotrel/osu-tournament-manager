@@ -20,7 +20,7 @@ export const onMultiplayerChannelInformationGlobalModifications = async ({
   modifications,
 }: {
   channel: string;
-  modifications: string[];
+  modifications: OsuBeatmapModification[];
 }) => {
   logger.debug(`[IRC] channel ${channel} global modifications updated`, {
     modifications,
@@ -38,7 +38,7 @@ export const onMultiplayerChannelInformationGlobalModifications = async ({
   const oldMatchState = await getMatchStateService(channelId);
   const newMatchState: BanchoLobbyState = {
     ...oldMatchState,
-    globalModifications: sanitizedModifications as OsuBeatmapModification[],
+    globalModifications: sanitizedModifications,
   };
 
   await setMatchStateInCache({

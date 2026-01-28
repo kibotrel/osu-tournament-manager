@@ -28,7 +28,7 @@ export const onMultiplayerChannelInformationSlot = async ({
   gameUserId: number;
   isHost: boolean;
   isReady: boolean;
-  modifications: string[];
+  modifications: OsuBeatmapModification[];
   slotNumber: number;
   user: string;
 }) => {
@@ -51,7 +51,7 @@ export const onMultiplayerChannelInformationSlot = async ({
       isHost,
       isReady,
       player: user,
-      selectedModifications: modifications as OsuBeatmapModification[],
+      selectedModifications: modifications,
     }),
   };
 

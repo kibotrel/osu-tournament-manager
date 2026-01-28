@@ -1,3 +1,5 @@
+import type { OsuBeatmapModification } from '@packages/shared';
+
 import { BanchoClientEvent } from '#src/banchoClientExport.js';
 import type { BanchoClient } from '#src/classes/ircClientClass.js';
 import type { IrcCommand } from '#src/classes/ircCommandClass.js';
@@ -248,7 +250,9 @@ export class IrcCommandPrivateMessage implements IrcCommand {
     )!;
     const { modifications } = match.groups!;
     const data = {
-      modifications: modifications.split(', ').filter(Boolean),
+      modifications: modifications
+        .split(', ')
+        .filter(Boolean) as OsuBeatmapModification[],
     };
 
     this.banchoClient.emit(
@@ -318,7 +322,7 @@ export class IrcCommandPrivateMessage implements IrcCommand {
       isHost: attributes.startsWith(BanchoTerm.Host),
       slotNumber: Number(slotNumber),
       user,
-      modifications,
+      modifications: modifications as OsuBeatmapModification[],
     };
 
     this.banchoClient.emit(
