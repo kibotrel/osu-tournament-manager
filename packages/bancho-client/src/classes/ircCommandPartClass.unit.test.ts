@@ -5,7 +5,7 @@ import { IrcCommandPart } from '#src/classes/ircCommandPartClass.js';
 
 describe('IrcCommandPart', () => {
   const banchoClient = new BanchoClient({
-    clientCredentials: { username: 'username', password: 'password' },
+    clientCredentials: { username: 'bot', password: 'password' },
     serverInformation: { host: 'localhost.dev', port: 6667 },
   });
   const packetParts = ['username!server@localhost.dev PART', '#channel'];
@@ -35,6 +35,29 @@ describe('IrcCommandPart', () => {
       expect(eventEmitter).toHaveBeenCalledWith('user_left_channel:#channel', {
         user: 'username',
       });
+    });
+
+    it('should emit multiplayer_channel_closed as well if user is this client user', () => {
+      const packetParts = ['bot!server@localhost.dev PART', '#channel'];
+      const command = new IrcCommandPart(banchoClient, packetParts);
+      const eventEmitter = vi.spyOn(banchoClient, 'emit');
+
+      command.handleCommand();
+
+      expect(eventEmitter).toHaveBeenCalledTimes(4);
+      expect(eventEmitter).toHaveBeenCalledWith('user_left_channel', {
+        channel: '#channel',
+        user: 'bot',
+      });
+      expect(eventEmitter).toHaveBeenCalledWith('user_left_channel:#channel', {
+        user: 'bot',
+      });
+      expect(eventEmitter).toHaveBeenCalledWith('multiplayer_channel_closed', {
+        channel: '#channel',
+      });
+      expect(eventEmitter).toHaveBeenCalledWith(
+        'multiplayer_channel_closed:#channel',
+      );
     });
   });
 });

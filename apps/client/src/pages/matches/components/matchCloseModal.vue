@@ -1,16 +1,19 @@
 <template>
-  <BaseModal v-show="properties.isModalOpen" @close:modal="emit('close:modal')">
+  <BaseModal
+    id="close-match-modal"
+    :isModalOpen
+    @close:modal="emit('close:modal')"
+  >
     <template #header>
-      <h1 class="text-2xl font-semibold tracking-tight">Close match</h1>
+      <BaseHeadline class="mb-4">Close match</BaseHeadline>
     </template>
     <template #body>
       <div class="space-y-2">
-        <p>
+        <BaseBody>
           You are about to close the match
-          <MatchNameCopySpan :matchName="properties.matchName" />. This action
-          cannot be undone.
-        </p>
-        <p>To confirm, please type the match name exactly as shown above.</p>
+          <MatchNameCopy :matchName="matchName" />. This action cannot be
+          undone. To confirm, please type the match name exactly as shown above.
+        </BaseBody>
         <BaseInput
           id="match-name-confirmation"
           placeholder="MWC4K2025 RO32: Philippines VS France"
@@ -26,7 +29,7 @@
           id="close-match-button"
           variant="danger"
           :isLoading="isPending"
-          :isDisabled="properties.matchName !== confirmationMatchName"
+          :isDisabled="matchName !== confirmationMatchName"
           @keydown.enter="handleCloseMatch"
           @mousedown="handleCloseMatch"
         >
@@ -44,12 +47,14 @@
 import { ref } from 'vue';
 
 import { useCloseMatch } from '#src/api/matchesApi.js';
+import BaseBody from '#src/components/base/baseBody.vue';
 import BaseButton from '#src/components/base/baseButton.vue';
+import BaseHeadline from '#src/components/base/baseHeadline.vue';
 import BaseIcon from '#src/components/base/baseIcon.vue';
 import BaseInput from '#src/components/base/baseInput.vue';
 import BaseModal from '#src/components/base/baseModal.vue';
 
-import MatchNameCopySpan from './matchNameCopySpan.vue';
+import MatchNameCopy from './matchNameCopy.vue';
 
 interface Properties {
   isModalOpen: boolean;

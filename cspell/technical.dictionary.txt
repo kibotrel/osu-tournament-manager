@@ -8,6 +8,8 @@ genid
 healthcheck
 isready
 Logform
+open-code
+opencode
 persistedstate
 postgres
 postgresql

@@ -24,5 +24,14 @@ export class IrcCommandPart implements IrcCommand {
     this.banchoClient.emit(`${BanchoClientEvent.UserLeftChannel}:${channel}`, {
       user,
     });
+
+    if (user === this.banchoClient.username) {
+      this.banchoClient.emit(BanchoClientEvent.MultiplayerChannelClosed, {
+        channel,
+      });
+      this.banchoClient.emit(
+        `${BanchoClientEvent.MultiplayerChannelClosed}:${channel}`,
+      );
+    }
   }
 }

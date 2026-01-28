@@ -2,12 +2,12 @@ import type { ErrorReport } from '#src/classes/httpErrorReportClass.js';
 import type { StringRecord } from '#src/sharedExport.js';
 
 export interface GetMatchRequestParameters extends StringRecord {
-  id: string;
+  gameMatchId: string;
 }
 
 export interface GetMatchResponseData {
   endsAt: Date | null;
-  id: number;
+  gameMatchId: number;
   name: string;
 }
 

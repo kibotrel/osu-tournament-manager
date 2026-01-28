@@ -64,6 +64,7 @@ export enum WebSocketChannel {
 
 export enum WebSocketChannelMatchesEvent {
   ChatMessages = 'chat-messages',
+  LobbyState = 'lobby-state',
 }
 
 export enum WebSocketState {

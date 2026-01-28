@@ -3,7 +3,12 @@ bancho
 beatmap
 Beatmap
 clearhost
+Freemod
+Kurokotei
 mappool
 Mappool
 mappools
+Nightcore
+osu
+Osu
 taiko

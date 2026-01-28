@@ -38,15 +38,17 @@ describe('getMatchController', () => {
       GetMatchResponseBody
     >();
     const response = expressResponseMock<GetMatchResponseBody>();
-    const match = { endsAt: null, id: 1, name: 'Test Match' };
+    const match = { endsAt: null, gameMatchId: 1, name: 'Test Match' };
 
-    request.params = { id: '1' };
+    request.params = { gameMatchId: '1' };
     getMatchServiceMock.mockResolvedValueOnce(match);
 
     await getMatchController(request, response, next);
 
     expect(matchedData).toHaveBeenCalledWith(request);
-    expect(getMatchServiceMock).toHaveBeenCalledWith(Number(request.params.id));
+    expect(getMatchServiceMock).toHaveBeenCalledWith(
+      Number(request.params.gameMatchId),
+    );
     expect(response.status).toHaveBeenCalledWith(HttpStatusCode.Ok);
     expect(response.json).toHaveBeenCalledWith(match);
     expect(next).not.toHaveBeenCalled();
@@ -62,13 +64,15 @@ describe('getMatchController', () => {
     const response = expressResponseMock<GetMatchResponseBody>();
     const error = new Error('Test error');
 
-    request.params = { id: '1' };
+    request.params = { gameMatchId: '1' };
     getMatchServiceMock.mockRejectedValueOnce(error);
 
     await getMatchController(request, response, next);
 
     expect(matchedData).toHaveBeenCalledWith(request);
-    expect(getMatchServiceMock).toHaveBeenCalledWith(Number(request.params.id));
+    expect(getMatchServiceMock).toHaveBeenCalledWith(
+      Number(request.params.gameMatchId),
+    );
     expect(response.status).not.toHaveBeenCalled();
     expect(response.json).not.toHaveBeenCalled();
     expect(next).toHaveBeenCalledWith(error);
