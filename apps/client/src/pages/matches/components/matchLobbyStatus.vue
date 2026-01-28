@@ -46,7 +46,7 @@
               </BaseBody>
               <CrownIcon v-show="slot.isHost" class="h-6 w-6 text-yellow-400" />
             </div>
-            <div>
+            <div v-show="slot.player">
               <BaseModification
                 class="mr-1"
                 v-for="(modification, index) in [
