@@ -3,10 +3,8 @@
     isInline
     :class="isSupported ? 'copy' : ''"
     @mousedown="copy(matchName)"
-  >
-    {{ matchName }}
-  </BaseBody>
-  "
+    >{{ matchName }}</BaseBody
+  >"
 </template>
 
 <script setup lang="ts">
