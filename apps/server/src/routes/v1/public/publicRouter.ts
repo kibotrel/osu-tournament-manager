@@ -1,9 +1,8 @@
-import type { Router } from 'express';
-import express from 'express';
+import { Router } from 'express';
 
 import { healthController } from '#src/controllers/v1/public/healthController.js';
 
-const publicRouter: Router = express.Router({
+const publicRouter: Router = Router({
   caseSensitive: true,
   strict: true,
   mergeParams: true,

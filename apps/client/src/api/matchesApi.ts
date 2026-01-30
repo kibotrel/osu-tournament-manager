@@ -141,7 +141,9 @@ export const useGetMatch = (
 
   return useQuery({
     enabled,
-    queryFn: () => getMatch(gameMatchId),
+    queryFn: () => {
+      return getMatch(gameMatchId);
+    },
     queryKey: ['match', gameMatchId],
     staleTime,
     retry: false,
@@ -159,7 +161,9 @@ export const useGetMatchChatHistory = (
 
   return useQuery({
     enabled,
-    queryFn: () => getMatchChatHistory(gameMatchId),
+    queryFn: () => {
+      return getMatchChatHistory(gameMatchId);
+    },
     queryKey: ['match', gameMatchId, 'chat-history'],
     staleTime,
   });
@@ -176,7 +180,9 @@ export const useGetMatchState = (
 
   return useQuery({
     enabled,
-    queryFn: () => getMatchState(gameMatchId),
+    queryFn: () => {
+      return getMatchState(gameMatchId);
+    },
     queryKey: ['match', gameMatchId, 'state'],
     staleTime,
   });

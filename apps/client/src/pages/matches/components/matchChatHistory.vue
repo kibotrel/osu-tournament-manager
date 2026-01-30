@@ -1,8 +1,8 @@
 <template>
   <div class="border-primary-3 mx-auto mt-4 w-3/4 rounded-md border-2">
     <div
-      class="chat-history-container"
       ref="chatHistoryDiv"
+      class="chat-history-container"
       tabindex="-1"
       @scroll="onScroll"
     >
@@ -15,16 +15,16 @@
       <div v-else-if="history.length === 0">
         <BaseBody class="text-primary-2">No message yet.</BaseBody>
       </div>
-      <div v-else v-for="(entry, index) in history" :key="entry.timestamp">
+      <div v-for="(entry, index) in history" v-else :key="entry.timestamp">
         <div :class="detectMarginBetweenMessages(index)">
           <div v-if="shouldDisplayUsername(index)">
             <BaseBody
-              isInline
+              is-inline
               :class="['font-bold!', usernameColorByRole(entry.message.author)]"
             >
               {{ entry.message.author }}
             </BaseBody>
-            <BaseCaption class="text-primary-2 ml-2" isInline>
+            <BaseCaption class="text-primary-2 ml-2" is-inline>
               {{ new Date(entry.timestamp).toLocaleTimeString() }}
             </BaseCaption>
           </div>
@@ -42,12 +42,12 @@
     </div>
     <div class="border-primary-3 flex flex-row items-center border-t-2">
       <BaseInput
-        class="flex-1"
         id="message-input"
-        placeholder="Type your message..."
         v-model="refereeMessage.content"
+        class="flex-1"
+        placeholder="Type your message..."
         variant="ghost"
-        :isDisabled="!isSocketReady"
+        :is-disabled="!isSocketReady"
         @keydown.enter="sendRefereeMessage"
       />
       <div

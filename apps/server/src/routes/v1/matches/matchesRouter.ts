@@ -1,5 +1,4 @@
-import type { Router } from 'express';
-import express from 'express';
+import { Router } from 'express';
 
 import { closeMatchController } from '#src/controllers/v1/matches/closeMatchController.js';
 import { createMatchController } from '#src/controllers/v1/matches/createMatchController.js';
@@ -14,7 +13,7 @@ import { getMatchChatHistoryValidators } from '#src/validators/v1/matches/getMat
 import { getMatchStateValidators } from '#src/validators/v1/matches/getMatchStateValidators.js';
 import { getMatchValidators } from '#src/validators/v1/matches/getMatchValidators.js';
 
-const matchesRouter: Router = express.Router({
+const matchesRouter: Router = Router({
   caseSensitive: true,
   strict: true,
   mergeParams: true,

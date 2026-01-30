@@ -2,7 +2,7 @@
   <BaseDrawer
     id="match-information-drawer"
     variant="right"
-    :isDrawerOpen
+    :is-drawer-open
     @close:drawer="emit('close:drawer')"
   >
     <template #header>
@@ -14,15 +14,16 @@
         </div>
         <div v-if="match.historyUrl">
           <BaseBody>
-            <BaseLink isExternal :link="match.historyUrl">
+            <BaseLink is-external :link="match.historyUrl">
               Official match page
             </BaseLink>
           </BaseBody>
         </div>
       </div>
       <BaseTabList
-        class="mx-8 mt-8"
         id="match-drawer-tab-list"
+        v-model="tab"
+        class="mx-8 mt-8"
         :tabs="[
           { label: 'Status', value: 'status', icon: 'signal' },
           { label: 'Settings', value: 'settings', icon: 'gear' },
@@ -33,13 +34,12 @@
             icon: 'commandLine',
           },
         ]"
-        v-model="tab"
       />
     </template>
     <template #body>
       <div class="h-full p-4">
         <div v-if="tab === 'status'" class="h-full">
-          <MatchLobbyStatus :sendBanchoMessage="sendBanchoMessage" />
+          <MatchLobbyStatus :send-bancho-message="sendBanchoMessage" />
         </div>
         <div
           v-else

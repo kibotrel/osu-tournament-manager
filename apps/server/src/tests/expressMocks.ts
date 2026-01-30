@@ -21,11 +21,11 @@ export const expressRequestMock = <
       RequestBodyType,
       RequestQueryType
     >
-  > = {};
-
-  request.body = {} as RequestBodyType;
-  request.params = {} as PathParametersType;
-  request.query = {} as RequestQueryType;
+  > = {
+    body: {} as RequestBodyType,
+    params: {} as PathParametersType,
+    query: {} as RequestQueryType,
+  };
 
   request.session = {
     cookie: {
@@ -71,12 +71,12 @@ export const expressRequestMock = <
 };
 
 export const expressResponseMock = <ResponseBodyType = never>() => {
-  const response: Partial<Response<ResponseBodyType>> = {};
-
-  response.json = vi.fn().mockReturnThis();
-  response.end = vi.fn().mockReturnThis();
-  response.setHeader = vi.fn().mockReturnThis();
-  response.status = vi.fn().mockReturnThis();
+  const response: Partial<Response<ResponseBodyType>> = {
+    json: vi.fn().mockReturnThis(),
+    end: vi.fn().mockReturnThis(),
+    setHeader: vi.fn().mockReturnThis(),
+    status: vi.fn().mockReturnThis(),
+  };
 
   return response as Response<ResponseBodyType>;
 };

@@ -1,7 +1,7 @@
 <template>
   <BaseModal
     id="close-match-modal"
-    :isModalOpen
+    :is-modal-open
     @close:modal="emit('close:modal')"
   >
     <template #header>
@@ -11,13 +11,13 @@
       <div class="space-y-2">
         <BaseBody>
           You are about to close the match
-          <MatchNameCopy :matchName="matchName" />. This action cannot be
+          <MatchNameCopy :match-name="matchName" />. This action cannot be
           undone. To confirm, please type the match name exactly as shown above.
         </BaseBody>
         <BaseInput
           id="match-name-confirmation"
-          placeholder="MWC4K2025 RO32: Philippines VS France"
           v-model="confirmationMatchName"
+          placeholder="MWC4K2025 RO32: Philippines VS France"
           @keydown.enter="handleCloseMatch"
         />
       </div>
@@ -25,11 +25,11 @@
     <template #footer>
       <div class="flex flex-row justify-end">
         <BaseButton
-          class="w-32"
           id="close-match-button"
+          class="w-32"
           variant="danger"
-          :isLoading="isPending"
-          :isDisabled="matchName !== confirmationMatchName"
+          :is-loading="isPending"
+          :is-disabled="matchName !== confirmationMatchName"
           @keydown.enter="handleCloseMatch"
           @mousedown="handleCloseMatch"
         >
