@@ -1,4 +1,4 @@
-import { describe, expect, it, vi } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 
 import { BanchoClient } from '#src/classes/ircClientClass.js';
 import { IrcCommandPart } from '#src/classes/ircCommandPartClass.js';
@@ -21,6 +21,10 @@ describe('IrcCommandPart', () => {
   });
 
   describe('handleCommand', () => {
+    afterEach(() => {
+      vi.resetAllMocks();
+    });
+
     it('should emit user_left_channel event with the channel and user', () => {
       const command = new IrcCommandPart(banchoClient, packetParts);
       const eventEmitter = vi.spyOn(banchoClient, 'emit');

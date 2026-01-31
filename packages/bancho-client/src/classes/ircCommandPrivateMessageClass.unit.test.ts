@@ -1,4 +1,4 @@
-import { describe, expect, it, vi } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 
 import { BanchoClient } from '#src/classes/ircClientClass.js';
 import { IrcCommandPrivateMessage } from '#src/classes/ircCommandPrivateMessageClass.js';
@@ -27,6 +27,10 @@ describe('IrcCommandPrivateMessage', () => {
   });
 
   describe('handleCommand', () => {
+    afterEach(() => {
+      vi.resetAllMocks();
+    });
+
     it('should emit channel_message event with the channel, message and user', () => {
       const packetParts = [
         'username!server@localhost.dev PRIVMSG #channel',
