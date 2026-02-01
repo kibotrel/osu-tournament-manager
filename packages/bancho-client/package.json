@@ -4,7 +4,7 @@
   },
   "devDependencies": {
     "@packages/prettier-config": "workspace:*",
-    "vitest": "3.2.4"
+    "vitest": "4.0.18"
   },
   "imports": {
     "#src/*": "./src/*"
