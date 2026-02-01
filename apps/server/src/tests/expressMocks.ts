@@ -2,9 +2,10 @@ import { randomUUID } from 'node:crypto';
 
 import { Time } from '@packages/shared';
 import type { Request, Response } from 'express';
+import type { Mock } from 'vitest';
 import { vi } from 'vitest';
 
-export const expressNextFunctionMock = () => {
+export const expressNextFunctionMock = (): Mock => {
   return vi.fn();
 };
 
@@ -21,11 +22,11 @@ export const expressRequestMock = <
       RequestBodyType,
       RequestQueryType
     >
-  > = {};
-
-  request.body = {} as RequestBodyType;
-  request.params = {} as PathParametersType;
-  request.query = {} as RequestQueryType;
+  > = {
+    body: {} as RequestBodyType,
+    params: {} as PathParametersType,
+    query: {} as RequestQueryType,
+  };
 
   request.session = {
     cookie: {
@@ -71,12 +72,12 @@ export const expressRequestMock = <
 };
 
 export const expressResponseMock = <ResponseBodyType = never>() => {
-  const response: Partial<Response<ResponseBodyType>> = {};
-
-  response.json = vi.fn().mockReturnThis();
-  response.end = vi.fn().mockReturnThis();
-  response.setHeader = vi.fn().mockReturnThis();
-  response.status = vi.fn().mockReturnThis();
+  const response: Partial<Response<ResponseBodyType>> = {
+    json: vi.fn().mockReturnThis(),
+    end: vi.fn().mockReturnThis(),
+    setHeader: vi.fn().mockReturnThis(),
+    status: vi.fn().mockReturnThis(),
+  };
 
   return response as Response<ResponseBodyType>;
 };

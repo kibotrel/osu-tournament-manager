@@ -15,7 +15,7 @@ const $router = inject<Router>('$router');
 const { mutateAsync: login } = useLogin();
 
 onBeforeMount(async () => {
-  const [parameter, token] = window.location.search.slice(1).split('=');
+  const [parameter, token] = globalThis.location.search.slice(1).split('=');
 
   if (parameter === 'code' && token) {
     return await login(token);

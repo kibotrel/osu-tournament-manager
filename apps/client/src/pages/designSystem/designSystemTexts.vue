@@ -38,8 +38,8 @@
       <div class="flex flex-row space-x-2">
         <BaseIcon
           v-for="icon in icons"
+          :key="icon"
           :name="icon"
-          v-bind:key="icon"
           class="h-6 w-6"
         />
       </div>

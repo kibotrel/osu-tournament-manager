@@ -3,21 +3,27 @@
     <div class="space-y-2">
       <BaseHeadline variant="title">Badges</BaseHeadline>
       <div class="flex flex-row items-center space-x-2">
-        <BaseBadge variant="base"> Base </BaseBadge>
-        <BaseBadge variant="small"> Small </BaseBadge>
-        <BaseBadge :icon="{ side: 'left', name: 'cubeTransparent' }">
+        <BaseBadge class="w-32" variant="base"> Base </BaseBadge>
+        <BaseBadge class="w-32" variant="small"> Small </BaseBadge>
+        <BaseBadge
+          :icon="{ side: 'left', name: 'cubeTransparent' }"
+          class="w-32"
+        >
           Left icon
         </BaseBadge>
-        <BaseBadge :icon="{ side: 'right', name: 'cubeTransparent' }">
+        <BaseBadge
+          :icon="{ side: 'right', name: 'cubeTransparent' }"
+          class="w-32"
+        >
           Right icon
         </BaseBadge>
       </div>
       <div class="flex flex-row items-center space-x-2">
-        <BaseBadge color="primary">Primary</BaseBadge>
-        <BaseBadge color="secondary">Secondary</BaseBadge>
-        <BaseBadge color="green">Green</BaseBadge>
-        <BaseBadge color="red">Red</BaseBadge>
-        <BaseBadge color="yellow">Yellow</BaseBadge>
+        <BaseBadge class="w-32" color="primary">Primary</BaseBadge>
+        <BaseBadge class="w-32" color="secondary">Secondary</BaseBadge>
+        <BaseBadge class="w-32" color="green">Green</BaseBadge>
+        <BaseBadge class="w-32" color="red">Red</BaseBadge>
+        <BaseBadge class="w-32" color="yellow">Yellow</BaseBadge>
       </div>
     </div>
     <div class="space-y-2">

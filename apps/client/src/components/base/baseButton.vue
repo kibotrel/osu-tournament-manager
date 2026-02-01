@@ -1,5 +1,5 @@
 <template>
-  <button :class="variant" :disabled="isLoading || isDisabled" :id>
+  <button :id :class="variant" :disabled="isLoading || isDisabled">
     <div v-if="isLoading">
       <LoadingIcon class="h-6 w-6" />
     </div>

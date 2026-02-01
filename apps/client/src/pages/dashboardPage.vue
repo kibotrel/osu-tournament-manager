@@ -5,18 +5,18 @@
       {{ user.isLoggedIn }}
     </p>
     <BaseButton
-      class="w-24"
       id="logout-button"
-      :isLoading="isPending"
+      class="w-24"
+      :is-loading="isPending"
       @mousedown="logout"
     >
       Logout
     </BaseButton>
     <input
+      v-model="message.content"
       class="my-2 rounded-md border border-gray-300 bg-inherit p-2"
       placeholder="Enter message..."
       type="text"
-      v-model="message.content"
       @keydown.enter="
         () => {
           sendMessage(message, WebSocketChannelMatchesEvent.ChatMessages);

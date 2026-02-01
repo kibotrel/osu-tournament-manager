@@ -44,7 +44,7 @@ export const parseIrcMessage = (
  * and `'+'` is used to denote channel voice status.
  */
 export const parseIrcUsername = (username: string) => {
-  return username.replace(/^(\+|@)/, '');
+  return username.replace(/^([+@])/, '');
 };
 
 /**

@@ -1,9 +1,9 @@
 <template>
   <Transition name="backdrop">
-    <div class="fixed inset-0 z-10 bg-black/50" v-show="isDrawerOpen"></div>
+    <div v-show="isDrawerOpen" class="fixed inset-0 z-10 bg-black/50"></div>
   </Transition>
   <Transition :name="`drawer-${variant}`">
-    <div ref="drawer" v-show="isDrawerOpen" :class="[variant, 'drawer']" :id>
+    <div v-show="isDrawerOpen" :id ref="drawer" :class="[variant, 'drawer']">
       <div class="flex flex-row justify-between p-2">
         <BaseIcon
           class="action-icon"
@@ -37,9 +37,8 @@
 <script setup lang="ts">
 import { useTemplateRef } from 'vue';
 
+import EllipsisVerticalIcon from '#src/components/icons/ellipsisVerticalIcon.vue';
 import { usePopUpBehavior } from '#src/composables/usePopUpComposable.js';
-
-import EllipsisVerticalIcon from '../icons/ellipsisVerticalIcon.vue';
 
 import BaseIcon from './baseIcon.vue';
 
@@ -55,7 +54,9 @@ const drawer = useTemplateRef<HTMLDivElement>('drawer');
 defineProps<Properties>();
 usePopUpBehavior({
   element: drawer,
-  onClose: () => emit('close:drawer'),
+  onClose: () => {
+    return emit('close:drawer');
+  },
 });
 </script>
 

@@ -8,22 +8,27 @@
       ]"
       :for="id"
     >
-      <BaseBody class="font-semibold!" isInline variant="small">
+      <BaseBody class="font-semibold!" is-inline variant="small">
         {{ label }}
       </BaseBody>
-      <BaseBody v-if="isRequired" class="text-red-400" isInline variant="small">
+      <BaseBody
+        v-if="isRequired"
+        class="text-red-400"
+        is-inline
+        variant="small"
+      >
         *
       </BaseBody>
     </label>
     <input
       v-if="type === 'number'"
+      :id
       inputmode="numeric"
       min="0"
       type="number"
       :autocomplete="doAutoComplete ? 'on' : 'off'"
       :class="[errorMessage ? 'error' : '', variant]"
       :disabled="isDisabled"
-      :id
       :placeholder
       :value="modelValue"
       @blur="emit('blur')"
@@ -32,10 +37,10 @@
     />
     <input
       v-else
+      :id
       :autocomplete="doAutoComplete ? 'on' : 'off'"
       :class="[errorMessage ? 'error' : '', variant]"
       :disabled="isDisabled"
-      :id
       :placeholder
       :value="modelValue"
       @blur="emit('blur')"
@@ -58,10 +63,10 @@ interface Properties {
   id: string;
   doAutoComplete?: boolean;
   errorMessage?: string;
+  modelValue: string;
   isDisabled?: boolean;
   isRequired?: boolean;
   label?: string;
-  modelValue?: string;
   placeholder?: string;
   type?: 'text' | 'number';
   variant?: InputVariant;
@@ -70,9 +75,11 @@ interface Properties {
 const emit = defineEmits(['blur', 'update:modelValue']);
 
 withDefaults(defineProps<Properties>(), {
+  errorMessage: '',
   doAutoComplete: false,
   isDisabled: false,
   isRequired: false,
+  label: '',
   placeholder: '',
   type: 'text',
   variant: 'primary',

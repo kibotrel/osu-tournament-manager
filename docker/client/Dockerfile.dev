@@ -1,4 +1,4 @@
-FROM node:22.13.0-slim AS base-image
+FROM node:22.22.0-slim AS base-image
 ARG PNPM_VERSION=9.15.4
 RUN npm --global install pnpm@${PNPM_VERSION}
 

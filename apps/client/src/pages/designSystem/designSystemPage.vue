@@ -2,9 +2,9 @@
   <div class="m-4">
     <BaseHeadline variant="hero">Design System</BaseHeadline>
     <BaseTabList
-      class="my-4"
       id="design-system-page-tab-list"
       v-model="tab"
+      class="my-4"
       :tabs
     />
     <div v-if="tab === 'texts'">

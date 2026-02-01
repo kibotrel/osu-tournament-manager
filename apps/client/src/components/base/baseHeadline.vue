@@ -1,5 +1,5 @@
 <template>
-  <component :class="variant" :is="variant === 'subtitle' ? 'h2' : 'h1'">
+  <component :is="variant === 'subtitle' ? 'h2' : 'h1'" :class="variant">
     <slot></slot>
   </component>
 </template>

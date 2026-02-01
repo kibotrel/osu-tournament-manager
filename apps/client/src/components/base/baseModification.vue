@@ -16,11 +16,11 @@
       </clipPath>
     </svg>
     <component
+      :is="modificationComponent()"
       :class="[
         'col-start-1 row-start-1 h-8 w-8',
         getModificationForegroundColor(),
       ]"
-      :is="modificationComponent()"
       :mod
     />
   </div>
@@ -44,14 +44,15 @@ const FallbackComponent = defineComponent({
   name: 'FallbackModification',
   props: { mod: { type: String, required: true } },
   setup: (properties) => {
-    return () =>
-      h(
+    return () => {
+      return h(
         'div',
         { class: 'flex items-center justify-center text-sm text-semibold' },
         OsuBeatmapModificationAcronym[
           properties.mod as OsuBeatmapModification
         ] ?? properties.mod,
       );
+    };
   },
 });
 
@@ -87,8 +88,9 @@ const modificationComponent = () => {
   return defineAsyncComponent({
     errorComponent: FallbackComponent,
     loadingComponent: FallbackComponent,
-    loader: () =>
-      import(`#src/components/mods/${properties.mod}Modification.vue`),
+    loader: () => {
+      return import(`#src/components/mods/${properties.mod}Modification.vue`);
+    },
   });
 };
 </script>

@@ -1,5 +1,5 @@
 <template>
-  <component :class="variant" :is="isInline ? 'span' : 'p'">
+  <component :is="isInline ? 'span' : 'p'" :class="variant">
     <slot></slot>
   </component>
 </template>

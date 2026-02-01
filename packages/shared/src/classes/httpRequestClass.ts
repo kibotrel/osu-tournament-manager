@@ -12,19 +12,16 @@ export interface HttpResponse<ResponseType> {
  * Simple wrapper around the fetch API to make it easier to use.
  */
 export class HttpRequest<PayloadType extends object = NothingRecord> {
-  public baseApiEndpoint: string;
-  public baseUrl: string;
+  public baseApiEndpoint: string = '';
+  public baseUrl: string = '';
   public httpHeaders: Headers;
   public payload: PayloadType | NothingRecord;
   public apiVersion: string;
 
   constructor() {
-    this.baseApiEndpoint = '';
-    this.baseUrl = '';
     this.httpHeaders = new Headers();
     this.payload = {};
     this.apiVersion = '';
-
     this.setHttpHeader(HttpHeader.ContentType, 'application/json');
   }
 

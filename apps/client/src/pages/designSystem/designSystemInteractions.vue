@@ -3,12 +3,12 @@
     <div class="space-y-2">
       <BaseHeadline variant="title">Buttons</BaseHeadline>
       <div class="flex flex-row space-x-2">
-        <BaseButton class="w-32" id="button-primary" variant="primary">
+        <BaseButton id="button-primary" class="w-32" variant="primary">
           Primary
         </BaseButton>
         <BaseButton
-          class="w-32"
           id="button-primary-with-icon"
+          class="w-32"
           variant="primary"
         >
           With icon
@@ -17,34 +17,34 @@
           </template>
         </BaseButton>
         <BaseButton
-          class="w-32"
           id="button-loading"
-          isLoading
+          class="w-32"
+          is-loading
           variant="primary"
         />
         <BaseButton
-          class="w-32"
           id="button-disabled"
-          isDisabled
+          class="w-32"
+          is-disabled
           variant="primary"
         >
           Disabled
         </BaseButton>
       </div>
       <div class="flex flex-row space-x-2">
-        <BaseButton class="w-32" id="button-secondary" variant="secondary">
+        <BaseButton id="button-secondary" class="w-32" variant="secondary">
           Secondary
         </BaseButton>
-        <BaseButton class="w-32" id="button-ghost" variant="ghost">
+        <BaseButton id="button-ghost" class="w-32" variant="ghost">
           Ghost
         </BaseButton>
-        <BaseButton class="w-32" id="button-success" variant="success">
+        <BaseButton id="button-success" class="w-32" variant="success">
           Success
         </BaseButton>
-        <BaseButton class="w-32" id="button-warning" variant="warning">
+        <BaseButton id="button-warning" class="w-32" variant="warning">
           Warning
         </BaseButton>
-        <BaseButton class="w-32" id="button-danger" variant="danger">
+        <BaseButton id="button-danger" class="w-32" variant="danger">
           Danger
         </BaseButton>
       </div>
@@ -54,50 +54,51 @@
       <div class="flex flex-row items-end space-x-2">
         <BaseInput
           id="string-input"
+          v-model="stringInputValue"
           label="Label"
           placeholder="String"
-          v-model="stringInputValue"
         />
         <BaseInput
           id="number-input"
+          v-model="numberInputValue"
           label="Label"
           placeholder="Number"
           type="number"
-          v-model="numberInputValue"
         />
         <BaseInput
           id="disabled-input"
-          isDisabled
+          v-model="disabledStringInputValue"
+          is-disabled
           label="Label"
           placeholder="Disabled"
         />
       </div>
       <div class="mt-4 flex flex-row space-x-2">
         <BaseInput
-          errorMessage="Error message"
           id="error-input"
+          v-model="stringErrorValue"
+          error-message="Error message"
           label="Label"
           placeholder="Error"
-          v-model="stringErrorValue"
         />
         <BaseInput
           id="required-input"
-          isRequired
+          v-model="stringInputValue"
+          is-required
           label="Label"
           placeholder="Required"
-          v-model="stringInputValue"
         />
         <BaseInput
-          class="mt-6"
           id="no-label-input"
-          placeholder="No label"
           v-model="stringInputValue"
+          class="mt-6"
+          placeholder="No label"
         />
         <BaseInput
-          class="mt-6"
           id="ghost-input"
-          placeholder="Ghost"
           v-model="stringInputValue"
+          class="mt-6"
+          placeholder="Ghost"
           variant="ghost"
         />
       </div>
@@ -113,6 +114,7 @@ import BaseHeadline from '#src/components/base/baseHeadline.vue';
 import BaseIcon from '#src/components/base/baseIcon.vue';
 import BaseInput from '#src/components/base/baseInput.vue';
 
+const disabledStringInputValue = ref('');
 const numberInputValue = ref('');
 const stringErrorValue = ref('Wrong input');
 const stringInputValue = ref('');

@@ -1,5 +1,3 @@
-/* eslint-disable unicorn/consistent-function-scoping */
-
 import type {
   WebSocketChannel,
   WebSocketChannelMatchesEvent,

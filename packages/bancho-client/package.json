@@ -4,7 +4,7 @@
   },
   "devDependencies": {
     "@packages/prettier-config": "workspace:*",
-    "vitest": "3.2.4"
+    "vitest": "4.0.18"
   },
   "imports": {
     "#src/*": "./src/*"
@@ -16,7 +16,7 @@
     "build": "tsc && tsc-alias",
     "dev": "nodemon --config nodemon.json",
     "format": "prettier --write src/**/*.ts",
-    "lint": "eslint src/**/*.ts --config .eslintrc",
+    "lint": "eslint src/**/*.ts",
     "test:unit": "vitest --silent --config vitest.config.unit.ts",
     "type-check": "tsc --noEmit"
   },

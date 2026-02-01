@@ -1,6 +1,6 @@
 <template>
   "<BaseBody
-    isInline
+    is-inline
     :class="isSupported ? 'copy' : ''"
     @mousedown="copy(matchName)"
     >{{ matchName }}</BaseBody

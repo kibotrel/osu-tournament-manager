@@ -2,9 +2,9 @@
   <div class="tab-list">
     <div
       v-for="tab in tabs"
-      :class="['tab', tab.value === selected ? 'selected' : 'not-selected']"
       :id="`tab-${tab.value}`"
       :key="tab.value"
+      :class="['tab', tab.value === selected ? 'selected' : 'not-selected']"
       :tabindex="selected === tab.value ? -1 : 0"
       @keydown.enter="selectTab(tab.value)"
       @mousedown="selectTab(tab.value)"
