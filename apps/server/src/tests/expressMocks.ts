@@ -2,9 +2,10 @@ import { randomUUID } from 'node:crypto';
 
 import { Time } from '@packages/shared';
 import type { Request, Response } from 'express';
+import type { Mock } from 'vitest';
 import { vi } from 'vitest';
 
-export const expressNextFunctionMock = () => {
+export const expressNextFunctionMock = (): Mock => {
   return vi.fn();
 };
 
