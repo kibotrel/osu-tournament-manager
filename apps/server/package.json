@@ -17,7 +17,7 @@
     "redis": "5.8.2",
     "swagger-themes": "1.4.3",
     "swagger-ui-express": "5.0.1",
-    "ws": "8.18.3"
+    "ws": "8.19.0"
   },
   "devDependencies": {
     "@packages/prettier-config": "workspace:*",
