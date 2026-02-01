@@ -28,7 +28,7 @@
     "@types/ws": "8.18.1",
     "drizzle-kit": "0.31.5",
     "tsx": "4.19.1",
-    "vitest": "3.2.4"
+    "vitest": "4.0.18"
   },
   "imports": {
     "#src/*": "./src/*"
