@@ -12,7 +12,7 @@
     "express-openapi-validator": "5.6.2",
     "express-session": "1.18.2",
     "express-validator": "7.3.1",
-    "helmet": "8.0.0",
+    "helmet": "8.1.0",
     "pg": "8.18.0",
     "redis": "5.10.0",
     "swagger-themes": "1.4.3",
