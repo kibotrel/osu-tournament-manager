@@ -295,6 +295,7 @@ export class WebSocketServer {
 
       logger.debug('[WS] New open connection', {
         websocketId: extendedWebSocket.id,
+        subscription,
       });
 
       this.cacheWebSocketClient(extendedWebSocket);
