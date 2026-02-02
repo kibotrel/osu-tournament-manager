@@ -4,12 +4,12 @@
     "@packages/shared": "workspace:*",
     "@tailwindcss/vite": "4.1.18",
     "@tanstack/vue-query": "5.90.2",
-    "@vueuse/core": "13.9.0",
-    "pinia": "2.2.2",
+    "@vueuse/core": "14.2.0",
+    "pinia": "3.0.4",
     "pinia-plugin-persistedstate": "4.0.2",
     "tailwindcss": "4.1.18",
-    "vue": "3.5.8",
-    "vue-router": "4.4.5"
+    "vue": "3.5.27",
+    "vue-router": "5.0.1"
   },
   "devDependencies": {
     "@packages/prettier-config": "workspace:*",
@@ -21,7 +21,7 @@
     "prettier-plugin-tailwindcss": "0.6.11",
     "vite": "7.3.1",
     "vite-plugin-vue-devtools": "8.0.5",
-    "vue-tsc": "3.0.5"
+    "vue-tsc": "3.2.4"
   },
   "imports": {
     "#src/*": "./src/*"
