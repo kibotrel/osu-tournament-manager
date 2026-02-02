@@ -1,16 +1,14 @@
 <template>
   <div class="h-full">
-    <div
-      class="border-primary-3 mx-4 flex h-full flex-col overflow-hidden rounded-md border-2"
-    >
+    <div class="border-primary-3 mx-4 rounded-md border-2">
       <div class="border-primary-3 border-b-2 px-4 py-2">
         <div class="flex items-center justify-between">
           <BaseBody variant="base" class="text-primary-2"
             >{{ match.playerCount }} / 16 Players</BaseBody
           >
           <BaseButton
-            class="w-32"
             id="refresh-lobby-state"
+            class="w-32"
             variant="primary"
             @keydown.enter="refreshLobbyState"
             @mousedown="refreshLobbyState"
@@ -23,13 +21,13 @@
         </div>
       </div>
       <div class="flex-1 overflow-y-auto">
-        <div v-for="(slot, index) in match.slots" :key="index">
+        <div v-for="(slot, slotIndex) in match.slots" :key="slotIndex">
           <div
             :class="[
               'border-primary-4 grid grid-cols-[0.5rem_1fr_1fr_5rem_2em] items-center',
               {
-                'border-b-2': index < match.slots.length - 1,
-                'border-t-2': index > 0,
+                'border-b-2': slotIndex < match.slots.length - 1,
+                'border-t-2': slotIndex > 0,
                 'hover:bg-primary-3/30': slot.player,
               },
             ]"
@@ -38,39 +36,39 @@
               :class="[
                 'flex h-full overflow-hidden',
                 slot.player ? 'bg-primary-1' : 'bg-primary-3/60',
-                { 'rounded-bl-sm': index === match.slots.length - 1 },
+                { 'rounded-bl-sm': slotIndex === match.slots.length - 1 },
               ]"
             >
-              <span v-html="'&nbsp'" />
+              <span>&nbsp;</span>
             </div>
             <div class="flex items-center space-x-2">
               <BaseBody class="ml-2 py-2 font-bold!">
-                <span v-html="slot.player || '&nbsp;'" />
+                <span>{{ slot.player || '\u00a0' }}</span>
               </BaseBody>
               <CrownIcon v-show="slot.isHost" class="h-6 w-6 text-yellow-400" />
             </div>
             <div v-show="slot.player">
               <BaseModification
-                class="mr-1"
-                v-for="(modification, index) in [
+                v-for="(modification, modificationIndex) in [
                   ...match.globalModifications,
                   ...slot.selectedModifications,
                 ]"
-                :key="index"
+                :key="modificationIndex"
+                class="mr-1"
                 :mod="modification"
               />
             </div>
             <div class="flex">
               <BaseBadge
+                v-show="slot.isReady === true"
                 color="green"
                 variant="small"
-                v-show="slot.isReady === true"
                 :icon="{ side: 'right', name: 'check' }"
               >
                 Ready
               </BaseBadge>
             </div>
-            <div class="flex" v-if="slot.player">
+            <div v-if="slot.player" class="flex">
               <BaseDropdown :items="quickActionsForPlayer(slot.player)" />
             </div>
           </div>

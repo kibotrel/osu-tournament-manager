@@ -4,16 +4,16 @@
       <BaseHeadline variant="title">Drawers</BaseHeadline>
       <div class="flex flex-row space-x-2">
         <BaseButton
-          class="w-32"
           id="open-bottom-drawer"
+          class="w-32"
           @keydown.enter="isBottomDrawerOpen = true"
           @mousedown="isBottomDrawerOpen = true"
         >
           Bottom
         </BaseButton>
         <BaseButton
-          class="w-32"
           id="open-right-drawer"
+          class="w-32"
           @keydown.enter="isRightDrawerOpen = true"
           @mousedown="isRightDrawerOpen = true"
         >
@@ -37,8 +37,8 @@
       <BaseHeadline variant="title">Modals</BaseHeadline>
       <div class="flex flex-row space-x-2">
         <BaseButton
-          class="w-32"
           id="base-modal"
+          class="w-32"
           @keydown.enter="isModalOpen = true"
           @mousedown="isModalOpen = true"
         >
@@ -58,12 +58,12 @@
       <div class="w-96 space-y-4">
         <BaseTabList
           id="base-tab-list"
+          v-model="selectedTab"
           :tabs="[
             { label: 'Base', value: 'tab1' },
             { label: 'Tab', value: 'tab2' },
             { label: 'List', value: 'tab3' },
           ]"
-          v-model="selectedTab"
         />
         <BaseTabList
           id="base-tab-list-with-icons"
@@ -77,7 +77,7 @@
     </div>
     <BaseModal
       id="base-modal"
-      :isModalOpen="isModalOpen"
+      :is-modal-open="isModalOpen"
       @close:modal="isModalOpen = false"
     >
       <template #header>
@@ -88,8 +88,8 @@
       </template>
       <template #footer>
         <BaseButton
-          class="w-24"
           id="base-modal-cancel-button"
+          class="w-24"
           variant="secondary"
           @keydown.enter="isModalOpen = false"
           @mousedown="isModalOpen = false"
@@ -97,8 +97,8 @@
           Cancel
         </BaseButton>
         <BaseButton
-          class="w-24"
           id="base-modal-confirm-button"
+          class="w-24"
           variant="primary"
           @keydown.enter="isModalOpen = false"
           @mousedown="isModalOpen = false"
@@ -110,7 +110,7 @@
     <BaseDrawer
       id="base-bottom-drawer"
       variant="bottom"
-      :isDrawerOpen="isBottomDrawerOpen"
+      :is-drawer-open="isBottomDrawerOpen"
       @close:drawer="isBottomDrawerOpen = false"
     >
       <template #header>
@@ -122,8 +122,8 @@
       <template #footer>
         <div class="flex flex-row justify-end space-x-2 p-4">
           <BaseButton
-            class="w-24"
             id="base-modal-confirm-button"
+            class="w-24"
             variant="primary"
             @keydown.enter="isBottomDrawerOpen = false"
             @mousedown="isBottomDrawerOpen = false"
@@ -136,7 +136,7 @@
     <BaseDrawer
       id="base-right-drawer"
       variant="right"
-      :isDrawerOpen="isRightDrawerOpen"
+      :is-drawer-open="isRightDrawerOpen"
       @close:drawer="isRightDrawerOpen = false"
     >
       <template #header>
@@ -148,8 +148,8 @@
       <template #footer>
         <div class="flex flex-row justify-end space-x-2 p-4">
           <BaseButton
-            class="w-24"
             id="base-modal-confirm-button"
+            class="w-24"
             variant="primary"
             @keydown.enter="isRightDrawerOpen = false"
             @mousedown="isRightDrawerOpen = false"

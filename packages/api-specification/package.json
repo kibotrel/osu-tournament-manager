@@ -1,7 +1,7 @@
 {
   "devDependencies": {
     "@packages/prettier-config": "workspace:*",
-    "@redocly/cli": "2.2.2"
+    "@redocly/cli": "2.15.0"
   },
   "files": [
     "dist/",

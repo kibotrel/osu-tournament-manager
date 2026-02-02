@@ -18,7 +18,7 @@ const router = createRouter({
       },
     },
     {
-      path: '/matches/:gameMatchId(\\d+)',
+      path: String.raw`/matches/:gameMatchId(\d+)`,
       name: 'match',
       component: () => {
         return import('#src/pages/matches/matchPage.vue');

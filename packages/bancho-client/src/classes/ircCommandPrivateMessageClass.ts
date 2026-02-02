@@ -142,7 +142,14 @@ export class IrcCommandPrivateMessage implements IrcCommand {
 
   private handleMultiplayerChannelChangedBeatmap(payload: Payload) {
     const { channel, message } = payload;
-    const match = message.match(BanchoBotCommonMessage.ChangedBeatmap)!;
+    const match = new RegExp(BanchoBotCommonMessage.ChangedBeatmap).exec(
+      message,
+    );
+
+    if (!match) {
+      return;
+    }
+
     const { beatmap, url } = match.groups!;
     const data = { beatmap, url };
 
@@ -169,7 +176,14 @@ export class IrcCommandPrivateMessage implements IrcCommand {
 
   private handleMultiplayerChannelCreation(payload: Payload) {
     const { message } = payload;
-    const match = message.match(BanchoBotCommonMessage.MatchCreation)!;
+    const match = new RegExp(BanchoBotCommonMessage.MatchCreation).exec(
+      message,
+    );
+
+    if (!match) {
+      return;
+    }
+
     const { historyUrl, name } = match.groups!;
     const data = { historyUrl, name };
     const channel = `#mp_${historyUrl.split('/').at(-1)!}`;
@@ -186,7 +200,12 @@ export class IrcCommandPrivateMessage implements IrcCommand {
 
   private handleMultiplayerChannelHostChangedEvent(payload: Payload) {
     const { channel, message } = payload;
-    const match = message.match(BanchoBotCommonMessage.MatchNewHost)!;
+    const match = new RegExp(BanchoBotCommonMessage.MatchNewHost).exec(message);
+
+    if (!match) {
+      return;
+    }
+
     const { user } = match.groups!;
     const data = { newHost: user };
 
@@ -213,7 +232,14 @@ export class IrcCommandPrivateMessage implements IrcCommand {
 
   private handleMultiplayerChannelInformationConditionsEvent(payload: Payload) {
     const { channel, message } = payload;
-    const match = message.match(BanchoBotCommonMessage.MatchConditions)!;
+    const match = new RegExp(BanchoBotCommonMessage.MatchConditions).exec(
+      message,
+    );
+
+    if (!match) {
+      return;
+    }
+
     const { teamMode, winCondition } = match.groups!;
     const data = {
       teamMode: teamMode as BanchoTeamMode,
@@ -234,7 +260,14 @@ export class IrcCommandPrivateMessage implements IrcCommand {
     payload: Payload,
   ) {
     const { channel, message } = payload;
-    const match = message.match(BanchoBotCommonMessage.CurrentlyPlaying)!;
+    const match = new RegExp(BanchoBotCommonMessage.CurrentlyPlaying).exec(
+      message,
+    );
+
+    if (!match) {
+      return;
+    }
+
     const { beatmap, url } = match.groups!;
     const data = { beatmap, url };
 
@@ -252,9 +285,14 @@ export class IrcCommandPrivateMessage implements IrcCommand {
     payload: Payload,
   ) {
     const { channel, message } = payload;
-    const match = message.match(
+    const match = new RegExp(
       BanchoBotCommonMessage.GlobalActiveModifications,
-    )!;
+    ).exec(message);
+
+    if (!match) {
+      return;
+    }
+
     const { modifications } = match.groups!;
     const data = {
       modifications: modifications
@@ -274,7 +312,14 @@ export class IrcCommandPrivateMessage implements IrcCommand {
 
   private handleMultiplayerChannelInformationIdentityEvent(payload: Payload) {
     const { channel, message } = payload;
-    const match = message.match(BanchoBotCommonMessage.RoomIdentification)!;
+    const match = new RegExp(BanchoBotCommonMessage.RoomIdentification).exec(
+      message,
+    );
+
+    if (!match) {
+      return;
+    }
+
     const { historyUrl, name } = match.groups!;
     const data = { historyUrl, name };
 
@@ -292,7 +337,12 @@ export class IrcCommandPrivateMessage implements IrcCommand {
     payload: Payload,
   ) {
     const { channel, message } = payload;
-    const match = message.match(BanchoBotCommonMessage.PlayerCount)!;
+    const match = new RegExp(BanchoBotCommonMessage.PlayerCount).exec(message);
+
+    if (!match) {
+      return;
+    }
+
     const { playerCount } = match.groups!;
     const data = { playerCount: Number(playerCount) };
 
@@ -308,7 +358,12 @@ export class IrcCommandPrivateMessage implements IrcCommand {
 
   private handleMultiplayerChannelInformationSlotEvent(payload: Payload) {
     const { channel, message } = payload;
-    const match = message.match(BanchoBotCommonMessage.MatchSlot)!;
+    const match = new RegExp(BanchoBotCommonMessage.MatchSlot).exec(message);
+
+    if (!match) {
+      return;
+    }
+
     const {
       attributes = '',
       gameUserId,
@@ -321,8 +376,9 @@ export class IrcCommandPrivateMessage implements IrcCommand {
       .trim()
       .split(', ')
       .filter((modification) => {
-        return modification && modification !== BanchoTerm.Host;
-      });
+        return modification !== BanchoTerm.Host;
+      })
+      .filter(Boolean);
     const data = {
       gameUserId: Number(gameUserId),
       isReady: status === BanchoReadyStatus.Ready,
@@ -344,7 +400,14 @@ export class IrcCommandPrivateMessage implements IrcCommand {
 
   private handleMultiplayerChannelNameUpdated(payload: Payload) {
     const { channel, message } = payload;
-    const match = message.match(BanchoBotCommonMessage.RoomNameUpdated)!;
+    const match = new RegExp(BanchoBotCommonMessage.RoomNameUpdated).exec(
+      message,
+    );
+
+    if (!match) {
+      return;
+    }
+
     const { name } = match.groups!;
     const data = { name };
 
@@ -360,7 +423,14 @@ export class IrcCommandPrivateMessage implements IrcCommand {
 
   private handleMultiplayerPlayerJoinedSlotEvent(payload: Payload) {
     const { channel, message } = payload;
-    const match = message.match(BanchoBotCommonMessage.UserJoinedSlot)!;
+    const match = new RegExp(BanchoBotCommonMessage.UserJoinedSlot).exec(
+      message,
+    );
+
+    if (!match) {
+      return;
+    }
+
     const { user, slotNumber } = match.groups!;
     const data = { user, slotNumber: Number(slotNumber) };
 
@@ -376,7 +446,12 @@ export class IrcCommandPrivateMessage implements IrcCommand {
 
   private handleMultiplayerPayerLeftRoomEvent(payload: Payload) {
     const { channel, message } = payload;
-    const match = message.match(BanchoBotCommonMessage.UserLeftRoom)!;
+    const match = new RegExp(BanchoBotCommonMessage.UserLeftRoom).exec(message);
+
+    if (!match) {
+      return;
+    }
+
     const { user } = match.groups!;
     const data = { user };
 
@@ -392,7 +467,14 @@ export class IrcCommandPrivateMessage implements IrcCommand {
 
   private handleMultiplayerPlayerMovedSlotEvent(payload: Payload) {
     const { channel, message } = payload;
-    const match = message.match(BanchoBotCommonMessage.UserMovedSlot)!;
+    const match = new RegExp(BanchoBotCommonMessage.UserMovedSlot).exec(
+      message,
+    );
+
+    if (!match) {
+      return;
+    }
+
     const { user, slotNumber } = match.groups!;
     const data = { user, slotNumber: Number(slotNumber) };
 
@@ -412,7 +494,14 @@ export class IrcCommandPrivateMessage implements IrcCommand {
 
   private handleUserInvitedToChannelEvent(payload: Payload) {
     const { channel, message } = payload;
-    const match = message.match(BanchoBotCommonMessage.InvitedUserToChannel)!;
+    const match = new RegExp(BanchoBotCommonMessage.InvitedUserToChannel).exec(
+      message,
+    );
+
+    if (!match) {
+      return;
+    }
+
     const { user } = match.groups!;
 
     this.banchoClient.emit(BanchoClientEvent.UserInvitedToChannel, {

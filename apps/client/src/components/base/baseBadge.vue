@@ -3,7 +3,7 @@
     v-if="variant === 'base'"
     variant="small"
     :class="['badge badge--base', `badge--${color}`]"
-    :isInline
+    :is-inline
   >
     <div class="flex items-center justify-center gap-1 px-2">
       <BaseIcon
@@ -14,7 +14,7 @@
       <slot />
       <BaseIcon
         v-if="icon?.side === 'right'"
-        class="h-3 w-3"
+        class="h-4 w-4"
         :name="icon.name"
       />
     </div>
@@ -22,7 +22,7 @@
   <BaseCaption
     v-else
     :class="['badge badge--small', `badge--${color}`]"
-    :isInline
+    :is-inline
   >
     <div class="flex items-center justify-center gap-1 px-2">
       <BaseIcon
@@ -47,16 +47,27 @@ import type { IconName } from './baseIcon.vue';
 import BaseIcon from './baseIcon.vue';
 
 export type BadgeVariant = 'base' | 'small';
-export type BadgeColor = 'green' | 'primary' | 'red' | 'secondary' | 'yellow';
+export type BadgeColor =
+  | 'green'
+  | 'none'
+  | 'primary'
+  | 'red'
+  | 'secondary'
+  | 'yellow';
 
 interface Properties {
-  icon?: { side: 'left' | 'right'; name: IconName };
+  icon?: { side: 'left' | 'right'; name: IconName } | null;
   color?: BadgeColor;
   isInline?: boolean;
   variant?: BadgeVariant;
 }
 
-withDefaults(defineProps<Properties>(), { isInline: false, variant: 'base' });
+withDefaults(defineProps<Properties>(), {
+  icon: null,
+  color: 'none',
+  isInline: false,
+  variant: 'base',
+});
 </script>
 
 <style scoped>
@@ -68,10 +79,6 @@ withDefaults(defineProps<Properties>(), { isInline: false, variant: 'base' });
 
 .badge--base {
   @apply py-1;
-}
-
-.badge--blue {
-  @apply border-blue-500 bg-blue-500/50;
 }
 
 .badge--green {

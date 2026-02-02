@@ -75,7 +75,7 @@ export const usePopUpBehavior = ({
     }
 
     const first = focusable[0];
-    const last = focusable.at(-1);
+    const last = focusable.at(-1) ?? null;
     const active = document.activeElement;
 
     if (!event.shiftKey && active === last) {
@@ -90,16 +90,16 @@ export const usePopUpBehavior = ({
   watch(isElementVisible, async (isVisible) => {
     if (isVisible && element.value) {
       elementStack.push(element);
-      window.addEventListener('keydown', closeOnEscape);
-      window.addEventListener('keydown', tabNavigation);
-      window.addEventListener('mousedown', closeOnClickOutside);
+      globalThis.addEventListener('keydown', closeOnEscape);
+      globalThis.addEventListener('keydown', tabNavigation);
+      globalThis.addEventListener('mousedown', closeOnClickOutside);
 
       await trapFocus(element.value);
     } else {
       elementStack.pop();
-      window.removeEventListener('keydown', closeOnEscape);
-      window.removeEventListener('keydown', tabNavigation);
-      window.removeEventListener('mousedown', closeOnClickOutside);
+      globalThis.removeEventListener('keydown', closeOnEscape);
+      globalThis.removeEventListener('keydown', tabNavigation);
+      globalThis.removeEventListener('mousedown', closeOnClickOutside);
 
       await nextTick();
 
@@ -113,9 +113,9 @@ export const usePopUpBehavior = ({
 
   onUnmounted(async () => {
     elementStack.pop();
-    window.removeEventListener('keydown', closeOnEscape);
-    window.removeEventListener('keydown', tabNavigation);
-    window.removeEventListener('mousedown', closeOnClickOutside);
+    globalThis.removeEventListener('keydown', closeOnEscape);
+    globalThis.removeEventListener('keydown', tabNavigation);
+    globalThis.removeEventListener('mousedown', closeOnClickOutside);
 
     await nextTick();
 

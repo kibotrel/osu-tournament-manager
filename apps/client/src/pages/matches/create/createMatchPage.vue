@@ -6,19 +6,19 @@
       </BaseHeadline>
       <BaseInput
         id="match-name"
-        isRequired
+        v-model="matchName"
+        is-required
         label="Match name"
         placeholder="MWC4K2025 RO32: Philippines VS France"
-        v-model="matchName"
         @keydown.enter="handleCreateMatch"
       />
       <div class="flex justify-center">
         <BaseButton
-          class="mt-8 w-32"
           id="create-match-button"
+          class="mt-8 w-32"
           variant="success"
-          :isDisabled="matchName.length === 0"
-          :isLoading="isPending || !isIdle"
+          :is-disabled="matchName.length === 0"
+          :is-loading="isPending || !isIdle"
           @keydown.enter="handleCreateMatch"
           @mousedown="handleCreateMatch"
         >

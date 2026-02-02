@@ -8,13 +8,13 @@
     />
 
     <Transition name="dropdown">
-      <div v-show="isOpen" class="dropdown-menu" ref="dropdown">
+      <div v-show="isOpen" ref="dropdown" class="dropdown-menu">
         <div
           v-for="item in items"
-          class="dropdown-item"
-          tabindex="0"
           :id="item.id"
           :key="item.label"
+          class="dropdown-item"
+          tabindex="0"
           @keydown.enter="selectItem(item)"
           @mousedown="selectItem(item)"
         >

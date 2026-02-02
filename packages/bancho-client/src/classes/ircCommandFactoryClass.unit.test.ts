@@ -1,4 +1,3 @@
-/* eslint-disable dot-notation */
 import { describe, expect, it } from 'vitest';
 
 import { BanchoClient } from '#src/classes/ircClientClass.js';

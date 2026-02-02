@@ -2,26 +2,26 @@
   "dependencies": {
     "@fontsource/geist-sans": "5.1.0",
     "@packages/shared": "workspace:*",
-    "@tailwindcss/vite": "4.0.14",
+    "@tailwindcss/vite": "4.1.18",
     "@tanstack/vue-query": "5.90.2",
-    "@vueuse/core": "13.9.0",
-    "pinia": "2.2.2",
+    "@vueuse/core": "14.2.0",
+    "pinia": "3.0.4",
     "pinia-plugin-persistedstate": "4.0.2",
-    "tailwindcss": "4.1.13",
-    "vue": "3.5.8",
-    "vue-router": "4.4.5"
+    "tailwindcss": "4.1.18",
+    "vue": "3.5.27",
+    "vue-router": "5.0.1"
   },
   "devDependencies": {
     "@packages/prettier-config": "workspace:*",
-    "@tanstack/eslint-plugin-query": "5.86.0",
-    "@vitejs/plugin-vue": "5.2.1",
-    "@vue/eslint-config-prettier": "9.0.0",
-    "@vue/eslint-config-typescript": "13.0.0",
-    "eslint-plugin-vue": "9.26.0",
-    "prettier-plugin-tailwindcss": "0.6.11",
-    "vite": "6.4.1",
-    "vite-plugin-vue-devtools": "7.7.2",
-    "vue-tsc": "3.0.5"
+    "@tanstack/eslint-plugin-query": "5.91.3",
+    "@vitejs/plugin-vue": "6.0.3",
+    "@vue/eslint-config-prettier": "10.2.0",
+    "@vue/eslint-config-typescript": "14.6.0",
+    "eslint-plugin-vue": "10.7.0",
+    "prettier-plugin-tailwindcss": "0.7.2",
+    "vite": "7.3.1",
+    "vite-plugin-vue-devtools": "8.0.5",
+    "vue-tsc": "3.2.4"
   },
   "imports": {
     "#src/*": "./src/*"
@@ -32,7 +32,7 @@
     "build": "vite build",
     "dev": "vite --host",
     "format": "prettier --write src/**/*.ts src/**/*.vue",
-    "lint": "eslint src/**/*.ts src/**/*.vue --config .eslintrc",
+    "lint": "eslint src/**/*.ts src/**/*.vue",
     "preview": "vite preview",
     "type-check": "vue-tsc --noEmit"
   },
