@@ -18,19 +18,22 @@ import '#src/assets/styles/index.css';
 import { piniaPluginRouter, vuePluginRouter } from '#src/plugins/index.js';
 import router from '#src/router/index.js';
 
+import { PiniaRouterPlugin } from './plugins/piniaRouterPlugin.js';
+import { VueRouterPlugin } from './plugins/vueRouterPlugin.js';
+
 const app = createApp(App);
 const pinia = createPinia();
 
 app.use(pinia);
 app.use(router);
-app.use(vuePluginRouter);
+app.use(VueRouterPlugin);
 app.use(VueQueryPlugin, {
   enableDevtoolsV6Plugin: true,
   queryClientConfig: {
     defaultOptions: { queries: { refetchOnWindowFocus: false } },
   },
 });
-pinia.use(piniaPluginRouter);
+pinia.use(PiniaRouterPlugin);
 pinia.use(createPersistedState());
 
 app.mount('#app');
