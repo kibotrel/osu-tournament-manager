@@ -5,9 +5,12 @@ Caddyfile
 dorny
 geist
 genid
+gruntfuggly
 healthcheck
 isready
 Logform
+lokalise
+nguyenngoclong
 open-code
 opencode
 persistedstate
