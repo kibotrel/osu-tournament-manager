@@ -5,6 +5,8 @@
     "@tailwindcss/vite": "4.1.18",
     "@tanstack/vue-query": "5.90.2",
     "@vueuse/core": "14.2.0",
+    "i18next": "25.8.0",
+    "i18next-vue": "5.4.0",
     "pinia": "3.0.4",
     "pinia-plugin-persistedstate": "4.0.2",
     "tailwindcss": "4.1.18",
