@@ -79,7 +79,6 @@ const increaseDifficultyMods = [
   OsuBeatmapModification.SuddenDeath,
 ];
 const maniaMods = [
-  OsuBeatmapModification.Coop,
   OsuBeatmapModification.OneKey,
   OsuBeatmapModification.TwoKeys,
   OsuBeatmapModification.ThreeKeys,
