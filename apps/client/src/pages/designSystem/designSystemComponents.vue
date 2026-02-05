@@ -62,10 +62,7 @@ import BaseBadge from '#src/components/base/baseBadge.vue';
 import BaseHeadline from '#src/components/base/baseHeadline.vue';
 import BaseModification from '#src/components/base/baseModification.vue';
 
-const baseMods = [
-  OsuBeatmapModification.NoModification,
-  OsuBeatmapModification.FreeModification,
-];
+const baseMods = [OsuBeatmapModification.NoModification];
 const decreaseDifficultyMods = [
   OsuBeatmapModification.Easy,
   OsuBeatmapModification.HalfTime,
