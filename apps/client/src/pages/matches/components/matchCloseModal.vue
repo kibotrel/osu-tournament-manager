@@ -5,19 +5,23 @@
     @close:modal="emit('close:modal')"
   >
     <template #header>
-      <BaseHeadline class="mb-4">Close match</BaseHeadline>
+      <BaseHeadline class="mb-4">{{
+        $t('pages.match.modals.endMatch.title')
+      }}</BaseHeadline>
     </template>
     <template #body>
       <div class="space-y-2">
         <BaseBody>
-          You are about to close the match
-          <MatchNameCopy :match-name="matchName" />. This action cannot be
-          undone. To confirm, please type the match name exactly as shown above.
+          <i18next :translation="$t('pages.match.modals.endMatch.body')">
+            <template #matchName>
+              <MatchNameCopy :match-name="matchName" />
+            </template>
+          </i18next>
         </BaseBody>
         <BaseInput
           id="match-name-confirmation"
           v-model="confirmationMatchName"
-          placeholder="MWC4K2025 RO32: Philippines VS France"
+          :placeholder="matchName"
           @keydown.enter="handleCloseMatch"
         />
       </div>
@@ -33,7 +37,7 @@
           @keydown.enter="handleCloseMatch"
           @mousedown="handleCloseMatch"
         >
-          <template #default> Close </template>
+          <template #default> {{ $t('global.words.end') }} </template>
           <template #icon>
             <BaseIcon name="arrowLeftStartOnRectangle" />
           </template>

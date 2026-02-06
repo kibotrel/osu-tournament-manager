@@ -15,7 +15,7 @@
         <div v-if="match.historyUrl">
           <BaseBody>
             <BaseLink is-external :link="match.historyUrl">
-              Official match page
+              {{ $t('pages.match.drawer.linkToOfficialHistory') }}
             </BaseLink>
           </BaseBody>
         </div>
@@ -25,11 +25,23 @@
         v-model="tab"
         class="mx-8 mt-8"
         :tabs="[
-          { label: 'Status', value: 'status', icon: 'signal' },
-          { label: 'Settings', value: 'settings', icon: 'gear' },
-          { label: 'Timeline', value: 'timeline', icon: 'clock' },
           {
-            label: 'Commands',
+            label: $t('pages.match.drawer.tabs.names.status'),
+            value: 'status',
+            icon: 'signal',
+          },
+          {
+            label: $t('pages.match.drawer.tabs.names.settings'),
+            value: 'settings',
+            icon: 'gear',
+          },
+          {
+            label: $t('pages.match.drawer.tabs.names.timeline'),
+            value: 'timeline',
+            icon: 'clock',
+          },
+          {
+            label: $t('pages.match.drawer.tabs.names.commands'),
             value: 'commands',
             icon: 'commandLine',
           },
@@ -45,7 +57,9 @@
           v-else
           class="border-primary-2 flex h-full items-center justify-center rounded-md border-2 border-dashed p-4"
         >
-          <BaseBody class="text-primary-2 italic">Work in progress</BaseBody>
+          <BaseBody class="text-primary-2 italic">{{
+            $t('global.common.workInProgress')
+          }}</BaseBody>
         </div>
       </div>
     </template>

@@ -13,7 +13,9 @@
         <LoadingIcon class="h-6" />
       </div>
       <div v-else-if="history.length === 0">
-        <BaseBody class="text-primary-2">No message yet.</BaseBody>
+        <BaseBody class="text-primary-2">{{
+          $t('pages.match.components.matchChatHistory.noMessagePlaceholder')
+        }}</BaseBody>
       </div>
       <div v-for="(entry, index) in history" v-else :key="entry.timestamp">
         <div :class="detectMarginBetweenMessages(index)">
@@ -45,9 +47,11 @@
         id="message-input"
         v-model="refereeMessage.content"
         class="flex-1"
-        placeholder="Type your message..."
         variant="ghost"
         :is-disabled="!isSocketReady"
+        :placeholder="
+          $t('pages.match.components.matchChatHistory.input.placeholder')
+        "
         @keydown.enter="sendRefereeMessage"
       />
       <div

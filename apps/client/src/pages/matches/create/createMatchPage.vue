@@ -2,14 +2,14 @@
   <div class="flex min-h-screen items-center justify-center">
     <div class="border-primary-3 w-1/4 rounded-md border-2 p-8">
       <BaseHeadline variant="hero" class="mb-8 text-center"
-        >Create a new match
+        >{{ $t('pages.createMatch.title') }}
       </BaseHeadline>
       <BaseInput
         id="match-name"
         v-model="matchName"
         is-required
-        label="Match name"
-        placeholder="MWC4K2025 RO32: Philippines VS France"
+        :label="$t('global.words.name')"
+        :placeholder="$t('pages.createMatch.form.name.placeholder')"
         @keydown.enter="handleCreateMatch"
       />
       <div class="flex justify-center">
@@ -22,7 +22,7 @@
           @keydown.enter="handleCreateMatch"
           @mousedown="handleCreateMatch"
         >
-          <template #default> Create </template>
+          <template #default> {{ $t('global.words.create') }} </template>
           <template #icon>
             <ArrowRightEndOnRectangleIcon />
           </template>

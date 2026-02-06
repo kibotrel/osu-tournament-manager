@@ -1,0 +1,145 @@
+{
+  "global": {
+    "common": {
+      "workInProgress": "Work in progress..."
+    },
+    "words": {
+      "bottom": "Bottom",
+      "button": "Button",
+      "cancel": "Cancel",
+      "close": "Close",
+      "confirm": "Confirm",
+      "create": "Create",
+      "end": "End",
+      "link": "Link",
+      "name": "Name",
+      "ready": "Ready",
+      "refresh": "Refresh",
+      "right": "Right",
+      "start": "Start"
+    }
+  },
+  "pages": {
+    "createMatch": {
+      "form": {
+        "name": {
+          "placeholder": "Team1 vs Team2"
+        }
+      },
+      "title": "New match"
+    },
+    "designSystem": {
+      "tabs": {
+        "component": {
+          "words": {
+            "badge": "Badge",
+            "green": "Green",
+            "modification": "Modification",
+            "red": "Red",
+            "yellow": "Yellow"
+          }
+        },
+        "interaction": {
+          "words": {
+            "button": "Button",
+            "danger": "Danger",
+            "disabled": "Disabled",
+            "error": "Error",
+            "errorMessage": "Error message",
+            "ghost": "Ghost",
+            "input": "Input",
+            "label": "Label",
+            "noLabel": "No label",
+            "number": "Number",
+            "required": "Required",
+            "success": "Success",
+            "text": "Text",
+            "warning": "Warning",
+            "wrongInput": "Wrong input"
+          }
+        },
+        "layout": {
+          "words": {
+            "content": "Content",
+            "drawer": "Drawer",
+            "dropdown": "Dropdown",
+            "modal": "Modal",
+            "option": "Option",
+            "separator": "Separator",
+            "tab": "Tab",
+            "tabList": "Tabs list",
+            "title": "Title"
+          }
+        },
+        "text": {
+          "pangram": "The five boxing wizards jump quickly",
+          "words": {
+            "body": "Body",
+            "caption": "Caption",
+            "headline": "Headline"
+          }
+        }
+      },
+      "title": "Design System",
+      "words": {
+        "base": "Base",
+        "component": "Component",
+        "icon": "Icon",
+        "interaction": "Interaction",
+        "layout": "Layout",
+        "primary": "Primary",
+        "secondary": "Secondary",
+        "small": "Small",
+        "text": "Text"
+      }
+    },
+    "login": {
+      "buttons": {
+        "login": "Login"
+      },
+      "howToAccess": "To get access to this webapp, please login with your osu! account",
+      "title": "Welcome"
+    },
+    "match": {
+      "buttons": {
+        "terminateMatch": "End match"
+      },
+      "components": {
+        "matchChatHistory": {
+          "input": {
+            "placeholder": "Type your message..."
+          },
+          "noMessagePlaceholder": "No message yet..."
+        }
+      },
+      "drawer": {
+        "linkToOfficialHistory": "Official match page",
+        "tabs": {
+          "matchLobbyStatus": {
+            "dropdown": {
+              "kick": "Kick",
+              "transferHost": "Transfer host"
+            },
+            "playerCount": "{{playerCount}} / 16 Players"
+          },
+          "names": {
+            "commands": "Commands",
+            "settings": "Settings",
+            "status": "Status",
+            "timeline": "Timeline"
+          }
+        }
+      },
+      "errors": {
+        "notFound": "Match not found"
+      },
+      "modals": {
+        "endMatch": {
+          "body": "You are about to close \"{matchName}\". This action cannot be undone. Please type the exact match name to confirm",
+          "title": "End match"
+        }
+      },
+      "title": "Match {{id}}"
+    }
+  }
+}

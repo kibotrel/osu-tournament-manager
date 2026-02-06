@@ -1,6 +1,8 @@
 <template>
   <div class="m-4">
-    <BaseHeadline variant="hero">Design System</BaseHeadline>
+    <BaseHeadline variant="hero">
+      {{ $t('pages.designSystem.title') }}
+    </BaseHeadline>
     <BaseTabList
       id="design-system-page-tab-list"
       v-model="tab"
@@ -23,6 +25,7 @@
 </template>
 
 <script setup lang="ts">
+import { useTranslation } from 'i18next-vue';
 import { ref } from 'vue';
 
 import BaseHeadline from '#src/components/base/baseHeadline.vue';
@@ -40,15 +43,24 @@ interface Tab {
   value: string;
 }
 
+const { t } = useTranslation();
 const tab = ref('texts');
 const tabs: Tab[] = [
-  { icon: 'text', label: 'Texts', value: 'texts' },
+  { icon: 'text', label: t('pages.designSystem.words.text'), value: 'texts' },
   {
     icon: 'cursorArrowRays',
-    label: 'Interactions',
+    label: t('pages.designSystem.words.interaction'),
     value: 'Interactions',
   },
-  { icon: 'rectangleGroup', label: 'Layout', value: 'layout' },
-  { icon: 'cubeTransparent', label: 'Components', value: 'components' },
+  {
+    icon: 'rectangleGroup',
+    label: t('pages.designSystem.words.layout'),
+    value: 'layout',
+  },
+  {
+    icon: 'cubeTransparent',
+    label: t('pages.designSystem.words.component'),
+    value: 'components',
+  },
 ];
 </script>
