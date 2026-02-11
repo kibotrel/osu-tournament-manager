@@ -71,6 +71,7 @@ const icons: IconName[] = [
   'ellipsisVertical',
   'gear',
   'identification',
+  'language',
   'loading',
   'paperAirplane',
   'play',
