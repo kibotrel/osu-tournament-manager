@@ -9,6 +9,8 @@ The client is structured into several directories, each serving a specific purpo
 - [`api`](../../apps/client/src/api/): Contains composable functions to interact with the server API.
 - [`assets`](../../apps/client/src/assets/): Holds static assets like images, fonts, and stylesheets.
 - [`components`](../../apps/client/src/components/): Basic building blocks of the application, such as buttons, modals, and form elements.
+- [`composables`](../../apps/client/src/composables/): Contains reusable logic and reactive behavior that can be shared across components.
+- [`locales`](../../apps/client/src/locales/): Contains localization files for supporting multiple languages.
 - [`pages`](../../apps/client/src/pages/): Higher-level components representing different pages or views in the application, file-tree in this directory corresponds to the routing structure.
 - [`plugins`](../../apps/client/src/plugins/): Holds Vue plugins and third-party custom integrations.
 - [`router`](../../apps/client/src/router/): Manages application routing using [Vue Router](https://router.vuejs.org/).
@@ -33,3 +35,7 @@ Like for the server, some tools are present on the client to improve developer e
 - [Vue Devtools](https://devtools.vuejs.org/) to inspect and debug Vue components.
 - [Pinia Devtools](https://pinia.vuejs.org/cookbook/devtools.html) to inspect and debug Pinia stores.
 - Hot module replacement to see changes in real-time without refreshing the page thanks to [Vite](https://vitejs.dev/).
+
+> [!TIP]
+>
+> To simplify localization work, there is a VSCode extension called [i18n-ally](https://github.com/lokalise/i18n-ally) that provides a nice interface to manage translation files and keys directly from the editor.
