@@ -27,14 +27,39 @@
       <BaseHeadline variant="title">{{
         $t('pages.designSystem.tabs.layout.words.dropdown')
       }}</BaseHeadline>
-      <div class="flex flex-row items-center space-x-2">
-        <BaseDropdown
-          id="dropdown"
-          v-model="isDropdownOpen"
-          :items="dropdownItems"
-          @keydown.enter="isDropdownOpen = true"
-          @mousedown="isDropdownOpen = true"
-        />
+      <div class="flex flex-col gap-2">
+        <div class="flex items-center space-x-2">
+          <BaseDropdown
+            id="dropdown"
+            v-model="isDropdownOpen"
+            :items="dropdownItems"
+            @keydown.enter="isDropdownOpen = true"
+            @mousedown="isDropdownOpen = true"
+          />
+          <BaseBody>{{ $t('pages.designSystem.words.base') }}</BaseBody>
+        </div>
+        <div class="flex items-center space-x-2">
+          <BaseDropdown
+            id="dropdown-with-flag"
+            v-model="isDropdownOpenWithFlag"
+            :items="dropdownWithFlagItems"
+            @keydown.enter="isDropdownOpenWithFlag = true"
+            @mousedown="isDropdownOpenWithFlag = true"
+          />
+          <BaseBody>{{
+            $t('pages.designSystem.tabs.layout.words.flag')
+          }}</BaseBody>
+        </div>
+        <div class="flex items-center space-x-2">
+          <BaseDropdown
+            id="dropdown-with-icon"
+            v-model="isDropdownOpenWithIcon"
+            :items="dropdownWithIconItems"
+            @keydown.enter="isDropdownOpenWithIcon = true"
+            @mousedown="isDropdownOpenWithIcon = true"
+          />
+          <BaseBody>{{ $t('pages.designSystem.words.icon') }}</BaseBody>
+        </div>
       </div>
     </div>
     <div class="space-y-2">
@@ -188,6 +213,8 @@ const { t } = useTranslation();
 const isModalOpen = ref(false);
 const isBottomDrawerOpen = ref(false);
 const isDropdownOpen = ref(false);
+const isDropdownOpenWithFlag = ref(false);
+const isDropdownOpenWithIcon = ref(false);
 const isRightDrawerOpen = ref(false);
 const dropdownItems: DropdownItem[] = [
   {
@@ -207,6 +234,58 @@ const dropdownItems: DropdownItem[] = [
   {
     id: 'option-3',
     label: t('pages.designSystem.tabs.layout.words.option'),
+    onSelect: () => {
+      console.log('Option 3');
+    },
+  },
+];
+const dropdownWithFlagItems: DropdownItem[] = [
+  {
+    id: 'option-1',
+    label: t('pages.designSystem.tabs.layout.words.flag'),
+    countryCode: 'US',
+    onSelect: () => {
+      console.log('Option 1');
+    },
+  },
+  {
+    id: 'option-2',
+    label: t('pages.designSystem.tabs.layout.words.flag'),
+    countryCode: 'FR',
+    onSelect: () => {
+      console.log('Option 2');
+    },
+  },
+  {
+    id: 'option-3',
+    label: t('pages.designSystem.tabs.layout.words.flag'),
+    countryCode: 'JP',
+    onSelect: () => {
+      console.log('Option 3');
+    },
+  },
+];
+const dropdownWithIconItems: DropdownItem[] = [
+  {
+    id: 'option-1',
+    label: t('pages.designSystem.words.icon'),
+    icon: 'cubeTransparent',
+    onSelect: () => {
+      console.log('Option 1');
+    },
+  },
+  {
+    id: 'option-2',
+    label: t('pages.designSystem.words.icon'),
+    icon: 'cubeTransparent',
+    onSelect: () => {
+      console.log('Option 2');
+    },
+  },
+  {
+    id: 'option-3',
+    label: t('pages.designSystem.words.icon'),
+    icon: 'cubeTransparent',
     onSelect: () => {
       console.log('Option 3');
     },
