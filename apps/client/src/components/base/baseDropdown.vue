@@ -1,14 +1,22 @@
 <template>
-  <div class="relative overflow-visible">
-    <EllipsisVerticalIcon
+  <div ref="wrapper" class="relative overflow-visible">
+    <BaseIcon
+      :name="dropdownIcon"
       class="dropdown-trigger"
       tabindex="0"
       @keydown.enter="isOpen = true"
       @mousedown="isOpen = true"
     />
-
     <Transition name="dropdown">
-      <div v-show="isOpen" ref="dropdown" class="dropdown-menu">
+      <div
+        v-show="isOpen"
+        ref="dropdown"
+        class="dropdown-menu"
+        :class="{
+          'right-0 origin-top-right': alignRight,
+          'left-0 origin-top-left': !alignRight,
+        }"
+      >
         <div
           v-for="item in items"
           :id="item.id"
@@ -18,7 +26,19 @@
           @keydown.enter="selectItem(item)"
           @mousedown="selectItem(item)"
         >
-          <BaseBody variant="small">{{ item.label }}</BaseBody>
+          <div class="flex items-center gap-2">
+            <BaseIcon
+              v-if="item.icon"
+              class="size-5 shrink-0"
+              :name="item.icon"
+            />
+            <BaseCountryFlag
+              v-else-if="item.countryCode"
+              class="h-5 w-5 shrink-0"
+              :country-code="item.countryCode"
+            />
+            <BaseBody>{{ item.label }}</BaseBody>
+          </div>
         </div>
       </div>
     </Transition>
@@ -26,33 +46,50 @@
 </template>
 
 <script setup lang="ts">
-import { ref, useTemplateRef } from 'vue';
+import { ref, useTemplateRef, watch } from 'vue';
 
-import EllipsisVerticalIcon from '#src/components/icons/ellipsisVerticalIcon.vue';
 import { usePopUpBehavior } from '#src/composables/usePopUpComposable.js';
 
 import BaseBody from './baseBody.vue';
+import BaseCountryFlag from './baseCountryFlag.vue';
+import type { IconName } from './baseIcon.vue';
+import BaseIcon from './baseIcon.vue';
 
 export interface DropdownItem {
   id: string;
+  countryCode?: string;
+  icon?: IconName;
   label: string;
   onSelect: () => void;
 }
 
 interface Properties {
+  dropdownIcon?: IconName;
   items: DropdownItem[];
 }
 
-defineProps<Properties>();
+withDefaults(defineProps<Properties>(), {
+  dropdownIcon: 'ellipsisVertical',
+});
 
 const dropdown = useTemplateRef<HTMLDivElement>('dropdown');
+const wrapper = useTemplateRef<HTMLDivElement>('wrapper');
 const isOpen = ref(false);
+const alignRight = ref(true);
 
 usePopUpBehavior({
   element: dropdown,
   onClose: () => {
     isOpen.value = false;
   },
+});
+
+watch(isOpen, (value) => {
+  if (value && wrapper.value) {
+    const rectangle = wrapper.value.getBoundingClientRect();
+
+    alignRight.value = rectangle.left > window.innerWidth / 2;
+  }
 });
 
 const selectItem = (item: DropdownItem) => {
@@ -66,7 +103,7 @@ const selectItem = (item: DropdownItem) => {
 @reference '#src/assets/styles/index.css';
 
 .dropdown-menu {
-  @apply bg-primary-4 border-primary-3 absolute top-full left-0 z-100 mt-2 rounded-md border whitespace-nowrap;
+  @apply bg-primary-4 border-primary-3 absolute top-full z-100 mt-2 rounded-md border-2 whitespace-nowrap;
 }
 
 .dropdown-item {
@@ -85,7 +122,6 @@ const selectItem = (item: DropdownItem) => {
 .dropdown-enter-active {
   animation: stretchDown 0.2s ease-out;
   transform: scaleY(0);
-  transform-origin: top;
 }
 
 .dropdown-leave-active {
@@ -96,12 +132,10 @@ const selectItem = (item: DropdownItem) => {
   from {
     opacity: 0;
     transform: scaleY(0);
-    transform-origin: top;
   }
   to {
     opacity: 1;
     transform: scaleY(1);
-    transform-origin: top;
   }
 }
 </style>
