@@ -4,10 +4,33 @@ import { URL, fileURLToPath } from 'node:url';
 import tailwindcss from '@tailwindcss/vite';
 import vue from '@vitejs/plugin-vue';
 import { defineConfig } from 'vite';
+import { viteStaticCopy } from 'vite-plugin-static-copy';
 import vueDevTools from 'vite-plugin-vue-devtools';
 
 export default defineConfig({
-  plugins: [tailwindcss(), vue(), vueDevTools()],
+  plugins: [
+    tailwindcss(),
+    vue(),
+    vueDevTools(),
+    viteStaticCopy({
+      targets: [
+        {
+          dest: 'flags',
+          rename: (fileName) => {
+            const countryCode = fileName
+              .split('-')
+              .map((hex) =>
+                String.fromCharCode(parseInt(hex, 16) - 0x1f1e6 + 65),
+              )
+              .join('');
+
+            return `${countryCode}.svg`;
+          },
+          src: 'node_modules/@discordapp/twemoji/dist/svg/1f1??-1f1??.svg',
+        },
+      ],
+    }),
+  ],
   preview: {
     host: '192.168.1.100',
     port: 8080,

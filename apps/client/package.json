@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "@discordapp/twemoji": "16.0.1",
     "@fontsource/geist-sans": "5.1.0",
     "@packages/shared": "workspace:*",
     "@tailwindcss/vite": "4.1.18",
@@ -22,6 +23,7 @@
     "eslint-plugin-vue": "10.7.0",
     "prettier-plugin-tailwindcss": "0.7.2",
     "vite": "7.3.1",
+    "vite-plugin-static-copy": "3.2.0",
     "vite-plugin-vue-devtools": "8.0.5",
     "vue-tsc": "3.2.4"
   },

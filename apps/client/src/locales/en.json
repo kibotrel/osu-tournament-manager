@@ -3,6 +3,10 @@
     "common": {
       "workInProgress": "Work in progress..."
     },
+    "languages": {
+      "english": "English",
+      "french": "French"
+    },
     "words": {
       "bottom": "Bottom",
       "button": "Button",
@@ -33,6 +37,7 @@
         "component": {
           "words": {
             "badge": "Badge",
+            "countryFlag": "Country flag",
             "green": "Green",
             "modification": "Modification",
             "red": "Red",
@@ -63,6 +68,7 @@
             "content": "Content",
             "drawer": "Drawer",
             "dropdown": "Dropdown",
+            "flag": "Flag",
             "modal": "Modal",
             "option": "Option",
             "separator": "Separator",

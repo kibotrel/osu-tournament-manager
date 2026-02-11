@@ -24,7 +24,8 @@ internationalization.init({
   debug: import.meta.env.DEV,
   fallbackLng: false,
   interpolation: { escapeValue: false },
-  lng: 'en',
+  lng: supportedLanguages[0],
+  load: 'currentOnly',
   resources,
 });
 

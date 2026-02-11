@@ -3,6 +3,10 @@
     "common": {
       "workInProgress": "En construction ..."
     },
+    "languages": {
+      "english": "Anglais",
+      "french": "Français"
+    },
     "words": {
       "bottom": "Bas",
       "button": "Bouton",
@@ -33,6 +37,7 @@
         "component": {
           "words": {
             "badge": "Badge",
+            "countryFlag": "Drapeau de pays",
             "green": "Vert",
             "modification": "Modification",
             "red": "Rouge",
@@ -63,6 +68,7 @@
             "content": "Contenu",
             "drawer": "Tiroir",
             "dropdown": "Menu déroulant",
+            "flag": "Drapeau",
             "modal": "Modale",
             "option": "Option",
             "separator": "Séparateur",
