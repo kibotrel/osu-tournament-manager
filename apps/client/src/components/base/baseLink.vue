@@ -1,6 +1,6 @@
 <template>
   <a target="_blank" :href="link" :rel="relation">
-    <slot> Link </slot>
+    <slot> {{ $t('global.words.link') }} </slot>
   </a>
 </template>
 

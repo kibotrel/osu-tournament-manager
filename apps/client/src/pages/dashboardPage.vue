@@ -1,85 +1,57 @@
 <template>
-  <div class="m-4">
-    <p>
-      Welcome {{ user.name }} ({{ user.gameUserId }}). Login:
-      {{ user.isLoggedIn }}
-    </p>
-    <BaseButton
-      id="logout-button"
-      class="w-24"
-      :is-loading="isPending"
-      @mousedown="logout"
-    >
-      Logout
-    </BaseButton>
-    <input
-      v-model="message.content"
-      class="my-2 rounded-md border border-gray-300 bg-inherit p-2"
-      placeholder="Enter message..."
-      type="text"
-      @keydown.enter="
-        () => {
-          sendMessage(message, WebSocketChannelMatchesEvent.ChatMessages);
-          message.content = '';
-        }
-      "
-    />
-    <div class="mt-2 flex gap-2">
-      <BaseButton id="connect-button" @mousedown="connect">Connect</BaseButton>
-      <BaseButton id="disconnect-button" @mousedown="disconnect"
-        >Disconnect</BaseButton
-      >
-      <BaseButton
-        id="send-message-button"
-        @mousedown="
-          () => {
-            sendMessage(message, WebSocketChannelMatchesEvent.ChatMessages);
-            message.content = '';
-          }
-        "
-        >Send message</BaseButton
-      >
-    </div>
-    <div class="my-2">
-      <h1>Messages</h1>
-      <p v-for="(entry, index) in history" :key="index">
-        [{{ formatTimestamp(entry.timestamp) }}] ({{ entry.topic }})
-        {{ entry.message.author }}:
-        {{ entry.message.content }}
+  <div>
+    <div class="m-4 flex flex-row items-center gap-2">
+      <p>
+        {{ $t('pages.login.title') }} {{ user.name }} ({{ user.gameUserId }}).
+        Login:
+        {{ user.isLoggedIn }}
       </p>
+    </div>
+    <div class="m-4 flex flex-row items-center gap-2">
+      <BaseButton
+        id="logout-button"
+        class="w-24"
+        :is-loading="isPending"
+        @mousedown="logout"
+      >
+        Logout
+      </BaseButton>
+      <BaseDropdown dropdown-icon="language" :items="languageDropdownItems" />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import type { WebSocketMatchMessage } from '@packages/shared';
-import {
-  WebSocketChannel,
-  WebSocketChannelMatchesEvent,
-  formatTimestamp,
-} from '@packages/shared';
-import { inject, reactive } from 'vue';
-import type { Router } from 'vue-router';
+import { useTranslation } from 'i18next-vue';
+import { computed } from 'vue';
 
 import { useLogout } from '#src/api/authenticationApi.js';
 import BaseButton from '#src/components/base/baseButton.vue';
+import type { DropdownItem } from '#src/components/base/baseDropdown.vue';
+import BaseDropdown from '#src/components/base/baseDropdown.vue';
 import { useUserStore } from '#src/stores/userStore.js';
-import { defineWebsocketStore } from '#src/stores/webSocketStore.js';
 
-const $router = inject<Router>('$router');
-const useWebSocketStore = defineWebsocketStore<
-  WebSocketMatchMessage,
-  WebSocketChannel.Matches
->({
-  channel: WebSocketChannel.Matches,
-  events: [WebSocketChannelMatchesEvent.ChatMessages],
-  threadId: $router?.currentRoute.value.query.id as string,
+const { i18next, t } = useTranslation();
+const languageDropdownItems = computed<DropdownItem[]>(() => {
+  return [
+    {
+      countryCode: 'gb',
+      id: 'language-en',
+      label: t('global.languages.english'),
+      onSelect: () => {
+        return i18next.changeLanguage('en');
+      },
+    },
+    {
+      countryCode: 'fr',
+      id: 'language-fr',
+      label: t('global.languages.french'),
+      onSelect: () => {
+        return i18next.changeLanguage('fr');
+      },
+    },
+  ];
 });
 const { isPending, mutate: logout } = useLogout();
 const { user } = useUserStore();
-const { connect, disconnect, history, sendMessage } = useWebSocketStore();
-const message = reactive<WebSocketMatchMessage>({
-  content: '',
-  author: user.name,
-});
 </script>

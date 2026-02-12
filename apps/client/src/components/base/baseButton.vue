@@ -8,7 +8,7 @@
         <slot name="icon" />
       </div>
       <BaseBody>
-        <slot> Button </slot>
+        <slot> {{ $t('global.words.button') }} </slot>
       </BaseBody>
     </div>
   </button>

@@ -1,0 +1,151 @@
+{
+  "global": {
+    "common": {
+      "workInProgress": "En construction ..."
+    },
+    "languages": {
+      "english": "Anglais",
+      "french": "Français"
+    },
+    "words": {
+      "bottom": "Bas",
+      "button": "Bouton",
+      "cancel": "Annuler",
+      "close": "Fermer",
+      "confirm": "Confirmer",
+      "create": "Créer",
+      "end": "Clore",
+      "link": "Lien",
+      "name": "Nom",
+      "ready": "Prêt",
+      "refresh": "Rafraîchir",
+      "right": "Droite",
+      "start": "Démarrer"
+    }
+  },
+  "pages": {
+    "createMatch": {
+      "form": {
+        "name": {
+          "placeholder": "Équipe1 VS Équipe2"
+        }
+      },
+      "title": "Nouveau match"
+    },
+    "designSystem": {
+      "tabs": {
+        "component": {
+          "words": {
+            "badge": "Badge",
+            "countryFlag": "Drapeau de pays",
+            "green": "Vert",
+            "modification": "Modification",
+            "red": "Rouge",
+            "yellow": "Jaune"
+          }
+        },
+        "interaction": {
+          "words": {
+            "button": "Bouton",
+            "danger": "Danger",
+            "disabled": "Désactivé",
+            "error": "Erreur",
+            "errorMessage": "Message d'erreur",
+            "ghost": "Fantôme",
+            "input": "Saisie",
+            "label": "Étiquette",
+            "noLabel": "Pas d'étiquette",
+            "number": "Nombre",
+            "required": "Requis",
+            "success": "Succès",
+            "text": "Texte",
+            "warning": "Attention",
+            "wrongInput": "Saisie incorrecte"
+          }
+        },
+        "layout": {
+          "words": {
+            "content": "Contenu",
+            "drawer": "Tiroir",
+            "dropdown": "Menu déroulant",
+            "flag": "Drapeau",
+            "modal": "Modale",
+            "option": "Option",
+            "separator": "Séparateur",
+            "tab": "Onglet",
+            "tabList": "Liste d'onglets",
+            "title": "Titre"
+          }
+        },
+        "text": {
+          "pangram": "Buvez de ce whisky que le patron juge fameux",
+          "words": {
+            "body": "Corps",
+            "caption": "Légende",
+            "headline": "Titre"
+          }
+        }
+      },
+      "title": "Système de Design",
+      "words": {
+        "base": "Base",
+        "component": "Composant",
+        "icon": "Icône",
+        "interaction": "Interaction",
+        "layout": "Mise en page",
+        "primary": "Primaire",
+        "secondary": "Secondaire",
+        "small": "Petit",
+        "text": "Texte"
+      }
+    },
+    "login": {
+      "buttons": {
+        "login": "Connexion"
+      },
+      "howToAccess": "Pour accéder à cette application Web, veuillez vous connecter avec votre compte osu!",
+      "title": "Bienvenue"
+    },
+    "match": {
+      "buttons": {
+        "terminateMatch": "Clore le match"
+      },
+      "components": {
+        "matchChatHistory": {
+          "input": {
+            "placeholder": "Tapper votre message ..."
+          },
+          "noMessagePlaceholder": "Aucun message pour le moment ..."
+        }
+      },
+      "drawer": {
+        "linkToOfficialHistory": "Page officielle du match",
+        "tabs": {
+          "matchLobbyStatus": {
+            "dropdown": {
+              "kick": "Exclure",
+              "transferHost": "Transférer l'hôte"
+            },
+            "playerCount": "{{playerCount}} / 16 Joueurs"
+          },
+          "names": {
+            "commands": "Commandes",
+            "settings": "Paramètres",
+            "status": "Statut",
+            "timeline": "Chronologie"
+          }
+        }
+      },
+      "errors": {
+        "notFound": "Match introuvable"
+      },
+      "modals": {
+        "endMatch": {
+          "body": "Vous êtes sur le point de clore \"{matchName}\". Cette action est irréversible. Veuillez saisir le nom exact du match pour confirmer",
+          "title": "Clore le match"
+        }
+      },
+      "title": "Match {{id}}"
+    }
+  }
+}

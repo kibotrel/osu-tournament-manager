@@ -1,6 +1,5 @@
 import 'pinia';
 import type { PiniaPluginContext } from 'pinia';
-import type { App } from 'vue';
 import { markRaw } from 'vue';
 import type { Router } from 'vue-router';
 
@@ -12,13 +11,7 @@ declare module 'pinia' {
   }
 }
 
-export const vuePluginRouter = {
-  install: (app: App) => {
-    app.provide('$router', router);
-  },
-};
-
-export const piniaPluginRouter = (context: PiniaPluginContext) => {
+export const PiniaRouterPlugin = (context: PiniaPluginContext) => {
   /* eslint-disable-next-line no-param-reassign */
   context.store.$router = markRaw(router);
 };

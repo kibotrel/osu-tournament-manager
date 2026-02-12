@@ -18,6 +18,8 @@
     "./src/**/*.ts",
     "./src/**/*.vue",
     "./src/assets/styles/tailwind.theme.js",
-    "vite-env.d.ts"
+    "./src/locales/**/*.json",
+    "./i18next.d.ts",
+    "./vite-env.d.ts"
   ]
 }

@@ -3,9 +3,13 @@
     <div class="border-primary-3 mx-4 rounded-md border-2">
       <div class="border-primary-3 border-b-2 px-4 py-2">
         <div class="flex items-center justify-between">
-          <BaseBody variant="base" class="text-primary-2"
-            >{{ match.playerCount }} / 16 Players</BaseBody
-          >
+          <BaseBody variant="base" class="text-primary-2">
+            {{
+              $t('pages.match.drawer.tabs.matchLobbyStatus.playerCount', {
+                playerCount: match.playerCount,
+              })
+            }}
+          </BaseBody>
           <BaseButton
             id="refresh-lobby-state"
             class="w-32"
@@ -13,7 +17,7 @@
             @keydown.enter="refreshLobbyState"
             @mousedown="refreshLobbyState"
           >
-            <template #default> Refresh </template>
+            <template #default> {{ $t('global.words.refresh') }} </template>
             <template #icon>
               <ArrowPathIcon class="text-primary-4 h-6 w-6" />
             </template>
@@ -65,7 +69,7 @@
                 variant="small"
                 :icon="{ side: 'right', name: 'check' }"
               >
-                Ready
+                {{ $t('global.words.ready') }}
               </BaseBadge>
             </div>
             <div v-if="slot.player" class="flex">
@@ -81,6 +85,7 @@
 <script setup lang="ts">
 import type { WebSocketMatchMessage } from '@packages/shared';
 import { BanchoCommand, WebSocketChannelMatchesEvent } from '@packages/shared';
+import { useTranslation } from 'i18next-vue';
 import { storeToRefs } from 'pinia';
 
 import BaseBadge from '#src/components/base/baseBadge.vue';
@@ -101,6 +106,7 @@ interface Properties {
   ) => void;
 }
 
+const { t } = useTranslation();
 const { user } = useUserStore();
 const { match } = storeToRefs(useMatchStore());
 const properties = defineProps<Properties>();
@@ -116,7 +122,9 @@ const quickActionsForPlayer = (player: string): DropdownItem[] => {
   return [
     {
       id: 'transfer-host',
-      label: 'Host',
+      label: t(
+        'pages.match.drawer.tabs.matchLobbyStatus.dropdown.transferHost',
+      ),
       onSelect: () => {
         properties.sendBanchoMessage(
           {
@@ -129,7 +137,7 @@ const quickActionsForPlayer = (player: string): DropdownItem[] => {
     },
     {
       id: 'kick-player',
-      label: 'Kick',
+      label: t('pages.match.drawer.tabs.matchLobbyStatus.dropdown.kick'),
       onSelect: () => {
         properties.sendBanchoMessage(
           {

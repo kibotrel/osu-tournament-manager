@@ -1,9 +1,11 @@
 <template>
   <div class="flex min-h-screen items-center justify-center">
     <div class="border-primary-3 w-1/4 rounded-md border-2 p-8 text-center">
-      <BaseHeadline class="mb-2" variant="hero">Welcome</BaseHeadline>
+      <BaseHeadline class="mb-2" variant="hero">
+        {{ $t('pages.login.title') }}
+      </BaseHeadline>
       <BaseBody class="text-primary-2">
-        To get access to this webapp, please login with your osu! account.
+        {{ $t('pages.login.howToAccess') }}
       </BaseBody>
       <BaseButton
         id="login-button"
@@ -12,7 +14,7 @@
         @keydown.enter="redirectToOsuAuthPage()"
         @mousedown="redirectToOsuAuthPage()"
       >
-        <template #default> Login </template>
+        <template #default> {{ $t('pages.login.buttons.login') }} </template>
         <template #icon>
           <IdentificationIcon class="text-primary-4 h-6 w-6" />
         </template>

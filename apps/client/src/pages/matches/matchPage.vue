@@ -9,11 +9,13 @@
     v-else-if="!match || match.endsAt"
     class="flex min-h-screen items-center justify-center"
   >
-    <BaseBody>Match not found.</BaseBody>
+    <BaseBody>{{ $t('pages.match.errors.notFound') }}</BaseBody>
   </div>
   <div v-else>
     <div class="my-4 flex justify-center">
-      <BaseHeadline>Match {{ match.gameMatchId }}</BaseHeadline>
+      <BaseHeadline>{{
+        $t('pages.match.title', { id: match.gameMatchId })
+      }}</BaseHeadline>
     </div>
     <MatchChatHistory />
     <div
@@ -26,7 +28,7 @@
         @keydown.enter="startMatchPoint"
         @mousedown="startMatchPoint"
       >
-        Start
+        {{ $t('global.words.start') }}
       </BaseButton>
       <BaseButton
         id="show-close-match-modal-button"
@@ -35,7 +37,7 @@
         @keydown.enter="isModalOpen = true"
         @mousedown="isModalOpen = true"
       >
-        Close Match
+        {{ $t('pages.match.buttons.terminateMatch') }}
       </BaseButton>
       <BaseButton
         id="show-match-information-drawer-button"

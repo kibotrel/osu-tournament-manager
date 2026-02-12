@@ -2,12 +2,16 @@ appendonly
 Bitfield
 caddyfile
 Caddyfile
+discordapp
 dorny
 geist
 genid
+gruntfuggly
 healthcheck
 isready
 Logform
+lokalise
+nguyenngoclong
 open-code
 opencode
 persistedstate

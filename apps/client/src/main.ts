@@ -1,4 +1,5 @@
 import { VueQueryPlugin } from '@tanstack/vue-query';
+import InternationalizationVuePlugin from 'i18next-vue';
 import { createPinia } from 'pinia';
 import { createPersistedState } from 'pinia-plugin-persistedstate';
 import { createApp } from 'vue';
@@ -15,22 +16,26 @@ import '@fontsource/geist-sans/900.css';
 
 import App from '#src/app.vue';
 import '#src/assets/styles/index.css';
-import { piniaPluginRouter, vuePluginRouter } from '#src/plugins/index.js';
 import router from '#src/router/index.js';
+
+import { InternationalizationPlugin } from './plugins/internationalizationPlugin.js';
+import { PiniaRouterPlugin } from './plugins/piniaRouterPlugin.js';
+import { VueRouterPlugin } from './plugins/vueRouterPlugin.js';
 
 const app = createApp(App);
 const pinia = createPinia();
 
+app.use(InternationalizationVuePlugin, { i18next: InternationalizationPlugin });
 app.use(pinia);
 app.use(router);
-app.use(vuePluginRouter);
+app.use(VueRouterPlugin);
 app.use(VueQueryPlugin, {
   enableDevtoolsV6Plugin: true,
   queryClientConfig: {
     defaultOptions: { queries: { refetchOnWindowFocus: false } },
   },
 });
-pinia.use(piniaPluginRouter);
+pinia.use(PiniaRouterPlugin);
 pinia.use(createPersistedState());
 
 app.mount('#app');

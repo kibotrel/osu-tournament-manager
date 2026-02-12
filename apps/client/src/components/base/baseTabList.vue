@@ -22,7 +22,7 @@ import BaseHeadline from './baseHeadline.vue';
 import type { IconName } from './baseIcon.vue';
 import BaseIcon from './baseIcon.vue';
 
-interface Tab {
+export interface Tab {
   label: string;
   icon?: IconName;
   value: string;
