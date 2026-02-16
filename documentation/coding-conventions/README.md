@@ -14,3 +14,5 @@ Here lays the coding guidelines for this project. It is recommended to follow th
 > Opinionated recommendations to keep the codebase clean.
 
 ## [Naming](./coding-conventions-naming.md)
+
+> Guidelines on how to name variables, functions, classes, etc.
