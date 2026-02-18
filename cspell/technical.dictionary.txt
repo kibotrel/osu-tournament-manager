@@ -4,11 +4,13 @@ caddyfile
 Caddyfile
 discordapp
 dorny
+frontmatter
 geist
 genid
 gruntfuggly
 healthcheck
 isready
+keybinds
 Logform
 lokalise
 nguyenngoclong
@@ -25,6 +27,10 @@ rushstack
 shadcn
 smallint
 sonarjs
+todoread
+todowrite
 varchar
 vueuse
+webfetch
+websearch
 yoda

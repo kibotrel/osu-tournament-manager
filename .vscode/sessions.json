@@ -52,7 +52,7 @@
       {
         "autoExecuteCommands": true,
         "commands": [
-          "opencode"
+          "OPENCODE_ENABLE_EXA=1 opencode"
         ],
         "icon": "robot",
         "name": "opencode"
