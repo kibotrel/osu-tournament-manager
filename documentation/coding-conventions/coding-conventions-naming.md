@@ -14,7 +14,7 @@ The following applies to every section below.
 Applies to all declarations using `let` or `const`.
 
 - Always use [camelCase](https://developer.mozilla.org/docs/Glossary/Camel_case) except for [magic value constants](https://refactoring.guru/replace-magic-number-with-symbolic-constant) which must be written in [SCREAMING_SNAKE_CASE](https://en.wiktionary.org/wiki/screaming_snake_case).
-- `Boolean` variables must be prefixed with binary-indicating words like `is`, `do`, or `should` . This is enforced by an `eslint` rule.
+- `Boolean` variables must be prefixed with binary-indicating words like `is`, `do`, or `should`.
 
   ```ts
   // Bad
