@@ -24,7 +24,8 @@ internationalization.init({
   debug: import.meta.env.DEV,
   fallbackLng: false,
   interpolation: { escapeValue: false },
-  lng: supportedLanguages[0],
+  // TODO: Detect language from userStore
+  lng: 'en',
   load: 'currentOnly',
   resources,
 });
