@@ -42,6 +42,9 @@ permission:
 - **universal-agent-rules**: Ensures consistency across agent behaviors and provides a base ruleset that all agents are built upon
   - Location: `.opencode/skills/universal-agent-rules/SKILL.md`
 
+- **project-documentation-discovery**: This skill allow incremental discovery of how osu-tournament-manager works
+  - Location: `.opencode/skills/project-documentation-discovery/SKILL.md`
+
 ---
 
 # Agent-Specific Rules
