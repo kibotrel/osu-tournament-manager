@@ -16,3 +16,11 @@ Here lays the coding guidelines for this project. It is recommended to follow th
 ## [Naming](./coding-conventions-naming.md)
 
 > Guidelines on how to name variables, functions, classes, etc.
+
+## [Specific client guidelines](./coding-conventions-specific-client-guidelines.md)
+
+> Collection of guidelines that apply on `@apps/client` only.
+
+## [Specific server guidelines](./coding-conventions-specific-server-guidelines.md)
+
+> Collection of guidelines that apply on `@apps/server` only.
