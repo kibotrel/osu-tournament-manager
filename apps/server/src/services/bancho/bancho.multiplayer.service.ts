@@ -7,7 +7,7 @@ import {
   removeMatchFromCachedSet,
 } from '#src/services/cache/cache.service.js';
 
-export const openMultiplayerChannel = async (name: string) => {
+export const openMultiplayerChannelService = async (name: string) => {
   const channel = await banchoClient.createMultiplayerChannel(name);
 
   await addMatchToCachedSet(channel);
@@ -15,7 +15,7 @@ export const openMultiplayerChannel = async (name: string) => {
   return { gameMatchId: gameMatchIdFromBanchoChannel(channel) };
 };
 
-export const joinAllOngoingMatches = async () => {
+export const joinAllOngoingMatchesService = async () => {
   const ongoingMatches = await getAllOngoingMatchesFromCache();
 
   if (ongoingMatches.length === 0) {

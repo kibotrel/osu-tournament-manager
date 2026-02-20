@@ -14,7 +14,7 @@ import {
   getMatchById,
 } from '#src/queries/matches/matches.get.queries.js';
 import type { SelectMatch } from '#src/schemas/matches/matches.matches.table.js';
-import { openMultiplayerChannel } from '#src/services/bancho/bancho.multiplayer.service.js';
+import { openMultiplayerChannelService } from '#src/services/bancho/bancho.multiplayer.service.js';
 import {
   getMatchChatHistoryFromCache,
   getMatchStateFromCache,
@@ -55,7 +55,7 @@ vi.mock('#src/queries/matches/matches.get.queries.js', () => {
 });
 
 vi.mock('#src/services/bancho/bancho.multiplayer.service.js', () => {
-  return { openMultiplayerChannel: vi.fn() };
+  return { openMultiplayerChannelService: vi.fn() };
 });
 
 vi.mock('#src/queries/matches/matches.create.queries.js', () => {
@@ -307,7 +307,9 @@ describe('openMatchService', () => {
   it('should open multiplayer channel on bancho and register match in database', async () => {
     const name = 'Test Match';
     const gameMatchId = 123_456;
-    const openMultiplayerChannelMock = vi.mocked(openMultiplayerChannel);
+    const openMultiplayerChannelServiceMock = vi.mocked(
+      openMultiplayerChannelService,
+    );
     const createMatchMock = vi.mocked(createMatch);
     const banchoChannelFromGameMatchIdSpy = vi.spyOn(
       shared,
@@ -328,12 +330,12 @@ describe('openMatchService', () => {
       tournamentId: 1,
     };
 
-    openMultiplayerChannelMock.mockResolvedValueOnce({ gameMatchId });
+    openMultiplayerChannelServiceMock.mockResolvedValueOnce({ gameMatchId });
     createMatchMock.mockResolvedValueOnce(match as SelectMatch);
 
     const result = await openMatchService(name);
 
-    expect(openMultiplayerChannel).toHaveBeenCalledWith(name);
+    expect(openMultiplayerChannelService).toHaveBeenCalledWith(name);
     expect(createMatch).toHaveBeenCalledWith({
       bansPerTeam: 0,
       bestOf: 0,
@@ -354,7 +356,9 @@ describe('openMatchService', () => {
 
   it('should throw HttpInternalServerError if opening multiplayer channel on bancho fails', async () => {
     const name = 'Test Match';
-    const openMultiplayerChannelMock = vi.mocked(openMultiplayerChannel);
+    const openMultiplayerChannelServiceMock = vi.mocked(
+      openMultiplayerChannelService,
+    );
     const banchoChannelFromGameMatchIdSpy = vi.spyOn(
       shared,
       'banchoChannelFromGameMatchId',
@@ -362,7 +366,7 @@ describe('openMatchService', () => {
     const promiseAllSpy = vi.spyOn(Promise, 'all');
     const errorToThrow = new Error('Failed to open channel');
 
-    openMultiplayerChannelMock.mockRejectedValueOnce(errorToThrow);
+    openMultiplayerChannelServiceMock.mockRejectedValueOnce(errorToThrow);
 
     try {
       await openMatchService(name);
@@ -377,7 +381,7 @@ describe('openMatchService', () => {
       );
     }
 
-    expect(openMultiplayerChannel).toHaveBeenCalledWith(name);
+    expect(openMultiplayerChannelService).toHaveBeenCalledWith(name);
     expect(createMatch).not.toHaveBeenCalled();
     expect(banchoChannelFromGameMatchIdSpy).not.toHaveBeenCalled();
     expect(banchoClient.closeMultiplayerChannel).not.toHaveBeenCalled();
@@ -388,7 +392,9 @@ describe('openMatchService', () => {
   it('should close bancho channel and remove it from cache before throwing HttpInternalServerError if registering match in database fails', async () => {
     const name = 'Test Match';
     const gameMatchId = 123_456;
-    const openMultiplayerChannelMock = vi.mocked(openMultiplayerChannel);
+    const openMultiplayerChannelServiceMock = vi.mocked(
+      openMultiplayerChannelService,
+    );
     const createMatchMock = vi.mocked(createMatch);
     const banchoChannelFromGameMatchIdSpy = vi.spyOn(
       shared,
@@ -397,7 +403,7 @@ describe('openMatchService', () => {
     const promiseAllSpy = vi.spyOn(Promise, 'all');
     const errorToThrow = new Error('Failed to create match in database');
 
-    openMultiplayerChannelMock.mockResolvedValueOnce({ gameMatchId });
+    openMultiplayerChannelServiceMock.mockResolvedValueOnce({ gameMatchId });
     createMatchMock.mockRejectedValueOnce(errorToThrow);
 
     try {
@@ -413,7 +419,7 @@ describe('openMatchService', () => {
       );
     }
 
-    expect(openMultiplayerChannel).toHaveBeenCalledWith(name);
+    expect(openMultiplayerChannelService).toHaveBeenCalledWith(name);
     expect(createMatch).toHaveBeenCalledWith({
       bansPerTeam: 0,
       bestOf: 0,

@@ -15,7 +15,7 @@ import { banchoClient } from '#src/dependencies/ircClient.dependency.js';
 import { logger } from '#src/dependencies/logger.dependency.js';
 import { createMatch } from '#src/queries/matches/matches.create.queries.js';
 import { getMatchByGameMatchId } from '#src/queries/matches/matches.get.queries.js';
-import { openMultiplayerChannel } from '#src/services/bancho/bancho.multiplayer.service.js';
+import { openMultiplayerChannelService } from '#src/services/bancho/bancho.multiplayer.service.js';
 import {
   getMatchChatHistoryFromCache,
   getMatchStateFromCache,
@@ -87,7 +87,7 @@ export const openMatchService = async (name: string) => {
   let matchId: number = 0;
 
   try {
-    const { gameMatchId } = await openMultiplayerChannel(name);
+    const { gameMatchId } = await openMultiplayerChannelService(name);
 
     matchId = gameMatchId;
 
