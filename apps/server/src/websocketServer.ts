@@ -3,7 +3,7 @@ import {
   WEBSOCKET_PONG_PAYLOAD,
 } from '@packages/shared';
 
-import { WebSocketServer } from '#src/classes/webSocketServerClass.js';
+import { WebSocketServer } from '#src/classes/webSocketServer.class.js';
 
 export const webSocketServer = new WebSocketServer({
   pingIntervalTime: WEBSOCKET_PING_INTERVAL,

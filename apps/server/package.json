@@ -38,12 +38,12 @@
   "scripts": {
     "build": "tsc --build && tsc-alias",
     "db:migrate": "drizzle-kit migrate",
-    "db:migration:create": "pnpm build && drizzle-kit generate && tsx --env-file=.env ./src/scripts/renameMigrationFileScript.ts",
+    "db:migration:create": "pnpm build && drizzle-kit generate && tsx --env-file=.env ./src/scripts/renameMigrationFile.script.ts",
     "db:migration:drop": "drizzle-kit drop",
     "db:studio": "drizzle-kit studio local",
     "dev": "nodemon --signal SIGTERM --config nodemon.json src/entrypoint.ts",
     "format": "prettier --write src/**/*.ts",
-    "healthcheck": "tsx --env-file=.env ./src/scripts/healthCheckScript.ts",
+    "healthcheck": "tsx --env-file=.env ./src/scripts/healthCheck.script.ts",
     "lint": "eslint src/**/*.ts",
     "test:unit": "vitest --config vitest.config.unit.ts",
     "type-check": "tsc --noEmit"
