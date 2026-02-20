@@ -2,7 +2,7 @@ import type { BanchoLobbyState } from '@packages/shared';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
 import { logger } from '#src/dependencies/logger.dependency.js';
-import { setMatchStateInCache } from '#src/services/cache/cache.service.js';
+import { setMatchStateInCacheService } from '#src/services/cache/cache.service.js';
 import { getMatchStateService } from '#src/services/matches/matches.service.js';
 import { webSocketServer } from '#src/websocketServer.js';
 
@@ -13,7 +13,7 @@ vi.mock('#src/dependencies/logger.dependency.js', () => {
 });
 
 vi.mock('#src/services/cache/cache.service.js', () => {
-  return { setMatchStateInCache: vi.fn() };
+  return { setMatchStateInCacheService: vi.fn() };
 });
 
 vi.mock('#src/services/matches/matches.service.js', () => {
@@ -71,7 +71,9 @@ describe('onMultiplayerPlayerMovedSlot', () => {
   });
 
   it('should update match state in cache', async () => {
-    const setMatchStateInCacheMock = vi.mocked(setMatchStateInCache);
+    const setMatchStateInCacheServiceMock = vi.mocked(
+      setMatchStateInCacheService,
+    );
     const getMatchStateServiceMock = vi.mocked(getMatchStateService);
 
     getMatchStateServiceMock.mockResolvedValueOnce(mockOldMatchState);
@@ -83,7 +85,7 @@ describe('onMultiplayerPlayerMovedSlot', () => {
     });
 
     expect(getMatchStateServiceMock).toHaveBeenCalledWith(1);
-    expect(setMatchStateInCacheMock).toHaveBeenCalledWith({
+    expect(setMatchStateInCacheServiceMock).toHaveBeenCalledWith({
       channel: 1,
       state: newMatchState,
     });
@@ -120,7 +122,9 @@ describe('onMultiplayerPlayerMovedSlot', () => {
   it('should log a warning if the moved slot could not be found', async () => {
     const loggerWarnMock = vi.mocked(logger.warn);
     const getMatchStateServiceMock = vi.mocked(getMatchStateService);
-    const setMatchStateInCacheMock = vi.mocked(setMatchStateInCache);
+    const setMatchStateInCacheServiceMock = vi.mocked(
+      setMatchStateInCacheService,
+    );
     const webSocketServerMock = vi.mocked(
       webSocketServer.broadcastMessageToSubscribers,
     );
@@ -136,7 +140,7 @@ describe('onMultiplayerPlayerMovedSlot', () => {
     expect(loggerWarnMock).toHaveBeenCalledWith(
       '[IRC] Could not find slot for nonexistent_player in channel #mp_1 when moving to slot 2',
     );
-    expect(setMatchStateInCacheMock).not.toHaveBeenCalled();
+    expect(setMatchStateInCacheServiceMock).not.toHaveBeenCalled();
     expect(webSocketServerMock).not.toHaveBeenCalled();
   });
 });

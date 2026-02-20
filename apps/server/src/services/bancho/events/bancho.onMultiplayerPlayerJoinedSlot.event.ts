@@ -11,7 +11,7 @@ import {
 
 import { baseSlot } from '#src/constants/bancho.constants.js';
 import { logger } from '#src/dependencies/logger.dependency.js';
-import { setMatchStateInCache } from '#src/services/cache/cache.service.js';
+import { setMatchStateInCacheService } from '#src/services/cache/cache.service.js';
 import { getMatchStateService } from '#src/services/matches/matches.service.js';
 import { webSocketServer } from '#src/websocketServer.js';
 
@@ -37,7 +37,7 @@ export const onMultiplayerPlayerJoinedSlot = async ({
     }),
   };
 
-  await setMatchStateInCache({
+  await setMatchStateInCacheService({
     channel: channelId,
     state: newMatchState,
   });

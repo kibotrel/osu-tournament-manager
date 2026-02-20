@@ -2,7 +2,7 @@ import { BanchoPublicChannel } from '@packages/bancho-client';
 import type { WebSocketMatchMessage, WebSocketMessage } from '@packages/shared';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
-import { addMatchMessageToCache } from '#src/services/cache/cache.service.js';
+import { addMatchMessageToCacheService } from '#src/services/cache/cache.service.js';
 import { webSocketServer } from '#src/websocketServer.js';
 
 import { onChannelMessage } from './bancho.onChannelMessage.event.js';
@@ -12,7 +12,7 @@ vi.mock('#src/dependencies/logger.dependency.js', () => {
 });
 
 vi.mock('#src/services/cache/cache.service.js', () => {
-  return { addMatchMessageToCache: vi.fn() };
+  return { addMatchMessageToCacheService: vi.fn() };
 });
 
 vi.mock('#src/websocketServer.js', () => {
@@ -39,7 +39,7 @@ describe('onChannelMessage', () => {
       user: 'user',
     });
 
-    expect(addMatchMessageToCache).toHaveBeenCalledWith({
+    expect(addMatchMessageToCacheService).toHaveBeenCalledWith({
       channel: 1,
       message: JSON.stringify(message),
     });
@@ -71,7 +71,9 @@ describe('onChannelMessage', () => {
   });
 
   it('should not do anything if channel lobby', async () => {
-    const addMatchMessageToCacheMock = vi.mocked(addMatchMessageToCache);
+    const addMatchMessageToCacheServiceMock = vi.mocked(
+      addMatchMessageToCacheService,
+    );
 
     await onChannelMessage({
       channel: BanchoPublicChannel.Lobby,
@@ -79,11 +81,13 @@ describe('onChannelMessage', () => {
       user: 'user',
     });
 
-    expect(addMatchMessageToCacheMock).not.toHaveBeenCalled();
+    expect(addMatchMessageToCacheServiceMock).not.toHaveBeenCalled();
   });
 
   it('should not do anything for direct message channel', async () => {
-    const addMatchMessageToCacheMock = vi.mocked(addMatchMessageToCache);
+    const addMatchMessageToCacheServiceMock = vi.mocked(
+      addMatchMessageToCacheService,
+    );
 
     await onChannelMessage({
       channel: 'direct_message',
@@ -91,6 +95,6 @@ describe('onChannelMessage', () => {
       user: 'user',
     });
 
-    expect(addMatchMessageToCacheMock).not.toHaveBeenCalled();
+    expect(addMatchMessageToCacheServiceMock).not.toHaveBeenCalled();
   });
 });

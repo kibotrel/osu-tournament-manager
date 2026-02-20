@@ -10,7 +10,7 @@ import {
 } from '@packages/shared';
 
 import { logger } from '#src/dependencies/logger.dependency.js';
-import { setMatchStateInCache } from '#src/services/cache/cache.service.js';
+import { setMatchStateInCacheService } from '#src/services/cache/cache.service.js';
 import { getMatchStateService } from '#src/services/matches/matches.service.js';
 import { webSocketServer } from '#src/websocketServer.js';
 
@@ -29,7 +29,7 @@ export const onMultiplayerChannelInformationPlayerCount = async ({
   const oldMatchState = await getMatchStateService(channelId);
   const newMatchState: BanchoLobbyState = { ...oldMatchState, playerCount };
 
-  await setMatchStateInCache({
+  await setMatchStateInCacheService({
     channel: channelId,
     state: newMatchState,
   });

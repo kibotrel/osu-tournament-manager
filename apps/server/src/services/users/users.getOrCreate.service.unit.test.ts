@@ -5,7 +5,7 @@ import { createUser } from '#src/queries/users/users.create.queries.js';
 import { getUserByGameUserId } from '#src/queries/users/users.get.queries.js';
 import type { SelectUser } from '#src/schemas/users/users.users.table.js';
 
-import { getOrCreateUser } from './users.getOrCreate.service.js';
+import { getOrCreateUserService } from './users.getOrCreate.service.js';
 
 vi.mock('#src/queries/users/users.get.queries.js', () => {
   return {
@@ -19,7 +19,7 @@ vi.mock('#src/queries/users/users.create.queries.js', () => {
   };
 });
 
-describe('getOrCreateUser', () => {
+describe('getOrCreateUserService', () => {
   beforeEach(() => {
     vi.clearAllMocks();
   });
@@ -44,7 +44,7 @@ describe('getOrCreateUser', () => {
 
     mockedGetUserByGameUserId.mockResolvedValueOnce(existingUser);
 
-    const result = await getOrCreateUser(gameUser);
+    const result = await getOrCreateUserService(gameUser);
 
     expect(getUserByGameUserId).toHaveBeenCalledWith(gameUser.id);
     expect(createUser).not.toHaveBeenCalled();
@@ -74,7 +74,7 @@ describe('getOrCreateUser', () => {
     mockedGetUserByGameUserId.mockResolvedValueOnce(null);
     mockedCreateUser.mockResolvedValueOnce(newUser);
 
-    const result = await getOrCreateUser(gameUser);
+    const result = await getOrCreateUserService(gameUser);
 
     expect(getUserByGameUserId).toHaveBeenCalledWith(gameUser.id);
     expect(createUser).toHaveBeenCalledWith({

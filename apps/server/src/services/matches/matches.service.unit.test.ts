@@ -16,9 +16,9 @@ import {
 import type { SelectMatch } from '#src/schemas/matches/matches.matches.table.js';
 import { openMultiplayerChannelService } from '#src/services/bancho/bancho.multiplayer.service.js';
 import {
-  getMatchChatHistoryFromCache,
-  getMatchStateFromCache,
-  removeMatchFromCachedSet,
+  getMatchChatHistoryFromCacheService,
+  getMatchStateFromCacheService,
+  removeMatchFromCachedSetService,
 } from '#src/services/cache/cache.service.js';
 
 import {
@@ -35,10 +35,10 @@ vi.mock('#src/dependencies/ircClient.dependency.js', () => {
 
 vi.mock('#src/services/cache/cache.service.js', () => {
   return {
-    deleteMatchChatHistoryFromCache: vi.fn(),
-    getMatchChatHistoryFromCache: vi.fn(),
-    getMatchStateFromCache: vi.fn(),
-    removeMatchFromCachedSet: vi.fn(),
+    deleteMatchChatHistoryFromCacheService: vi.fn(),
+    getMatchChatHistoryFromCacheService: vi.fn(),
+    getMatchStateFromCacheService: vi.fn(),
+    removeMatchFromCachedSetService: vi.fn(),
   };
 });
 
@@ -210,11 +210,11 @@ describe('getMatchChatHistoryService', () => {
         topic: `matches:${gameMatchId}:chat-messages`,
       },
     ];
-    const getMatchChatHistoryFromCacheMock = vi.mocked(
-      getMatchChatHistoryFromCache,
+    const getMatchChatHistoryFromCacheServiceMock = vi.mocked(
+      getMatchChatHistoryFromCacheService,
     );
 
-    getMatchChatHistoryFromCacheMock.mockResolvedValueOnce(
+    getMatchChatHistoryFromCacheServiceMock.mockResolvedValueOnce(
       chatHistory.map((item) => {
         return JSON.stringify(item);
       }),
@@ -222,7 +222,9 @@ describe('getMatchChatHistoryService', () => {
 
     const result = await getMatchChatHistoryService(gameMatchId);
 
-    expect(getMatchChatHistoryFromCache).toHaveBeenCalledWith(gameMatchId);
+    expect(getMatchChatHistoryFromCacheService).toHaveBeenCalledWith(
+      gameMatchId,
+    );
     expect(Array.isArray(result)).toBe(true);
     expect(result).toHaveLength(1);
     expect(result).toEqual(chatHistory);
@@ -230,15 +232,17 @@ describe('getMatchChatHistoryService', () => {
 
   it('should return an empty array if no chat message is found', async () => {
     const gameMatchId = 123_456;
-    const getMatchChatHistoryFromCacheMock = vi.mocked(
-      getMatchChatHistoryFromCache,
+    const getMatchChatHistoryFromCacheServiceMock = vi.mocked(
+      getMatchChatHistoryFromCacheService,
     );
 
-    getMatchChatHistoryFromCacheMock.mockResolvedValueOnce([]);
+    getMatchChatHistoryFromCacheServiceMock.mockResolvedValueOnce([]);
 
     const result = await getMatchChatHistoryService(gameMatchId);
 
-    expect(getMatchChatHistoryFromCache).toHaveBeenCalledWith(gameMatchId);
+    expect(getMatchChatHistoryFromCacheService).toHaveBeenCalledWith(
+      gameMatchId,
+    );
     expect(Array.isArray(result)).toBe(true);
     expect(result).toHaveLength(0);
   });
@@ -265,25 +269,29 @@ describe('getMatchStateService', () => {
         },
       ],
     };
-    const getMatchStateFromCacheMock = vi.mocked(getMatchStateFromCache);
+    const getMatchStateFromCacheServiceMock = vi.mocked(
+      getMatchStateFromCacheService,
+    );
 
-    getMatchStateFromCacheMock.mockResolvedValueOnce(cachedState);
+    getMatchStateFromCacheServiceMock.mockResolvedValueOnce(cachedState);
 
     const result = await getMatchStateService(gameMatchId);
 
-    expect(getMatchStateFromCacheMock).toHaveBeenCalledWith(gameMatchId);
+    expect(getMatchStateFromCacheServiceMock).toHaveBeenCalledWith(gameMatchId);
     expect(result).toEqual(cachedState);
   });
 
   it('should return base match state if no state found in cache', async () => {
     const gameMatchId = 1;
-    const getMatchStateFromCacheMock = vi.mocked(getMatchStateFromCache);
+    const getMatchStateFromCacheServiceMock = vi.mocked(
+      getMatchStateFromCacheService,
+    );
 
-    getMatchStateFromCacheMock.mockResolvedValueOnce(null);
+    getMatchStateFromCacheServiceMock.mockResolvedValueOnce(null);
 
     const result = await getMatchStateService(gameMatchId);
 
-    expect(getMatchStateFromCacheMock).toHaveBeenCalledWith(gameMatchId);
+    expect(getMatchStateFromCacheServiceMock).toHaveBeenCalledWith(gameMatchId);
     expect(result).toEqual({
       globalModifications: [],
       playerCount: 0,
@@ -349,7 +357,7 @@ describe('openMatchService', () => {
     });
     expect(banchoChannelFromGameMatchIdSpy).not.toHaveBeenCalled();
     expect(banchoClient.closeMultiplayerChannel).not.toHaveBeenCalled();
-    expect(removeMatchFromCachedSet).not.toHaveBeenCalled();
+    expect(removeMatchFromCachedSetService).not.toHaveBeenCalled();
     expect(promiseAllSpy).not.toHaveBeenCalled();
     expect(result).toEqual(match);
   });
@@ -385,7 +393,7 @@ describe('openMatchService', () => {
     expect(createMatch).not.toHaveBeenCalled();
     expect(banchoChannelFromGameMatchIdSpy).not.toHaveBeenCalled();
     expect(banchoClient.closeMultiplayerChannel).not.toHaveBeenCalled();
-    expect(removeMatchFromCachedSet).not.toHaveBeenCalled();
+    expect(removeMatchFromCachedSetService).not.toHaveBeenCalled();
     expect(promiseAllSpy).not.toHaveBeenCalled();
   });
 
@@ -435,7 +443,9 @@ describe('openMatchService', () => {
     expect(banchoClient.closeMultiplayerChannel).toHaveBeenCalledWith(
       `#mp_${gameMatchId}`,
     );
-    expect(removeMatchFromCachedSet).toHaveBeenCalledWith(`#mp_${gameMatchId}`);
+    expect(removeMatchFromCachedSetService).toHaveBeenCalledWith(
+      `#mp_${gameMatchId}`,
+    );
     expect(promiseAllSpy).toHaveBeenCalled();
     expect(promiseAllSpy.mock.calls?.at(0)?.at(0)).toHaveLength(2);
   });

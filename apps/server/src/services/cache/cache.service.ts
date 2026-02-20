@@ -22,7 +22,7 @@ import {
   setStringInCacheByKey,
 } from '#src/queries/cache/cache.update.queries.js';
 
-export const addMatchMessageToCache = async (options: {
+export const addMatchMessageToCacheService = async (options: {
   channel: number | string;
   message: string;
 }) => {
@@ -35,28 +35,30 @@ export const addMatchMessageToCache = async (options: {
   });
 };
 
-export const addMatchToCachedSet = async (channel: string) => {
+export const addMatchToCachedSetService = async (channel: string) => {
   await addToSetInCacheByKey({
     key: CacheSetTopic.OpenMatches,
     value: channel,
   });
 };
 
-export const deleteMatchChatHistoryFromCache = async (
+export const deleteMatchChatHistoryFromCacheService = async (
   channel: number | string,
 ) => {
   await deleteListInCacheByKey(`${CacheListTopic.MatchMessages}:${channel}`);
 };
 
-export const deleteMatchStateFromCache = async (channel: number | string) => {
+export const deleteMatchStateFromCacheService = async (
+  channel: number | string,
+) => {
   await deleteStringInCacheByKey(`${CacheStringTopic.MatchState}:${channel}`);
 };
 
-export const getAllOngoingMatchesFromCache = async () => {
+export const getAllOngoingMatchesFromCacheService = async () => {
   return await getSetFromCacheByKey(CacheSetTopic.OpenMatches);
 };
 
-export const getMatchChatHistoryFromCache = async (
+export const getMatchChatHistoryFromCacheService = async (
   channel: number | string,
 ) => {
   return await getListFromCacheByKey(
@@ -64,7 +66,9 @@ export const getMatchChatHistoryFromCache = async (
   );
 };
 
-export const getMatchStateFromCache = async (channel: number | string) => {
+export const getMatchStateFromCacheService = async (
+  channel: number | string,
+) => {
   const matchState = await getStringFromCacheByKey(
     `${CacheStringTopic.MatchState}:${channel}`,
   );
@@ -76,14 +80,14 @@ export const getMatchStateFromCache = async (channel: number | string) => {
   return JSON.parse(matchState) as BanchoLobbyState;
 };
 
-export const removeMatchFromCachedSet = async (channel: string) => {
+export const removeMatchFromCachedSetService = async (channel: string) => {
   await removeFromSetInCacheByKey({
     key: CacheSetTopic.OpenMatches,
     value: channel,
   });
 };
 
-export const setMatchStateInCache = async (options: {
+export const setMatchStateInCacheService = async (options: {
   channel: number | string;
   state: BanchoLobbyState;
 }) => {

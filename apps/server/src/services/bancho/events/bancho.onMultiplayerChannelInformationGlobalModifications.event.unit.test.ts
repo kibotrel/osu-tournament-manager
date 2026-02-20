@@ -2,7 +2,7 @@ import type { BanchoLobbyState } from '@packages/shared';
 import { OsuBeatmapModification } from '@packages/shared';
 import { describe, expect, it, vi } from 'vitest';
 
-import { setMatchStateInCache } from '#src/services/cache/cache.service.js';
+import { setMatchStateInCacheService } from '#src/services/cache/cache.service.js';
 import { getMatchStateService } from '#src/services/matches/matches.service.js';
 import { webSocketServer } from '#src/websocketServer.js';
 
@@ -13,7 +13,7 @@ vi.mock('#src/dependencies/logger.dependency.js', () => {
 });
 
 vi.mock('#src/services/cache/cache.service.js', () => {
-  return { setMatchStateInCache: vi.fn() };
+  return { setMatchStateInCacheService: vi.fn() };
 });
 
 vi.mock('#src/services/matches/matches.service.js', () => {
@@ -44,7 +44,9 @@ const newMatchState: BanchoLobbyState = {
 
 describe('onMultiplayerChannelInformationGlobalModifications', () => {
   it('should update match state in cache', async () => {
-    const setMatchStateInCacheMock = vi.mocked(setMatchStateInCache);
+    const setMatchStateInCacheServiceMock = vi.mocked(
+      setMatchStateInCacheService,
+    );
     const getMatchStateServiceMock = vi.mocked(getMatchStateService);
 
     getMatchStateServiceMock.mockResolvedValueOnce(mockOldMatchState);
@@ -58,7 +60,7 @@ describe('onMultiplayerChannelInformationGlobalModifications', () => {
     });
 
     expect(getMatchStateServiceMock).toHaveBeenCalledWith(1);
-    expect(setMatchStateInCacheMock).toHaveBeenCalledWith({
+    expect(setMatchStateInCacheServiceMock).toHaveBeenCalledWith({
       channel: 1,
       state: newMatchState,
     });
@@ -103,7 +105,9 @@ describe('onMultiplayerChannelInformationGlobalModifications', () => {
         OsuBeatmapModification.Nightcore,
       ],
     };
-    const setMatchStateInCacheMock = vi.mocked(setMatchStateInCache);
+    const setMatchStateInCacheServiceMock = vi.mocked(
+      setMatchStateInCacheService,
+    );
     const getMatchStateServiceMock = vi.mocked(getMatchStateService);
 
     getMatchStateServiceMock.mockResolvedValueOnce(mockOldMatchState);
@@ -118,14 +122,16 @@ describe('onMultiplayerChannelInformationGlobalModifications', () => {
     });
 
     expect(getMatchStateServiceMock).toHaveBeenCalledWith(1);
-    expect(setMatchStateInCacheMock).toHaveBeenCalledWith({
+    expect(setMatchStateInCacheServiceMock).toHaveBeenCalledWith({
       channel: 1,
       state: newMatchStateSpecialCaseNightcore,
     });
   });
 
   it('should remove Freemod whenever it is enabled', async () => {
-    const setMatchStateInCacheMock = vi.mocked(setMatchStateInCache);
+    const setMatchStateInCacheServiceMock = vi.mocked(
+      setMatchStateInCacheService,
+    );
     const getMatchStateServiceMock = vi.mocked(getMatchStateService);
 
     getMatchStateServiceMock.mockResolvedValueOnce(mockOldMatchState);
@@ -140,7 +146,7 @@ describe('onMultiplayerChannelInformationGlobalModifications', () => {
     });
 
     expect(getMatchStateServiceMock).toHaveBeenCalledWith(1);
-    expect(setMatchStateInCacheMock).toHaveBeenCalledWith({
+    expect(setMatchStateInCacheServiceMock).toHaveBeenCalledWith({
       channel: 1,
       state: newMatchState,
     });

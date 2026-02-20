@@ -3,7 +3,9 @@ import type { OsuGetMeResponseBody } from '@packages/osu-sdk';
 import { createUser } from '#src/queries/users/users.create.queries.js';
 import { getUserByGameUserId } from '#src/queries/users/users.get.queries.js';
 
-export const getOrCreateUser = async (gameUser: OsuGetMeResponseBody) => {
+export const getOrCreateUserService = async (
+  gameUser: OsuGetMeResponseBody,
+) => {
   const user = await getUserByGameUserId(gameUser.id);
 
   if (user) {

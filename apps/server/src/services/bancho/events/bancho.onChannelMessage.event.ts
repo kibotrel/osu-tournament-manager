@@ -7,7 +7,7 @@ import {
 } from '@packages/shared';
 
 import { logger } from '#src/dependencies/logger.dependency.js';
-import { addMatchMessageToCache } from '#src/services/cache/cache.service.js';
+import { addMatchMessageToCacheService } from '#src/services/cache/cache.service.js';
 import { webSocketServer } from '#src/websocketServer.js';
 
 export const onChannelMessage = async ({
@@ -36,7 +36,7 @@ export const onChannelMessage = async ({
   };
   const buffer = Buffer.from(JSON.stringify(payload));
 
-  await addMatchMessageToCache({
+  await addMatchMessageToCacheService({
     channel: gameMatchId,
     message: buffer.toString(),
   });

@@ -2,8 +2,8 @@ import { afterEach, describe, expect, it, vi } from 'vitest';
 
 import { banchoClient } from '#src/dependencies/ircClient.dependency.js';
 import {
-  addMatchToCachedSet,
-  getAllOngoingMatchesFromCache,
+  addMatchToCachedSetService,
+  getAllOngoingMatchesFromCacheService,
 } from '#src/services/cache/cache.service.js';
 
 import {
@@ -22,8 +22,8 @@ vi.mock('#src/dependencies/ircClient.dependency.js', () => {
 
 vi.mock('#src/services/cache/cache.service.js', () => {
   return {
-    addMatchToCachedSet: vi.fn(),
-    getAllOngoingMatchesFromCache: vi.fn(),
+    addMatchToCachedSetService: vi.fn(),
+    getAllOngoingMatchesFromCacheService: vi.fn(),
   };
 });
 
@@ -40,7 +40,7 @@ describe('openMultiplayerChannelService', () => {
     const { gameMatchId } = await openMultiplayerChannelService(name);
 
     expect(banchoClient.createMultiplayerChannel).toHaveBeenCalledWith(name);
-    expect(addMatchToCachedSet).toHaveBeenCalledWith(banchoChannel);
+    expect(addMatchToCachedSetService).toHaveBeenCalledWith(banchoChannel);
     expect(gameMatchId).toBe(Number(banchoChannel.slice(4)));
   });
 });
@@ -52,16 +52,18 @@ describe('joinAllOngoingMatchesService', () => {
 
   it('should join all ongoing matches from cache', async () => {
     const ongoingMatches = ['#mp_123', '#mp_456'];
-    const getAllOngoingMatchesFromCacheMock = vi.mocked(
-      getAllOngoingMatchesFromCache,
+    const getAllOngoingMatchesFromCacheServiceMock = vi.mocked(
+      getAllOngoingMatchesFromCacheService,
     );
     const spyPromiseAll = vi.spyOn(Promise, 'all');
 
-    getAllOngoingMatchesFromCacheMock.mockResolvedValueOnce(ongoingMatches);
+    getAllOngoingMatchesFromCacheServiceMock.mockResolvedValueOnce(
+      ongoingMatches,
+    );
 
     await joinAllOngoingMatchesService();
 
-    expect(getAllOngoingMatchesFromCache).toHaveBeenCalled();
+    expect(getAllOngoingMatchesFromCacheService).toHaveBeenCalled();
     expect(banchoClient.joinChannel).toHaveBeenCalledTimes(
       ongoingMatches.length,
     );
@@ -75,12 +77,12 @@ describe('joinAllOngoingMatchesService', () => {
   });
 
   it('should not attempt to join any channels if there are no ongoing matches', async () => {
-    const getAllOngoingMatchesFromCacheMock = vi.mocked(
-      getAllOngoingMatchesFromCache,
+    const getAllOngoingMatchesFromCacheServiceMock = vi.mocked(
+      getAllOngoingMatchesFromCacheService,
     );
     const spyPromiseAll = vi.spyOn(Promise, 'all');
 
-    getAllOngoingMatchesFromCacheMock.mockResolvedValueOnce([]);
+    getAllOngoingMatchesFromCacheServiceMock.mockResolvedValueOnce([]);
 
     await joinAllOngoingMatchesService();
 

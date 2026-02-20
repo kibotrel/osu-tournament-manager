@@ -17,9 +17,9 @@ import { createMatch } from '#src/queries/matches/matches.create.queries.js';
 import { getMatchByGameMatchId } from '#src/queries/matches/matches.get.queries.js';
 import { openMultiplayerChannelService } from '#src/services/bancho/bancho.multiplayer.service.js';
 import {
-  getMatchChatHistoryFromCache,
-  getMatchStateFromCache,
-  removeMatchFromCachedSet,
+  getMatchChatHistoryFromCacheService,
+  getMatchStateFromCacheService,
+  removeMatchFromCachedSetService,
 } from '#src/services/cache/cache.service.js';
 
 export const closeMatchService = async (gameMatchId: number) => {
@@ -66,7 +66,7 @@ export const getMatchService = async (gameMatchId: number) => {
 export const getMatchChatHistoryService = async (
   gameMatchId: number | string,
 ) => {
-  const cacheHistory = await getMatchChatHistoryFromCache(gameMatchId);
+  const cacheHistory = await getMatchChatHistoryFromCacheService(gameMatchId);
 
   return cacheHistory.map<WebSocketMessage<WebSocketMatchMessage>>((entry) => {
     return JSON.parse(entry);
@@ -74,7 +74,7 @@ export const getMatchChatHistoryService = async (
 };
 
 export const getMatchStateService = async (gameMatchId: number | string) => {
-  const state = await getMatchStateFromCache(gameMatchId);
+  const state = await getMatchStateFromCacheService(gameMatchId);
 
   if (!state) {
     return baseMatchState;
@@ -118,7 +118,7 @@ export const openMatchService = async (name: string) => {
     const channel = banchoChannelFromGameMatchId(matchId);
     const promises = [
       banchoClient.closeMultiplayerChannel(channel),
-      removeMatchFromCachedSet(channel),
+      removeMatchFromCachedSetService(channel),
     ];
 
     await Promise.all(promises);

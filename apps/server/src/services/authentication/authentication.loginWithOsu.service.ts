@@ -1,7 +1,7 @@
 import { osuGetMe, osuPostOauthToken } from '@packages/osu-sdk';
 
 import { environmentConfig } from '#src/configs/environment.config.js';
-import { getOrCreateUser } from '#src/services/users/users.getOrCreate.service.js';
+import { getOrCreateUserService } from '#src/services/users/users.getOrCreate.service.js';
 
 /**
  * Use code given by osu! Oauth, exchange it for an access token, and get game user's information.
@@ -15,7 +15,7 @@ export const loginWithOsuService = async (authenticationCode: string) => {
     redirectUri: `${environmentConfig.baseUrl}/oauth/callback`,
   });
   const gameUser = await osuGetMe({ token: bearer.token });
-  const { isNew, user } = await getOrCreateUser(gameUser);
+  const { isNew, user } = await getOrCreateUserService(gameUser);
 
   return { bearer, isNew, user };
 };

@@ -22,7 +22,7 @@ import { HttpEvent } from '#src/constants/http.constants.js';
 import { banchoClient } from '#src/dependencies/ircClient.dependency.js';
 import { logger } from '#src/dependencies/logger.dependency.js';
 import { session as sessionMiddleware } from '#src/middlewares/session.middleware.js';
-import { addMatchMessageToCache } from '#src/services/cache/cache.service.js';
+import { addMatchMessageToCacheService } from '#src/services/cache/cache.service.js';
 
 /**
  * This trick is needed because augmenting the WebSocket interface through declaration merging
@@ -143,7 +143,7 @@ export class WebSocketServer {
         message.toString(),
       );
 
-      addMatchMessageToCache({
+      addMatchMessageToCacheService({
         channel: threadId,
         message: message.toString(),
       });
