@@ -7,7 +7,7 @@ import { getOrCreateUser } from '#src/services/users/users.getOrCreate.service.j
  * Use code given by osu! Oauth, exchange it for an access token, and get game user's information.
  * If user doesn't exist in the database yet create it.
  */
-export const loginWithOsu = async (authenticationCode: string) => {
+export const loginWithOsuService = async (authenticationCode: string) => {
   const bearer = await osuPostOauthToken({
     clientId: environmentConfig.osuClientId,
     clientSecret: environmentConfig.osuClientSecret,

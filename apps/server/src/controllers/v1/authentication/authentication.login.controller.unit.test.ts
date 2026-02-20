@@ -8,7 +8,7 @@ import { matchedData } from 'express-validator';
 import { describe, expect, it, vi } from 'vitest';
 
 import type { SelectUser } from '#src/schemas/users/users.users.table.js';
-import { loginWithOsu } from '#src/services/authentication/authentication.loginWithOsu.service.js';
+import { loginWithOsuService } from '#src/services/authentication/authentication.loginWithOsu.service.js';
 import {
   expressNextFunctionMock,
   expressRequestMock,
@@ -25,15 +25,18 @@ vi.mock('express-validator', () => {
   };
 });
 
-vi.mock('#src/services/authentication/authentication.loginWithOsu.service.js', () => {
-  return {
-    loginWithOsu: vi.fn(),
-  };
-});
+vi.mock(
+  '#src/services/authentication/authentication.loginWithOsu.service.js',
+  () => {
+    return {
+      loginWithOsuService: vi.fn(),
+    };
+  },
+);
 
 describe('loginController', () => {
   it('should respond with status 200 for existing users', async () => {
-    const loginWithOsuMock = vi.mocked(loginWithOsu);
+    const loginWithOsuServiceMock = vi.mocked(loginWithOsuService);
     const next = expressNextFunctionMock();
     const request = expressRequestMock<
       never,
@@ -59,14 +62,16 @@ describe('loginController', () => {
       token: 'test-access-token',
     } as const;
 
-    loginWithOsuMock.mockResolvedValue({ isNew: false, user, bearer });
+    loginWithOsuServiceMock.mockResolvedValue({ isNew: false, user, bearer });
 
     const response = expressResponseMock<LoginResponseBody>();
 
     await loginController(request, response, next);
 
     expect(matchedData).toHaveBeenCalledWith(request);
-    expect(loginWithOsu).toHaveBeenCalledWith(request.body.authenticationCode);
+    expect(loginWithOsuService).toHaveBeenCalledWith(
+      request.body.authenticationCode,
+    );
     expect(response.status).toHaveBeenCalledWith(HttpStatusCode.Ok);
     expect(response.json).toHaveBeenCalledWith({
       avatarUrl: user.avatarUrl,
@@ -77,7 +82,7 @@ describe('loginController', () => {
   });
 
   it('should respond with status 201 for new users', async () => {
-    const loginWithOsuMock = vi.mocked(loginWithOsu);
+    const loginWithOsuServiceMock = vi.mocked(loginWithOsuService);
     const next = expressNextFunctionMock();
     const request = expressRequestMock<
       never,
@@ -103,14 +108,16 @@ describe('loginController', () => {
       token: 'test-access-token',
     } as const;
 
-    loginWithOsuMock.mockResolvedValue({ isNew: true, user, bearer });
+    loginWithOsuServiceMock.mockResolvedValue({ isNew: true, user, bearer });
 
     const response = expressResponseMock<LoginResponseBody>();
 
     await loginController(request, response, next);
 
     expect(matchedData).toHaveBeenCalledWith(request);
-    expect(loginWithOsu).toHaveBeenCalledWith(request.body.authenticationCode);
+    expect(loginWithOsuService).toHaveBeenCalledWith(
+      request.body.authenticationCode,
+    );
     expect(response.status).toHaveBeenCalledWith(HttpStatusCode.Created);
     expect(response.json).toHaveBeenCalledWith({
       avatarUrl: user.avatarUrl,
@@ -120,8 +127,8 @@ describe('loginController', () => {
     expect(next).not.toHaveBeenCalled();
   });
 
-  it('should call next with an error if loginWithOsu fails', async () => {
-    const loginWithOsuMock = vi.mocked(loginWithOsu);
+  it('should call next with an error if loginWithOsuService fails', async () => {
+    const loginWithOsuServiceMock = vi.mocked(loginWithOsuService);
     const next = expressNextFunctionMock();
     const request = expressRequestMock<
       never,
@@ -134,14 +141,16 @@ describe('loginController', () => {
 
     const error = new Error('Login failed');
 
-    loginWithOsuMock.mockRejectedValue(error);
+    loginWithOsuServiceMock.mockRejectedValue(error);
 
     const response = expressResponseMock<LoginResponseBody>();
 
     await loginController(request, response, next);
 
     expect(matchedData).toHaveBeenCalledWith(request);
-    expect(loginWithOsu).toHaveBeenCalledWith(request.body.authenticationCode);
+    expect(loginWithOsuService).toHaveBeenCalledWith(
+      request.body.authenticationCode,
+    );
     expect(response.status).not.toHaveBeenCalled();
     expect(response.json).not.toHaveBeenCalled();
     expect(next).toHaveBeenCalledWith(error);

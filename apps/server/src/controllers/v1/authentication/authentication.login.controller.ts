@@ -3,7 +3,7 @@ import { HttpStatusCode } from '@packages/shared';
 import type { RequestHandler } from 'express';
 import { matchedData } from 'express-validator';
 
-import { loginWithOsu } from '#src/services/authentication/authentication.loginWithOsu.service.js';
+import { loginWithOsuService } from '#src/services/authentication/authentication.loginWithOsu.service.js';
 
 export const loginController: RequestHandler<
   never,
@@ -15,7 +15,8 @@ export const loginController: RequestHandler<
   const { authenticationCode } = matchedData<LoginRequestBody>(request);
 
   try {
-    const { bearer, isNew, user } = await loginWithOsu(authenticationCode);
+    const { bearer, isNew, user } =
+      await loginWithOsuService(authenticationCode);
     const statusCode = isNew ? HttpStatusCode.Created : HttpStatusCode.Ok;
 
     session.user = {
