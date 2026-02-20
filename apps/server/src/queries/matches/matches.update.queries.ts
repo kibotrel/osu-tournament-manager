@@ -4,7 +4,7 @@ import { database } from '#src/dependencies/database.dependency.js';
 import type { InsertMatch } from '#src/schemas/matches/matches.matches.table.js';
 import { matchesTable } from '#src/schemas/matches/matches.matches.table.js';
 
-export const patchMatchByGameMatchId = async (
+export const patchMatchByGameMatchIdQuery = async (
   gameMatchId: number,
   options: Partial<Omit<InsertMatch, 'id' | 'createdAt' | 'updatedAt'>>,
 ) => {
@@ -16,7 +16,7 @@ export const patchMatchByGameMatchId = async (
   return { success: rowCount === 1 };
 };
 
-export const patchMatchById = async (
+export const patchMatchByIdQuery = async (
   id: number,
   options: Partial<Omit<InsertMatch, 'id' | 'createdAt' | 'updatedAt'>>,
 ) => {

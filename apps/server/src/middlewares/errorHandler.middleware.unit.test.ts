@@ -15,7 +15,7 @@ import {
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
 import { logger } from '#src/dependencies/logger.dependency.js';
-import { deleteListInCacheByKey } from '#src/queries/cache/cache.delete.queries.js';
+import { deleteListInCacheByKeyQuery } from '#src/queries/cache/cache.delete.queries.js';
 import {
   expressNextFunctionMock,
   expressRequestMock,
@@ -40,7 +40,7 @@ vi.mock('#src/configs/environment.config.js', () => {
 
 vi.mock('#src/queries/cache/cache.delete.queries.js', () => {
   return {
-    deleteListInCacheByKey: vi.fn(),
+    deleteListInCacheByKeyQuery: vi.fn(),
   };
 });
 
@@ -50,9 +50,11 @@ describe('errorHandler', () => {
   });
 
   it('should return status code 400 if error is instance of Error along with error report', async () => {
-    const mockedDeleteListInCacheByKey = vi.mocked(deleteListInCacheByKey);
+    const deleteListInCacheByKeyQueryMock = vi.mocked(
+      deleteListInCacheByKeyQuery,
+    );
 
-    mockedDeleteListInCacheByKey.mockResolvedValueOnce([]);
+    deleteListInCacheByKeyQueryMock.mockResolvedValueOnce([]);
 
     const error = new Error('test');
     const next = expressNextFunctionMock();
@@ -92,9 +94,11 @@ describe('errorHandler', () => {
   });
 
   it('should return the relative status code if error is instance of HttpError along with error report', async () => {
-    const mockedDeleteListInCacheByKey = vi.mocked(deleteListInCacheByKey);
+    const deleteListInCacheByKeyQueryMock = vi.mocked(
+      deleteListInCacheByKeyQuery,
+    );
 
-    mockedDeleteListInCacheByKey.mockResolvedValueOnce([]);
+    deleteListInCacheByKeyQueryMock.mockResolvedValueOnce([]);
 
     const error = new HttpForbiddenError({ message: 'test' });
     const next = expressNextFunctionMock();
@@ -129,9 +133,11 @@ describe('errorHandler', () => {
   });
 
   it('should return status 404 if instance of express-open-api-validator/NotFound and convert it to an usable error report', async () => {
-    const mockedDeleteListInCacheByKey = vi.mocked(deleteListInCacheByKey);
+    const deleteListInCacheByKeyQueryMock = vi.mocked(
+      deleteListInCacheByKeyQuery,
+    );
 
-    mockedDeleteListInCacheByKey.mockResolvedValueOnce([]);
+    deleteListInCacheByKeyQueryMock.mockResolvedValueOnce([]);
 
     const error = new NotFound({ path: '/api/v1/test' });
     const next = expressNextFunctionMock();
@@ -162,9 +168,11 @@ describe('errorHandler', () => {
   });
 
   it('should return status 405 if instance of express-open-api-validator/MethodNotAllowed and convert it to an usable error report and add Allow header to response', async () => {
-    const mockedDeleteListInCacheByKey = vi.mocked(deleteListInCacheByKey);
+    const deleteListInCacheByKeyQueryMock = vi.mocked(
+      deleteListInCacheByKeyQuery,
+    );
 
-    mockedDeleteListInCacheByKey.mockResolvedValueOnce([]);
+    deleteListInCacheByKeyQueryMock.mockResolvedValueOnce([]);
 
     const error = new MethodNotAllowed({ path: '/api/v1/public/health' });
     const next = expressNextFunctionMock();
@@ -201,9 +209,11 @@ describe('errorHandler', () => {
   });
 
   it('should return status 500 if error is not recognized', async () => {
-    const mockedDeleteListInCacheByKey = vi.mocked(deleteListInCacheByKey);
+    const deleteListInCacheByKeyQueryMock = vi.mocked(
+      deleteListInCacheByKeyQuery,
+    );
 
-    mockedDeleteListInCacheByKey.mockResolvedValueOnce([]);
+    deleteListInCacheByKeyQueryMock.mockResolvedValueOnce([]);
 
     const error = 'test';
     const next = expressNextFunctionMock();

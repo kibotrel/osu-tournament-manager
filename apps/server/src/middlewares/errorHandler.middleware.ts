@@ -18,7 +18,7 @@ import { environmentConfig } from '#src/configs/environment.config.js';
 import { CacheListTopic } from '#src/constants/cache.constants.js';
 import { allowedHttpMethodsOnResource } from '#src/constants/http.constants.js';
 import { logger } from '#src/dependencies/logger.dependency.js';
-import { deleteListInCacheByKey } from '#src/queries/cache/cache.delete.queries.js';
+import { deleteListInCacheByKeyQuery } from '#src/queries/cache/cache.delete.queries.js';
 
 const { NotFound, MethodNotAllowed } = error;
 
@@ -131,7 +131,7 @@ export const errorHandler: ErrorRequestHandler<never, ErrorReport> = async (
     response.setHeader(HttpHeader.Allow, errorReport.getAllowedMethods());
   }
 
-  const metrics = await deleteListInCacheByKey(
+  const metrics = await deleteListInCacheByKeyQuery(
     `${CacheListTopic.ServerMetrics}:${request.id}`,
   );
 

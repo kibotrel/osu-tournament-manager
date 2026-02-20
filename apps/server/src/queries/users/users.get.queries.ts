@@ -5,7 +5,7 @@ import { database } from '#src/dependencies/database.dependency.js';
 import type { SelectUser } from '#src/schemas/users/users.users.table.js';
 import { usersTable } from '#src/schemas/users/users.users.table.js';
 
-export const getUserByGameUserId = async <
+export const getUserByGameUserIdQuery = async <
   Columns extends ReadonlyArray<keyof SelectUser> = [],
 >(
   gameUserId: number,

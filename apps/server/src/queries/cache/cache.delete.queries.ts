@@ -4,7 +4,7 @@ import type {
 } from '#src/@types/cache/cache.types.js';
 import { cache } from '#src/dependencies/cache.dependency.js';
 
-export const deleteListInCacheByKey = async (key: CacheListKey) => {
+export const deleteListInCacheByKeyQuery = async (key: CacheListKey) => {
   const array = await cache.lRange(key, 0, -1);
 
   await cache.del(key);
@@ -12,6 +12,6 @@ export const deleteListInCacheByKey = async (key: CacheListKey) => {
   return array;
 };
 
-export const deleteStringInCacheByKey = async (key: CacheStringKey) => {
+export const deleteStringInCacheByKeyQuery = async (key: CacheStringKey) => {
   await cache.del(key);
 };

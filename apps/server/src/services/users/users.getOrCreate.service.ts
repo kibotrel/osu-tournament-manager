@@ -1,19 +1,19 @@
 import type { OsuGetMeResponseBody } from '@packages/osu-sdk';
 
-import { createUser } from '#src/queries/users/users.create.queries.js';
-import { getUserByGameUserId } from '#src/queries/users/users.get.queries.js';
+import { createUserQuery } from '#src/queries/users/users.create.queries.js';
+import { getUserByGameUserIdQuery } from '#src/queries/users/users.get.queries.js';
 
 export const getOrCreateUserService = async (
   gameUser: OsuGetMeResponseBody,
 ) => {
-  const user = await getUserByGameUserId(gameUser.id);
+  const user = await getUserByGameUserIdQuery(gameUser.id);
 
   if (user) {
     return { isNew: false, user };
   }
 
   const { id, ...properties } = gameUser;
-  const newUser = await createUser({ ...properties, gameUserId: id });
+  const newUser = await createUserQuery({ ...properties, gameUserId: id });
 
   return { isNew: true, user: newUser };
 };

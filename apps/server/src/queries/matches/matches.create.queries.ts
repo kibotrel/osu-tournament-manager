@@ -4,7 +4,7 @@ import {
   matchesTable,
 } from '#src/schemas/matches/matches.matches.table.js';
 
-export const createMatch = async (matchData: InsertMatch) => {
+export const createMatchQuery = async (matchData: InsertMatch) => {
   const [match] = await database
     .insert(matchesTable)
     .values(matchData)

@@ -1,5 +1,5 @@
 import { CacheListTopic } from '#src/constants/cache.constants.js';
-import { addToListInCacheByKey } from '#src/queries/cache/cache.update.queries.js';
+import { addToListInCacheByKeyQuery } from '#src/queries/cache/cache.update.queries.js';
 
 export interface ServerMetric {
   description?: string | null;
@@ -56,7 +56,7 @@ export class MetricsCollector {
       ? `${baseData}; desc="${description}"`
       : baseData;
 
-    await addToListInCacheByKey({
+    await addToListInCacheByKeyQuery({
       key: `${CacheListTopic.ServerMetrics}:${this.requestId}`,
       value: serializedData,
     });

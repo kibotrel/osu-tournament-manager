@@ -7,7 +7,7 @@ import type {
 } from '#src/@types/cache/cache.types.js';
 import { cache } from '#src/dependencies/cache.dependency.js';
 
-export const addToListInCacheByKey = async (
+export const addToListInCacheByKeyQuery = async (
   options: AddToCacheOptions<CacheListKey>,
 ) => {
   const { key, value, expiryInSeconds } = options;
@@ -19,7 +19,7 @@ export const addToListInCacheByKey = async (
   }
 };
 
-export const addToSetInCacheByKey = async (
+export const addToSetInCacheByKeyQuery = async (
   options: AddToCacheOptions<CacheSetKey>,
 ) => {
   const { expiryInSeconds, key, value } = options;
@@ -31,7 +31,7 @@ export const addToSetInCacheByKey = async (
   }
 };
 
-export const removeFromListInCacheByKey = async (
+export const removeFromListInCacheByKeyQuery = async (
   options: AddToCacheOptions<CacheListKey>,
 ) => {
   const { expiryInSeconds, key, value } = options;
@@ -43,7 +43,7 @@ export const removeFromListInCacheByKey = async (
   }
 };
 
-export const removeFromSetInCacheByKey = async (
+export const removeFromSetInCacheByKeyQuery = async (
   options: AddToCacheOptions<CacheSetKey>,
 ) => {
   const { expiryInSeconds, key, value } = options;
@@ -55,7 +55,7 @@ export const removeFromSetInCacheByKey = async (
   }
 };
 
-export const setStringInCacheByKey = async (
+export const setStringInCacheByKeyQuery = async (
   options: AddToCacheOptions<CacheStringKey>,
 ) => {
   const { expiryInSeconds, key, value } = options;

@@ -7,7 +7,7 @@ import {
   matchesTable,
 } from '#src/schemas/matches/matches.matches.table.js';
 
-export const getMatchById = async <
+export const getMatchByIdQuery = async <
   Columns extends ReadonlyArray<keyof SelectMatch> = [],
 >(
   id: number,
@@ -35,7 +35,7 @@ export const getMatchById = async <
     : Pick<SelectMatch, Columns[number]> | null;
 };
 
-export const getMatchByGameMatchId = async <
+export const getMatchByGameMatchIdQuery = async <
   Columns extends ReadonlyArray<keyof SelectMatch> = [],
 >(
   gameMatchId: number,

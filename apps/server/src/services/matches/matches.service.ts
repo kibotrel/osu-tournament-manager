@@ -13,8 +13,8 @@ import {
 import { baseMatchState } from '#src/constants/bancho.constants.js';
 import { banchoClient } from '#src/dependencies/ircClient.dependency.js';
 import { logger } from '#src/dependencies/logger.dependency.js';
-import { createMatch } from '#src/queries/matches/matches.create.queries.js';
-import { getMatchByGameMatchId } from '#src/queries/matches/matches.get.queries.js';
+import { createMatchQuery } from '#src/queries/matches/matches.create.queries.js';
+import { getMatchByGameMatchIdQuery } from '#src/queries/matches/matches.get.queries.js';
 import { openMultiplayerChannelService } from '#src/services/bancho/bancho.multiplayer.service.js';
 import {
   getMatchChatHistoryFromCacheService,
@@ -23,7 +23,7 @@ import {
 } from '#src/services/cache/cache.service.js';
 
 export const closeMatchService = async (gameMatchId: number) => {
-  const match = await getMatchByGameMatchId(gameMatchId, {
+  const match = await getMatchByGameMatchIdQuery(gameMatchId, {
     columnsFilter: ['endsAt', 'gameMatchId', 'gameMatchId', 'id'],
   });
 
@@ -52,7 +52,7 @@ export const closeMatchService = async (gameMatchId: number) => {
 };
 
 export const getMatchService = async (gameMatchId: number) => {
-  const match = await getMatchByGameMatchId(gameMatchId, {
+  const match = await getMatchByGameMatchIdQuery(gameMatchId, {
     columnsFilter: ['endsAt', 'gameMatchId', 'name'],
   });
 
@@ -92,7 +92,7 @@ export const openMatchService = async (name: string) => {
     matchId = gameMatchId;
 
     // TODO: Fill with real data when creating tournament, mappools and teams are implemented.
-    return await createMatch({
+    return await createMatchQuery({
       bansPerTeam: 0,
       bestOf: 0,
       gameMatchId,
