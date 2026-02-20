@@ -36,4 +36,4 @@ We believe that a good developer experience leads to a better product, ship code
 
 - Request tracking to debug issues more easily (see [`requestIdentity.middleware`](../../apps/server/src/middlewares/requestIdentity.middleware.ts)).
 - Global error handling to catch and log errors in a consistent manner (see [`errorHandler.middleware`](../../apps/server/src/middlewares/errorHandler.middleware.ts)).
-- Small API to gauge performance using [HTTP Server-Timing header](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Server-Timing) (see [`metricsCollector.class`](../../apps/server/src/classes/metricsCollector.class.ts)).
+- Small API to gauge performance using [HTTP Server-Timing header](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Server-Timing) (see [`MetricsCollector`](../../apps/server/src/classes/metricsCollector.class.ts)).
