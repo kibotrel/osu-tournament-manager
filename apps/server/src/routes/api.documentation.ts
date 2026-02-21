@@ -18,6 +18,7 @@ if (!environmentConfig.isDevelopmentMode) {
   server.variables.environment.enum.shift();
 }
 
-export const documentation: RequestHandler = swaggerUi.setup(apiSpecification, {
-  customCss: new SwaggerTheme().getBuffer(SwaggerThemeNameEnum.DARK),
-});
+export const apiDocumentation: RequestHandler = swaggerUi.setup(
+  apiSpecification,
+  { customCss: new SwaggerTheme().getBuffer(SwaggerThemeNameEnum.DARK) },
+);

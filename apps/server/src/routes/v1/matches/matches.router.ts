@@ -5,8 +5,8 @@ import { createMatchController } from '#src/controllers/v1/matches/matches.creat
 import { getMatchController } from '#src/controllers/v1/matches/matches.get.controller.js';
 import { getMatchChatHistoryController } from '#src/controllers/v1/matches/matches.getChatHistory.controller.js';
 import { getMatchStateController } from '#src/controllers/v1/matches/matches.getState.controller.js';
-import { validateRequest } from '#src/middlewares/requestValidator.middleware.js';
-import { isAuthenticated } from '#src/middlewares/session.middleware.js';
+import { validateRequestMiddleware } from '#src/middlewares/requestValidator.middleware.js';
+import { isAuthenticatedMiddleware } from '#src/middlewares/session.middleware.js';
 import { closeMatchValidators } from '#src/validators/v1/matches/matches.close.validators.js';
 import { createMatchValidators } from '#src/validators/v1/matches/matches.create.validators.js';
 import { getMatchValidators } from '#src/validators/v1/matches/matches.get.validators.js';
@@ -19,35 +19,35 @@ const matchesRouter: Router = Router({
   mergeParams: true,
 });
 
-matchesRouter.use(isAuthenticated);
+matchesRouter.use(isAuthenticatedMiddleware);
 matchesRouter.post(
   '/',
   createMatchValidators(),
-  validateRequest,
+  validateRequestMiddleware,
   createMatchController,
 );
 matchesRouter.get(
   '/:gameMatchId/chat-history',
   getMatchChatHistoryValidators(),
-  validateRequest,
+  validateRequestMiddleware,
   getMatchChatHistoryController,
 );
 matchesRouter.get(
   '/:gameMatchId/state',
   getMatchStateValidators(),
-  validateRequest,
+  validateRequestMiddleware,
   getMatchStateController,
 );
 matchesRouter.post(
   '/:gameMatchId/close',
   closeMatchValidators(),
-  validateRequest,
+  validateRequestMiddleware,
   closeMatchController,
 );
 matchesRouter.get(
   '/:gameMatchId',
   getMatchValidators(),
-  validateRequest,
+  validateRequestMiddleware,
   getMatchController,
 );
 

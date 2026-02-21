@@ -9,7 +9,7 @@ import {
   expressResponseMock,
 } from '#src/tests/express.mocks.js';
 
-import { resourceNotFoundHandler } from './resourceNotFound.middleware.js';
+import { resourceNotFoundMiddleware } from './resourceNotFound.middleware.js';
 
 vi.mock('#src/dependencies/logger.dependency.js', () => {
   return {
@@ -25,7 +25,7 @@ vi.mock('#src/configs/environment.config.js', () => {
   };
 });
 
-describe('resourceNotFoundHandler', () => {
+describe('resourceNotFoundMiddleware', () => {
   afterEach(() => {
     vi.clearAllMocks();
   });
@@ -39,7 +39,7 @@ describe('resourceNotFoundHandler', () => {
     request.method = 'GET';
     request.url = '/api/v1/test';
 
-    resourceNotFoundHandler(request, response, next);
+    resourceNotFoundMiddleware(request, response, next);
 
     expect(logger.error).not.toHaveBeenCalled();
     expect(response.setHeader).toHaveBeenCalledWith(

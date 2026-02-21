@@ -22,7 +22,11 @@ const formatValidationErrors = (errors: Result) => {
   });
 };
 
-export const validateRequest: RequestHandler = (request, _response, next) => {
+export const validateRequestMiddleware: RequestHandler = (
+  request,
+  _response,
+  next,
+) => {
   const validationErrors = validationResult(request);
 
   if (validationErrors.isEmpty()) {

@@ -21,7 +21,7 @@ import { environmentConfig } from '#src/configs/environment.config.js';
 import { HttpEvent } from '#src/constants/http.constants.js';
 import { banchoClient } from '#src/dependencies/ircClient.dependency.js';
 import { logger } from '#src/dependencies/logger.dependency.js';
-import { session as sessionMiddleware } from '#src/middlewares/session.middleware.js';
+import { sessionMiddleware } from '#src/middlewares/session.middleware.js';
 import { addMatchMessageToCacheService } from '#src/services/cache/cache.service.js';
 
 /**

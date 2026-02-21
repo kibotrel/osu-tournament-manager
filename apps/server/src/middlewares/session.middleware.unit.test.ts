@@ -8,7 +8,7 @@ import {
   expressResponseMock,
 } from '#src/tests/express.mocks.js';
 
-import { isAuthenticated } from './session.middleware.js';
+import { isAuthenticatedMiddleware } from './session.middleware.js';
 
 vi.mock('#src/dependencies/cache.dependency.js', () => {
   return {
@@ -24,7 +24,7 @@ vi.mock('express-session', () => {
   };
 });
 
-describe('isAuthenticated', () => {
+describe('isAuthenticatedMiddleware', () => {
   afterEach(() => {
     vi.clearAllMocks();
   });
@@ -40,7 +40,7 @@ describe('isAuthenticated', () => {
       id: 1,
     };
 
-    isAuthenticated(request, response, next);
+    isAuthenticatedMiddleware(request, response, next);
 
     expect(next).toHaveBeenCalledWith();
   });
@@ -50,7 +50,7 @@ describe('isAuthenticated', () => {
     const response = expressResponseMock() as Response;
     const next = expressNextFunctionMock();
 
-    isAuthenticated(request, response, next);
+    isAuthenticatedMiddleware(request, response, next);
 
     expect(next).toHaveBeenCalledWith(
       new HttpUnauthorizedError({

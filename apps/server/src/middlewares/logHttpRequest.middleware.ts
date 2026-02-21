@@ -6,7 +6,7 @@ import { logger } from '#src/dependencies/logger.dependency.js';
 
 const { isProductionMode } = environmentConfig;
 
-export const logHttpRequest: RequestHandler = (request, _, next) => {
+export const logHttpRequestMiddleware: RequestHandler = (request, _, next) => {
   const isHealthCheck = request.url === '/api/v1/public/health';
 
   if (

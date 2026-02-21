@@ -2,7 +2,7 @@ import { Router } from 'express';
 
 import { loginController } from '#src/controllers/v1/authentication/authentication.login.controller.js';
 import { logoutController } from '#src/controllers/v1/authentication/authentication.logout.controller.js';
-import { validateRequest } from '#src/middlewares/requestValidator.middleware.js';
+import { validateRequestMiddleware } from '#src/middlewares/requestValidator.middleware.js';
 import { loginValidators } from '#src/validators/v1/authentication/authentication.login.validators.js';
 
 const authenticationRouter: Router = Router({
@@ -14,7 +14,7 @@ const authenticationRouter: Router = Router({
 authenticationRouter.post(
   '/login',
   loginValidators(),
-  validateRequest,
+  validateRequestMiddleware,
   loginController,
 );
 authenticationRouter.get('/logout', logoutController);

@@ -9,7 +9,10 @@ import type { RequestHandler } from 'express';
 import { environmentConfig } from '#src/configs/environment.config.js';
 import { logger } from '#src/dependencies/logger.dependency.js';
 
-export const resourceNotFoundHandler: RequestHandler = (request, response) => {
+export const resourceNotFoundMiddleware: RequestHandler = (
+  request,
+  response,
+) => {
   const error = new HttpNotFoundError({
     message: `Resource at ${request.url} could not be found`,
   });

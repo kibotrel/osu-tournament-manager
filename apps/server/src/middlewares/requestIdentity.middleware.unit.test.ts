@@ -8,7 +8,7 @@ import {
   expressResponseMock,
 } from '#src/tests/express.mocks.js';
 
-import { setRequestId } from './requestIdentity.middleware.js';
+import { setRequestIdMiddleware } from './requestIdentity.middleware.js';
 
 vi.mock('node:crypto', () => {
   return {
@@ -16,13 +16,13 @@ vi.mock('node:crypto', () => {
   };
 });
 
-describe('setRequestId', () => {
+describe('setRequestIdMiddleware', () => {
   it('should set request.id and X-Request-Id header', () => {
     const request = expressRequestMock() as Request;
     const response = expressResponseMock() as Response;
     const next = expressNextFunctionMock();
 
-    setRequestId(request, response, next);
+    setRequestIdMiddleware(request, response, next);
 
     expect(request.id).toEqual('test-unique-id');
     expect(response.setHeader).toHaveBeenCalledWith(

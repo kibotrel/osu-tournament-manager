@@ -95,7 +95,7 @@ export const normalizeError = (options: ParseErrorOptions): NormalizedError => {
  * Middleware to communicate errors to the client in a consistent way conforming
  * to {@link https://datatracker.ietf.org/doc/rfc9457/ | RFC 9457}.
  */
-export const errorHandler: ErrorRequestHandler<never, ErrorReport> = async (
+export const errorMiddleware: ErrorRequestHandler<never, ErrorReport> = async (
   rawError,
   request,
   response,

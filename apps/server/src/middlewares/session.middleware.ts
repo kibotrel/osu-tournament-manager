@@ -8,7 +8,7 @@ import expressSession from 'express-session';
 import { environmentConfig } from '#src/configs/environment.config.js';
 import { cache } from '#src/dependencies/cache.dependency.js';
 
-export const session: RequestHandler = expressSession({
+export const sessionMiddleware: RequestHandler = expressSession({
   cookie: { maxAge: Time.Week, secure: true },
   genid: () => {
     return randomUUID();
@@ -20,7 +20,11 @@ export const session: RequestHandler = expressSession({
   store: new RedisStore({ client: cache }),
 });
 
-export const isAuthenticated: RequestHandler = (request, _response, next) => {
+export const isAuthenticatedMiddleware: RequestHandler = (
+  request,
+  _response,
+  next,
+) => {
   if (request.session?.user) {
     return next();
   }

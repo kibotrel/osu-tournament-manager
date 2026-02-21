@@ -8,7 +8,7 @@ import {
   expressResponseMock,
 } from '#src/tests/express.mocks.js';
 
-import { logHttpRequest } from './logHttpRequest.middleware.js';
+import { logHttpRequestMiddleware } from './logHttpRequest.middleware.js';
 
 vi.mock('#src/dependencies/logger.dependency.js', () => {
   return {
@@ -24,7 +24,7 @@ vi.mock('#src/configs/environment.config.js', () => {
   };
 });
 
-describe('logHttpRequest', () => {
+describe('logHttpRequestMiddleware', () => {
   afterEach(() => {
     vi.clearAllMocks();
   });
@@ -38,7 +38,7 @@ describe('logHttpRequest', () => {
     request.method = 'GET';
     request.url = '/api/v1/test';
 
-    logHttpRequest(request, response, next);
+    logHttpRequestMiddleware(request, response, next);
 
     expect(logger.http).toHaveBeenCalledWith('GET /api/v1/test', {
       requestId: 'test-request-id',
@@ -58,7 +58,7 @@ describe('logHttpRequest', () => {
     request.params = { id: '123' };
     request.query = { search: 'term' };
 
-    logHttpRequest(request, response, next);
+    logHttpRequestMiddleware(request, response, next);
 
     expect(logger.http).toHaveBeenCalledWith('POST /api/v1/test', {
       body: request.body,
@@ -76,7 +76,7 @@ describe('logHttpRequest', () => {
 
     request.url = '/api/v1/public/health';
 
-    logHttpRequest(request, response, next);
+    logHttpRequestMiddleware(request, response, next);
 
     expect(logger.http).not.toHaveBeenCalled();
     expect(next).toHaveBeenCalled();
@@ -90,7 +90,7 @@ describe('logHttpRequest', () => {
     request.url = '/api/v1/authentication/login';
     request.method = 'POST';
 
-    logHttpRequest(request, response, next);
+    logHttpRequestMiddleware(request, response, next);
 
     expect(logger.http).not.toHaveBeenCalled();
     expect(next).toHaveBeenCalled();
@@ -104,7 +104,7 @@ describe('logHttpRequest', () => {
     request.url = '/api/v1/authentication/logout';
     request.method = 'GET';
 
-    logHttpRequest(request, response, next);
+    logHttpRequestMiddleware(request, response, next);
 
     expect(logger.http).not.toHaveBeenCalled();
     expect(next).toHaveBeenCalled();

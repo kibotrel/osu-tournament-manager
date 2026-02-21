@@ -22,7 +22,7 @@ import {
   expressResponseMock,
 } from '#src/tests/express.mocks.js';
 
-import { errorHandler } from './errorHandler.middleware.js';
+import { errorMiddleware } from './errorHandler.middleware.js';
 
 vi.mock('#src/dependencies/logger.dependency.js', () => {
   return {
@@ -44,7 +44,7 @@ vi.mock('#src/queries/cache/cache.delete.queries.js', () => {
   };
 });
 
-describe('errorHandler', () => {
+describe('errorMiddleware', () => {
   afterEach(() => {
     vi.clearAllMocks();
   });
@@ -70,7 +70,7 @@ describe('errorHandler', () => {
       writable: false,
     });
 
-    await errorHandler(error, request, response, next);
+    await errorMiddleware(error, request, response, next);
 
     expect(response.setHeader).toHaveBeenCalledTimes(2);
     expect(response.setHeader).toHaveBeenCalledWith(
@@ -114,7 +114,7 @@ describe('errorHandler', () => {
       writable: false,
     });
 
-    await errorHandler(error, request, response, next);
+    await errorMiddleware(error, request, response, next);
 
     expect(response.setHeader).toHaveBeenCalledTimes(2);
     expect(logger.error).toHaveBeenCalledWith('test', {
@@ -153,7 +153,7 @@ describe('errorHandler', () => {
       writable: false,
     });
 
-    await errorHandler(error, request, response, next);
+    await errorMiddleware(error, request, response, next);
 
     expect(response.setHeader).toHaveBeenCalledTimes(2);
     expect(logger.error).not.toHaveBeenCalled();
@@ -188,7 +188,7 @@ describe('errorHandler', () => {
       writable: false,
     });
 
-    await errorHandler(error, request, response, next);
+    await errorMiddleware(error, request, response, next);
 
     expect(response.setHeader).toHaveBeenCalledTimes(3);
     expect(response.setHeader).toHaveBeenCalledWith(
@@ -229,7 +229,7 @@ describe('errorHandler', () => {
       writable: false,
     });
 
-    await errorHandler(error, request, response, next);
+    await errorMiddleware(error, request, response, next);
 
     expect(response.setHeader).toHaveBeenCalledTimes(2);
     expect(response.status).toHaveBeenCalledWith(
