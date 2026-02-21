@@ -38,6 +38,17 @@ Generally speaking file naming is dictated by the folder where it lives. The pat
 >
 > It applies to every top level folder in `@apps/server`. It allows to easily find files either based on feature (e.g. `login`) or purpose (e.g. `controller`).
 
+### Function Naming
+
+How functions are named is generally dictated by where they are located to help easier identification of purpose. Here are some examples:
+
+| Function Type          | Pattern                  | Examples                                        |
+| ---------------------- | ------------------------ | ----------------------------------------------- |
+| **Service**            | `<actionName>Service`    | `loginWithOsuService`, `getOrCreateUserService` |
+| **Query**              | `<operationName>Query`   | `createUserQuery`, `getMatchByIdQuery`          |
+| **Middleware**         | `<actionName>Middleware` | `sessionMiddleware`, `errorMiddleware`          |
+| **osu! event handler** | `on<Event>Event`         | `onBotConnectedEvent`, `onChannelMessageEvent`  |
+
 ## Data flow
 
 - Data serialization must occur at the service level if needed.
