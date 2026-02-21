@@ -14,7 +14,7 @@ import { setMatchStateInCacheService } from '#src/services/cache/cache.service.j
 import { getMatchStateService } from '#src/services/matches/matches.service.js';
 import { webSocketServer } from '#src/websocketServer.js';
 
-export const onMultiplayerChannelNameUpdated = async ({
+export const onMultiplayerChannelNameUpdatedEvent = async ({
   channel,
   name,
 }: {

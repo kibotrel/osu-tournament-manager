@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from 'vitest';
 
-import { patchMatchByGameMatchId } from '#src/queries/matches/matches.update.queries.js';
+import { patchMatchByGameMatchIdQuery } from '#src/queries/matches/matches.update.queries.js';
 import {
   deleteMatchChatHistoryFromCacheService,
   deleteMatchStateFromCacheService,
@@ -8,14 +8,14 @@ import {
 } from '#src/services/cache/cache.service.js';
 import { webSocketServer } from '#src/websocketServer.js';
 
-import { onMultiplayerChannelClosed } from './bancho.onMultiplayerChannelClosed.event.js';
+import { onMultiplayerChannelClosedEvent } from './bancho.onMultiplayerChannelClosed.event.js';
 
 vi.mock('#src/dependencies/logger.dependency.js', () => {
   return { logger: { debug: vi.fn() } };
 });
 
 vi.mock('#src/queries/matches/matches.update.queries.js', () => {
-  return { patchMatchByGameMatchId: vi.fn() };
+  return { patchMatchByGameMatchIdQuery: vi.fn() };
 });
 
 vi.mock('#src/websocketServer.js', () => {
@@ -30,17 +30,17 @@ vi.mock('#src/services/cache/cache.service.js', () => {
   };
 });
 
-describe('onMultiplayerChannelClosed', () => {
+describe('onMultiplayerChannelClosedEvent', () => {
   it('should delete all match data from cache', async () => {
     const spyPromiseAll = vi.spyOn(Promise, 'all');
 
-    await onMultiplayerChannelClosed({
+    await onMultiplayerChannelClosedEvent({
       channel: '#mp_1',
     });
 
     expect(deleteMatchChatHistoryFromCacheService).toHaveBeenCalledWith(1);
     expect(deleteMatchStateFromCacheService).toHaveBeenCalledWith(1);
-    expect(patchMatchByGameMatchId).toHaveBeenCalledWith(1, {
+    expect(patchMatchByGameMatchIdQuery).toHaveBeenCalledWith(1, {
       endsAt: expect.any(Date),
     });
     expect(removeMatchFromCachedSetService).toHaveBeenCalledWith('#mp_1');

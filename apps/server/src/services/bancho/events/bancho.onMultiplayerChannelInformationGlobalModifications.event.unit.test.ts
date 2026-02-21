@@ -6,7 +6,7 @@ import { setMatchStateInCacheService } from '#src/services/cache/cache.service.j
 import { getMatchStateService } from '#src/services/matches/matches.service.js';
 import { webSocketServer } from '#src/websocketServer.js';
 
-import { onMultiplayerChannelInformationGlobalModifications } from './bancho.onMultiplayerChannelInformationGlobalModifications.event.js';
+import { onMultiplayerChannelInformationGlobalModificationsEvent } from './bancho.onMultiplayerChannelInformationGlobalModifications.event.js';
 
 vi.mock('#src/dependencies/logger.dependency.js', () => {
   return { logger: { debug: vi.fn() } };
@@ -42,7 +42,7 @@ const newMatchState: BanchoLobbyState = {
   ],
 };
 
-describe('onMultiplayerChannelInformationGlobalModifications', () => {
+describe('onMultiplayerChannelInformationGlobalModificationsEvent', () => {
   it('should update match state in cache', async () => {
     const setMatchStateInCacheServiceMock = vi.mocked(
       setMatchStateInCacheService,
@@ -51,7 +51,7 @@ describe('onMultiplayerChannelInformationGlobalModifications', () => {
 
     getMatchStateServiceMock.mockResolvedValueOnce(mockOldMatchState);
 
-    await onMultiplayerChannelInformationGlobalModifications({
+    await onMultiplayerChannelInformationGlobalModificationsEvent({
       channel: '#mp_1',
       modifications: [
         OsuBeatmapModification.Hidden,
@@ -74,7 +74,7 @@ describe('onMultiplayerChannelInformationGlobalModifications', () => {
 
     getMatchStateServiceMock.mockResolvedValueOnce(mockOldMatchState);
 
-    await onMultiplayerChannelInformationGlobalModifications({
+    await onMultiplayerChannelInformationGlobalModificationsEvent({
       channel: '#mp_1',
       modifications: [
         OsuBeatmapModification.Hidden,
@@ -112,7 +112,7 @@ describe('onMultiplayerChannelInformationGlobalModifications', () => {
 
     getMatchStateServiceMock.mockResolvedValueOnce(mockOldMatchState);
 
-    await onMultiplayerChannelInformationGlobalModifications({
+    await onMultiplayerChannelInformationGlobalModificationsEvent({
       channel: '#mp_1',
       modifications: [
         OsuBeatmapModification.Hidden,
@@ -136,7 +136,7 @@ describe('onMultiplayerChannelInformationGlobalModifications', () => {
 
     getMatchStateServiceMock.mockResolvedValueOnce(mockOldMatchState);
 
-    await onMultiplayerChannelInformationGlobalModifications({
+    await onMultiplayerChannelInformationGlobalModificationsEvent({
       channel: '#mp_1',
       modifications: [
         OsuBeatmapModification.Hidden,

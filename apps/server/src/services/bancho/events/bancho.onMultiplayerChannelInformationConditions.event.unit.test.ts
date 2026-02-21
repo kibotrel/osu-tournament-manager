@@ -6,7 +6,7 @@ import { setMatchStateInCacheService } from '#src/services/cache/cache.service.j
 import { getMatchStateService } from '#src/services/matches/matches.service.js';
 import { webSocketServer } from '#src/websocketServer.js';
 
-import { onMultiplayerChannelInformationConditions } from './bancho.onMultiplayerChannelInformationConditions.event.js';
+import { onMultiplayerChannelInformationConditionsEvent } from './bancho.onMultiplayerChannelInformationConditions.event.js';
 
 vi.mock('#src/dependencies/logger.dependency.js', () => {
   return { logger: { debug: vi.fn() } };
@@ -57,7 +57,7 @@ const newMatchState: BanchoLobbyState = {
   winCondition: BanchoWinCondition.Accuracy,
 };
 
-describe('onMultiplayerChannelInformationConditions', () => {
+describe('onMultiplayerChannelInformationConditionsEvent', () => {
   it('should update match state in cache', async () => {
     const setMatchStateInCacheServiceMock = vi.mocked(
       setMatchStateInCacheService,
@@ -66,7 +66,7 @@ describe('onMultiplayerChannelInformationConditions', () => {
 
     getMatchStateServiceMock.mockResolvedValueOnce(mockOldMatchState);
 
-    await onMultiplayerChannelInformationConditions({
+    await onMultiplayerChannelInformationConditionsEvent({
       channel: '#mp_1',
       teamMode: BanchoTeamMode.TeamVs,
       winCondition: BanchoWinCondition.Accuracy,
@@ -84,7 +84,7 @@ describe('onMultiplayerChannelInformationConditions', () => {
       webSocketServer.broadcastMessageToSubscribers,
     );
 
-    await onMultiplayerChannelInformationConditions({
+    await onMultiplayerChannelInformationConditionsEvent({
       channel: '#mp_1',
       teamMode: BanchoTeamMode.TeamVs,
       winCondition: BanchoWinCondition.Accuracy,

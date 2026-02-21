@@ -5,7 +5,7 @@ import { setMatchStateInCacheService } from '#src/services/cache/cache.service.j
 import { getMatchStateService } from '#src/services/matches/matches.service.js';
 import { webSocketServer } from '#src/websocketServer.js';
 
-import { onMultiplayerPayerLeftRoom } from './bancho.onMultiplayerPayerLeftRoom.event.js';
+import { onMultiplayerPayerLeftRoomEvent } from './bancho.onMultiplayerPayerLeftRoom.event.js';
 
 vi.mock('#src/dependencies/logger.dependency.js', () => {
   return { logger: { debug: vi.fn() } };
@@ -64,7 +64,7 @@ const newMatchState: BanchoLobbyState = {
   globalModifications: [],
 };
 
-describe('onMultiplayerPayerLeftRoom', () => {
+describe('onMultiplayerPayerLeftRoomEvent', () => {
   it('should update match state in cache', async () => {
     const setMatchStateInCacheServiceMock = vi.mocked(
       setMatchStateInCacheService,
@@ -73,7 +73,7 @@ describe('onMultiplayerPayerLeftRoom', () => {
 
     getMatchStateServiceMock.mockResolvedValueOnce(mockOldMatchState);
 
-    await onMultiplayerPayerLeftRoom({
+    await onMultiplayerPayerLeftRoomEvent({
       channel: '#mp_1',
       user: 'player1',
     });
@@ -93,7 +93,7 @@ describe('onMultiplayerPayerLeftRoom', () => {
 
     getMatchStateServiceMock.mockResolvedValueOnce(mockOldMatchState);
 
-    await onMultiplayerPayerLeftRoom({
+    await onMultiplayerPayerLeftRoomEvent({
       channel: '#mp_1',
       user: 'player1',
     });

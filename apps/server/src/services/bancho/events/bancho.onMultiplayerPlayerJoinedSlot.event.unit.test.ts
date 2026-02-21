@@ -5,7 +5,7 @@ import { setMatchStateInCacheService } from '#src/services/cache/cache.service.j
 import { getMatchStateService } from '#src/services/matches/matches.service.js';
 import { webSocketServer } from '#src/websocketServer.js';
 
-import { onMultiplayerPlayerJoinedSlot } from './bancho.onMultiplayerPlayerJoinedSlot.event.js';
+import { onMultiplayerPlayerJoinedSlotEvent } from './bancho.onMultiplayerPlayerJoinedSlot.event.js';
 
 vi.mock('#src/dependencies/logger.dependency.js', () => {
   return { logger: { debug: vi.fn() } };
@@ -64,7 +64,7 @@ const newMatchState: BanchoLobbyState = {
   globalModifications: [],
 };
 
-describe('onMultiplayerPlayerJoinedSlot', () => {
+describe('onMultiplayerPlayerJoinedSlotEvent', () => {
   it('should update match state in cache', async () => {
     const setMatchStateInCacheServiceMock = vi.mocked(
       setMatchStateInCacheService,
@@ -73,7 +73,7 @@ describe('onMultiplayerPlayerJoinedSlot', () => {
 
     getMatchStateServiceMock.mockResolvedValueOnce(mockOldMatchState);
 
-    await onMultiplayerPlayerJoinedSlot({
+    await onMultiplayerPlayerJoinedSlotEvent({
       channel: '#mp_1',
       slotNumber: 1,
       user: 'player2',
@@ -93,7 +93,7 @@ describe('onMultiplayerPlayerJoinedSlot', () => {
     const getMatchStateServiceMock = vi.mocked(getMatchStateService);
 
     getMatchStateServiceMock.mockResolvedValueOnce(mockOldMatchState);
-    await onMultiplayerPlayerJoinedSlot({
+    await onMultiplayerPlayerJoinedSlotEvent({
       channel: '#mp_1',
       slotNumber: 1,
       user: 'player2',

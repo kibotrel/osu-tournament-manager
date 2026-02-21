@@ -5,7 +5,7 @@ import { afterEach, describe, expect, it, vi } from 'vitest';
 import { addMatchMessageToCacheService } from '#src/services/cache/cache.service.js';
 import { webSocketServer } from '#src/websocketServer.js';
 
-import { onChannelMessage } from './bancho.onChannelMessage.event.js';
+import { onChannelMessageEvent } from './bancho.onChannelMessage.event.js';
 
 vi.mock('#src/dependencies/logger.dependency.js', () => {
   return { logger: { debug: vi.fn() } };
@@ -25,7 +25,7 @@ const message: WebSocketMessage<WebSocketMatchMessage> = {
   topic: 'matches:1:chat-messages',
 };
 
-describe('onChannelMessage', () => {
+describe('onChannelMessageEvent', () => {
   afterEach(() => {
     vi.clearAllMocks();
   });
@@ -33,7 +33,7 @@ describe('onChannelMessage', () => {
   it('should add the message to the corresponding match history in cache', async () => {
     vi.spyOn(Date, 'now').mockReturnValueOnce(1);
 
-    await onChannelMessage({
+    await onChannelMessageEvent({
       channel: '#mp_1',
       message: 'test message',
       user: 'user',
@@ -50,7 +50,7 @@ describe('onChannelMessage', () => {
       webSocketServer.broadcastMessageToSubscribers,
     );
 
-    await onChannelMessage({
+    await onChannelMessageEvent({
       channel: '#mp_2',
       message: 'test message',
       user: 'user',
@@ -75,7 +75,7 @@ describe('onChannelMessage', () => {
       addMatchMessageToCacheService,
     );
 
-    await onChannelMessage({
+    await onChannelMessageEvent({
       channel: BanchoPublicChannel.Lobby,
       message: 'test message',
       user: 'user',
@@ -89,7 +89,7 @@ describe('onChannelMessage', () => {
       addMatchMessageToCacheService,
     );
 
-    await onChannelMessage({
+    await onChannelMessageEvent({
       channel: 'direct_message',
       message: 'test message',
       user: 'user',

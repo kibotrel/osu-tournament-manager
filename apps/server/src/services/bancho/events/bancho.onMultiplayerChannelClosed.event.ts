@@ -5,7 +5,7 @@ import {
 } from '@packages/shared';
 
 import { logger } from '#src/dependencies/logger.dependency.js';
-import { patchMatchByGameMatchId } from '#src/queries/matches/matches.update.queries.js';
+import { patchMatchByGameMatchIdQuery } from '#src/queries/matches/matches.update.queries.js';
 import {
   deleteMatchChatHistoryFromCacheService,
   deleteMatchStateFromCacheService,
@@ -13,7 +13,7 @@ import {
 } from '#src/services/cache/cache.service.js';
 import { webSocketServer } from '#src/websocketServer.js';
 
-export const onMultiplayerChannelClosed = async ({
+export const onMultiplayerChannelClosedEvent = async ({
   channel,
 }: {
   channel: string;
@@ -24,7 +24,7 @@ export const onMultiplayerChannelClosed = async ({
   const promises = [
     deleteMatchChatHistoryFromCacheService(channelId),
     deleteMatchStateFromCacheService(channelId),
-    patchMatchByGameMatchId(channelId, { endsAt: new Date() }),
+    patchMatchByGameMatchIdQuery(channelId, { endsAt: new Date() }),
     removeMatchFromCachedSetService(channel),
     webSocketServer.disconnectAllTopicSubscribers(
       `${WebSocketChannel.Matches}:${channelId}:${WebSocketChannelMatchesEvent.ChatMessages}`,

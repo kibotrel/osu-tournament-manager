@@ -5,7 +5,7 @@ import { setMatchStateInCacheService } from '#src/services/cache/cache.service.j
 import { getMatchStateService } from '#src/services/matches/matches.service.js';
 import { webSocketServer } from '#src/websocketServer.js';
 
-import { onMultiplayerChannelNameUpdated } from './bancho.onMultiplayerChannelNameUpdated.event.js';
+import { onMultiplayerChannelNameUpdatedEvent } from './bancho.onMultiplayerChannelNameUpdated.event.js';
 
 vi.mock('#src/dependencies/logger.dependency.js', () => {
   return { logger: { debug: vi.fn() } };
@@ -40,7 +40,7 @@ const newMatchState: BanchoLobbyState = {
   name: 'New match name',
 };
 
-describe('onMultiplayerChannelNameUpdated', () => {
+describe('onMultiplayerChannelNameUpdatedEvent', () => {
   it('should update match state in cache', async () => {
     const setMatchStateInCacheServiceMock = vi.mocked(
       setMatchStateInCacheService,
@@ -49,7 +49,7 @@ describe('onMultiplayerChannelNameUpdated', () => {
 
     getMatchStateServiceMock.mockResolvedValueOnce(mockOldMatchState);
 
-    await onMultiplayerChannelNameUpdated({
+    await onMultiplayerChannelNameUpdatedEvent({
       channel: '#mp_1',
       name: 'New match name',
     });
@@ -66,7 +66,7 @@ describe('onMultiplayerChannelNameUpdated', () => {
       webSocketServer.broadcastMessageToSubscribers,
     );
 
-    await onMultiplayerChannelNameUpdated({
+    await onMultiplayerChannelNameUpdatedEvent({
       channel: '#mp_1',
       name: 'New match name',
     });

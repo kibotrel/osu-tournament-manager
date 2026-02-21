@@ -5,7 +5,7 @@ import { setMatchStateInCacheService } from '#src/services/cache/cache.service.j
 import { getMatchStateService } from '#src/services/matches/matches.service.js';
 import { webSocketServer } from '#src/websocketServer.js';
 
-import { onMultiplayerChannelHostCleared } from './bancho.onMultiplayerChannelHostCleared.event.js';
+import { onMultiplayerChannelHostClearedEvent } from './bancho.onMultiplayerChannelHostCleared.event.js';
 
 vi.mock('#src/dependencies/logger.dependency.js', () => {
   return { logger: { debug: vi.fn() } };
@@ -64,7 +64,7 @@ const newMatchState: BanchoLobbyState = {
   globalModifications: [],
 };
 
-describe('onMultiplayerChannelHostCleared', () => {
+describe('onMultiplayerChannelHostClearedEvent', () => {
   it('should update match state in cache', async () => {
     const setMatchStateInCacheServiceMock = vi.mocked(
       setMatchStateInCacheService,
@@ -73,7 +73,7 @@ describe('onMultiplayerChannelHostCleared', () => {
 
     getMatchStateServiceMock.mockResolvedValueOnce(mockOldMatchState);
 
-    await onMultiplayerChannelHostCleared({
+    await onMultiplayerChannelHostClearedEvent({
       channel: '#mp_1',
     });
 
@@ -92,7 +92,7 @@ describe('onMultiplayerChannelHostCleared', () => {
 
     getMatchStateServiceMock.mockResolvedValueOnce(mockOldMatchState);
 
-    await onMultiplayerChannelHostCleared({
+    await onMultiplayerChannelHostClearedEvent({
       channel: '#mp_1',
     });
 

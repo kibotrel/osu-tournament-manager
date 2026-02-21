@@ -6,7 +6,7 @@ import { setMatchStateInCacheService } from '#src/services/cache/cache.service.j
 import { getMatchStateService } from '#src/services/matches/matches.service.js';
 import { webSocketServer } from '#src/websocketServer.js';
 
-import { onMultiplayerPlayerMovedSlot } from './bancho.onMultiplayerPlayerMovedSlot.event.js';
+import { onMultiplayerPlayerMovedSlotEvent } from './bancho.onMultiplayerPlayerMovedSlot.event.js';
 
 vi.mock('#src/dependencies/logger.dependency.js', () => {
   return { logger: { debug: vi.fn(), warn: vi.fn() } };
@@ -65,7 +65,7 @@ const newMatchState: BanchoLobbyState = {
   globalModifications: [],
 };
 
-describe('onMultiplayerPlayerMovedSlot', () => {
+describe('onMultiplayerPlayerMovedSlotEvent', () => {
   afterEach(() => {
     vi.clearAllMocks();
   });
@@ -78,7 +78,7 @@ describe('onMultiplayerPlayerMovedSlot', () => {
 
     getMatchStateServiceMock.mockResolvedValueOnce(mockOldMatchState);
 
-    await onMultiplayerPlayerMovedSlot({
+    await onMultiplayerPlayerMovedSlotEvent({
       channel: '#mp_1',
       slotNumber: 2,
       user: 'player1',
@@ -99,7 +99,7 @@ describe('onMultiplayerPlayerMovedSlot', () => {
 
     getMatchStateServiceMock.mockResolvedValueOnce(mockOldMatchState);
 
-    await onMultiplayerPlayerMovedSlot({
+    await onMultiplayerPlayerMovedSlotEvent({
       channel: '#mp_1',
       slotNumber: 2,
       user: 'player1',
@@ -131,7 +131,7 @@ describe('onMultiplayerPlayerMovedSlot', () => {
 
     getMatchStateServiceMock.mockResolvedValueOnce(mockOldMatchState);
 
-    await onMultiplayerPlayerMovedSlot({
+    await onMultiplayerPlayerMovedSlotEvent({
       channel: '#mp_1',
       slotNumber: 2,
       user: 'nonexistent_player',

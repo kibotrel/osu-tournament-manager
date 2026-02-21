@@ -5,7 +5,7 @@ import { setMatchStateInCacheService } from '#src/services/cache/cache.service.j
 import { getMatchStateService } from '#src/services/matches/matches.service.js';
 import { webSocketServer } from '#src/websocketServer.js';
 
-import { onMultiplayerChannelInformationIdentity } from './bancho.onMultiplayerChannelInformationIdentity.event.js';
+import { onMultiplayerChannelInformationIdentityEvent } from './bancho.onMultiplayerChannelInformationIdentity.event.js';
 
 vi.mock('#src/dependencies/logger.dependency.js', () => {
   return { logger: { debug: vi.fn() } };
@@ -42,7 +42,7 @@ const newMatchState: BanchoLobbyState = {
   historyUrl: 'new-history-url',
 };
 
-describe('onMultiplayerChannelInformationIdentity', () => {
+describe('onMultiplayerChannelInformationIdentityEvent', () => {
   it('should update match state in cache', async () => {
     const setMatchStateInCacheServiceMock = vi.mocked(
       setMatchStateInCacheService,
@@ -51,7 +51,7 @@ describe('onMultiplayerChannelInformationIdentity', () => {
 
     getMatchStateServiceMock.mockResolvedValueOnce(mockOldMatchState);
 
-    await onMultiplayerChannelInformationIdentity({
+    await onMultiplayerChannelInformationIdentityEvent({
       channel: '#mp_1',
       historyUrl: 'new-history-url',
       name: 'New match name',
@@ -72,7 +72,7 @@ describe('onMultiplayerChannelInformationIdentity', () => {
 
     getMatchStateServiceMock.mockResolvedValueOnce(mockOldMatchState);
 
-    await onMultiplayerChannelInformationIdentity({
+    await onMultiplayerChannelInformationIdentityEvent({
       channel: '#mp_1',
       historyUrl: 'new-history-url',
       name: 'New match name',

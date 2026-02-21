@@ -10,7 +10,7 @@ import { logger } from '#src/dependencies/logger.dependency.js';
 import { addMatchMessageToCacheService } from '#src/services/cache/cache.service.js';
 import { webSocketServer } from '#src/websocketServer.js';
 
-export const onChannelMessage = async ({
+export const onChannelMessageEvent = async ({
   channel,
   message,
   user,

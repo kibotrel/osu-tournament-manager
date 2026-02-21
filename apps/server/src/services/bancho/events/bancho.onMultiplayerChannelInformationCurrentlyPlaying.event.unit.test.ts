@@ -5,7 +5,7 @@ import { setMatchStateInCacheService } from '#src/services/cache/cache.service.j
 import { getMatchStateService } from '#src/services/matches/matches.service.js';
 import { webSocketServer } from '#src/websocketServer.js';
 
-import { onMultiplayerChannelInformationCurrentlyPlaying } from './bancho.onMultiplayerChannelInformationCurrentlyPlaying.event.js';
+import { onMultiplayerChannelInformationCurrentlyPlayingEvent } from './bancho.onMultiplayerChannelInformationCurrentlyPlaying.event.js';
 
 vi.mock('#src/dependencies/logger.dependency.js', () => {
   return { logger: { debug: vi.fn() } };
@@ -46,7 +46,7 @@ const newMatchState: BanchoLobbyState = {
   },
 };
 
-describe('onMultiplayerChannelInformationCurrentlyPlaying', () => {
+describe('onMultiplayerChannelInformationCurrentlyPlayingEvent', () => {
   it('should update match state in cache', async () => {
     const setMatchStateInCacheServiceMock = vi.mocked(
       setMatchStateInCacheService,
@@ -55,7 +55,7 @@ describe('onMultiplayerChannelInformationCurrentlyPlaying', () => {
 
     getMatchStateServiceMock.mockResolvedValueOnce(mockOldMatchState);
 
-    await onMultiplayerChannelInformationCurrentlyPlaying({
+    await onMultiplayerChannelInformationCurrentlyPlayingEvent({
       beatmap: 'Glamour Of The Kill - A Hope In Hell',
       channel: '#mp_1',
       url: 'https://osu.ppy.sh/beatmapsets/1381917#mania/2855263',
@@ -76,7 +76,7 @@ describe('onMultiplayerChannelInformationCurrentlyPlaying', () => {
 
     getMatchStateServiceMock.mockResolvedValueOnce(mockOldMatchState);
 
-    await onMultiplayerChannelInformationCurrentlyPlaying({
+    await onMultiplayerChannelInformationCurrentlyPlayingEvent({
       beatmap: 'Glamour Of The Kill - A Hope In Hell',
       channel: '#mp_1',
       url: 'https://osu.ppy.sh/beatmapsets/1381917#mania/2855263',
