@@ -1,8 +1,8 @@
 import type { transport as Transport, Logger as WinstonLogger } from 'winston';
 import { createLogger } from 'winston';
 
-import { consoleTransport } from '#src/transports/consoleTransport.js';
-import type { LogLevel, LogMetadata } from '#src/types/loggerTypes.js';
+import { consoleTransport } from '#src/transports/console.transport.js';
+import type { LogLevel, LogMetadata } from '#src/types/logger.types.js';
 
 const enum Events {
   FINISH = 'finish',

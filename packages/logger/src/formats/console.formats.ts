@@ -4,7 +4,7 @@ import chalk from 'chalk';
 import type { Logform } from 'winston';
 import { format } from 'winston';
 
-import type { LogMetadata } from '#src/loggerExport.js';
+import type { LogMetadata } from '#src/logger.export.js';
 
 const { colorize, json, printf, timestamp } = format;
 
