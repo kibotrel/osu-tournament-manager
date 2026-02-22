@@ -10,28 +10,28 @@ openapi: 3.0.0
 paths:
   /authentication/login:
     post:
-      $ref: paths/v1/authentication/login.openapi.yaml
+      $ref: paths/v1/authentication/authentication.login.openapi.yaml
   /authentication/logout:
     post:
-      $ref: paths/v1/authentication/logout.openapi.yaml
+      $ref: paths/v1/authentication/authentication.logout.openapi.yaml
   /matches:
     post:
-      $ref: paths/v1/matches/createMatch.openapi.yaml
+      $ref: paths/v1/matches/matches.create.openapi.yaml
   /matches/{gameMatchId}:
     get:
-      $ref: paths/v1/matches/getMatch.openapi.yaml
+      $ref: paths/v1/matches/matches.get.openapi.yaml
   /matches/{gameMatchId}/chat-history:
     get:
-      $ref: paths/v1/matches/getMatchChatHistory.openapi.yaml
+      $ref: paths/v1/matches/matches.getChatHistory.openapi.yaml
   /matches/{gameMatchId}/close:
     post:
-      $ref: paths/v1/matches/closeMatch.openapi.yaml
+      $ref: paths/v1/matches/matches.close.openapi.yaml
   /matches/{gameMatchId}/state:
     get:
-      $ref: paths/v1/matches/getMatchState.openapi.yaml
+      $ref: paths/v1/matches/matches.getState.openapi.yaml
   /public/health:
     get:
-      $ref: paths/v1/public/health.openapi.yaml
+      $ref: paths/v1/public/public.health.openapi.yaml
 
 servers:
   - url: https://{environment}.osu-tournament-manager.app/api/{version}

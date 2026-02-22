@@ -6,12 +6,12 @@ import {
 } from '@packages/bancho-client';
 
 import { createExpressApplication } from '#src/application.js';
-import type { WebSocketServer } from '#src/classes/webSocketServerClass.js';
-import { environmentConfig } from '#src/configs/environmentConfig.js';
-import { cache } from '#src/dependencies/cacheDependency.js';
-import { postgresClient } from '#src/dependencies/databaseDependency.js';
-import { banchoClient } from '#src/dependencies/ircClientDependency.js';
-import { logger } from '#src/dependencies/loggerDependency.js';
+import type { WebSocketServer } from '#src/classes/webSocketServer.class.js';
+import { environmentConfig } from '#src/configs/environment.config.js';
+import { cache } from '#src/dependencies/cache.dependency.js';
+import { postgresClient } from '#src/dependencies/database.dependency.js';
+import { banchoClient } from '#src/dependencies/ircClient.dependency.js';
+import { logger } from '#src/dependencies/logger.dependency.js';
 
 export const gracefulShutdown = async (
   httpServer: Server,

@@ -2,13 +2,13 @@ import type { Express } from 'express';
 import express from 'express';
 import helmet from 'helmet';
 
-import { errorHandler } from '#src/middlewares/errorHandlerMiddleware.js';
-import { logHttpRequest } from '#src/middlewares/logHttpRequestMiddleware.js';
-import { setRequestId } from '#src/middlewares/requestIdentityMiddleware.js';
-import { resourceNotFoundHandler } from '#src/middlewares/resourceNotFoundMiddleware.js';
-import { session } from '#src/middlewares/sessionMiddleware.js';
-import { specificationValidator } from '#src/middlewares/specificationValidatorMiddleware.js';
-import { apiRouter } from '#src/routes/apiRouter.js';
+import { errorMiddleware } from '#src/middlewares/errorHandler.middleware.js';
+import { logHttpRequestMiddleware } from '#src/middlewares/logHttpRequest.middleware.js';
+import { setRequestIdMiddleware } from '#src/middlewares/requestIdentity.middleware.js';
+import { resourceNotFoundMiddleware } from '#src/middlewares/resourceNotFound.middleware.js';
+import { sessionMiddleware } from '#src/middlewares/session.middleware.js';
+import { specificationValidatorMiddleware } from '#src/middlewares/specificationValidator.middleware.js';
+import { apiRouter } from '#src/routes/api.router.js';
 
 export const createExpressApplication = (): Express => {
   const application = express();
@@ -17,15 +17,15 @@ export const createExpressApplication = (): Express => {
   application.set('trust proxy', 1);
 
   application.use(express.json());
-  application.use(setRequestId);
-  application.use(logHttpRequest);
-  application.use(session);
+  application.use(setRequestIdMiddleware);
+  application.use(logHttpRequestMiddleware);
+  application.use(sessionMiddleware);
 
   application.use('/api', apiRouter);
-  application.use(specificationValidator);
+  application.use(specificationValidatorMiddleware);
 
-  application.use(resourceNotFoundHandler);
-  application.use(errorHandler);
+  application.use(resourceNotFoundMiddleware);
+  application.use(errorMiddleware);
 
   return application;
 };

@@ -11,7 +11,7 @@
   "imports": {
     "#src/*": "./src/*"
   },
-  "main": "dist/src/loggerExport.js",
+  "main": "dist/src/logger.export.js",
   "name": "@packages/logger",
   "private": true,
   "scripts": {
@@ -22,5 +22,5 @@
     "type-check": "tsc --noEmit"
   },
   "type": "module",
-  "types": "dist/src/loggerExport.d.ts"
+  "types": "dist/src/logger.export.d.ts"
 }

@@ -163,7 +163,7 @@ services:
         condition: service_healthy
     healthcheck:
       interval: 250ms
-      retries: 10
+      retries: 25
       test: ["CMD", "pnpm", "healthcheck"]
       timeout: 1s
     networks:
