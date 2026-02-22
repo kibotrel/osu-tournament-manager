@@ -32,7 +32,6 @@ export const formatTimestamp = (timestamp: number): string => {
     hour12: false,
     minute: '2-digit',
     second: '2-digit',
-    // TODO: Add Timezone support based on https://timezonedb.com/time-zones
     timeZone: 'UTC',
   }).format(timestamp);
 };
