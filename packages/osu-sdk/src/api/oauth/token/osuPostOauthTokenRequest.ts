@@ -1,7 +1,6 @@
 import { HttpError, postRequest } from '@packages/shared';
 
-import { baseUrl } from '#src/constants/osuConstants.js';
-import { OsuOauthGrantType } from '#src/types/osuTypes.js';
+import { BASE_URL, OsuOauthGrantType } from '#src/constants/osu.constants.js';
 
 export interface OsuPostOauthTokenRequestBody {
   clientId: number;
@@ -46,7 +45,7 @@ export const osuPostOauthToken = async (
     InternalOsuPostOauthTokenResponseBody
   >({
     baseApiEndpoint: '',
-    baseUrl,
+    baseUrl: BASE_URL,
     apiVersion: '',
     endpoint: '/oauth/token',
     payload: {
@@ -110,7 +109,7 @@ export const osuPostOauthTokenRefresh = async (
     InternalOsuPostOauthTokenRefreshResponseBody
   >({
     baseApiEndpoint: '',
-    baseUrl,
+    baseUrl: BASE_URL,
     apiVersion: '',
     endpoint: '/oauth/token',
     payload: {

@@ -1,7 +1,7 @@
 import type { NothingRecord } from '@packages/shared';
 import { HttpError, getRequest } from '@packages/shared';
 
-import { baseUrl } from '#src/constants/osuConstants.js';
+import { BASE_URL } from '#src/constants/osu.constants.js';
 
 export interface OsuGetMeRequestQuery {
   token: string;
@@ -34,7 +34,7 @@ export const osuGetMe = async (
     InternalOsuGetMeRequestQuery,
     InternalOsuGetMeResponseBody
   >({
-    baseUrl,
+    baseUrl: BASE_URL,
     endpoint: '/me',
     payload: {},
     token,

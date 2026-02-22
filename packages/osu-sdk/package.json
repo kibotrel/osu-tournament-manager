@@ -8,7 +8,7 @@
   "imports": {
     "#src/*": "./src/*"
   },
-  "main": "dist/src/osuSdkExport.js",
+  "main": "dist/src/osuSdk.export.js",
   "name": "@packages/osu-sdk",
   "private": true,
   "scripts": {
@@ -19,5 +19,5 @@
     "type-check": "tsc --noEmit"
   },
   "type": "module",
-  "types": "dist/src/osuSdkExport.d.ts"
+  "types": "dist/src/osuSdk.export.d.ts"
 }
