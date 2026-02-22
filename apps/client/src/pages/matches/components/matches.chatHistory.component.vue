@@ -87,7 +87,7 @@ import BaseCaption from '#src/components/base/caption.base.vue';
 import BaseInput from '#src/components/base/input.base.vue';
 import LoadingIcon from '#src/components/icons/loading.icon.vue';
 import PaperAirplaneIcon from '#src/components/icons/paperAirplane.icon.vue';
-import { useScroll } from '#src/composables/useScrollBehavior.composable.js';
+import { useScrollBehavior } from '#src/composables/useScrollBehavior.composable.js';
 import { useUserStore } from '#src/stores/user.store.js';
 import { defineWebsocketStore } from '#src/stores/webSocket.store.js';
 
@@ -95,9 +95,10 @@ const route = useRoute();
 const matchId = Number(route.params.gameMatchId);
 const { data: cacheHistory, isLoading } = useGetMatchChatHistory(matchId);
 const chatHistoryDiv = ref<HTMLElement | null>(null);
-const { isAtBottom, onScroll, scrollToBottom } = useScroll(chatHistoryDiv, {
-  isInitiallyAtBottom: true,
-});
+const { isAtBottom, onScroll, scrollToBottom } = useScrollBehavior(
+  chatHistoryDiv,
+  { isInitiallyAtBottom: true },
+);
 const { user } = useUserStore();
 const useWebSocketStore = defineWebsocketStore<
   WebSocketMatchMessage,

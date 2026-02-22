@@ -1,7 +1,7 @@
 import type { Ref } from 'vue';
 import { nextTick, ref } from 'vue';
 
-export const useScroll = (
+export const useScrollBehavior = (
   target: Ref<HTMLElement | null>,
   options: { isInitiallyAtBottom: boolean },
 ) => {
