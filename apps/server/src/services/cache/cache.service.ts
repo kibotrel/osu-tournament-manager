@@ -1,4 +1,4 @@
-import type { BanchoLobbyState } from '@packages/shared/dist/src/types/banchoTypes.js';
+import type { BanchoLobbyState } from '@packages/shared';
 
 import {
   CacheExpiry,
