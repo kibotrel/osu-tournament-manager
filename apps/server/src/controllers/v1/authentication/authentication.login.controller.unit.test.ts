@@ -1,4 +1,4 @@
-import type { OsuPostOauthTokenResponseBody } from '@packages/osu-sdk';
+import type { OsuPostOauthTokenQueryResponseBody } from '@packages/osu-sdk';
 import {
   HttpStatusCode,
   type LoginRequestBody,
@@ -56,7 +56,7 @@ describe('loginController', () => {
       name: 'TestUser',
       updatedAt: new Date(),
     } as const;
-    const bearer: OsuPostOauthTokenResponseBody = {
+    const bearer: OsuPostOauthTokenQueryResponseBody = {
       expiryTimestamp: Date.now(),
       refreshToken: 'test-refresh-token',
       token: 'test-access-token',
@@ -102,7 +102,7 @@ describe('loginController', () => {
       name: 'TestUser',
       updatedAt: new Date(),
     } as const;
-    const bearer: OsuPostOauthTokenResponseBody = {
+    const bearer: OsuPostOauthTokenQueryResponseBody = {
       expiryTimestamp: Date.now(),
       refreshToken: 'test-refresh-token',
       token: 'test-access-token',

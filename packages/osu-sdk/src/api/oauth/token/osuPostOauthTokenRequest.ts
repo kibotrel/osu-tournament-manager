@@ -2,20 +2,20 @@ import { HttpError, postRequest } from '@packages/shared';
 
 import { BASE_URL, OsuOauthGrantType } from '#src/constants/osu.constants.js';
 
-export interface OsuPostOauthTokenRequestBody {
+export interface OsuPostOauthTokenQueryRequestBody {
   clientId: number;
   clientSecret: string;
   authenticationCode: string;
   redirectUri: string;
 }
 
-export interface OsuPostOauthTokenResponseBody {
+export interface OsuPostOauthTokenQueryResponseBody {
   expiryTimestamp: number;
   refreshToken: string;
   token: string;
 }
 
-interface InternalOsuPostOauthTokenRequestBody {
+interface InternalOsuPostOauthTokenQueryRequestBody {
   client_id: number;
   client_secret: string;
   code: string;
@@ -23,7 +23,7 @@ interface InternalOsuPostOauthTokenRequestBody {
   redirect_uri: string;
 }
 
-interface InternalOsuPostOauthTokenResponseBody {
+interface InternalOsuPostOauthTokenQueryResponseBody {
   access_token: string;
   expires_in: number;
   refresh_token: string;
@@ -36,13 +36,13 @@ interface InternalOsuPostOauthTokenResponseBody {
  * See {@link https://osu.ppy.sh/docs/index.html#client-credentials-grant | Client Credentials Grant}
  * for more information.
  */
-export const osuPostOauthToken = async (
-  options: OsuPostOauthTokenRequestBody,
-): Promise<OsuPostOauthTokenResponseBody> => {
+export const osuPostOauthTokenQuery = async (
+  options: OsuPostOauthTokenQueryRequestBody,
+): Promise<OsuPostOauthTokenQueryResponseBody> => {
   const { clientId, clientSecret, authenticationCode, redirectUri } = options;
   const response = await postRequest<
-    InternalOsuPostOauthTokenRequestBody,
-    InternalOsuPostOauthTokenResponseBody
+    InternalOsuPostOauthTokenQueryRequestBody,
+    InternalOsuPostOauthTokenQueryResponseBody
   >({
     baseApiEndpoint: '',
     baseUrl: BASE_URL,
@@ -75,24 +75,24 @@ export const osuPostOauthToken = async (
   };
 };
 
-export interface OsuPostOauthTokenRefreshRequestBody {
+export interface OsuPostOauthTokenRefreshQueryRequestBody {
   clientId: number;
   clientSecret: string;
   refreshToken: string;
 }
 
-export type OsuPostOauthTokenRefreshResponseBody =
-  OsuPostOauthTokenResponseBody;
+export type OsuPostOauthTokenRefreshQueryResponseBody =
+  OsuPostOauthTokenQueryResponseBody;
 
-interface InternalOsuPostOauthTokenRefreshRequestBody {
+interface InternalOsuPostOauthTokenRefreshQueryRequestBody {
   client_id: number;
   client_secret: string;
   grant_type: OsuOauthGrantType.RefreshToken;
   refresh_token: string;
 }
 
-type InternalOsuPostOauthTokenRefreshResponseBody =
-  InternalOsuPostOauthTokenResponseBody;
+type InternalOsuPostOauthTokenRefreshQueryResponseBody =
+  InternalOsuPostOauthTokenQueryResponseBody;
 
 /**
  * Refresh Oauth token based on a previously issued refresh token.
@@ -100,13 +100,13 @@ type InternalOsuPostOauthTokenRefreshResponseBody =
  * See {@link https://osu.ppy.sh/docs/index.html#client-credentials-grant | Client Credentials Grant}
  * for more information.
  */
-export const osuPostOauthTokenRefresh = async (
-  options: OsuPostOauthTokenRefreshRequestBody,
-): Promise<OsuPostOauthTokenRefreshResponseBody> => {
+export const osuPostOauthTokenRefreshQuery = async (
+  options: OsuPostOauthTokenRefreshQueryRequestBody,
+): Promise<OsuPostOauthTokenRefreshQueryResponseBody> => {
   const { clientId, clientSecret, refreshToken } = options;
   const response = await postRequest<
-    InternalOsuPostOauthTokenRefreshRequestBody,
-    InternalOsuPostOauthTokenRefreshResponseBody
+    InternalOsuPostOauthTokenRefreshQueryRequestBody,
+    InternalOsuPostOauthTokenRefreshQueryResponseBody
   >({
     baseApiEndpoint: '',
     baseUrl: BASE_URL,

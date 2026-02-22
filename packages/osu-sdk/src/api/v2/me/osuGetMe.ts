@@ -3,20 +3,20 @@ import { HttpError, getRequest } from '@packages/shared';
 
 import { BASE_URL } from '#src/constants/osu.constants.js';
 
-export interface OsuGetMeRequestQuery {
+export interface OsuGetMeQueryRequestQuery {
   token: string;
 }
 
-export interface OsuGetMeResponseBody {
+export interface OsuGetMeQueryResponseBody {
   avatarUrl: string;
   country: string;
   id: number;
   name: string;
 }
 
-type InternalOsuGetMeRequestQuery = NothingRecord;
+type InternalOsuGetMeQueryRequestQuery = NothingRecord;
 
-interface InternalOsuGetMeResponseBody {
+interface InternalOsuGetMeQueryResponseBody {
   avatar_url: string;
   country_code: string;
   id: number;
@@ -26,13 +26,13 @@ interface InternalOsuGetMeResponseBody {
 /**
  * Get self user information from the osu! API.
  */
-export const osuGetMe = async (
-  options: OsuGetMeRequestQuery,
-): Promise<OsuGetMeResponseBody> => {
+export const osuGetMeQuery = async (
+  options: OsuGetMeQueryRequestQuery,
+): Promise<OsuGetMeQueryResponseBody> => {
   const { token } = options;
   const response = await getRequest<
-    InternalOsuGetMeRequestQuery,
-    InternalOsuGetMeResponseBody
+    InternalOsuGetMeQueryRequestQuery,
+    InternalOsuGetMeQueryResponseBody
   >({
     baseUrl: BASE_URL,
     endpoint: '/me',

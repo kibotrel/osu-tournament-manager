@@ -1,4 +1,4 @@
-import type { OsuGetMeResponseBody } from '@packages/osu-sdk';
+import type { OsuGetMeQueryResponseBody } from '@packages/osu-sdk';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { createUserQuery } from '#src/queries/users/users.create.queries.js';
@@ -26,7 +26,7 @@ describe('getOrCreateUserService', () => {
 
   it('should return existing user if found', async () => {
     const mockedGetUserByGameUserId = vi.mocked(getUserByGameUserIdQuery);
-    const gameUser: OsuGetMeResponseBody = {
+    const gameUser: OsuGetMeQueryResponseBody = {
       id: 1,
       avatarUrl: 'http://example.com/test.png',
       country: '__',
@@ -55,7 +55,7 @@ describe('getOrCreateUserService', () => {
   it('should create a new user if not found', async () => {
     const mockedGetUserByGameUserId = vi.mocked(getUserByGameUserIdQuery);
     const mockedCreateUser = vi.mocked(createUserQuery);
-    const gameUser: OsuGetMeResponseBody = {
+    const gameUser: OsuGetMeQueryResponseBody = {
       id: 2,
       avatarUrl: 'http://example.com/test2.png',
       country: 'US',
