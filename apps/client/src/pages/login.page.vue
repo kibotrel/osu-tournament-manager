@@ -26,15 +26,14 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 
+import { BASE_URL, OSU_APPLICATION_CLIENT_ID } from '#src/api/api.constants.js';
 import BaseBody from '#src/components/base/body.base.vue';
 import BaseButton from '#src/components/base/button.base.vue';
 import BaseHeadline from '#src/components/base/headline.base.vue';
 import IdentificationIcon from '#src/components/icons/identification.icon.vue';
 
-const baseUrl = import.meta.env.VITE_BASE_APP_URL;
-const callbackUrl = encodeURIComponent(`${baseUrl}/oauth/callback`);
-const clientId = import.meta.env.VITE_OSU_APPLICATION_CLIENT_ID;
-const authUrl = `https://osu.ppy.sh/oauth/authorize?client_id=${clientId}&response_type=code&redirect_uri=${callbackUrl}&scope=identify+public`;
+const callbackUrl = encodeURIComponent(`${BASE_URL}/oauth/callback`);
+const authUrl = `https://osu.ppy.sh/oauth/authorize?client_id=${OSU_APPLICATION_CLIENT_ID}&response_type=code&redirect_uri=${callbackUrl}&scope=identify+public`;
 const isLoginButtonLoading = ref(false);
 
 const redirectToOsuAuthPage = () => {

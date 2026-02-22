@@ -18,7 +18,7 @@ import { defineStore } from 'pinia';
 import type { UnwrapRef } from 'vue';
 import { ref } from 'vue';
 
-import { baseWebSocketUrl } from '#src/api/api.constants.js';
+import { BASE_WEBSOCKET_URL } from '#src/api/api.constants.js';
 import type { ExtendedWebSocket } from '#src/types/webSockets.types.js';
 
 interface WebSocketChannelEventsMap {
@@ -80,7 +80,7 @@ export const defineWebsocketStore = <
         removeEmpty: true,
         separator: '/',
       });
-      const webSocketUrl = new URL(endpoint, baseWebSocketUrl);
+      const webSocketUrl = new URL(endpoint, BASE_WEBSOCKET_URL);
 
       webSocketUrl.searchParams.append('events', events.join(','));
 

@@ -10,12 +10,12 @@ import { useMutation } from '@tanstack/vue-query';
 import { inject } from 'vue';
 import type { Router } from 'vue-router';
 
-import { baseUrl } from '#src/api/api.constants.js';
+import { BASE_URL } from '#src/api/api.constants.js';
 import { useUserStore } from '#src/stores/user.store.js';
 
 const login = async (authenticationCode: string) => {
   const response = await postRequest<LoginRequestBody, LoginResponseBody>({
-    baseUrl,
+    baseUrl: BASE_URL,
     endpoint: '/authentication/login',
     payload: { authenticationCode },
   });
@@ -29,7 +29,7 @@ const login = async (authenticationCode: string) => {
 
 const logout = async () => {
   const response = await getRequest<LogoutRequestBody, LogoutResponseBody>({
-    baseUrl,
+    baseUrl: BASE_URL,
     endpoint: '/authentication/logout',
     payload: {},
   });

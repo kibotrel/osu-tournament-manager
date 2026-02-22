@@ -17,11 +17,11 @@ import { useMutation, useQuery } from '@tanstack/vue-query';
 import { inject } from 'vue';
 import type { Router } from 'vue-router';
 
-import { baseUrl } from '#src/api/api.constants.js';
+import { BASE_URL } from '#src/api/api.constants.js';
 
 const closeMatch = async (gameMatchId: number | string) => {
   const response = await postRequest<NothingRecord, CloseMatchResponseBody>({
-    baseUrl,
+    baseUrl: BASE_URL,
     endpoint: `/matches/${gameMatchId}/close`,
     payload: {},
   });
@@ -38,7 +38,7 @@ const createMatch = async (name: string) => {
     CreateMatchRequestBody,
     CreateMatchResponseBody
   >({
-    baseUrl,
+    baseUrl: BASE_URL,
     endpoint: '/matches',
     payload: { name },
   });
@@ -52,7 +52,7 @@ const createMatch = async (name: string) => {
 
 const getMatch = async (gameMatchId: number | string) => {
   const response = await getRequest<NothingRecord, GetMatchResponseBody>({
-    baseUrl,
+    baseUrl: BASE_URL,
     endpoint: `/matches/${gameMatchId}`,
     payload: {},
   });
@@ -69,7 +69,7 @@ const getMatchChatHistory = async (gameMatchId: number | string) => {
     NothingRecord,
     GetMatchChatHistoryResponseBody
   >({
-    baseUrl,
+    baseUrl: BASE_URL,
     endpoint: `/matches/${gameMatchId}/chat-history`,
     payload: {},
   });
@@ -83,7 +83,7 @@ const getMatchChatHistory = async (gameMatchId: number | string) => {
 
 const getMatchState = async (gameMatchId: number | string) => {
   const response = await getRequest<NothingRecord, GetMatchStateResponseBody>({
-    baseUrl,
+    baseUrl: BASE_URL,
     endpoint: `/matches/${gameMatchId}/state`,
     payload: {},
   });
