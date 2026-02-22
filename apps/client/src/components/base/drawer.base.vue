@@ -37,10 +37,10 @@
 <script setup lang="ts">
 import { useTemplateRef } from 'vue';
 
-import EllipsisVerticalIcon from '#src/components/icons/ellipsisVerticalIcon.vue';
-import { usePopUpBehavior } from '#src/composables/usePopUpComposable.js';
+import EllipsisVerticalIcon from '#src/components/icons/ellipsisVertical.icon.vue';
+import { usePopUpBehavior } from '#src/composables/usePopUpBehavior.composable.js';
 
-import BaseIcon from './baseIcon.vue';
+import BaseIcon from './icon.base.vue';
 
 interface Properties {
   id: string;

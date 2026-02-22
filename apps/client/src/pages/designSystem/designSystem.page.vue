@@ -28,14 +28,14 @@
 import { useTranslation } from 'i18next-vue';
 import { ref } from 'vue';
 
-import BaseHeadline from '#src/components/base/baseHeadline.vue';
-import type { IconName } from '#src/components/base/baseIcon.vue';
-import BaseTabList from '#src/components/base/baseTabList.vue';
+import BaseHeadline from '#src/components/base/headline.base.vue';
+import type { IconName } from '#src/components/base/icon.base.vue';
+import BaseTabList from '#src/components/base/tabList.base.vue';
 
-import DesignSystemComponents from './designSystemComponents.vue';
-import DesignSystemInteractions from './designSystemInteractions.vue';
-import DesignSystemLayout from './designSystemLayout.vue';
-import DesignSystemTexts from './designSystemTexts.vue';
+import DesignSystemComponents from './designSystem.tab.components.vue';
+import DesignSystemInteractions from './designSystem.tab.interactions.vue';
+import DesignSystemLayout from './designSystem.tab.layout.vue';
+import DesignSystemTexts from './designSystem.tab.texts.vue';
 
 interface Tab {
   icon: IconName;

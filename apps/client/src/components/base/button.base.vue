@@ -17,9 +17,9 @@
 <script setup lang="ts">
 import { useSlots } from 'vue';
 
-import LoadingIcon from '#src/components/icons/loadingIcon.vue';
+import LoadingIcon from '#src/components/icons/loading.icon.vue';
 
-import BaseBody from './baseBody.vue';
+import BaseBody from './body.base.vue';
 
 export type ButtonVariant =
   | 'danger'

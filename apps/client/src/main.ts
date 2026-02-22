@@ -18,9 +18,9 @@ import App from '#src/app.vue';
 import '#src/assets/styles/index.css';
 import router from '#src/router/index.js';
 
-import { InternationalizationPlugin } from './plugins/internationalizationPlugin.js';
-import { PiniaRouterPlugin } from './plugins/piniaRouterPlugin.js';
-import { VueRouterPlugin } from './plugins/vueRouterPlugin.js';
+import { InternationalizationPlugin } from './plugins/internationalization.plugin.js';
+import { PiniaRouterPlugin } from './plugins/piniaRouter.plugin.js';
+import { VueRouterPlugin } from './plugins/vueRouter.plugin.js';
 
 const app = createApp(App);
 const pinia = createPinia();

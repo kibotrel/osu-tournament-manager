@@ -89,7 +89,11 @@ const modificationComponent = () => {
     errorComponent: FallbackComponent,
     loadingComponent: FallbackComponent,
     loader: () => {
-      return import(`#src/components/mods/${properties.mod}Modification.vue`);
+      // eslint-disable-next-line unicorn/prevent-abbreviations
+      const modName =
+        properties.mod.charAt(0).toLowerCase() + properties.mod.slice(1);
+
+      return import(`#src/components/mods/${modName}.mod.vue`);
     },
   });
 };

@@ -8,8 +8,8 @@
 import { inject, onBeforeMount } from 'vue';
 import type { Router } from 'vue-router';
 
-import { useLogin } from '#src/api/authenticationApi.js';
-import LoadingIcon from '#src/components/icons/loadingIcon.vue';
+import { useLogin } from '#src/api/authentication.api.js';
+import LoadingIcon from '#src/components/icons/loading.icon.vue';
 
 const $router = inject<Router>('$router');
 const { mutateAsync: login } = useLogin();

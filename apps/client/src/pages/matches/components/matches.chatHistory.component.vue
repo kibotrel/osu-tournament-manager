@@ -81,15 +81,15 @@ import { storeToRefs } from 'pinia';
 import { reactive, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
 
-import { useGetMatchChatHistory } from '#src/api/matchesApi.js';
-import BaseBody from '#src/components/base/baseBody.vue';
-import BaseCaption from '#src/components/base/baseCaption.vue';
-import BaseInput from '#src/components/base/baseInput.vue';
-import LoadingIcon from '#src/components/icons/loadingIcon.vue';
-import PaperAirplaneIcon from '#src/components/icons/paperAirplaneIcon.vue';
-import { useScroll } from '#src/composables/useScrollComposable.js';
-import { useUserStore } from '#src/stores/userStore.js';
-import { defineWebsocketStore } from '#src/stores/webSocketStore.js';
+import { useGetMatchChatHistory } from '#src/api/matches.api.js';
+import BaseBody from '#src/components/base/body.base.vue';
+import BaseCaption from '#src/components/base/caption.base.vue';
+import BaseInput from '#src/components/base/input.base.vue';
+import LoadingIcon from '#src/components/icons/loading.icon.vue';
+import PaperAirplaneIcon from '#src/components/icons/paperAirplane.icon.vue';
+import { useScroll } from '#src/composables/useScrollBehavior.composable.js';
+import { useUserStore } from '#src/stores/user.store.js';
+import { defineWebsocketStore } from '#src/stores/webSocket.store.js';
 
 const route = useRoute();
 const matchId = Number(route.params.gameMatchId);

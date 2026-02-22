@@ -50,15 +50,15 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 
-import { useCloseMatch } from '#src/api/matchesApi.js';
-import BaseBody from '#src/components/base/baseBody.vue';
-import BaseButton from '#src/components/base/baseButton.vue';
-import BaseHeadline from '#src/components/base/baseHeadline.vue';
-import BaseIcon from '#src/components/base/baseIcon.vue';
-import BaseInput from '#src/components/base/baseInput.vue';
-import BaseModal from '#src/components/base/baseModal.vue';
+import { useCloseMatch } from '#src/api/matches.api.js';
+import BaseBody from '#src/components/base/body.base.vue';
+import BaseButton from '#src/components/base/button.base.vue';
+import BaseHeadline from '#src/components/base/headline.base.vue';
+import BaseIcon from '#src/components/base/icon.base.vue';
+import BaseInput from '#src/components/base/input.base.vue';
+import BaseModal from '#src/components/base/modal.base.vue';
 
-import MatchNameCopy from './matchNameCopy.vue';
+import MatchNameCopy from './matches.nameCopy.component.vue';
 
 interface Properties {
   isModalOpen: boolean;

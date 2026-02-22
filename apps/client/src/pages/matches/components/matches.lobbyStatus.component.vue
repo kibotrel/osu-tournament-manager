@@ -88,16 +88,16 @@ import { BanchoCommand, WebSocketChannelMatchesEvent } from '@packages/shared';
 import { useTranslation } from 'i18next-vue';
 import { storeToRefs } from 'pinia';
 
-import BaseBadge from '#src/components/base/baseBadge.vue';
-import BaseBody from '#src/components/base/baseBody.vue';
-import BaseButton from '#src/components/base/baseButton.vue';
-import type { DropdownItem } from '#src/components/base/baseDropdown.vue';
-import BaseDropdown from '#src/components/base/baseDropdown.vue';
-import BaseModification from '#src/components/base/baseModification.vue';
-import ArrowPathIcon from '#src/components/icons/arrowPathIcon.vue';
-import CrownIcon from '#src/components/icons/crownIcon.vue';
-import { useMatchStore } from '#src/stores/matchStore.js';
-import { useUserStore } from '#src/stores/userStore.js';
+import BaseBadge from '#src/components/base/badge.base.vue';
+import BaseBody from '#src/components/base/body.base.vue';
+import BaseButton from '#src/components/base/button.base.vue';
+import type { DropdownItem } from '#src/components/base/dropdown.base.vue';
+import BaseDropdown from '#src/components/base/dropdown.base.vue';
+import BaseModification from '#src/components/base/modification.base.vue';
+import ArrowPathIcon from '#src/components/icons/arrowPath.icon.vue';
+import CrownIcon from '#src/components/icons/crown.icon.vue';
+import { useMatchStore } from '#src/stores/match.store.js';
+import { useUserStore } from '#src/stores/user.store.js';
 
 interface Properties {
   sendBanchoMessage: (

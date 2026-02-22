@@ -198,16 +198,16 @@
 import { useTranslation } from 'i18next-vue';
 import { ref } from 'vue';
 
-import BaseBody from '#src/components/base/baseBody.vue';
-import BaseButton from '#src/components/base/baseButton.vue';
-import BaseDrawer from '#src/components/base/baseDrawer.vue';
-import type { DropdownItem } from '#src/components/base/baseDropdown.vue';
-import BaseDropdown from '#src/components/base/baseDropdown.vue';
-import BaseHeadline from '#src/components/base/baseHeadline.vue';
-import BaseModal from '#src/components/base/baseModal.vue';
-import BaseSeparator from '#src/components/base/baseSeparator.vue';
-import type { Tab } from '#src/components/base/baseTabList.vue';
-import BaseTabList from '#src/components/base/baseTabList.vue';
+import BaseBody from '#src/components/base/body.base.vue';
+import BaseButton from '#src/components/base/button.base.vue';
+import BaseDrawer from '#src/components/base/drawer.base.vue';
+import type { DropdownItem } from '#src/components/base/dropdown.base.vue';
+import BaseDropdown from '#src/components/base/dropdown.base.vue';
+import BaseHeadline from '#src/components/base/headline.base.vue';
+import BaseModal from '#src/components/base/modal.base.vue';
+import BaseSeparator from '#src/components/base/separator.base.vue';
+import type { Tab } from '#src/components/base/tabList.base.vue';
+import BaseTabList from '#src/components/base/tabList.base.vue';
 
 const { t } = useTranslation();
 const isModalOpen = ref(false);

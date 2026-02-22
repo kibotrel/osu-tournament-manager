@@ -35,8 +35,8 @@
 <script setup lang="ts">
 import { useTemplateRef } from 'vue';
 
-import XMarkIcon from '#src/components/icons/xMarkIcon.vue';
-import { usePopUpBehavior } from '#src/composables/usePopUpComposable.js';
+import XMarkIcon from '#src/components/icons/xMark.icon.vue';
+import { usePopUpBehavior } from '#src/composables/usePopUpBehavior.composable.js';
 
 interface Properties {
   id: string;

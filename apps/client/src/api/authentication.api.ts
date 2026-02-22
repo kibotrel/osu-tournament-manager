@@ -10,8 +10,8 @@ import { useMutation } from '@tanstack/vue-query';
 import { inject } from 'vue';
 import type { Router } from 'vue-router';
 
-import { baseUrl } from '#src/api/apiConstants.js';
-import { useUserStore } from '#src/stores/userStore.js';
+import { baseUrl } from '#src/api/api.constants.js';
+import { useUserStore } from '#src/stores/user.store.js';
 
 const login = async (authenticationCode: string) => {
   const response = await postRequest<LoginRequestBody, LoginResponseBody>({

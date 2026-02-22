@@ -47,13 +47,13 @@
 </template>
 
 <script setup lang="ts">
-import type { BodyVariant } from '#src/components/base/baseBody.vue';
-import BaseBody from '#src/components/base/baseBody.vue';
-import BaseCaption from '#src/components/base/baseCaption.vue';
-import type { HeadlineVariant } from '#src/components/base/baseHeadline.vue';
-import BaseHeadline from '#src/components/base/baseHeadline.vue';
-import type { IconName } from '#src/components/base/baseIcon.vue';
-import BaseIcon from '#src/components/base/baseIcon.vue';
+import type { BodyVariant } from '#src/components/base/body.base.vue';
+import BaseBody from '#src/components/base/body.base.vue';
+import BaseCaption from '#src/components/base/caption.base.vue';
+import type { HeadlineVariant } from '#src/components/base/headline.base.vue';
+import BaseHeadline from '#src/components/base/headline.base.vue';
+import type { IconName } from '#src/components/base/icon.base.vue';
+import BaseIcon from '#src/components/base/icon.base.vue';
 
 const icons: IconName[] = [
   'arrowLeftStartOnRectangle',

@@ -74,17 +74,17 @@ import { inject, nextTick, ref, watch } from 'vue';
 import type { Router } from 'vue-router';
 import { useRoute } from 'vue-router';
 
-import { useGetMatch } from '#src/api/matchesApi.js';
-import BaseBody from '#src/components/base/baseBody.vue';
-import BaseButton from '#src/components/base/baseButton.vue';
-import BaseHeadline from '#src/components/base/baseHeadline.vue';
-import LoadingIcon from '#src/components/icons/loadingIcon.vue';
-import { useUserStore } from '#src/stores/userStore.js';
-import { defineWebsocketStore } from '#src/stores/webSocketStore.js';
+import { useGetMatch } from '#src/api/matches.api.js';
+import BaseBody from '#src/components/base/body.base.vue';
+import BaseButton from '#src/components/base/button.base.vue';
+import BaseHeadline from '#src/components/base/headline.base.vue';
+import LoadingIcon from '#src/components/icons/loading.icon.vue';
+import { useUserStore } from '#src/stores/user.store.js';
+import { defineWebsocketStore } from '#src/stores/webSocket.store.js';
 
-import MatchChatHistory from './components/matchChatHistory.vue';
-import MatchCloseModal from './components/matchCloseModal.vue';
-import MatchDrawer from './components/matchDrawer.vue';
+import MatchChatHistory from './components/matches.chatHistory.component.vue';
+import MatchCloseModal from './components/matches.closeModal.component.vue';
+import MatchDrawer from './components/matches.drawer.component.vue';
 
 const route = useRoute();
 const router = inject<Router>('$router');

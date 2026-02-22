@@ -41,10 +41,10 @@
 </template>
 
 <script setup lang="ts">
-import BaseBody from './baseBody.vue';
-import BaseCaption from './baseCaption.vue';
-import type { IconName } from './baseIcon.vue';
-import BaseIcon from './baseIcon.vue';
+import BaseBody from './body.base.vue';
+import BaseCaption from './caption.base.vue';
+import type { IconName } from './icon.base.vue';
+import BaseIcon from './icon.base.vue';
 
 export type BadgeVariant = 'base' | 'small';
 export type BadgeColor =

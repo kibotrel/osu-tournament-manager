@@ -36,7 +36,7 @@ const properties = defineProps<{
 
 const svgComponent = () => {
   return defineAsyncComponent(() => {
-    return import(`#src/components/icons/${properties.name}Icon.vue`);
+    return import(`#src/components/icons/${properties.name}.icon.vue`);
   });
 };
 </script>

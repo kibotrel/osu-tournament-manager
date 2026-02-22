@@ -48,12 +48,12 @@
 <script setup lang="ts">
 import { ref, useTemplateRef, watch } from 'vue';
 
-import { usePopUpBehavior } from '#src/composables/usePopUpComposable.js';
+import { usePopUpBehavior } from '#src/composables/usePopUpBehavior.composable.js';
 
-import BaseBody from './baseBody.vue';
-import BaseCountryFlag from './baseCountryFlag.vue';
-import type { IconName } from './baseIcon.vue';
-import BaseIcon from './baseIcon.vue';
+import BaseBody from './body.base.vue';
+import BaseCountryFlag from './countryFlag.base.vue';
+import type { IconName } from './icon.base.vue';
+import BaseIcon from './icon.base.vue';
 
 export interface DropdownItem {
   id: string;

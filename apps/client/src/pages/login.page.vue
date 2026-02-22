@@ -26,10 +26,10 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 
-import BaseBody from '#src/components/base/baseBody.vue';
-import BaseButton from '#src/components/base/baseButton.vue';
-import BaseHeadline from '#src/components/base/baseHeadline.vue';
-import IdentificationIcon from '#src/components/icons/identificationIcon.vue';
+import BaseBody from '#src/components/base/body.base.vue';
+import BaseButton from '#src/components/base/button.base.vue';
+import BaseHeadline from '#src/components/base/headline.base.vue';
+import IdentificationIcon from '#src/components/icons/identification.icon.vue';
 
 const baseUrl = import.meta.env.VITE_BASE_APP_URL;
 const callbackUrl = encodeURIComponent(`${baseUrl}/oauth/callback`);

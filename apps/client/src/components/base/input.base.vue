@@ -55,7 +55,7 @@
 </template>
 
 <script setup lang="ts">
-import BaseBody from './baseBody.vue';
+import BaseBody from './body.base.vue';
 
 export type InputVariant = 'ghost' | 'primary';
 

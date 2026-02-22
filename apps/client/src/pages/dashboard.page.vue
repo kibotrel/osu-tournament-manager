@@ -25,11 +25,11 @@
 import { useTranslation } from 'i18next-vue';
 import { computed } from 'vue';
 
-import { useLogout } from '#src/api/authenticationApi.js';
-import BaseButton from '#src/components/base/baseButton.vue';
-import type { DropdownItem } from '#src/components/base/baseDropdown.vue';
-import BaseDropdown from '#src/components/base/baseDropdown.vue';
-import { useUserStore } from '#src/stores/userStore.js';
+import { useLogout } from '#src/api/authentication.api.js';
+import BaseButton from '#src/components/base/button.base.vue';
+import type { DropdownItem } from '#src/components/base/dropdown.base.vue';
+import BaseDropdown from '#src/components/base/dropdown.base.vue';
+import { useUserStore } from '#src/stores/user.store.js';
 
 const { i18next, t } = useTranslation();
 const languageDropdownItems = computed<DropdownItem[]>(() => {

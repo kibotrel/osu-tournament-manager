@@ -17,7 +17,7 @@ import { useMutation, useQuery } from '@tanstack/vue-query';
 import { inject } from 'vue';
 import type { Router } from 'vue-router';
 
-import { baseUrl } from '#src/api/apiConstants.js';
+import { baseUrl } from '#src/api/api.constants.js';
 
 const closeMatch = async (gameMatchId: number | string) => {
   const response = await postRequest<NothingRecord, CloseMatchResponseBody>({

@@ -11,7 +11,7 @@
 <script setup lang="ts">
 import { useClipboard } from '@vueuse/core';
 
-import BaseBody from '#src/components/base/baseBody.vue';
+import BaseBody from '#src/components/base/body.base.vue';
 
 interface Properties {
   matchName: string;

@@ -79,16 +79,16 @@ import { storeToRefs } from 'pinia';
 import { ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
 
-import { useGetMatchState } from '#src/api/matchesApi.js';
-import BaseBody from '#src/components/base/baseBody.vue';
-import BaseDrawer from '#src/components/base/baseDrawer.vue';
-import BaseHeadline from '#src/components/base/baseHeadline.vue';
-import BaseLink from '#src/components/base/baseLink.vue';
-import BaseTabList from '#src/components/base/baseTabList.vue';
-import { useMatchStore } from '#src/stores/matchStore.js';
-import { defineWebsocketStore } from '#src/stores/webSocketStore.js';
+import { useGetMatchState } from '#src/api/matches.api.js';
+import BaseBody from '#src/components/base/body.base.vue';
+import BaseDrawer from '#src/components/base/drawer.base.vue';
+import BaseHeadline from '#src/components/base/headline.base.vue';
+import BaseLink from '#src/components/base/link.base.vue';
+import BaseTabList from '#src/components/base/tabList.base.vue';
+import { useMatchStore } from '#src/stores/match.store.js';
+import { defineWebsocketStore } from '#src/stores/webSocket.store.js';
 
-import MatchLobbyStatus from './matchLobbyStatus.vue';
+import MatchLobbyStatus from './matches.lobbyStatus.component.vue';
 
 type Tab = 'commands' | 'settings' | 'status' | 'timeline';
 

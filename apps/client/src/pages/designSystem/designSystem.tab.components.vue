@@ -76,12 +76,12 @@ import { OsuBeatmapModification } from '@packages/shared';
 import type {
   BadgeColor,
   BadgeVariant,
-} from '#src/components/base/baseBadge.vue';
-import BaseBadge from '#src/components/base/baseBadge.vue';
-import BaseCountryFlag from '#src/components/base/baseCountryFlag.vue';
-import BaseHeadline from '#src/components/base/baseHeadline.vue';
-import type { IconName } from '#src/components/base/baseIcon.vue';
-import BaseModification from '#src/components/base/baseModification.vue';
+} from '#src/components/base/badge.base.vue';
+import BaseBadge from '#src/components/base/badge.base.vue';
+import BaseCountryFlag from '#src/components/base/countryFlag.base.vue';
+import BaseHeadline from '#src/components/base/headline.base.vue';
+import type { IconName } from '#src/components/base/icon.base.vue';
+import BaseModification from '#src/components/base/modification.base.vue';
 
 interface Badge {
   icon: { side: 'left' | 'right'; name: IconName } | null;

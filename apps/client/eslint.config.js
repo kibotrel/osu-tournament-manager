@@ -22,6 +22,7 @@ export default [
         sourceType: 'module',
       },
     },
+    rules: { 'vue/multi-word-component-names': 'off' },
   },
   { ignores: ['dist/', 'coverage/', 'eslint.config.js'] },
 ];

@@ -18,8 +18,8 @@ import { defineStore } from 'pinia';
 import type { UnwrapRef } from 'vue';
 import { ref } from 'vue';
 
-import { baseWebSocketUrl } from '#src/api/apiConstants.js';
-import type { ExtendedWebSocket } from '#src/types/webSockets.js';
+import { baseWebSocketUrl } from '#src/api/api.constants.js';
+import type { ExtendedWebSocket } from '#src/types/webSockets.types.js';
 
 interface WebSocketChannelEventsMap {
   [WebSocketChannel.Matches]: WebSocketChannelMatchesEvent;

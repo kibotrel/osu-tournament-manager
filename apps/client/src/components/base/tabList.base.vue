@@ -18,9 +18,9 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 
-import BaseHeadline from './baseHeadline.vue';
-import type { IconName } from './baseIcon.vue';
-import BaseIcon from './baseIcon.vue';
+import BaseHeadline from './headline.base.vue';
+import type { IconName } from './icon.base.vue';
+import BaseIcon from './icon.base.vue';
 
 export interface Tab {
   label: string;

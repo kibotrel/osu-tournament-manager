@@ -120,10 +120,10 @@
 import { useTranslation } from 'i18next-vue';
 import { ref } from 'vue';
 
-import BaseButton from '#src/components/base/baseButton.vue';
-import BaseHeadline from '#src/components/base/baseHeadline.vue';
-import BaseIcon from '#src/components/base/baseIcon.vue';
-import BaseInput from '#src/components/base/baseInput.vue';
+import BaseButton from '#src/components/base/button.base.vue';
+import BaseHeadline from '#src/components/base/headline.base.vue';
+import BaseIcon from '#src/components/base/icon.base.vue';
+import BaseInput from '#src/components/base/input.base.vue';
 
 const { t } = useTranslation();
 const disabledStringInputValue = ref('');
