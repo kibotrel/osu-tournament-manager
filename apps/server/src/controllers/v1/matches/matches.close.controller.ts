@@ -1,0 +1,26 @@
+import {
+  type CloseMatchRequestParameters,
+  type CloseMatchResponseBody,
+  HttpStatusCode,
+} from '@packages/shared';
+import type { RequestHandler } from 'express';
+import { matchedData } from 'express-validator';
+
+import { closeMatchService } from '#src/services/matches/matches.service.js';
+
+export const closeMatchController: RequestHandler<
+  CloseMatchRequestParameters,
+  CloseMatchResponseBody,
+  never,
+  never
+> = async (request, response, next) => {
+  const { gameMatchId } = matchedData<CloseMatchRequestParameters>(request);
+
+  try {
+    const { status } = await closeMatchService(Number(gameMatchId));
+
+    return response.status(HttpStatusCode.Ok).json({ status });
+  } catch (error) {
+    return next(error);
+  }
+};

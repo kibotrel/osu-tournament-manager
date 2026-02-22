@@ -1,4 +1,4 @@
-import { Signal } from '#src/constants/signalConstants.js';
+import { Signal } from '#src/constants/signal.constants.js';
 import { createHttpServer, gracefulShutdown } from '#src/httpServer.js';
 import { webSocketServer } from '#src/websocketServer.js';
 

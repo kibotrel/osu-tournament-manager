@@ -9,7 +9,7 @@
   "imports": {
     "#src/*": "./src/*"
   },
-  "main": "dist/src/banchoClientExport.js",
+  "main": "dist/src/banchoClient.export.js",
   "name": "@packages/bancho-client",
   "private": true,
   "scripts": {
@@ -21,5 +21,5 @@
     "type-check": "tsc --noEmit"
   },
   "type": "module",
-  "types": "dist/src/banchoClientExport.d.ts"
+  "types": "dist/src/banchoClient.export.d.ts"
 }

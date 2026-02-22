@@ -8,7 +8,7 @@ This package is a partial implementation of [RFC 1459](https://datatracker.ietf.
 
 ## 📁 Structure
 
-- [`classes`](/packages/bancho-client/src/classes): Contains classes responsible to handle IRC commands and the main [`IrcClientClass`](../../packages/bancho-client/src/classes/IrcClientClass.ts).
+- [`classes`](/packages/bancho-client/src/classes): Contains classes responsible to handle IRC commands and the main [`BanchoClient`](../../packages/bancho-client/src/classes/ircClient.class.ts).
 - [`constants`](/packages/bancho-client/src/constants): All the static data either related to the IRC protocol or bancho specifically.
 - [`methods`](/packages/bancho-client/src/methods): Additional helper functions to parse and format data sent to and received from the server.
 
@@ -19,13 +19,13 @@ This client use an event-driven architecture to provide a simple interface to in
 > [!IMPORTANT]
 > To keep the client as fast and lightweight as possible, no API calls are made to osu!. It is the consumer's responsibility to fetch any additional data when handling specific events.
 
-Core functionalities are encapsulated in [`IrcClientClass`](/packages/bancho-client/src/classes/IrcClientClass.ts) which extends Node.js's built-in [`EventEmitter`](https://nodejs.org/api/events.html#events_class_eventemitter).
+Core functionalities are encapsulated in [`BanchoClient`](/packages/bancho-client/src/classes/ircClient.class.ts) which extends Node.js's built-in [`EventEmitter`](https://nodejs.org/api/events.html#events_class_eventemitter).
 
-The client is constantly processing incoming packets from the server while connected and with the help of [`IrcCommandFactoryClass`](/packages/bancho-client/src/classes/IrcCommandFactoryClass.ts), detects how to handle each message and emit the corresponding events.
+The client is constantly processing incoming packets from the server while connected and with the help of [`IrcCommandFactory`](/packages/bancho-client/src/classes/ircCommandFactory.class.ts), detects how to handle each message and emit the corresponding events.
 
 > [!TIP]
 >
-> All emitted events by the client are listed in the [`BanchoClientEvent`](/packages/bancho-client/src/constants/banchoClientConstants.ts) enum.
+> All emitted events by the client are listed in the [`BanchoClientEvent`](/packages/bancho-client/src/constants/banchoClient.constants.ts) enum.
 
 ### ✨ Extra features
 

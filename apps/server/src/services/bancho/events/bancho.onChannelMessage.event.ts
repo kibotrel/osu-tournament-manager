@@ -1,0 +1,47 @@
+import { BanchoPublicChannel } from '@packages/bancho-client';
+import type { WebSocketMatchMessage, WebSocketMessage } from '@packages/shared';
+import {
+  WebSocketChannel,
+  WebSocketChannelMatchesEvent,
+  gameMatchIdFromBanchoChannel,
+} from '@packages/shared';
+
+import { logger } from '#src/dependencies/logger.dependency.js';
+import { addMatchMessageToCacheService } from '#src/services/cache/cache.service.js';
+import { webSocketServer } from '#src/websocketServer.js';
+
+export const onChannelMessageEvent = async ({
+  channel,
+  message,
+  user,
+}: {
+  channel: string;
+  message: string;
+  user: string;
+}) => {
+  if (channel === BanchoPublicChannel.Lobby || !channel.startsWith('#')) {
+    return;
+  }
+
+  logger.debug(`[IRC] New message in ${channel}`, {
+    content: message,
+    user,
+  });
+
+  const gameMatchId = gameMatchIdFromBanchoChannel(channel);
+  const payload: WebSocketMessage<WebSocketMatchMessage> = {
+    message: { author: user, content: message },
+    timestamp: Date.now(),
+    topic: `${WebSocketChannel.Matches}:${gameMatchId}:${WebSocketChannelMatchesEvent.ChatMessages}`,
+  };
+  const buffer = Buffer.from(JSON.stringify(payload));
+
+  await addMatchMessageToCacheService({
+    channel: gameMatchId,
+    message: buffer.toString(),
+  });
+  webSocketServer.broadcastMessageToSubscribers(buffer, {
+    isBinary: false,
+    isBanchoMessage: true,
+  });
+};
