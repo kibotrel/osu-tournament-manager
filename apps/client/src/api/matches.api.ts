@@ -19,7 +19,7 @@ import type { Router } from 'vue-router';
 
 import { BASE_URL } from '#src/api/api.constants.js';
 
-const closeMatch = async (gameMatchId: number | string) => {
+const closeMatchRequest = async (gameMatchId: number | string) => {
   const response = await postRequest<NothingRecord, CloseMatchResponseBody>({
     baseUrl: BASE_URL,
     endpoint: `/matches/${gameMatchId}/close`,
@@ -33,7 +33,7 @@ const closeMatch = async (gameMatchId: number | string) => {
   return response.data as CloseMatchResponseData;
 };
 
-const createMatch = async (name: string) => {
+const createMatchRequest = async (name: string) => {
   const response = await postRequest<
     CreateMatchRequestBody,
     CreateMatchResponseBody
@@ -50,7 +50,7 @@ const createMatch = async (name: string) => {
   return response.data as CreateMatchResponseData;
 };
 
-const getMatch = async (gameMatchId: number | string) => {
+const getMatchRequest = async (gameMatchId: number | string) => {
   const response = await getRequest<NothingRecord, GetMatchResponseBody>({
     baseUrl: BASE_URL,
     endpoint: `/matches/${gameMatchId}`,
@@ -64,7 +64,7 @@ const getMatch = async (gameMatchId: number | string) => {
   return response.data as GetMatchResponseData;
 };
 
-const getMatchChatHistory = async (gameMatchId: number | string) => {
+const getMatchChatHistoryRequest = async (gameMatchId: number | string) => {
   const response = await getRequest<
     NothingRecord,
     GetMatchChatHistoryResponseBody
@@ -81,7 +81,7 @@ const getMatchChatHistory = async (gameMatchId: number | string) => {
   return response.data as GetMatchChatHistoryResponseData;
 };
 
-const getMatchState = async (gameMatchId: number | string) => {
+const getMatchStateRequest = async (gameMatchId: number | string) => {
   const response = await getRequest<NothingRecord, GetMatchStateResponseBody>({
     baseUrl: BASE_URL,
     endpoint: `/matches/${gameMatchId}/state`,
@@ -98,10 +98,10 @@ const getMatchState = async (gameMatchId: number | string) => {
 /**
  * Close an existing match and its corresponding channel on bancho.
  */
-export const useCloseMatch = () => {
+export const useCloseMatchRequest = () => {
   return useMutation<CloseMatchResponseData, Error, number>({
     mutationFn: async (gameMatchId) => {
-      return await closeMatch(gameMatchId);
+      return await closeMatchRequest(gameMatchId);
     },
     onError: (error) => {
       // TODO: Add a toast message here
@@ -113,12 +113,12 @@ export const useCloseMatch = () => {
 /**
  * Create a new match and open its corresponding channel on bancho.
  */
-export const useCreateMatch = () => {
+export const useCreateMatchRequest = () => {
   const router = inject<Router>('$router');
 
   return useMutation<CreateMatchResponseData, Error, string>({
     mutationFn: async (name) => {
-      return await createMatch(name);
+      return await createMatchRequest(name);
     },
     onSuccess: (data) => {
       router?.push(`/matches/${data.gameMatchId}`);
@@ -133,7 +133,7 @@ export const useCreateMatch = () => {
 /**
  * Fetch an existing match by its bancho channel id.
  */
-export const useGetMatch = (
+export const useGetMatchRequest = (
   gameMatchId: number,
   options: { enabled?: boolean; staleTime?: number } = {},
 ) => {
@@ -141,8 +141,8 @@ export const useGetMatch = (
 
   return useQuery({
     enabled,
-    queryFn: () => {
-      return getMatch(gameMatchId);
+    queryFn: async () => {
+      return await getMatchRequest(gameMatchId);
     },
     queryKey: ['match', gameMatchId],
     staleTime,
@@ -153,7 +153,7 @@ export const useGetMatch = (
 /**
  * Fetch the chat history of an existing match by its bancho channel id.
  */
-export const useGetMatchChatHistory = (
+export const useGetMatchChatHistoryRequest = (
   gameMatchId: number | string,
   options: { enabled?: boolean; staleTime?: number } = {},
 ) => {
@@ -161,8 +161,8 @@ export const useGetMatchChatHistory = (
 
   return useQuery({
     enabled,
-    queryFn: () => {
-      return getMatchChatHistory(gameMatchId);
+    queryFn: async () => {
+      return await getMatchChatHistoryRequest(gameMatchId);
     },
     queryKey: ['match', gameMatchId, 'chat-history'],
     staleTime,
@@ -172,7 +172,7 @@ export const useGetMatchChatHistory = (
 /**
  * Fetch the lobby state of an existing match by its bancho channel id.
  */
-export const useGetMatchState = (
+export const useGetMatchStateRequest = (
   gameMatchId: number | string,
   options: { enabled?: boolean; staleTime?: number } = {},
 ) => {
@@ -180,8 +180,8 @@ export const useGetMatchState = (
 
   return useQuery({
     enabled,
-    queryFn: () => {
-      return getMatchState(gameMatchId);
+    queryFn: async () => {
+      return await getMatchStateRequest(gameMatchId);
     },
     queryKey: ['match', gameMatchId, 'state'],
     staleTime,

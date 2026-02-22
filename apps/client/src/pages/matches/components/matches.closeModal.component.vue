@@ -50,7 +50,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 
-import { useCloseMatch } from '#src/api/matches.api.js';
+import { useCloseMatchRequest } from '#src/api/matches.api.js';
 import BaseBody from '#src/components/base/body.base.vue';
 import BaseButton from '#src/components/base/button.base.vue';
 import BaseHeadline from '#src/components/base/headline.base.vue';
@@ -68,7 +68,7 @@ interface Properties {
 
 const emit = defineEmits(['close:modal', 'close:match']);
 const properties = defineProps<Properties>();
-const { mutate: closeMatch, isPending } = useCloseMatch();
+const { mutate: closeMatch, isPending } = useCloseMatchRequest();
 const confirmationMatchName = ref('');
 
 const handleCloseMatch = () => {

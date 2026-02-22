@@ -8,11 +8,11 @@
 import { inject, onBeforeMount } from 'vue';
 import type { Router } from 'vue-router';
 
-import { useLogin } from '#src/api/authentication.api.js';
+import { useLoginRequest } from '#src/api/authentication.api.js';
 import LoadingIcon from '#src/components/icons/loading.icon.vue';
 
 const $router = inject<Router>('$router');
-const { mutateAsync: login } = useLogin();
+const { mutateAsync: login } = useLoginRequest();
 
 onBeforeMount(async () => {
   const [parameter, token] = globalThis.location.search.slice(1).split('=');

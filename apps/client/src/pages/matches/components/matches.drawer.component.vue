@@ -79,7 +79,7 @@ import { storeToRefs } from 'pinia';
 import { ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
 
-import { useGetMatchState } from '#src/api/matches.api.js';
+import { useGetMatchStateRequest } from '#src/api/matches.api.js';
 import BaseBody from '#src/components/base/body.base.vue';
 import BaseDrawer from '#src/components/base/drawer.base.vue';
 import BaseHeadline from '#src/components/base/headline.base.vue';
@@ -102,7 +102,7 @@ interface Properties {
 
 const route = useRoute();
 const matchId = Number(route.params.gameMatchId);
-const { data: lobbyState } = useGetMatchState(matchId);
+const { data: lobbyState } = useGetMatchStateRequest(matchId);
 const { match } = storeToRefs(useMatchStore());
 const { setMatch } = useMatchStore();
 const useWebSocketStore = defineWebsocketStore<

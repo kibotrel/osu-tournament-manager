@@ -25,7 +25,7 @@
 import { useTranslation } from 'i18next-vue';
 import { computed } from 'vue';
 
-import { useLogout } from '#src/api/authentication.api.js';
+import { useLogoutRequest } from '#src/api/authentication.api.js';
 import BaseButton from '#src/components/base/button.base.vue';
 import type { DropdownItem } from '#src/components/base/dropdown.base.vue';
 import BaseDropdown from '#src/components/base/dropdown.base.vue';
@@ -52,6 +52,6 @@ const languageDropdownItems = computed<DropdownItem[]>(() => {
     },
   ];
 });
-const { isPending, mutate: logout } = useLogout();
+const { isPending, mutate: logout } = useLogoutRequest();
 const { user } = useUserStore();
 </script>

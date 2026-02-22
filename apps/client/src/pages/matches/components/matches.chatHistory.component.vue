@@ -81,7 +81,7 @@ import { storeToRefs } from 'pinia';
 import { reactive, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
 
-import { useGetMatchChatHistory } from '#src/api/matches.api.js';
+import { useGetMatchChatHistoryRequest } from '#src/api/matches.api.js';
 import BaseBody from '#src/components/base/body.base.vue';
 import BaseCaption from '#src/components/base/caption.base.vue';
 import BaseInput from '#src/components/base/input.base.vue';
@@ -93,7 +93,8 @@ import { defineWebsocketStore } from '#src/stores/webSocket.store.js';
 
 const route = useRoute();
 const matchId = Number(route.params.gameMatchId);
-const { data: cacheHistory, isLoading } = useGetMatchChatHistory(matchId);
+const { data: cacheHistory, isLoading } =
+  useGetMatchChatHistoryRequest(matchId);
 const chatHistoryDiv = ref<HTMLElement | null>(null);
 const { isAtBottom, onScroll, scrollToBottom } = useScrollBehavior(
   chatHistoryDiv,

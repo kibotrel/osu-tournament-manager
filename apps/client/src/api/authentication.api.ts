@@ -13,7 +13,7 @@ import type { Router } from 'vue-router';
 import { BASE_URL } from '#src/api/api.constants.js';
 import { useUserStore } from '#src/stores/user.store.js';
 
-const login = async (authenticationCode: string) => {
+const loginRequest = async (authenticationCode: string) => {
   const response = await postRequest<LoginRequestBody, LoginResponseBody>({
     baseUrl: BASE_URL,
     endpoint: '/authentication/login',
@@ -27,7 +27,7 @@ const login = async (authenticationCode: string) => {
   return response.data as LoginResponseData;
 };
 
-const logout = async () => {
+const logoutRequest = async () => {
   const response = await getRequest<LogoutRequestBody, LogoutResponseBody>({
     baseUrl: BASE_URL,
     endpoint: '/authentication/logout',
@@ -44,12 +44,12 @@ const logout = async () => {
 /**
  * Exchange an authentication code from osu! Oauth for a user bearer token + init a session.
  */
-export const useLogin = () => {
+export const useLoginRequest = () => {
   const router = inject<Router>('$router');
 
   return useMutation<LoginResponseData, Error, string>({
     mutationFn: async (code) => {
-      return await login(code);
+      return await loginRequest(code);
     },
     onSuccess: async (data) => {
       // TODO: Add a toast message here
@@ -68,12 +68,12 @@ export const useLogin = () => {
 /**
  * Log out the user and destroy its session.
  */
-export const useLogout = () => {
+export const useLogoutRequest = () => {
   const router = inject<Router>('$router');
 
   return useMutation<LogoutResponseBody, Error>({
     mutationFn: async () => {
-      return await logout();
+      return await logoutRequest();
     },
     onSettled: async () => {
       const { resetUser } = useUserStore();

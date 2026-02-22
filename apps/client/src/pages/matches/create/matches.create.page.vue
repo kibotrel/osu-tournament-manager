@@ -35,14 +35,14 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 
-import { useCreateMatch } from '#src/api/matches.api.js';
+import { useCreateMatchRequest } from '#src/api/matches.api.js';
 import BaseButton from '#src/components/base/button.base.vue';
 import BaseHeadline from '#src/components/base/headline.base.vue';
 import BaseInput from '#src/components/base/input.base.vue';
 import ArrowRightEndOnRectangleIcon from '#src/components/icons/arrowRightEndOnRectangle.icon.vue';
 
 const matchName = ref('');
-const { mutate: createMatch, isPending, isIdle } = useCreateMatch();
+const { mutate: createMatch, isPending, isIdle } = useCreateMatchRequest();
 
 const handleCreateMatch = () => {
   if (matchName.value.length === 0 || isPending.value) {

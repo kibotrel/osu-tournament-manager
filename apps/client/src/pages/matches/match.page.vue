@@ -74,7 +74,7 @@ import { inject, nextTick, ref, watch } from 'vue';
 import type { Router } from 'vue-router';
 import { useRoute } from 'vue-router';
 
-import { useGetMatch } from '#src/api/matches.api.js';
+import { useGetMatchRequest } from '#src/api/matches.api.js';
 import BaseBody from '#src/components/base/body.base.vue';
 import BaseButton from '#src/components/base/button.base.vue';
 import BaseHeadline from '#src/components/base/headline.base.vue';
@@ -91,7 +91,7 @@ const router = inject<Router>('$router');
 const matchId = Number(route.params.gameMatchId);
 const isModalOpen = ref(false);
 const isMatchInformationDrawerOpen = ref(false);
-const { data: match, isLoading: isMatchLoading } = useGetMatch(matchId);
+const { data: match, isLoading: isMatchLoading } = useGetMatchRequest(matchId);
 const { user } = useUserStore();
 const useWebSocketStore = defineWebsocketStore<
   WebSocketMatchMessage,
