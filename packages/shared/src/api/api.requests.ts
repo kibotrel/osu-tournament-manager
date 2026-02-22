@@ -1,6 +1,6 @@
-import { HttpRequest } from '#src/classes/httpRequestClass.js';
-import { HttpHeader } from '#src/constants/httpConstants.js';
-import type { NothingRecord } from '#src/types/utilityTypes.js';
+import { HttpRequest } from '#src/classes/httpRequest.class.js';
+import { HttpHeader } from '#src/constants/http.constants.js';
+import type { NothingRecord } from '#src/types/utility.types.js';
 
 export interface RequestConfiguration<PayloadType> {
   baseUrl: string;

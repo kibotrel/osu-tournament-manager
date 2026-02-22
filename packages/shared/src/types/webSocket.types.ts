@@ -1,5 +1,5 @@
-import type { BanchoLobbyState } from './banchoTypes.js';
-import type { UnknownRecord } from './utilityTypes.js';
+import type { BanchoLobbyState } from './bancho.types.js';
+import type { UnknownRecord } from './utility.types.js';
 
 export interface WebSocketMatchMessage {
   author: string;

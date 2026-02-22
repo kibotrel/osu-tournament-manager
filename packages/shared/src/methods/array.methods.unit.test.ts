@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { formatList } from '#src/methods/arrayMethods.js';
+import { formatList } from '#src/methods/array.methods.js';
 
 describe('formatList', () => {
   it('should return a string with elements joined by a comma by default', () => {

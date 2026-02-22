@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { gameMatchIdFromBanchoChannel } from '#src/methods/stringMethods.js';
+import { gameMatchIdFromBanchoChannel } from '#src/methods/string.methods.js';
 
 describe('gameMatchIdFromBanchoChannel', () => {
   it('should return id of bancho channel', () => {

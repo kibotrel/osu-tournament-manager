@@ -6,8 +6,8 @@ import {
   HttpInternalServerError,
   HttpMethodNotAllowedError,
   HttpNotFoundError,
-} from '#src/classes/httpErrorClass.js';
-import { HttpErrorReport } from '#src/classes/httpErrorReportClass.js';
+} from '#src/classes/httpError.class.js';
+import { HttpErrorReport } from '#src/classes/httpErrorReport.class.js';
 
 describe('HttpErrorReport', () => {
   describe('constructor', () => {

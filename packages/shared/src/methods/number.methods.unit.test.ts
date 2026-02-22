@@ -4,7 +4,7 @@ import {
   banchoChannelFromGameMatchId,
   exponentialBackoffDelay,
   formatTimestamp,
-} from '#src/methods/numberMethods.js';
+} from '#src/methods/number.methods.js';
 
 describe('banchoChannelFromGameMatchId', () => {
   it('should convert an integer to bancho channel identifier', () => {

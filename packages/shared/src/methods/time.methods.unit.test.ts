@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { sleep } from '#src/methods/timeMethods.js';
+import { sleep } from '#src/methods/time.methods.js';
 
 describe('sleep', () => {
   it('should delay execution for at least the requested duration', async () => {

@@ -1,4 +1,4 @@
-import type { ErrorReport } from '#src/sharedExport.js';
+import type { ErrorReport } from '#src/shared.export.js';
 
 export const isBinaryObject = (object: unknown): object is Blob => {
   return (

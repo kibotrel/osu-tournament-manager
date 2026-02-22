@@ -13,7 +13,7 @@ import {
   HttpUnauthorizedError,
   HttpUnavailableForLegalReasonsError,
   HttpUnprocessableContentError,
-} from '#src/classes/httpErrorClass.js';
+} from '#src/classes/httpError.class.js';
 
 describe('HttpBadRequestError', () => {
   it('should instantiate with the status 400', () => {

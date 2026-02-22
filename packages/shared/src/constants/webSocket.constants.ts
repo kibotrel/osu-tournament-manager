@@ -1,4 +1,4 @@
-import { Time } from '#src/constants/timeConstants.js';
+import { Time } from '#src/constants/time.constants.js';
 
 /**
  * The interval at witch sever should send ping messages to all connected clients.

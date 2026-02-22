@@ -1,4 +1,4 @@
-import { OsuBeatmapModification } from '#src/constants/osuConstants.js';
+import { OsuBeatmapModification } from '#src/constants/osu.constants.js';
 
 export const isOsuBeatmapModificationDifficultyDecrease = (
   modification: OsuBeatmapModification,

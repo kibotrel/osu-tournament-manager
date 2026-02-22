@@ -1,5 +1,5 @@
-import type { OsuBeatmapModification } from '#src/constants/osuConstants.js';
-import type { BanchoTeamMode, BanchoWinCondition } from '#src/sharedExport.js';
+import type { OsuBeatmapModification } from '#src/constants/osu.constants.js';
+import type { BanchoTeamMode, BanchoWinCondition } from '#src/shared.export.js';
 
 export interface BanchoLobbySlot {
   isHost: boolean;

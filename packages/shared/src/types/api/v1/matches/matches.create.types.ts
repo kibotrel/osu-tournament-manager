@@ -1,4 +1,4 @@
-import type { ErrorReport } from '#src/classes/httpErrorReportClass.js';
+import type { ErrorReport } from '#src/classes/httpErrorReport.class.js';
 
 export interface CreateMatchRequestBody {
   name: string;

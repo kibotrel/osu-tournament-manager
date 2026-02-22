@@ -1,10 +1,10 @@
 import type { Request } from 'express';
 
-import type { HttpError } from '#src/classes/httpErrorClass.js';
+import type { HttpError } from '#src/classes/httpError.class.js';
 import {
   HttpStatusCode,
   HttpStatusCodesToMessagesMapping,
-} from '#src/constants/httpConstants.js';
+} from '#src/constants/http.constants.js';
 
 export type ErrorReport = Omit<
   HttpErrorReport,

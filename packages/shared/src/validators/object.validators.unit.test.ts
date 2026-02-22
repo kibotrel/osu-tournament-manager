@@ -1,10 +1,10 @@
 import { describe, expect, it } from 'vitest';
 
-import type { HttpErrorReport } from '#src/sharedExport.js';
+import type { HttpErrorReport } from '#src/shared.export.js';
 import {
   isBinaryObject,
   isErrorReport,
-} from '#src/validators/objectValidators.js';
+} from '#src/validators/object.validators.js';
 
 describe('isBinaryObject', () => {
   it('should return true if input is a Blob', () => {

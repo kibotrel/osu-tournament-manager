@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 
-import { HttpRequest } from '#src/classes/httpRequestClass.js';
-import { HttpHeader } from '#src/sharedExport.js';
+import { HttpRequest } from '#src/classes/httpRequest.class.js';
+import { HttpHeader } from '#src/shared.export.js';
 
 describe('HttpRequest', () => {
   describe('constructor', () => {

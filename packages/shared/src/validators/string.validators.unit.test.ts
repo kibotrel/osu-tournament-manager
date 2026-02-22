@@ -1,13 +1,13 @@
 import { describe, expect, it } from 'vitest';
 
-import { OsuBeatmapModification } from '#src/sharedExport.js';
+import { OsuBeatmapModification } from '#src/shared.export.js';
 
 import {
   isOsuBeatmapModificationDifficultyDecrease,
   isOsuBeatmapModificationDifficultyIncrease,
   isOsuBeatmapModificationManiaSpecific,
   isOsuBeatmapModificationStandardSpecific,
-} from './stringValidators.js';
+} from './string.validators.js';
 
 describe('isOsuBeatmapModificationDifficultyDecrease', () => {
   it('should return true for valid difficulty decrease modifications', () => {

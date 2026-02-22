@@ -1,6 +1,6 @@
-import type { HttpStatusCode } from '#src/constants/httpConstants.js';
-import { HttpHeader, HttpMethod } from '#src/constants/httpConstants.js';
-import type { NothingRecord, UnknownRecord } from '#src/types/utilityTypes.js';
+import type { HttpStatusCode } from '#src/constants/http.constants.js';
+import { HttpHeader, HttpMethod } from '#src/constants/http.constants.js';
+import type { NothingRecord, UnknownRecord } from '#src/types/utility.types.js';
 
 export interface HttpResponse<ResponseType> {
   data: ResponseType;
