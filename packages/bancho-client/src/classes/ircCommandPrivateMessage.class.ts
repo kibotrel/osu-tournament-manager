@@ -4,16 +4,16 @@ import type {
   OsuBeatmapModification,
 } from '@packages/shared';
 
-import { BanchoClientEvent } from '#src/banchoClientExport.js';
-import type { BanchoClient } from '#src/classes/ircClientClass.js';
-import type { IrcCommand } from '#src/classes/ircCommandClass.js';
+import { BanchoClientEvent } from '#src/banchoClient.export.js';
+import type { BanchoClient } from '#src/classes/ircClient.class.js';
+import type { IrcCommand } from '#src/classes/ircCommand.class.js';
 import {
   BanchoBotCommonMessage,
   BanchoReadyStatus,
   BanchoTerm,
   BanchoUser,
-} from '#src/constants/banchoClientConstants.js';
-import { parseIrcUsername } from '#src/methods/parseMethods.js';
+} from '#src/constants/banchoClient.constants.js';
+import { parseIrcUsername } from '#src/methods/parse.methods.js';
 
 interface Payload {
   channel: string;

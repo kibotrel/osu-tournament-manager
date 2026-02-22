@@ -1,16 +1,16 @@
-import { IrcKeyword } from '#src/constants/ircConstants.js';
+import { IrcKeyword } from '#src/constants/irc.constants.js';
 
-import type { BanchoClient } from './ircClientClass.js';
-import { IrcCommandChannelNotFound } from './ircCommandChannelNotFoundClass.js';
-import { IrcCommandChannelTopic } from './ircCommandChannelTopicClass.js';
-import { IrcCommandJoin } from './ircCommandJoinClass.js';
-import { IrcCommandNameListBody } from './ircCommandNameListBodyClass.js';
-import { IrcCommandNoop } from './ircCommandNoopClass.js';
-import { IrcCommandPart } from './ircCommandPartClass.js';
-import { IrcCommandPrivateMessage } from './ircCommandPrivateMessageClass.js';
-import { IrcCommandQuit } from './ircCommandQuitClass.js';
-import { IrcCommandRecipientNotFound } from './ircCommandRecipientNotFoundClass.js';
-import { IrcCommandWelcome } from './ircCommandWelcomeClass.js';
+import type { BanchoClient } from './ircClient.class.js';
+import { IrcCommandChannelNotFound } from './ircCommandChannelNotFound.class.js';
+import { IrcCommandChannelTopic } from './ircCommandChannelTopic.class.js';
+import { IrcCommandJoin } from './ircCommandJoin.class.js';
+import { IrcCommandNameListBody } from './ircCommandNameListBody.class.js';
+import { IrcCommandNoop } from './ircCommandNoop.class.js';
+import { IrcCommandPart } from './ircCommandPart.class.js';
+import { IrcCommandPrivateMessage } from './ircCommandPrivateMessage.class.js';
+import { IrcCommandQuit } from './ircCommandQuit.class.js';
+import { IrcCommandRecipientNotFound } from './ircCommandRecipientNotFound.class.js';
+import { IrcCommandWelcome } from './ircCommandWelcome.class.js';
 
 export class IrcCommandFactory {
   private readonly banchoClient: BanchoClient;

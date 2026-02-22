@@ -1,7 +1,7 @@
 import { describe, expect, it, vi } from 'vitest';
 
-import { BanchoClient } from '#src/classes/ircClientClass.js';
-import { IrcCommandChannelTopic } from '#src/classes/ircCommandChannelTopicClass.js';
+import { BanchoClient } from '#src/classes/ircClient.class.js';
+import { IrcCommandChannelTopic } from '#src/classes/ircCommandChannelTopic.class.js';
 
 describe('IrcCommandChannelTopic', () => {
   const banchoClient = new BanchoClient({

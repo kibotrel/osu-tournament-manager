@@ -1,7 +1,7 @@
-import { BanchoClientEvent } from '#src/banchoClientExport.js';
-import type { BanchoClient } from '#src/classes/ircClientClass.js';
-import type { IrcCommand } from '#src/classes/ircCommandClass.js';
-import { parseIrcUsername } from '#src/methods/parseMethods.js';
+import { BanchoClientEvent } from '#src/banchoClient.export.js';
+import type { BanchoClient } from '#src/classes/ircClient.class.js';
+import type { IrcCommand } from '#src/classes/ircCommand.class.js';
+import { parseIrcUsername } from '#src/methods/parse.methods.js';
 
 export class IrcCommandJoin implements IrcCommand {
   public readonly banchoClient: BanchoClient;

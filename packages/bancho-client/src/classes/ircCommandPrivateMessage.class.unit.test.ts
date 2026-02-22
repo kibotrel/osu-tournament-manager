@@ -1,7 +1,7 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
-import { BanchoClient } from '#src/classes/ircClientClass.js';
-import { IrcCommandPrivateMessage } from '#src/classes/ircCommandPrivateMessageClass.js';
+import { BanchoClient } from '#src/classes/ircClient.class.js';
+import { IrcCommandPrivateMessage } from '#src/classes/ircCommandPrivateMessage.class.js';
 
 describe('IrcCommandPrivateMessage', () => {
   const banchoClient = new BanchoClient({

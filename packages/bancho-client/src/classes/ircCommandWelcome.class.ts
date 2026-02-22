@@ -1,6 +1,6 @@
-import type { BanchoClient } from '#src/classes/ircClientClass.js';
-import type { IrcCommand } from '#src/classes/ircCommandClass.js';
-import { BanchoClientEvent } from '#src/constants/banchoClientConstants.js';
+import type { BanchoClient } from '#src/classes/ircClient.class.js';
+import type { IrcCommand } from '#src/classes/ircCommand.class.js';
+import { BanchoClientEvent } from '#src/constants/banchoClient.constants.js';
 
 export class IrcCommandWelcome implements IrcCommand {
   public readonly banchoClient: BanchoClient;

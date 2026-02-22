@@ -11,20 +11,20 @@ import { BanchoCommand } from '@packages/shared';
 import {
   BanchoClientEvent,
   BanchoPublicChannel,
-} from '#src/constants/banchoClientConstants.js';
+} from '#src/constants/banchoClient.constants.js';
 import {
   IrcClientState,
   IrcEvent,
   IrcKeyword,
-} from '#src/constants/ircConstants.js';
+} from '#src/constants/irc.constants.js';
 import {
   parseIrcMessage,
   parseOsuUsername,
-} from '#src/methods/parseMethods.js';
+} from '#src/methods/parse.methods.js';
 import {
   isDirectMessageChannel,
   isSocketReady,
-} from '#src/methods/typeGardMethods.js';
+} from '#src/methods/typeGard.methods.js';
 
 interface EmittedEvents {
   [BanchoClientEvent.AddChannelMembers]: [{ channel: string; users: string[] }];

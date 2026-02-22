@@ -1,8 +1,8 @@
 import { describe, expect, it, vi } from 'vitest';
 
-import { BanchoClient } from '#src/classes/ircClientClass.js';
-import { IrcCommandNoop } from '#src/classes/ircCommandNoopClass.js';
-import type { IrcKeyword } from '#src/constants/ircConstants.js';
+import { BanchoClient } from '#src/classes/ircClient.class.js';
+import { IrcCommandNoop } from '#src/classes/ircCommandNoop.class.js';
+import type { IrcKeyword } from '#src/constants/irc.constants.js';
 
 describe('IrcCommandNoop', () => {
   const banchoClient = new BanchoClient({

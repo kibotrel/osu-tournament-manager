@@ -1,18 +1,18 @@
 import { describe, expect, it } from 'vitest';
 
-import { BanchoClient } from '#src/classes/ircClientClass.js';
-import { IrcCommandChannelNotFound } from '#src/classes/ircCommandChannelNotFoundClass.js';
-import { IrcCommandChannelTopic } from '#src/classes/ircCommandChannelTopicClass.js';
-import { IrcCommandFactory } from '#src/classes/ircCommandFactoryClass.js';
-import { IrcCommandJoin } from '#src/classes/ircCommandJoinClass.js';
-import { IrcCommandNameListBody } from '#src/classes/ircCommandNameListBodyClass.js';
-import { IrcCommandNoop } from '#src/classes/ircCommandNoopClass.js';
-import { IrcCommandPart } from '#src/classes/ircCommandPartClass.js';
-import { IrcCommandPrivateMessage } from '#src/classes/ircCommandPrivateMessageClass.js';
-import { IrcCommandQuit } from '#src/classes/ircCommandQuitClass.js';
-import { IrcCommandRecipientNotFound } from '#src/classes/ircCommandRecipientNotFoundClass.js';
-import { IrcCommandWelcome } from '#src/classes/ircCommandWelcomeClass.js';
-import type { IrcKeyword } from '#src/constants/ircConstants.js';
+import { BanchoClient } from '#src/classes/ircClient.class.js';
+import { IrcCommandChannelNotFound } from '#src/classes/ircCommandChannelNotFound.class.js';
+import { IrcCommandChannelTopic } from '#src/classes/ircCommandChannelTopic.class.js';
+import { IrcCommandFactory } from '#src/classes/ircCommandFactory.class.js';
+import { IrcCommandJoin } from '#src/classes/ircCommandJoin.class.js';
+import { IrcCommandNameListBody } from '#src/classes/ircCommandNameListBody.class.js';
+import { IrcCommandNoop } from '#src/classes/ircCommandNoop.class.js';
+import { IrcCommandPart } from '#src/classes/ircCommandPart.class.js';
+import { IrcCommandPrivateMessage } from '#src/classes/ircCommandPrivateMessage.class.js';
+import { IrcCommandQuit } from '#src/classes/ircCommandQuit.class.js';
+import { IrcCommandRecipientNotFound } from '#src/classes/ircCommandRecipientNotFound.class.js';
+import { IrcCommandWelcome } from '#src/classes/ircCommandWelcome.class.js';
+import type { IrcKeyword } from '#src/constants/irc.constants.js';
 
 describe('IrcCommandFactory', () => {
   const banchoClient = new BanchoClient({

@@ -1,7 +1,10 @@
-import type { BanchoClient } from '#src/banchoClientExport.js';
-import { IrcCommandFactory } from '#src/classes/ircCommandFactoryClass.js';
-import { IrcCommandPing } from '#src/classes/ircCommandPingClass.js';
-import { IrcKeyword, ignoredIrcKeywords } from '#src/constants/ircConstants.js';
+import type { BanchoClient } from '#src/banchoClient.export.js';
+import { IrcCommandFactory } from '#src/classes/ircCommandFactory.class.js';
+import { IrcCommandPing } from '#src/classes/ircCommandPing.class.js';
+import {
+  IrcKeyword,
+  ignoredIrcKeywords,
+} from '#src/constants/irc.constants.js';
 
 /**
  * Parses the IRC message and returns the corresponding command handler.

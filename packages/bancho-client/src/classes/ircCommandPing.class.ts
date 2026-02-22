@@ -1,6 +1,6 @@
-import type { BanchoClient } from '#src/classes/ircClientClass.js';
-import type { IrcCommand } from '#src/classes/ircCommandClass.js';
-import { IrcKeyword } from '#src/constants/ircConstants.js';
+import type { BanchoClient } from '#src/classes/ircClient.class.js';
+import type { IrcCommand } from '#src/classes/ircCommand.class.js';
+import { IrcKeyword } from '#src/constants/irc.constants.js';
 
 export class IrcCommandPing implements IrcCommand {
   public readonly banchoClient: BanchoClient;

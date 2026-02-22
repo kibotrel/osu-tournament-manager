@@ -2,12 +2,12 @@ import { Socket } from 'node:net';
 
 import { describe, expect, it } from 'vitest';
 
-import { IrcClientState } from '#src/constants/ircConstants.js';
+import { IrcClientState } from '#src/constants/irc.constants.js';
 import {
   isDirectMessageChannel,
   isPublicChannel,
   isSocketReady,
-} from '#src/methods/typeGardMethods.js';
+} from '#src/methods/typeGard.methods.js';
 
 describe('isDirectMessageChannel', () => {
   it('should return true if input is a direct message channel', () => {

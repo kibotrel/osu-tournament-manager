@@ -1,7 +1,7 @@
 import { describe, expect, it, vi } from 'vitest';
 
-import { BanchoClient } from '#src/classes/ircClientClass.js';
-import { IrcCommandChannelNotFound } from '#src/classes/ircCommandChannelNotFoundClass.js';
+import { BanchoClient } from '#src/classes/ircClient.class.js';
+import { IrcCommandChannelNotFound } from '#src/classes/ircCommandChannelNotFound.class.js';
 
 describe('IrcCommandChannelNotFound', () => {
   const banchoClient = new BanchoClient({

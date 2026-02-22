@@ -1,4 +1,4 @@
-import type { BanchoClient } from '#src/classes/ircClientClass.js';
+import type { BanchoClient } from '#src/classes/ircClient.class.js';
 
 export abstract class IrcCommand {
   public abstract readonly banchoClient: BanchoClient;
