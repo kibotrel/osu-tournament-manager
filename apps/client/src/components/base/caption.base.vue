@@ -5,11 +5,11 @@
 </template>
 
 <script setup lang="ts">
-export type BodyVariant = 'base';
+export type CaptionVariant = 'base';
 
 interface Properties {
   isInline?: boolean;
-  variant?: BodyVariant;
+  variant?: CaptionVariant;
 }
 
 withDefaults(defineProps<Properties>(), { isInline: false, variant: 'base' });
