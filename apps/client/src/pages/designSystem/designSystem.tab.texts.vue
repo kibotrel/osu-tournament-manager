@@ -60,6 +60,7 @@ const icons: IconName[] = [
   'arrowPath',
   'arrowRightEndOnRectangle',
   'check',
+  'checkCircle',
   'chevronDoubleDown',
   'chevronDoubleRight',
   'clipboard',
@@ -69,8 +70,10 @@ const icons: IconName[] = [
   'cubeTransparent',
   'cursorArrowRays',
   'ellipsisVertical',
+  'exclamationCircle',
   'gear',
   'identification',
+  'informationCircle',
   'language',
   'loading',
   'paperAirplane',
@@ -78,6 +81,7 @@ const icons: IconName[] = [
   'rectangleGroup',
   'signal',
   'text',
+  'xCircle',
   'xMark',
 ];
 const headlineVariants: HeadlineVariant[] = ['hero', 'title', 'subtitle'];
