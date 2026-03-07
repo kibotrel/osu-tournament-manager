@@ -15,12 +15,16 @@
       "confirm": "Confirmer",
       "create": "Créer",
       "end": "Clore",
+      "error": "Erreur",
+      "info": "Info",
       "link": "Lien",
       "name": "Nom",
       "ready": "Prêt",
       "refresh": "Rafraîchir",
       "right": "Droite",
-      "start": "Démarrer"
+      "start": "Démarrer",
+      "success": "Succès",
+      "warning": "Attention"
     }
   },
   "pages": {

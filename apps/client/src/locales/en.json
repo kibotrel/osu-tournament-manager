@@ -15,12 +15,16 @@
       "confirm": "Confirm",
       "create": "Create",
       "end": "End",
+      "error": "Error",
+      "info": "Info",
       "link": "Link",
       "name": "Name",
       "ready": "Ready",
       "refresh": "Refresh",
       "right": "Right",
-      "start": "Start"
+      "start": "Start",
+      "success": "Success",
+      "warning": "Warning"
     }
   },
   "pages": {
