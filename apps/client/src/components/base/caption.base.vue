@@ -19,6 +19,6 @@ withDefaults(defineProps<Properties>(), { isInline: false, variant: 'base' });
 @reference '#src/assets/styles/index.css';
 
 .base {
-  @apply text-xs font-normal tracking-normal;
+  @apply text-xs font-normal tracking-normal text-balance;
 }
 </style>
