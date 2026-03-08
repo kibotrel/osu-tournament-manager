@@ -82,19 +82,19 @@ withDefaults(defineProps<Properties>(), {
 }
 
 .badge--green {
-  @apply border-green-500 bg-green-500/50;
+  @apply bg-faded-green border-green-500;
 }
 
 .badge--primary {
-  @apply border-primary-1 bg-primary-1/50;
+  @apply border-primary-1 bg-faded-primary-1;
 }
 
 .badge--red {
-  @apply border-red-500 bg-red-500/50;
+  @apply bg-faded-red border-red-400;
 }
 
 .badge--secondary {
-  @apply border-primary-3 bg-primary-3/50;
+  @apply border-primary-3 bg-faded-primary-3;
 }
 
 .badge--small {
@@ -102,6 +102,6 @@ withDefaults(defineProps<Properties>(), {
 }
 
 .badge--yellow {
-  @apply border-yellow-400 bg-yellow-400/50;
+  @apply bg-faded-yellow border-yellow-400;
 }
 </style>

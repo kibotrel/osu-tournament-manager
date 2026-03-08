@@ -5,11 +5,11 @@
 </template>
 
 <script setup lang="ts">
-export type BodyVariant = 'base';
+export type CaptionVariant = 'base';
 
 interface Properties {
   isInline?: boolean;
-  variant?: BodyVariant;
+  variant?: CaptionVariant;
 }
 
 withDefaults(defineProps<Properties>(), { isInline: false, variant: 'base' });
@@ -19,6 +19,6 @@ withDefaults(defineProps<Properties>(), { isInline: false, variant: 'base' });
 @reference '#src/assets/styles/index.css';
 
 .base {
-  @apply text-xs font-normal tracking-normal;
+  @apply text-xs font-normal tracking-normal text-balance;
 }
 </style>

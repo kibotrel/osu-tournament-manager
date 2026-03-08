@@ -59,13 +59,28 @@ describe('HttpErrorReport', () => {
       expect(errorReport.title).toBe('Internal Server Error');
     });
 
-    it('should not expose errors and detail for status code 404', () => {
+    it('should not expose errors and detail for status code 404 if related to resource discovery', () => {
       const errorReport = new HttpErrorReport({
-        error: new HttpNotFoundError({ message: 'test message' }),
+        error: new HttpNotFoundError({
+          message: 'Resource at /resource/1 not found',
+        }),
         request: { path: '/resource/1' } as Request,
       });
 
       expect(errorReport.detail).toBeUndefined();
+      expect(errorReport.errors).toBeUndefined();
+      expect(errorReport.instance).toBe('/resource/1');
+      expect(errorReport.status).toBe(404);
+      expect(errorReport.title).toBe('Not Found');
+    });
+
+    it('should expose detail for status code 404 if related to business logic', () => {
+      const errorReport = new HttpErrorReport({
+        error: new HttpNotFoundError({ message: 'businessLogicError' }),
+        request: { path: '/resource/1' } as Request,
+      });
+
+      expect(errorReport.detail).toBe('businessLogicError');
       expect(errorReport.errors).toBeUndefined();
       expect(errorReport.instance).toBe('/resource/1');
       expect(errorReport.status).toBe(404);
@@ -165,11 +180,11 @@ describe('HttpErrorReport', () => {
       });
     });
 
-    it('should serialize the error report with no detail and errors for status 404', () => {
+    it('should serialize the error report with no detail and errors for status 404 if related to resource discovery', () => {
       const errorReport = new HttpErrorReport({
         error: new HttpNotFoundError({
           errors: [{ error1: 'message1' }, { error2: 'message2' }],
-          message: 'test message',
+          message: 'Resource at /resource/1 not found',
         }),
         request: { path: '/resource/1' } as Request,
       });
@@ -181,6 +196,25 @@ describe('HttpErrorReport', () => {
         title: 'Not Found',
         detail: undefined,
         errors: undefined,
+      });
+    });
+
+    it('should serialize the error report with detail and no errors for status 404 if related to business logic', () => {
+      const errorReport = new HttpErrorReport({
+        error: new HttpNotFoundError({
+          errors: [{ error1: 'message1' }, { error2: 'message2' }],
+          message: 'businessLogicError',
+        }),
+        request: { path: '/resource/1' } as Request,
+      });
+      const serialized = errorReport.serialize();
+
+      expect(serialized).toEqual({
+        instance: '/resource/1',
+        status: 404,
+        title: 'Not Found',
+        detail: 'businessLogicError',
+        errors: [{ error1: 'message1' }, { error2: 'message2' }],
       });
     });
 

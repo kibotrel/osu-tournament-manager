@@ -14,10 +14,14 @@ import type {
 } from '@packages/shared';
 import { getRequest, postRequest } from '@packages/shared';
 import { useMutation, useQuery } from '@tanstack/vue-query';
+import { useTranslation } from 'i18next-vue';
 import { inject } from 'vue';
 import type { Router } from 'vue-router';
 
 import { BASE_URL } from '#src/api/api.constants.js';
+import { useToasterStore } from '#src/stores/toaster.store.js';
+
+import { extractApiErrorMessageKeyFromError } from './api.methods.js';
 
 const closeMatchRequest = async (gameMatchId: number | string) => {
   const response = await postRequest<NothingRecord, CloseMatchResponseBody>({
@@ -99,13 +103,27 @@ const getMatchStateRequest = async (gameMatchId: number | string) => {
  * Close an existing match and its corresponding channel on bancho.
  */
 export const useCloseMatchRequest = () => {
+  const router = inject<Router>('$router');
+  const { newToast } = useToasterStore();
+  const { t } = useTranslation();
+
   return useMutation<CloseMatchResponseData, Error, number>({
     mutationFn: async (gameMatchId) => {
       return await closeMatchRequest(gameMatchId);
     },
     onError: (error) => {
-      // TODO: Add a toast message here
-      console.log(JSON.parse(error.message));
+      const { errorName, translationKey } = extractApiErrorMessageKeyFromError(
+        error,
+        { namespace: 'matches.close' },
+      );
+
+      if (errorName === 'matchAlreadyClosed') {
+        newToast.info(t(translationKey));
+      } else {
+        newToast.error(t(translationKey));
+      }
+
+      router?.push('/');
     },
   });
 };
@@ -115,6 +133,8 @@ export const useCloseMatchRequest = () => {
  */
 export const useCreateMatchRequest = () => {
   const router = inject<Router>('$router');
+  const { newToast } = useToasterStore();
+  const { t } = useTranslation();
 
   return useMutation<CreateMatchResponseData, Error, string>({
     mutationFn: async (name) => {
@@ -124,8 +144,12 @@ export const useCreateMatchRequest = () => {
       router?.push(`/matches/${data.gameMatchId}`);
     },
     onError: (error) => {
-      // TODO: Add a toast message here
-      console.log(JSON.parse(error.message));
+      const { translationKey } = extractApiErrorMessageKeyFromError(error, {
+        namespace: 'matches.create',
+      });
+
+      newToast.error(t(translationKey));
+      router?.push('/');
     },
   });
 };

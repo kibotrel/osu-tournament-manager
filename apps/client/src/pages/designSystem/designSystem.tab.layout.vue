@@ -95,103 +95,174 @@
         <BaseTabList id="base-tab-list-with-icons" :tabs="tabsWithIconList" />
       </div>
     </div>
-    <BaseModal
-      id="base-modal"
-      :is-modal-open="isModalOpen"
-      @close:modal="isModalOpen = false"
-    >
-      <template #header>
-        <h1 class="mb-4 font-semibold tracking-tight">
-          {{ $t('pages.designSystem.tabs.layout.words.title') }}
-        </h1>
-      </template>
-      <template #body>
-        <p class="text-base">
-          {{ $t('pages.designSystem.tabs.layout.words.content') }}
-        </p>
-      </template>
-      <template #footer>
+    <div class="space-y-2">
+      <BaseHeadline variant="title">{{
+        $t('pages.designSystem.tabs.layout.words.toast')
+      }}</BaseHeadline>
+      <div class="flex flex-row space-x-2">
         <BaseButton
-          id="base-modal-cancel-button"
-          class="w-24"
-          variant="secondary"
-          @keydown.enter="isModalOpen = false"
-          @mousedown="isModalOpen = false"
+          id="show-toast"
+          class="w-32"
+          @keydown.enter="
+            newToast.error(
+              $t('pages.designSystem.tabs.layout.toasts.errorMessage'),
+            )
+          "
+          @mousedown="
+            newToast.error(
+              $t('pages.designSystem.tabs.layout.toasts.errorMessage'),
+            )
+          "
         >
-          {{ $t('global.words.cancel') }}
+          {{ $t('global.words.error') }}
         </BaseButton>
+        <BaseButton
+          id="show-toast"
+          class="w-32"
+          @keydown.enter="
+            newToast.info(
+              $t('pages.designSystem.tabs.layout.toasts.infoMessage'),
+            )
+          "
+          @mousedown="
+            newToast.info(
+              $t('pages.designSystem.tabs.layout.toasts.infoMessage'),
+            )
+          "
+        >
+          {{ $t('global.words.info') }}
+        </BaseButton>
+        <BaseButton
+          id="show-toast"
+          class="w-32"
+          @keydown.enter="
+            newToast.success(
+              $t('pages.designSystem.tabs.layout.toasts.successMessage'),
+            )
+          "
+          @mousedown="
+            newToast.success(
+              $t('pages.designSystem.tabs.layout.toasts.successMessage'),
+            )
+          "
+        >
+          {{ $t('global.words.success') }}
+        </BaseButton>
+        <BaseButton
+          id="show-toast"
+          class="w-32"
+          @keydown.enter="
+            newToast.warning(
+              $t('pages.designSystem.tabs.layout.toasts.warningMessage'),
+            )
+          "
+          @mousedown="
+            newToast.warning(
+              $t('pages.designSystem.tabs.layout.toasts.warningMessage'),
+            )
+          "
+        >
+          {{ $t('global.words.warning') }}
+        </BaseButton>
+      </div>
+    </div>
+  </div>
+  <BaseModal
+    id="base-modal"
+    :is-modal-open="isModalOpen"
+    @close:modal="isModalOpen = false"
+  >
+    <template #header>
+      <h1 class="mb-4 font-semibold tracking-tight">
+        {{ $t('pages.designSystem.tabs.layout.words.title') }}
+      </h1>
+    </template>
+    <template #body>
+      <p class="text-base">
+        {{ $t('pages.designSystem.tabs.layout.words.content') }}
+      </p>
+    </template>
+    <template #footer>
+      <BaseButton
+        id="base-modal-cancel-button"
+        class="w-24"
+        variant="secondary"
+        @keydown.enter="isModalOpen = false"
+        @mousedown="isModalOpen = false"
+      >
+        {{ $t('global.words.cancel') }}
+      </BaseButton>
+      <BaseButton
+        id="base-modal-confirm-button"
+        class="w-24"
+        variant="primary"
+        @keydown.enter="isModalOpen = false"
+        @mousedown="isModalOpen = false"
+      >
+        {{ $t('global.words.confirm') }}
+      </BaseButton>
+    </template>
+  </BaseModal>
+  <BaseDrawer
+    id="base-bottom-drawer"
+    variant="bottom"
+    :is-drawer-open="isBottomDrawerOpen"
+    @close:drawer="isBottomDrawerOpen = false"
+  >
+    <template #header>
+      <BaseHeadline class="px-4 py-8">
+        {{ $t('pages.designSystem.tabs.layout.words.title') }}
+      </BaseHeadline>
+    </template>
+    <template #body>
+      <BaseBody class="px-4">
+        {{ $t('pages.designSystem.tabs.layout.words.content') }}
+      </BaseBody>
+    </template>
+    <template #footer>
+      <div class="flex flex-row justify-end space-x-2 p-4">
         <BaseButton
           id="base-modal-confirm-button"
           class="w-24"
           variant="primary"
-          @keydown.enter="isModalOpen = false"
-          @mousedown="isModalOpen = false"
+          @keydown.enter="isBottomDrawerOpen = false"
+          @mousedown="isBottomDrawerOpen = false"
         >
-          {{ $t('global.words.confirm') }}
+          {{ $t('global.words.close') }}
         </BaseButton>
-      </template>
-    </BaseModal>
-    <BaseDrawer
-      id="base-bottom-drawer"
-      variant="bottom"
-      :is-drawer-open="isBottomDrawerOpen"
-      @close:drawer="isBottomDrawerOpen = false"
-    >
-      <template #header>
-        <BaseHeadline class="px-4 py-8">
-          {{ $t('pages.designSystem.tabs.layout.words.title') }}
-        </BaseHeadline>
-      </template>
-      <template #body>
-        <BaseBody class="px-4">
-          {{ $t('pages.designSystem.tabs.layout.words.content') }}
-        </BaseBody>
-      </template>
-      <template #footer>
-        <div class="flex flex-row justify-end space-x-2 p-4">
-          <BaseButton
-            id="base-modal-confirm-button"
-            class="w-24"
-            variant="primary"
-            @keydown.enter="isBottomDrawerOpen = false"
-            @mousedown="isBottomDrawerOpen = false"
-          >
-            {{ $t('global.words.close') }}
-          </BaseButton>
-        </div>
-      </template>
-    </BaseDrawer>
-    <BaseDrawer
-      id="base-right-drawer"
-      variant="right"
-      :is-drawer-open="isRightDrawerOpen"
-      @close:drawer="isRightDrawerOpen = false"
-    >
-      <template #header>
-        <BaseHeadline class="px-4 py-8">
-          {{ $t('pages.designSystem.tabs.layout.words.title') }}
-        </BaseHeadline>
-      </template>
-      <template #body>
-        <BaseBody class="px-4">
-          {{ $t('pages.designSystem.tabs.layout.words.content') }}
-        </BaseBody>
-      </template>
-      <template #footer>
-        <div class="flex flex-row justify-end space-x-2 p-4">
-          <BaseButton
-            id="base-modal-confirm-button"
-            class="w-24"
-            variant="primary"
-            @keydown.enter="isRightDrawerOpen = false"
-            @mousedown="isRightDrawerOpen = false"
-          >
-            {{ $t('global.words.close') }}
-          </BaseButton>
-        </div>
-      </template>
-    </BaseDrawer>
-  </div>
+      </div>
+    </template>
+  </BaseDrawer>
+  <BaseDrawer
+    id="base-right-drawer"
+    variant="right"
+    :is-drawer-open="isRightDrawerOpen"
+    @close:drawer="isRightDrawerOpen = false"
+  >
+    <template #header>
+      <BaseHeadline class="px-4 py-8">
+        {{ $t('pages.designSystem.tabs.layout.words.title') }}
+      </BaseHeadline>
+    </template>
+    <template #body>
+      <BaseBody class="px-4">
+        {{ $t('pages.designSystem.tabs.layout.words.content') }}
+      </BaseBody>
+    </template>
+    <template #footer>
+      <div class="flex flex-row justify-end space-x-2 p-4">
+        <BaseButton
+          id="base-modal-confirm-button"
+          class="w-24"
+          variant="primary"
+          @keydown.enter="isRightDrawerOpen = false"
+          @mousedown="isRightDrawerOpen = false"
+        >
+          {{ $t('global.words.close') }}
+        </BaseButton>
+      </div>
+    </template>
+  </BaseDrawer>
 </template>
 
 <script setup lang="ts">
@@ -208,8 +279,10 @@ import BaseModal from '#src/components/base/modal.base.vue';
 import BaseSeparator from '#src/components/base/separator.base.vue';
 import type { Tab } from '#src/components/base/tabList.base.vue';
 import BaseTabList from '#src/components/base/tabList.base.vue';
+import { useToasterStore } from '#src/stores/toaster.store.js';
 
 const { t } = useTranslation();
+const { newToast } = useToasterStore();
 const isModalOpen = ref(false);
 const isBottomDrawerOpen = ref(false);
 const isDropdownOpen = ref(false);

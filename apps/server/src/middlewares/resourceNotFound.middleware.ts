@@ -15,6 +15,7 @@ export const resourceNotFoundMiddleware: RequestHandler = (
 ) => {
   const error = new HttpNotFoundError({
     message: `Resource at ${request.url} could not be found`,
+    metadata: { method: request.method, url: request.url },
   });
 
   if (!environmentConfig.isProductionMode) {

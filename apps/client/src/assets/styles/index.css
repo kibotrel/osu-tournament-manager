@@ -1,6 +1,13 @@
 @import 'tailwindcss';
 
 @theme {
+  --color-faded-blue: #1a2e48;
+  --color-faded-green: #093e23;
+  --color-faded-red: #471e20;
+  --color-faded-yellow: #453700;
+  --color-faded-primary-1: #444446;
+  --color-faded-primary-2: #2e2e31;
+  --color-faded-primary-3: #0a0a0b;
   --color-primary-1: #fafafa;
   --color-primary-2: #a1a1aa;
   --color-primary-3: #27272a;

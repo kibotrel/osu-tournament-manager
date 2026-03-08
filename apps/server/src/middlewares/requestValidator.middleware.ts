@@ -37,7 +37,7 @@ export const validateRequestMiddleware: RequestHandler = (
 
   return next(
     new HttpBadRequestError({
-      message: 'Input validation failed',
+      message: 'inputValidationFailed',
       errors,
     }),
   );

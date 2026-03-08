@@ -10,6 +10,7 @@ export type IconName =
   | 'arrowPath'
   | 'arrowRightEndOnRectangle'
   | 'check'
+  | 'checkCircle'
   | 'chevronDoubleDown'
   | 'chevronDoubleRight'
   | 'clipboard'
@@ -19,8 +20,10 @@ export type IconName =
   | 'cubeTransparent'
   | 'cursorArrowRays'
   | 'ellipsisVertical'
+  | 'exclamationCircle'
   | 'gear'
   | 'identification'
+  | 'informationCircle'
   | 'language'
   | 'loading'
   | 'paperAirplane'
@@ -28,6 +31,7 @@ export type IconName =
   | 'rectangleGroup'
   | 'signal'
   | 'text'
+  | 'xCircle'
   | 'xMark';
 
 const properties = defineProps<{

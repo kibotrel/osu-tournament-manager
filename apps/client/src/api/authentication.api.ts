@@ -7,10 +7,12 @@ import type {
 } from '@packages/shared';
 import { getRequest, postRequest } from '@packages/shared';
 import { useMutation } from '@tanstack/vue-query';
+import { useTranslation } from 'i18next-vue';
 import { inject } from 'vue';
 import type { Router } from 'vue-router';
 
 import { BASE_URL } from '#src/api/api.constants.js';
+import { useToasterStore } from '#src/stores/toaster.store.js';
 import { useUserStore } from '#src/stores/user.store.js';
 
 const loginRequest = async (authenticationCode: string) => {
@@ -46,20 +48,21 @@ const logoutRequest = async () => {
  */
 export const useLoginRequest = () => {
   const router = inject<Router>('$router');
+  const { newToast } = useToasterStore();
+  const { t } = useTranslation();
 
   return useMutation<LoginResponseData, Error, string>({
     mutationFn: async (code) => {
       return await loginRequest(code);
     },
     onSuccess: async (data) => {
-      // TODO: Add a toast message here
       const { setUser } = useUserStore();
 
       setUser({ ...data, isLoggedIn: true });
       await router?.push('/');
     },
     onError: async () => {
-      // TODO: Add a toast message here
+      newToast.error(t('toasts.api.authentication.loginFailed'));
       await router?.push('/login');
     },
   });

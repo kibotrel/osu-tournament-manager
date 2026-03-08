@@ -15,12 +15,16 @@
       "confirm": "Confirmer",
       "create": "Créer",
       "end": "Clore",
+      "error": "Erreur",
+      "info": "Info",
       "link": "Lien",
       "name": "Nom",
       "ready": "Prêt",
       "refresh": "Rafraîchir",
       "right": "Droite",
-      "start": "Démarrer"
+      "start": "Démarrer",
+      "success": "Succès",
+      "warning": "Attention"
     }
   },
   "pages": {
@@ -64,6 +68,12 @@
           }
         },
         "layout": {
+          "toasts": {
+            "errorMessage": "Ceci est un message d'erreur.",
+            "infoMessage": "Ceci est un message informatif.",
+            "successMessage": "Ceci est un message de réussite.",
+            "warningMessage": "Ceci est un message de prévention."
+          },
           "words": {
             "content": "Contenu",
             "drawer": "Tiroir",
@@ -74,7 +84,8 @@
             "separator": "Séparateur",
             "tab": "Onglet",
             "tabList": "Liste d'onglets",
-            "title": "Titre"
+            "title": "Titre",
+            "toast": "Notification"
           }
         },
         "text": {
@@ -146,6 +157,43 @@
         }
       },
       "title": "Match {{id}}"
+    }
+  },
+  "toasts": {
+    "api": {
+      "authentication": {
+        "loginFailed": "Une erreur est survenue lors de l'authentification. Réessayez après quelques secondes."
+      },
+      "generics": {
+        "badRequest": "La requête est invalide. Veuillez vérifier votre saisie et réessayer.",
+        "forbidden": "Vous n'avez pas les permissions pour effectuer cette action.",
+        "internalServerError": "Une erreur inattendue est survenue sur le serveur.",
+        "locked": "La ressource à laquelle vous essayez d'accéder est actuellement verrouillée.",
+        "methodNotAllowed": "La méthode n'est pas autorisée pour la ressource demandée.",
+        "notFound": "La ressource demandée est introuvable.",
+        "rangeNotSatisfiable": "La plage de ressources spécifiée est invalide.",
+        "serviceUnavailable": "Le service est actuellement indisponible.",
+        "tooManyRequests": "Vous avez envoyé trop de requêtes. Attendez un moment avant de réessayer.",
+        "unauthorized": "Vous n'êtes pas authentifié. Connectez-vous et réessayez.",
+        "unavailableForLegalReasons": "La ressource est indisponible pour des raisons légales.",
+        "unprocessableContent": "Le serveur ne peut pas traiter la requête."
+      },
+      "matches": {
+        "close": {
+          "matchAlreadyClosed": "Match déjà terminé, l'action a été ignorée.",
+          "matchNotFound": "Match introuvable, ne peut être terminé."
+        },
+        "get": {
+          "matchNotFound": "Match introuvable."
+        }
+      }
+    },
+    "stores": {
+      "websocket": {
+        "connectionLost": "Communication en temps réelle avec le serveur perdue. Tentative de re-connexion en cours...",
+        "reconnectionFailed": "Échec` de la reconnexion au serveur. Essayez de rafraîchir la page.",
+        "reconnectionSuccessful": "La communication avec le serveur a été rétablie !"
+      }
     }
   }
 }

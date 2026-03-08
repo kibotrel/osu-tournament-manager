@@ -28,13 +28,14 @@ export const closeMatchService = async (gameMatchId: number) => {
   });
 
   if (!match) {
-    throw new HttpNotFoundError({ message: 'Match not found' });
+    throw new HttpNotFoundError({
+      message: 'matchNotFound',
+      metadata: { gameMatchId },
+    });
   }
 
   if (match.endsAt) {
-    throw new HttpUnprocessableContentError({
-      message: 'Match already closed',
-    });
+    throw new HttpUnprocessableContentError({ message: 'matchAlreadyClosed' });
   }
 
   const channel = banchoChannelFromGameMatchId(match.gameMatchId);
@@ -57,7 +58,10 @@ export const getMatchService = async (gameMatchId: number) => {
   });
 
   if (!match) {
-    throw new HttpNotFoundError({ message: 'Match not found' });
+    throw new HttpNotFoundError({
+      message: 'matchNotFound',
+      metadata: { gameMatchId },
+    });
   }
 
   return match;
@@ -110,7 +114,7 @@ export const openMatchService = async (name: string) => {
     if (!matchId) {
       throw new HttpInternalServerError({
         cause: usableError,
-        message: 'Failed to open bancho multiplayer channel',
+        message: 'matchChannelCreationFailed',
         metadata: { name },
       });
     }
@@ -125,7 +129,7 @@ export const openMatchService = async (name: string) => {
 
     throw new HttpInternalServerError({
       cause: usableError,
-      message: 'Failed to create match in database',
+      message: 'matchCreationFailed',
       metadata: { name, gameMatchId: matchId },
     });
   }

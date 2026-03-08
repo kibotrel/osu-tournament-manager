@@ -15,12 +15,16 @@
       "confirm": "Confirm",
       "create": "Create",
       "end": "End",
+      "error": "Error",
+      "info": "Info",
       "link": "Link",
       "name": "Name",
       "ready": "Ready",
       "refresh": "Refresh",
       "right": "Right",
-      "start": "Start"
+      "start": "Start",
+      "success": "Success",
+      "warning": "Warning"
     }
   },
   "pages": {
@@ -64,6 +68,12 @@
           }
         },
         "layout": {
+          "toasts": {
+            "errorMessage": "This is an error message.",
+            "infoMessage": "This is an informative message.",
+            "successMessage": "This is a success message.",
+            "warningMessage": "This is a warning message."
+          },
           "words": {
             "content": "Content",
             "drawer": "Drawer",
@@ -74,7 +84,8 @@
             "separator": "Separator",
             "tab": "Tab",
             "tabList": "Tabs list",
-            "title": "Title"
+            "title": "Title",
+            "toast": "Toast"
           }
         },
         "text": {
@@ -146,6 +157,43 @@
         }
       },
       "title": "Match {{id}}"
+    }
+  },
+  "toasts": {
+    "api": {
+      "authentication": {
+        "loginFailed": "An error occurred while authenticating. Try again after few seconds."
+      },
+      "generics": {
+        "badRequest": "The request was invalid. Please check your input and try again.",
+        "forbidden": "You don't have the permissions to perform this action.",
+        "internalServerError": "An unexpected error occurred on the server.",
+        "locked": "The resource you are trying to access is currently locked.",
+        "methodNotAllowed": "The method is not allowed for the requested ressource.",
+        "notFound": "The requested resource was not found.",
+        "rangeNotSatisfiable": "The resource range specified is invalid.",
+        "serviceUnavailable": "The service is currently unavailable.",
+        "tooManyRequests": "You have sent too many requests. Wait a moment before trying again.",
+        "unauthorized": "You are not authenticated. Log in and try again.",
+        "unavailableForLegalReasons": "The resource is unavailable for legal reasons.",
+        "unprocessableContent": "The server cannot process the request."
+      },
+      "matches": {
+        "close": {
+          "matchAlreadyClosed": "Match already closed, action was ignored.",
+          "matchNotFound": "Match not found, cannot close it."
+        },
+        "get": {
+          "matchNotFound": "Match not found."
+        }
+      }
+    },
+    "stores": {
+      "websocket": {
+        "connectionLost": "Real-time communication with the server was lost. Attempting to reconnect ...",
+        "reconnectionFailed": "Failed to reconnect to the server. Please refresh the page.",
+        "reconnectionSuccessful": "Communication re-established with the server!"
+      }
     }
   }
 }

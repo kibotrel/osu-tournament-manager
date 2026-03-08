@@ -14,12 +14,15 @@ import {
   isBinaryObject,
   sleep,
 } from '@packages/shared';
+import { useTranslation } from 'i18next-vue';
 import { defineStore } from 'pinia';
 import type { UnwrapRef } from 'vue';
 import { ref } from 'vue';
 
 import { BASE_WEBSOCKET_URL } from '#src/api/api.constants.js';
 import type { ExtendedWebSocket } from '#src/types/webSockets.types.js';
+
+import { useToasterStore } from './toaster.store.js';
 
 interface WebSocketChannelEventsMap {
   [WebSocketChannel.Matches]: WebSocketChannelMatchesEvent;
@@ -62,6 +65,8 @@ export const defineWebsocketStore = <
   });
 
   return defineStore(storeName, () => {
+    const { newToast } = useToasterStore();
+    const { t } = useTranslation();
     const lastMessage = ref<WebSocketMessage<MessageType> | null>(null);
     const history = ref<Array<WebSocketMessage<MessageType>>>([]);
     const isRetryingConnection = ref(false);
@@ -113,7 +118,7 @@ export const defineWebsocketStore = <
           WebSocketClosureReason.ServerShutdown,
         ].includes(event.reason as WebSocketClosureReason)
       ) {
-        // TODO: Show a message to the user indicating that websocket connection was lost and that we're attempting to re-establish it.
+        newToast.warning(t('toasts.stores.websocket.connectionLost'));
         isRetryingConnection.value = true;
 
         for (let attempt = 0; attempt < 5; attempt++) {
@@ -126,7 +131,10 @@ export const defineWebsocketStore = <
         }
 
         isRetryingConnection.value = false;
-        // TODO: Show a message to the user indicating that websocket connection couldn't be re-established.
+
+        if (!isSocketReady.value) {
+          newToast.error(t('toasts.stores.websocket.reconnectionFailed'));
+        }
       }
     };
 
@@ -134,7 +142,6 @@ export const defineWebsocketStore = <
       if (!isSocketReady.value) {
         socket.value = undefined;
       }
-      // TODO: Show a message to the user in a toast for example.
     };
 
     const onMessageEvent = (message: MessageEvent<string | Blob>) => {
@@ -154,7 +161,8 @@ export const defineWebsocketStore = <
     const onOpenEvent = () => {
       if (isRetryingConnection.value) {
         isRetryingConnection.value = false;
-        // TODO: Show a message to the user indicating that connection was re-established.
+
+        newToast.info(t('toasts.stores.websocket.reconnectionSuccessful'));
       }
 
       isSocketReady.value = true;
