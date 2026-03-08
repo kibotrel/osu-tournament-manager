@@ -51,12 +51,14 @@ export class HttpErrorReport {
     if (
       ![
         HttpStatusCode.InternalServerError,
-        HttpStatusCode.NotFound,
         HttpStatusCode.MethodNotAllowed,
       ].includes(this.status)
     ) {
       this.errors = error.errors;
-      this.detail = error.message;
+      this.detail =
+        error.message?.startsWith('Resource at') === true
+          ? undefined
+          : error.message;
     }
   }
 

@@ -53,7 +53,8 @@ export const normalizeError = (options: ParseErrorOptions): NormalizedError => {
   if (isExpressOpenApiValidatorMethodNotAllowedError(error)) {
     return {
       error: new HttpMethodNotAllowedError({
-        message: `Method ${method} not allowed on resource at ${url}`,
+        message: `Method not allowed on resource`,
+        metadata: { method, url },
       }),
       mustLog: false,
     };
@@ -62,7 +63,8 @@ export const normalizeError = (options: ParseErrorOptions): NormalizedError => {
   if (isExpressOpenApiValidatorNotFoundError(error)) {
     return {
       error: new HttpNotFoundError({
-        message: `Resource at ${url} could not be found`,
+        message: `Resource could not be found`,
+        metadata: { method, url },
       }),
       mustLog: false,
     };
@@ -76,6 +78,7 @@ export const normalizeError = (options: ParseErrorOptions): NormalizedError => {
     error: new HttpInternalServerError({
       cause: error as Error,
       message: HttpStatusMessage.InternalServerError,
+      metadata: { method, url },
     }),
     mustLog: true,
   };

@@ -31,7 +31,7 @@ export const isAuthenticatedMiddleware: RequestHandler = (
 
   return next(
     new HttpUnauthorizedError({
-      message: 'You must be authenticated to access this resource',
+      message: 'mustBeAuthenticated',
     }),
   );
 };
