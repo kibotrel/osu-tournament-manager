@@ -21,7 +21,7 @@ export const onMultiplayerChannelHostChangedEvent = async ({
   channel: string;
   newHost: string;
 }) => {
-  logger.debug(`[IRC] ${newHost} is now host of channel ${channel}`);
+  logger.silly(`[IRC] ${newHost} is now host of channel ${channel}`);
 
   const channelId = gameMatchIdFromBanchoChannel(channel);
   const oldMatchState = await getMatchStateService(channelId);

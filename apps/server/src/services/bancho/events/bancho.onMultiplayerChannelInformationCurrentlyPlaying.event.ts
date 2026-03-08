@@ -23,7 +23,7 @@ export const onMultiplayerChannelInformationCurrentlyPlayingEvent = async ({
   channel: string;
   url: string;
 }) => {
-  logger.debug(
+  logger.silly(
     `[IRC] channel ${channel} is currently playing ${beatmap} (${url})`,
   );
 

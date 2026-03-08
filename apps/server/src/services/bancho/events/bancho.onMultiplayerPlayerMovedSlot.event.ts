@@ -24,7 +24,7 @@ export const onMultiplayerPlayerMovedSlotEvent = async ({
   slotNumber: number;
   user: string;
 }) => {
-  logger.debug(
+  logger.silly(
     `[IRC] ${user} moved to slot ${slotNumber} in channel ${channel}`,
   );
 

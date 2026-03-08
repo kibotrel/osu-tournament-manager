@@ -24,7 +24,7 @@ export const onMultiplayerPlayerJoinedSlotEvent = async ({
   slotNumber: number;
   user: string;
 }) => {
-  logger.debug(`[IRC] ${user} joined channel ${channel} in slot ${slotNumber}`);
+  logger.silly(`[IRC] ${user} joined channel ${channel} in slot ${slotNumber}`);
 
   const channelId = gameMatchIdFromBanchoChannel(channel);
   const oldMatchState = await getMatchStateService(channelId);

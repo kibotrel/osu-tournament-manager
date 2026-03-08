@@ -22,7 +22,7 @@ export const onMultiplayerChannelInformationGlobalModificationsEvent = async ({
   channel: string;
   modifications: OsuBeatmapModification[];
 }) => {
-  logger.debug(`[IRC] channel ${channel} global modifications updated`, {
+  logger.silly(`[IRC] channel ${channel} global modifications updated`, {
     modifications,
   });
 

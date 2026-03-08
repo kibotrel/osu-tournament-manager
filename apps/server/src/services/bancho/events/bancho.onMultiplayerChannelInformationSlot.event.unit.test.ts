@@ -11,7 +11,15 @@ import { webSocketServer } from '#src/websocketServer.js';
 import { onMultiplayerChannelInformationSlotEvent } from './bancho.onMultiplayerChannelInformationSlot.event.js';
 
 vi.mock('#src/dependencies/logger.dependency.js', () => {
-  return { logger: { debug: vi.fn() } };
+  return {
+    logger: {
+      debug: vi.fn(),
+      error: vi.fn(),
+      info: vi.fn(),
+      silly: vi.fn(),
+      warn: vi.fn(),
+    },
+  };
 });
 
 vi.mock('#src/services/cache/cache.service.js', () => {

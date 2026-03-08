@@ -32,7 +32,7 @@ export const onMultiplayerChannelInformationSlotEvent = async ({
   slotNumber: number;
   user: string;
 }) => {
-  logger.debug(
+  logger.silly(
     `[IRC] channel ${channel} slot ${slotNumber} information updated`,
     {
       gameUserId,

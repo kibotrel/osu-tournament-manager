@@ -21,7 +21,7 @@ export const onMultiplayerChannelNameUpdatedEvent = async ({
   channel: string;
   name: string;
 }) => {
-  logger.debug(`[IRC] channel ${channel} name updated`, {
+  logger.silly(`[IRC] channel ${channel} name updated`, {
     name,
   });
 

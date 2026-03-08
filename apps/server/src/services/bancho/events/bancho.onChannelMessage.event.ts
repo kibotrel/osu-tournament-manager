@@ -23,7 +23,7 @@ export const onChannelMessageEvent = async ({
     return;
   }
 
-  logger.debug(`[IRC] New message in ${channel}`, {
+  logger.silly(`[IRC] New message in ${channel}`, {
     content: message,
     user,
   });

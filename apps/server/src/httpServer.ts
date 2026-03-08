@@ -21,7 +21,7 @@ export const gracefulShutdown = async (
   await banchoClient.removeAllListeners(BanchoClientEvent.BotDisconnected);
 
   banchoClient.on(BanchoClientEvent.BotDisconnected, () => {
-    logger.debug('[IRC] Disconnected from osu! server');
+    logger.silly('[IRC] Disconnected from osu! server');
   });
 
   await banchoClient.disconnect();
@@ -44,6 +44,6 @@ export const createHttpServer = async () => {
   await banchoClient.joinChannel(BanchoPublicChannel.Lobby);
 
   return application.listen(environmentConfig.expressPort, () => {
-    logger.debug('HTTP Server is running...');
+    logger.info('HTTP Server is running...');
   });
 };

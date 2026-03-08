@@ -5,7 +5,15 @@ import { joinAllOngoingMatchesService } from '#src/services/bancho/bancho.multip
 import { onBotConnectedEvent } from './bancho.onBotConnected.event.js';
 
 vi.mock('#src/dependencies/logger.dependency.js', () => {
-  return { logger: { debug: vi.fn() } };
+  return {
+    logger: {
+      debug: vi.fn(),
+      error: vi.fn(),
+      info: vi.fn(),
+      silly: vi.fn(),
+      warn: vi.fn(),
+    },
+  };
 });
 
 vi.mock('#src/services/bancho/bancho.multiplayer.service.js', () => {

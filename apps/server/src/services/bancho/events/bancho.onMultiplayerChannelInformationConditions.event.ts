@@ -25,7 +25,7 @@ export const onMultiplayerChannelInformationConditionsEvent = async ({
   teamMode: BanchoTeamMode;
   winCondition: BanchoWinCondition;
 }) => {
-  logger.debug(`[IRC] channel ${channel} conditions updated`, {
+  logger.silly(`[IRC] channel ${channel} conditions updated`, {
     teamMode,
     winCondition,
   });

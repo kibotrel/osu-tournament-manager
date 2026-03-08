@@ -21,7 +21,7 @@ export const onMultiplayerChannelInformationPlayerCountEvent = async ({
   channel: string;
   playerCount: number;
 }) => {
-  logger.debug(`[IRC] channel ${channel} player count updated`, {
+  logger.silly(`[IRC] channel ${channel} player count updated`, {
     playerCount,
   });
 

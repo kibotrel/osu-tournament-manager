@@ -19,7 +19,7 @@ export const onMultiplayerChannelHostClearedEvent = async ({
 }: {
   channel: string;
 }) => {
-  logger.debug(`[IRC] Host cleared in channel ${channel}`);
+  logger.silly(`[IRC] Host cleared in channel ${channel}`);
 
   const channelId = gameMatchIdFromBanchoChannel(channel);
   const oldMatchState = await getMatchStateService(channelId);

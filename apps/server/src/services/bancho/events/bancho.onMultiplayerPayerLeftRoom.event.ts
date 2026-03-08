@@ -22,7 +22,7 @@ export const onMultiplayerPayerLeftRoomEvent = async ({
   channel: string;
   user: string;
 }) => {
-  logger.debug(`[IRC] ${user} left channel ${channel}`);
+  logger.silly(`[IRC] ${user} left channel ${channel}`);
 
   const channelId = gameMatchIdFromBanchoChannel(channel);
   const oldMatchState = await getMatchStateService(channelId);

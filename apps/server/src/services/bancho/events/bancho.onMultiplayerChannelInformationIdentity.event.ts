@@ -23,7 +23,7 @@ export const onMultiplayerChannelInformationIdentityEvent = async ({
   historyUrl: string;
   name: string;
 }) => {
-  logger.debug(`[IRC] channel ${channel} information updated`, {
+  logger.silly(`[IRC] channel ${channel} information updated`, {
     historyUrl,
     name,
   });

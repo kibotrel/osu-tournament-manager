@@ -19,7 +19,7 @@ export const onMultiplayerChannelAllPlayersReadyEvent = async ({
 }: {
   channel: string;
 }) => {
-  logger.debug(`[IRC] All players ready in match ${channel}`);
+  logger.silly(`[IRC] All players ready in match ${channel}`);
 
   const channelId = gameMatchIdFromBanchoChannel(channel);
   const oldMatchState = await getMatchStateService(channelId);
