@@ -28,6 +28,14 @@ The design system is a collection of reusable components and styles that ensure 
 
 To allow real-time communication between the client and osu! multiplayer lobbies, we use [WebSockets](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API) to send and receive various events. This is made possible thanks to the server which acts as a bridge between the client and osu! using [`@packages/bancho-client`](./architecture-packages-bancho-client.md), our own custom IRC client tailored for [bancho](https://osu.ppy.sh/wiki/en/Bancho_%28server%29).
 
+## ✉️ Notifications
+
+To provide more feedback to the user, we integrated a custom [`ToastProvider`](../../apps/client/src/components/providers/toast.provider.vue) that can be used to display toast notifications across the application through a simple API provided by [`useToaster()`](../../apps/client/src/stores/toaster.store.ts).
+
+> [!NOTE]
+>
+> Toast visibility time is computed based on its content length at a pace of 150 words per minute. This timer can be paused by hovering the toast and is completely disabled on error ones which require manual dismissal to ensure user awareness.
+
 ## 🤩 Developer experience
 
 Like for the server, some tools are present on the client to improve developer experience.
