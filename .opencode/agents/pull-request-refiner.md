@@ -120,7 +120,9 @@ This agent structures GitHub PR descriptions by analyzing code changes and gathe
 
 4. **Related Issues (Question 2):**
    - Ask user: "Are there any related issues this PR closes?"
-   - If yes, format as: `Fixes: #1, #2, ... and #N`
+   - If yes, ask follow-up: "Must these issues be closed upon PR merge?"
+     - If must be closed, format as: `Closes: #1, #2, ... and #N`
+     - If not required to be closed, format as: `Related to: #1, #2, ... and #N`
    - If no, leave the Related Issue(s) section empty (will be removed from template)
 
 5. **Additional Notes (Question 3):**
