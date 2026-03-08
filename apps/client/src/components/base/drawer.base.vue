@@ -99,7 +99,7 @@ usePopUpBehavior({
 }
 
 .bottom {
-  @apply bottom-0 left-4 h-1/2 w-[calc(100%-32px)];
+  @apply bottom-4 left-4 h-1/2 w-[calc(100%-32px)];
 }
 
 .action-icon {
