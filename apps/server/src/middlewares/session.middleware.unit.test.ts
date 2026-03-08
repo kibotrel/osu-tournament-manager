@@ -54,7 +54,7 @@ describe('isAuthenticatedMiddleware', () => {
 
     expect(next).toHaveBeenCalledWith(
       new HttpUnauthorizedError({
-        message: 'You must be authenticated to access this resource',
+        message: 'mustBeAuthenticated',
       }),
     );
   });

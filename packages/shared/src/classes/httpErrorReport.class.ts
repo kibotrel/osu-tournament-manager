@@ -54,11 +54,11 @@ export class HttpErrorReport {
         HttpStatusCode.MethodNotAllowed,
       ].includes(this.status)
     ) {
-      this.errors = error.errors;
-      this.detail =
-        error.message?.startsWith('Resource at') === true
-          ? undefined
-          : error.message;
+      const isResourceDiscoveryRelatedError =
+        error.message?.startsWith('Resource at') === true;
+
+      this.errors = isResourceDiscoveryRelatedError ? undefined : error.errors;
+      this.detail = isResourceDiscoveryRelatedError ? undefined : error.message;
     }
   }
 

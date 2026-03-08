@@ -109,7 +109,7 @@ describe('closeMatchService', () => {
     } catch (error) {
       expect(error).toBeInstanceOf(HttpNotFoundError);
       expect(error).toEqual(
-        expect.objectContaining({ message: 'Match not found' }),
+        expect.objectContaining({ message: 'matchNotFound' }),
       );
     }
 
@@ -139,7 +139,7 @@ describe('closeMatchService', () => {
     } catch (error) {
       expect(error).toBeInstanceOf(HttpUnprocessableContentError);
       expect(error).toEqual(
-        expect.objectContaining({ message: 'Match already closed' }),
+        expect.objectContaining({ message: 'matchAlreadyClosed' }),
       );
     }
 
@@ -191,7 +191,7 @@ describe('getMatchService', () => {
     } catch (error) {
       expect(error).toBeInstanceOf(HttpNotFoundError);
       expect(error).toEqual(
-        expect.objectContaining({ message: 'Match not found' }),
+        expect.objectContaining({ message: 'matchNotFound' }),
       );
     }
 
@@ -380,7 +380,7 @@ describe('openMatchService', () => {
       'banchoChannelFromGameMatchId',
     );
     const promiseAllSpy = vi.spyOn(Promise, 'all');
-    const errorToThrow = new Error('Failed to open channel');
+    const errorToThrow = new Error('matchChannelCreationFailed');
 
     openMultiplayerChannelServiceMock.mockRejectedValueOnce(errorToThrow);
 
@@ -391,7 +391,7 @@ describe('openMatchService', () => {
       expect(error).toEqual(
         expect.objectContaining({
           cause: errorToThrow,
-          message: 'Failed to open bancho multiplayer channel',
+          message: 'matchChannelCreationFailed',
           metadata: { name },
         }),
       );
@@ -417,7 +417,7 @@ describe('openMatchService', () => {
       'banchoChannelFromGameMatchId',
     );
     const promiseAllSpy = vi.spyOn(Promise, 'all');
-    const errorToThrow = new Error('Failed to create match in database');
+    const errorToThrow = new Error('matchCreationFailed');
 
     openMultiplayerChannelServiceMock.mockResolvedValueOnce({ gameMatchId });
     createMatchQueryMock.mockRejectedValueOnce(errorToThrow);
@@ -429,7 +429,7 @@ describe('openMatchService', () => {
       expect(error).toEqual(
         expect.objectContaining({
           cause: errorToThrow,
-          message: 'Failed to create match in database',
+          message: 'matchCreationFailed',
           metadata: { name, gameMatchId },
         }),
       );

@@ -63,7 +63,7 @@ export const normalizeError = (options: ParseErrorOptions): NormalizedError => {
   if (isExpressOpenApiValidatorNotFoundError(error)) {
     return {
       error: new HttpNotFoundError({
-        message: `Resource could not be found`,
+        message: `Resource at ${url} could not be found`,
         metadata: { method, url },
       }),
       mustLog: false,
