@@ -35,9 +35,7 @@ export const closeMatchService = async (gameMatchId: number) => {
   }
 
   if (match.endsAt) {
-    throw new HttpUnprocessableContentError({
-      message: 'matchAlreadyClosed',
-    });
+    throw new HttpUnprocessableContentError({ message: 'matchAlreadyClosed' });
   }
 
   const channel = banchoChannelFromGameMatchId(match.gameMatchId);
