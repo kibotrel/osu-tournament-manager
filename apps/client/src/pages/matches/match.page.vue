@@ -70,15 +70,18 @@ import {
   WebSocketChannel,
   WebSocketChannelMatchesEvent,
 } from '@packages/shared';
+import { useTranslation } from 'i18next-vue';
 import { inject, nextTick, ref, watch } from 'vue';
 import type { Router } from 'vue-router';
 import { useRoute } from 'vue-router';
 
+import { extractApiErrorMessageKeyFromError } from '#src/api/api.methods.js';
 import { useGetMatchRequest } from '#src/api/matches.api.js';
 import BaseBody from '#src/components/base/body.base.vue';
 import BaseButton from '#src/components/base/button.base.vue';
 import BaseHeadline from '#src/components/base/headline.base.vue';
 import LoadingIcon from '#src/components/icons/loading.icon.vue';
+import { useToasterStore } from '#src/stores/toaster.store.js';
 import { useUserStore } from '#src/stores/user.store.js';
 import { defineWebsocketStore } from '#src/stores/webSocket.store.js';
 
@@ -91,7 +94,11 @@ const router = inject<Router>('$router');
 const matchId = Number(route.params.gameMatchId);
 const isModalOpen = ref(false);
 const isMatchInformationDrawerOpen = ref(false);
-const { data: match, isLoading: isMatchLoading } = useGetMatchRequest(matchId);
+const {
+  data: match,
+  error,
+  isLoading: isMatchLoading,
+} = useGetMatchRequest(matchId);
 const { user } = useUserStore();
 const useWebSocketStore = defineWebsocketStore<
   WebSocketMatchMessage,
@@ -101,11 +108,24 @@ const useWebSocketStore = defineWebsocketStore<
   events: [WebSocketChannelMatchesEvent.ChatMessages],
   threadId: matchId.toString(),
 });
+const { newToast } = useToasterStore();
+const { t } = useTranslation();
 const { connect, disconnect, sendMessage } = useWebSocketStore();
 
 watch(match, (newState, previousState) => {
   if (!previousState && newState?.endsAt === null) {
     connect();
+  }
+});
+
+watch(error, (newError) => {
+  if (newError) {
+    const { translationKey } = extractApiErrorMessageKeyFromError(newError, {
+      namespace: 'matches.get',
+    });
+
+    newToast.error(t(translationKey));
+    redirectToMatchCreationPage();
   }
 });
 
