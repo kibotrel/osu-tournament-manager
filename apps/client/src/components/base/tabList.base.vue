@@ -1,16 +1,18 @@
 <template>
-  <div class="tab-list">
-    <div
-      v-for="tab in tabs"
-      :id="`tab-${tab.value}`"
-      :key="tab.value"
-      :class="['tab', tab.value === selected ? 'selected' : 'not-selected']"
-      :tabindex="selected === tab.value ? -1 : 0"
-      @keydown.enter="selectTab(tab.value)"
-      @mousedown="selectTab(tab.value)"
-    >
-      <BaseIcon v-if="tab.icon" :name="tab.icon" class="h-6 w-6" />
-      <BaseHeadline variant="subtitle">{{ tab.label }}</BaseHeadline>
+  <div class="scroll-wrapper">
+    <div class="tab-list">
+      <div
+        v-for="tab in tabs"
+        :id="`tab-${tab.value}`"
+        :key="tab.value"
+        :class="['tab', tab.value === selected ? 'selected' : 'not-selected']"
+        :tabindex="selected === tab.value ? -1 : 0"
+        @keydown.enter="selectTab(tab.value)"
+        @mousedown="selectTab(tab.value)"
+      >
+        <BaseIcon v-if="tab.icon" :name="tab.icon" class="h-6 w-6" />
+        <BaseHeadline variant="subtitle">{{ tab.label }}</BaseHeadline>
+      </div>
     </div>
   </div>
 </template>
@@ -46,8 +48,15 @@ const selectTab = (value: string) => {
 <style scoped>
 @reference '#src/assets/styles/index.css';
 
+.scroll-wrapper {
+  @apply overflow-x-auto;
+
+  scrollbar-width: none;
+  scrollbar-gutter: stable;
+}
+
 .tab-list {
-  @apply border-primary-3 flex flex-row items-center border-b-2;
+  @apply border-primary-3 flex w-max min-w-full flex-row items-center border-b-2;
 }
 
 .tab {
@@ -67,6 +76,6 @@ const selectTab = (value: string) => {
 }
 
 .tab:focus-visible {
-  @apply rounded-md ring-2 ring-yellow-400 outline-hidden;
+  @apply rounded-md ring-2 ring-yellow-400 outline-hidden ring-inset;
 }
 </style>
