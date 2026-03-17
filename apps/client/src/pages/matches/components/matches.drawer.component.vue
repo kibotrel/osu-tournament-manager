@@ -7,23 +7,23 @@
   >
     <template #header>
       <div
-        class="align-center mx-8 mt-8 flex flex-row items-center justify-between"
+        class="align-center mx-4 mt-8 flex flex-col md:mx-8 md:flex-row md:items-center md:justify-between"
       >
         <div>
           <BaseHeadline class="">{{ match.name }}</BaseHeadline>
         </div>
-        <div v-if="match.historyUrl">
-          <BaseBody>
+        <div v-if="match.historyUrl" class="mt-2 md:mt-0">
+          <BaseCaption>
             <BaseLink is-external :link="match.historyUrl">
               {{ $t('pages.match.drawer.linkToOfficialHistory') }}
             </BaseLink>
-          </BaseBody>
+          </BaseCaption>
         </div>
       </div>
       <BaseTabList
         id="match-drawer-tab-list"
         v-model="tab"
-        class="mx-8 mt-8"
+        class="mx-4 mt-8 md:mx-8"
         :tabs="[
           {
             label: $t('pages.match.drawer.tabs.names.status'),
@@ -49,8 +49,8 @@
       />
     </template>
     <template #body>
-      <div class="h-full p-4">
-        <div v-if="tab === 'status'" class="h-full">
+      <div class="flex h-full min-h-0 flex-col pt-4 md:px-4 md:pt-8 md:pb-4">
+        <div v-if="tab === 'status'" class="flex min-h-0 flex-col">
           <MatchLobbyStatus :send-bancho-message="sendBanchoMessage" />
         </div>
         <div
@@ -81,6 +81,7 @@ import { useRoute } from 'vue-router';
 
 import { useGetMatchStateRequest } from '#src/api/matches.api.js';
 import BaseBody from '#src/components/base/body.base.vue';
+import BaseCaption from '#src/components/base/caption.base.vue';
 import BaseDrawer from '#src/components/base/drawer.base.vue';
 import BaseHeadline from '#src/components/base/headline.base.vue';
 import BaseLink from '#src/components/base/link.base.vue';

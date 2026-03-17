@@ -1,5 +1,7 @@
 <template>
-  <div class="border-primary-3 mx-auto mt-4 w-3/4 rounded-md border-2">
+  <div
+    class="border-primary-3 mx-auto mt-4 w-[calc(100%-32px)] rounded-md border-2 md:w-4/5 lg:w-2/3 2xl:w-1/2"
+  >
     <div
       ref="chatHistoryDiv"
       class="chat-history-container"
