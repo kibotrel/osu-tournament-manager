@@ -1,6 +1,8 @@
 <template>
   <div class="flex min-h-screen items-center justify-center">
-    <div class="border-primary-3 w-1/4 rounded-md border-2 p-8 text-center">
+    <div
+      class="border-primary-3 ] w-[calc(100%-32px)] rounded-md border-2 p-8 text-center sm:w-2/3 lg:w-1/2 xl:w-2/5 2xl:w-1/3"
+    >
       <BaseHeadline class="mb-2" variant="hero">
         {{ $t('pages.login.title') }}
       </BaseHeadline>
