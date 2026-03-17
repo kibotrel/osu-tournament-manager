@@ -12,14 +12,14 @@
     <BaseBody>{{ $t('pages.match.errors.notFound') }}</BaseBody>
   </div>
   <div v-else>
-    <div class="my-4 flex justify-center">
+    <div class="mx-4 my-4 flex justify-center">
       <BaseHeadline>{{
         $t('pages.match.title', { id: match.gameMatchId })
       }}</BaseHeadline>
     </div>
     <MatchChatHistory />
     <div
-      class="align-center mt-4 flex flex-col items-center justify-center gap-y-4"
+      class="align-center m-4 flex flex-col items-center justify-center gap-4 sm:flex-row"
     >
       <BaseButton
         id="start-match-point-button"

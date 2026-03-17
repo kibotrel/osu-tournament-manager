@@ -1,9 +1,5 @@
 <template>
-  <TransitionGroup
-    name="toaster"
-    tag="div"
-    class="absolute bottom-4 left-1/2 z-12 w-1/3 -translate-x-1/2 space-y-2"
-  >
+  <TransitionGroup name="toaster" tag="div" class="toaster">
     <BaseToast
       v-for="toast in toasts"
       :key="toast.id"
@@ -26,6 +22,13 @@ const { toasts } = storeToRefs(useToasterStore());
 </script>
 
 <style scoped>
+@reference '#src/assets/styles/index.css';
+
+.toaster {
+  @apply absolute bottom-4 left-1/2 z-12 w-5/6 -translate-x-1/2 space-y-2;
+  @apply sm:w-3/5 lg:w-1/2 xl:w-1/3;
+}
+
 .toaster-enter-active,
 .toaster-leave-active {
   transition: all 0.5s ease;

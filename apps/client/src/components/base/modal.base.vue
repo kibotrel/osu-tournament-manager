@@ -1,15 +1,7 @@
 <template>
   <Transition name="modal">
-    <div
-      v-show="isModalOpen"
-      class="fixed inset-0 z-11 flex items-center justify-center bg-black/50"
-    >
-      <div
-        :id
-        ref="modal"
-        class="bg-primary-4 border-primary-3 relative w-1/3 rounded-md border-2 p-4"
-        @mousedown.stop
-      >
+    <div v-show="isModalOpen" class="modal-backdrop">
+      <div :id ref="modal" class="modal" @mousedown.stop>
         <div>
           <XMarkIcon
             class="x-mark"
@@ -58,6 +50,14 @@ usePopUpBehavior({
 
 <style scoped>
 @reference '#src/assets/styles/index.css';
+
+.modal {
+  @apply bg-primary-4 border-primary-3 relative w-3/4 rounded-md border-2 p-4;
+  @apply sm:w-2/3 md:w-1/2 lg:w-1/3;
+}
+.modal-backdrop {
+  @apply fixed inset-0 z-11 flex items-center justify-center bg-black/50;
+}
 
 .modal-enter-active,
 .modal-leave-active {

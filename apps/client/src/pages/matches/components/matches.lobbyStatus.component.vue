@@ -1,7 +1,9 @@
 <template>
-  <div class="h-full">
-    <div class="border-primary-3 mx-4 rounded-md border-2">
-      <div class="border-primary-3 border-b-2 px-4 py-2">
+  <div class="flex min-h-0 flex-col">
+    <div
+      class="border-primary-3 mx-4 flex min-h-0 flex-col rounded-md border-2"
+    >
+      <div class="border-primary-3 shrink-0 border-b-2 px-4 py-2">
         <div class="flex items-center justify-between">
           <BaseBody variant="base" class="text-primary-2">
             {{
@@ -24,11 +26,11 @@
           </BaseButton>
         </div>
       </div>
-      <div class="flex-1 overflow-y-auto">
+      <div class="min-h-0 overflow-y-auto">
         <div v-for="(slot, slotIndex) in match.slots" :key="slotIndex">
           <div
             :class="[
-              'border-primary-4 grid grid-cols-[0.5rem_1fr_1fr_5rem_2em] items-center',
+              'border-primary-4 grid grid-cols-[0.5rem_1fr_auto_auto] items-center gap-x-2 sm:grid-cols-[0.5rem_1fr_1fr_5rem_2em] sm:gap-2',
               {
                 'border-b-2': slotIndex < match.slots.length - 1,
                 'border-t-2': slotIndex > 0,
@@ -38,31 +40,55 @@
           >
             <div
               :class="[
-                'flex h-full overflow-hidden',
+                'row-span-2 flex h-full overflow-hidden sm:row-span-1',
                 slot.player ? 'bg-primary-1' : 'bg-primary-3/60',
                 { 'rounded-bl-sm': slotIndex === match.slots.length - 1 },
               ]"
             >
               <span>&nbsp;</span>
             </div>
-            <div class="flex items-center space-x-2">
+            <div
+              class="pointer-events-none col-start-2 row-start-1 -ml-2 flex items-center space-x-2 opacity-0 sm:hidden"
+              aria-hidden="true"
+            >
               <BaseBody class="ml-2 py-2 font-bold!">
                 <span>{{ slot.player || '\u00a0' }}</span>
               </BaseBody>
               <CrownIcon v-show="slot.isHost" class="h-6 w-6 text-yellow-400" />
             </div>
-            <div v-show="slot.player">
-              <BaseModification
-                v-for="(modification, modificationIndex) in [
-                  ...match.globalModifications,
-                  ...slot.selectedModifications,
-                ]"
-                :key="modificationIndex"
-                class="mr-1"
-                :mod="modification"
-              />
+            <div
+              :class="[
+                'col-start-2 row-start-1 -ml-2 flex items-center space-x-2',
+                {
+                  'row-span-2 sm:row-span-1':
+                    match.globalModifications.length === 0 &&
+                    slot.selectedModifications.length === 0,
+                },
+              ]"
+            >
+              <BaseBody class="ml-2 py-2 font-bold!">
+                <span>{{ slot.player || '\u00a0' }}</span>
+              </BaseBody>
+              <CrownIcon v-show="slot.isHost" class="h-6 w-6 text-yellow-400" />
             </div>
-            <div class="flex">
+            <div
+              class="scrollbar col-start-2 row-start-2 flex min-h-8 overflow-x-scroll sm:col-start-3 sm:row-start-1 sm:min-h-0"
+            >
+              <template v-if="slot.player">
+                <BaseModification
+                  v-for="(modification, modificationIndex) in [
+                    ...match.globalModifications,
+                    ...slot.selectedModifications,
+                  ]"
+                  :key="modificationIndex"
+                  class="not-last:mr-1"
+                  :mod="modification"
+                />
+              </template>
+            </div>
+            <div
+              class="col-start-3 row-span-2 flex justify-end sm:col-start-4 sm:row-span-1 sm:row-start-1"
+            >
               <BaseBadge
                 v-show="slot.isReady === true"
                 color="green"
@@ -72,7 +98,10 @@
                 {{ $t('global.words.ready') }}
               </BaseBadge>
             </div>
-            <div v-if="slot.player" class="flex">
+            <div
+              v-if="slot.player"
+              class="col-start-4 row-span-2 flex sm:col-start-5 sm:row-span-1 sm:row-start-1"
+            >
               <BaseDropdown :items="quickActionsForPlayer(slot.player)" />
             </div>
           </div>
@@ -151,3 +180,13 @@ const quickActionsForPlayer = (player: string): DropdownItem[] => {
   ];
 };
 </script>
+
+<style scoped>
+@reference '#src/assets/styles/index.css';
+
+.scrollbar {
+  scrollbar-width: auto;
+  scrollbar-gutter: stable;
+  scrollbar-color: oklch(85.2% 0.199 91.936) transparent;
+}
+</style>
