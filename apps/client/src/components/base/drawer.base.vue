@@ -24,7 +24,7 @@
       <div>
         <slot name="header"> </slot>
       </div>
-      <div class="mb-4 flex-1 overflow-auto">
+      <div class="mb-4 flex min-h-0 flex-1 flex-col overflow-auto">
         <slot name="body"> </slot>
       </div>
       <div>
@@ -95,7 +95,8 @@ usePopUpBehavior({
 }
 
 .right {
-  @apply top-4 right-4 h-[calc(100%-32px)] w-1/2;
+  @apply top-4 right-4 h-[calc(100%-32px)] w-[calc(100%-32px)];
+  @apply sm:w-3/4 lg:w-1/2;
 }
 
 .bottom {
