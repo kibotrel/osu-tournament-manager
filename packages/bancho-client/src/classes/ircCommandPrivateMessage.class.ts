@@ -359,6 +359,11 @@ export class IrcCommandPrivateMessage implements IrcCommand {
   private handleMultiplayerChannelInformationSlotEvent(payload: Payload) {
     const { channel, message } = payload;
     const match = new RegExp(BanchoBotCommonMessage.MatchSlot).exec(message);
+    const nonDifficultyAttributes = new Set<string>([
+      BanchoTerm.Host,
+      BanchoTerm.TeamBlue,
+      BanchoTerm.TeamRed,
+    ]);
 
     if (!match) {
       return;
@@ -372,11 +377,11 @@ export class IrcCommandPrivateMessage implements IrcCommand {
       user,
     } = match.groups!;
     const modifications = attributes
-      .slice(attributes.indexOf('/') + 1)
+      .slice(attributes.lastIndexOf('/') + 1)
       .trim()
       .split(', ')
-      .filter((modification) => {
-        return modification !== BanchoTerm.Host;
+      .filter((attribute) => {
+        return !nonDifficultyAttributes.has(attribute);
       })
       .filter(Boolean);
     const data = {
