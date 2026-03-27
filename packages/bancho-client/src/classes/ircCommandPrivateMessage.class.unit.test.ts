@@ -325,7 +325,7 @@ describe('IrcCommandPrivateMessage', () => {
     it('should also emit multiplayer_channel_information_slot event if sender is BanchoBot and received message containing slot information', () => {
       const packetParts = [
         'BanchoBot!server@localhost.dev PRIVMSG #channel',
-        'Slot 5 Not Ready https://osu.ppy.sh/u/123456 player1 [Host, Hidden]',
+        'Slot 5 Not Ready https://osu.ppy.sh/u/123456 player1 [Host / Team Blue / Hidden]',
       ];
       const command = new IrcCommandPrivateMessage(banchoClient, packetParts);
       const eventEmitter = vi.spyOn(banchoClient, 'emit');
