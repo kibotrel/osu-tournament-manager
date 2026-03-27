@@ -71,4 +71,6 @@ export enum BanchoReadyStatus {
 
 export enum BanchoTerm {
   Host = 'Host',
+  TeamBlue = 'Team Blue',
+  TeamRed = 'Team Red',
 }
