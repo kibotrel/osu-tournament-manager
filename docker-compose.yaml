@@ -34,7 +34,7 @@ services:
   client:
     build:
       context: .
-      dockerfile: ./docker/client/Dockerfile.dev
+      dockerfile: ./docker/client/Dockerfile
     container_name: client
     depends_on:
       server:
@@ -72,7 +72,7 @@ services:
       args:
         PACKAGE: packages/api-specification
       context: .
-      dockerfile: ./docker/packages-builder/Dockerfile.dev
+      dockerfile: ./docker/packages-builder/Dockerfile
     restart: always
     volumes:
       - ./packages/api-specification:/osu-tournament-manager/packages/api-specification
@@ -83,7 +83,7 @@ services:
       args:
         PACKAGE: packages/bancho-client
       context: .
-      dockerfile: ./docker/packages-builder/Dockerfile.dev
+      dockerfile: ./docker/packages-builder/Dockerfile
     restart: always
     volumes:
       - ./packages/bancho-client:/osu-tournament-manager/packages/bancho-client
@@ -95,7 +95,7 @@ services:
       args:
         PACKAGE: packages/logger
       context: .
-      dockerfile: ./docker/packages-builder/Dockerfile.dev
+      dockerfile: ./docker/packages-builder/Dockerfile
     restart: always
     volumes:
       - ./packages/logger:/osu-tournament-manager/packages/logger
@@ -107,7 +107,7 @@ services:
       args:
         PACKAGE: packages/osu-sdk
       context: .
-      dockerfile: ./docker/packages-builder/Dockerfile.dev
+      dockerfile: ./docker/packages-builder/Dockerfile
     restart: always
     volumes:
       - ./packages/osu-sdk:/osu-tournament-manager/packages/osu-sdk
@@ -119,7 +119,7 @@ services:
       args:
         PACKAGE: packages/shared
       context: .
-      dockerfile: ./docker/packages-builder/Dockerfile.dev
+      dockerfile: ./docker/packages-builder/Dockerfile
     restart: always
     volumes:
       - ./packages/shared:/osu-tournament-manager/packages/shared
@@ -154,7 +154,7 @@ services:
   server:
     build:
       context: .
-      dockerfile: ./docker/server/Dockerfile.dev
+      dockerfile: ./docker/server/Dockerfile
     container_name: server
     depends_on:
       postgres:
