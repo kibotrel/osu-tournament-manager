@@ -1,0 +1,33 @@
+{$DOMAIN} {
+  tls {
+    issuer acme {
+      email {$CERTIFICATE_NOTIFICATIONS_EMAIL}
+    }
+  }
+
+	header -Server
+	header -Via
+
+	@websockets {
+		path /api/websockets/*
+		header Connection *Upgrade*
+		header Upgrade websocket
+	}
+
+	encode gzip
+
+	handle /api/* {
+		reverse_proxy server:{$SERVER_PORT_CONTAINER}
+	}
+
+	handle @websockets {
+		uri strip_prefix /api
+		reverse_proxy server:{$SERVER_PORT_CONTAINER}
+	}
+
+  reverse_proxy /* client:{$CLIENT_PORT_CONTAINER}
+
+	@static {
+		path /static/*
+	}
+}
