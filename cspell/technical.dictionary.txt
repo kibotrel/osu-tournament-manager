@@ -29,6 +29,7 @@ smallint
 sonarjs
 todoread
 todowrite
+unrs
 varchar
 vueuse
 webfetch

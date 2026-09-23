@@ -1,5 +1,5 @@
-FROM node:22.22.0-slim AS base-image
-ARG PNPM_VERSION=9.15.4
+FROM node:24.18.0-slim AS base-image
+ARG PNPM_VERSION=12.5.1
 RUN npm --global install pnpm@${PNPM_VERSION}
 
 FROM base-image AS install-dependencies
