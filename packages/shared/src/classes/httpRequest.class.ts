@@ -111,7 +111,7 @@ export class HttpRequest<PayloadType extends object = NothingRecord> {
   private readResponse<ResponseType = UnknownRecord>(
     response: Response,
   ): Promise<ResponseType> {
-    return response.json().catch(() => {
+    return (response.json() as Promise<ResponseType>).catch(() => {
       return {} as ResponseType;
     });
   }
