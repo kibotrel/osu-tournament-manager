@@ -5,9 +5,7 @@
     "winston": "3.19.0",
     "winston-transport": "4.9.0"
   },
-  "devDependencies": {
-    "@packages/prettier-config": "workspace:*"
-  },
+  "devDependencies": {},
   "imports": {
     "#src/*": "./src/*"
   },
@@ -17,8 +15,6 @@
   "scripts": {
     "build": "tsc && tsc-alias",
     "dev": "nodemon --config nodemon.json",
-    "format": "prettier --write src/**/*.ts",
-    "lint": "eslint src/**/*.ts",
     "type-check": "tsc --noEmit"
   },
   "type": "module",

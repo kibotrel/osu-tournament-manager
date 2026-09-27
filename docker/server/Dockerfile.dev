@@ -14,7 +14,6 @@ COPY packages/api-specification ./packages/api-specification/
 COPY packages/bancho-client ./packages/bancho-client/
 COPY packages/logger ./packages/logger/
 COPY packages/osu-sdk ./packages/osu-sdk/
-COPY packages/prettier-config ./packages/prettier-config/
 COPY packages/shared ./packages/shared/
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
 

@@ -1,6 +1,5 @@
 {
   "devDependencies": {
-    "@packages/prettier-config": "workspace:*",
     "@types/express": "4.17.21",
     "jsdom": "27.4.0",
     "vitest": "4.0.18"
@@ -14,8 +13,6 @@
   "scripts": {
     "build": "tsc && tsc-alias",
     "dev": "nodemon --config nodemon.json",
-    "format": "prettier --write src/**/*.ts",
-    "lint": "eslint src/**/*.ts",
     "test:unit": "vitest --silent --config vitest.config.unit.ts",
     "type-check": "tsc --noEmit"
   },
