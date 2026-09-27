@@ -9,20 +9,16 @@
     "husky": "9.1.7",
     "nodemon": "3.1.11",
     "tsc-alias": "1.8.16",
-    "typescript": "5.9.3",
+    "typescript": "6.0.3",
     "vitest": "4.0.18"
   },
   "name": "osu-tournament-manager",
+  "packageManager": "pnpm@12.6.0",
   "scripts": {
-    "format": "pnpm --filter=@packages/* format && pnpm --filter=./apps/* format",
-    "lint": "pnpm --filter=@packages/* lint && pnpm --filter=./apps/* lint",
     "prepare": "pnpm husky && pnpm --filter=@packages/* build",
-    "spellcheck": "cspell --config cspell.json --no-progress --no-summary --no-show-suggestions --no-must-find-files  --gitignore ./",
-    "test": "vitest --silent"
+    "spellcheck": "cspell --config cspell.json --no-progress --no-summary --no-show-suggestions --no-must-find-files --gitignore ./",
+    "test": "vitest --silent",
+    "type-check": "pnpm -r run type-check"
   },
-  "type": "module",
-  "workspaces": [
-    "apps/*",
-    "packages/*"
-  ]
+  "type": "module"
 }
