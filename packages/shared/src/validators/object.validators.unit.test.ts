@@ -8,7 +8,7 @@ import {
 
 describe('isBinaryObject', () => {
   it('should return true if input is a Blob', () => {
-    expect(isBinaryObject(new Blob())).toBe(true);
+    expect(isBinaryObject(new Blob([]))).toBe(true);
   });
 
   it('should return false if input is an object', () => {
