@@ -1,4 +1,19 @@
 {
+  "name": "@packages/osu-sdk",
+  "private": true,
+  "type": "module",
+  "main": "dist/src/osuSdk.export.js",
+  "types": "dist/src/osuSdk.export.d.ts",
+  "imports": {
+    "#src/*": "./src/*"
+  },
+  "scripts": {
+    "build": "tsc && tsc-alias",
+    "dev": "nodemon --config nodemon.json",
+    "format": "oxfmt",
+    "lint": "oxlint",
+    "type-check": "tsc --noEmit"
+  },
   "dependencies": {
     "@packages/shared": "workspace:*"
   },
@@ -7,20 +22,5 @@
     "@packages/config-linter": "workspace:*",
     "oxfmt": "0.70.0",
     "oxlint": "1.85.0"
-  },
-  "imports": {
-    "#src/*": "./src/*"
-  },
-  "main": "dist/src/osuSdk.export.js",
-  "name": "@packages/osu-sdk",
-  "private": true,
-  "scripts": {
-    "build": "tsc && tsc-alias",
-    "dev": "nodemon --config nodemon.json",
-    "format": "oxfmt",
-    "lint": "oxlint",
-    "type-check": "tsc --noEmit"
-  },
-  "type": "module",
-  "types": "dist/src/osuSdk.export.d.ts"
+  }
 }

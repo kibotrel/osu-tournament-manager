@@ -8,11 +8,7 @@ import type { LogMetadata } from '#src/logger.export.js';
 
 const { colorize, json, printf, timestamp } = format;
 
-export const baseConsoleFormat: Logform.Format[] = [
-  colorize(),
-  json(),
-  timestamp(),
-];
+export const baseConsoleFormat: Logform.Format[] = [colorize(), json(), timestamp()];
 
 interface FormatErrorParameters {
   error: Error;
@@ -40,11 +36,7 @@ const formatError = (options: FormatErrorParameters) => {
   );
 
   if (error.cause) {
-    formatError({
-      error: error.cause as Error,
-      logParts,
-      nestingLevel: nestingLevel + 1,
-    });
+    formatError({ error: error.cause as Error, logParts, nestingLevel: nestingLevel + 1 });
   }
 };
 
@@ -82,20 +74,11 @@ export const consoleSerializeAndPrint = printf((data) => {
   const logParts: string[] = [`${formattedTimestamp} ${level}: ${message}`];
 
   if (error) {
-    formatError({
-      error,
-      logParts,
-      logMessage: message as string,
-      nestingLevel: 1,
-    });
+    formatError({ error, logParts, logMessage: message as string, nestingLevel: 1 });
   }
 
   if (Object.keys(rest).length > 0) {
-    formatAdditionalData({
-      data: rest,
-      hasError: Boolean(error),
-      logParts,
-    });
+    formatAdditionalData({ data: rest, hasError: Boolean(error), logParts });
   }
 
   return logParts.join('\n');

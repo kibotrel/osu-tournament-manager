@@ -11,9 +11,6 @@ export const isPublicChannel = (recipient: string) => {
   return recipient.startsWith('#');
 };
 
-export const isSocketReady = (
-  state: IrcClientState,
-  socket?: Socket,
-): socket is Socket => {
+export const isSocketReady = (state: IrcClientState, socket?: Socket): socket is Socket => {
   return socket?.writable === true && clientStatesAllowingMessage.has(state);
 };

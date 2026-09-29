@@ -1,19 +1,12 @@
 {
-  "devDependencies": {
-    "@packages/config-formatter": "workspace:*",
-    "@packages/config-linter": "workspace:*",
-    "@types/express": "4.17.21",
-    "jsdom": "27.4.0",
-    "oxfmt": "0.70.0",
-    "oxlint": "1.85.0",
-    "vitest": "4.0.18"
-  },
+  "name": "@packages/shared",
+  "private": true,
+  "type": "module",
+  "main": "dist/src/shared.export.js",
+  "types": "dist/src/shared.export.d.ts",
   "imports": {
     "#src/*": "./src/*"
   },
-  "main": "dist/src/shared.export.js",
-  "name": "@packages/shared",
-  "private": true,
   "scripts": {
     "build": "tsc && tsc-alias",
     "dev": "nodemon --config nodemon.json",
@@ -22,6 +15,13 @@
     "test:unit": "vitest --silent --config vitest.config.unit.ts",
     "type-check": "tsc --noEmit"
   },
-  "type": "module",
-  "types": "dist/src/shared.export.d.ts"
+  "devDependencies": {
+    "@packages/config-formatter": "workspace:*",
+    "@packages/config-linter": "workspace:*",
+    "@types/express": "4.17.21",
+    "jsdom": "27.4.0",
+    "oxfmt": "0.70.0",
+    "oxlint": "1.85.0",
+    "vitest": "4.0.18"
+  }
 }

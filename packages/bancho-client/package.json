@@ -1,4 +1,20 @@
 {
+  "name": "@packages/bancho-client",
+  "private": true,
+  "type": "module",
+  "main": "dist/src/banchoClient.export.js",
+  "types": "dist/src/banchoClient.export.d.ts",
+  "imports": {
+    "#src/*": "./src/*"
+  },
+  "scripts": {
+    "build": "tsc && tsc-alias",
+    "dev": "nodemon --config nodemon.json",
+    "format": "oxfmt",
+    "lint": "oxlint",
+    "test:unit": "vitest --silent --config vitest.config.unit.ts",
+    "type-check": "tsc --noEmit"
+  },
   "dependencies": {
     "@packages/shared": "workspace:*"
   },
@@ -8,21 +24,5 @@
     "oxfmt": "0.70.0",
     "oxlint": "1.85.0",
     "vitest": "4.0.18"
-  },
-  "imports": {
-    "#src/*": "./src/*"
-  },
-  "main": "dist/src/banchoClient.export.js",
-  "name": "@packages/bancho-client",
-  "private": true,
-  "scripts": {
-    "build": "tsc && tsc-alias",
-    "dev": "nodemon --config nodemon.json",
-    "format": "oxfmt",
-    "lint": "oxlint",
-    "test:unit": "vitest --silent --config vitest.config.unit.ts",
-    "type-check": "tsc --noEmit"
-  },
-  "type": "module",
-  "types": "dist/src/banchoClient.export.d.ts"
+  }
 }

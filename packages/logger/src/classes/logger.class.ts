@@ -27,11 +27,7 @@ export class Logger {
       transports.push(consoleTransport());
     }
 
-    this.winston = createLogger({
-      exitOnError: false,
-      level,
-      transports,
-    });
+    this.winston = createLogger({ exitOnError: false, level, transports });
   }
 
   public debug(message: string, metadata?: LogMetadata) {

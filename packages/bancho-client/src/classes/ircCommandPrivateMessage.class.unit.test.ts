@@ -11,10 +11,7 @@ describe('IrcCommandPrivateMessage', () => {
 
   describe('constructor', () => {
     it('should create an instance of IrcCommandPrivateMessage', () => {
-      const packetParts = [
-        'username!server@localhost.dev PRIVMSG #channel',
-        'message content',
-      ];
+      const packetParts = ['username!server@localhost.dev PRIVMSG #channel', 'message content'];
       const command = new IrcCommandPrivateMessage(banchoClient, packetParts);
 
       expect(command).toBeInstanceOf(IrcCommandPrivateMessage);
@@ -32,10 +29,7 @@ describe('IrcCommandPrivateMessage', () => {
     });
 
     it('should emit channel_message event with the channel, message and user', () => {
-      const packetParts = [
-        'username!server@localhost.dev PRIVMSG #channel',
-        'message content',
-      ];
+      const packetParts = ['username!server@localhost.dev PRIVMSG #channel', 'message content'];
       const command = new IrcCommandPrivateMessage(banchoClient, packetParts);
       const eventEmitter = vi.spyOn(banchoClient, 'emit');
 
@@ -64,9 +58,7 @@ describe('IrcCommandPrivateMessage', () => {
       command.handleCommand();
 
       expect(eventEmitter).toHaveBeenCalledTimes(3);
-      expect(eventEmitter).toHaveBeenCalledWith(
-        'concurrent_match_limit_reached',
-      );
+      expect(eventEmitter).toHaveBeenCalledWith('concurrent_match_limit_reached');
     });
 
     it('should also emit multiplayer_channel_all_players_ready event if sender is BanchoBot and received message indicating all players are ready', () => {
@@ -80,20 +72,14 @@ describe('IrcCommandPrivateMessage', () => {
       command.handleCommand();
 
       expect(eventEmitter).toHaveBeenCalledTimes(4);
-      expect(eventEmitter).toHaveBeenCalledWith(
-        'multiplayer_channel_all_players_ready',
-        { channel: '#channel' },
-      );
-      expect(eventEmitter).toHaveBeenCalledWith(
-        'multiplayer_channel_all_players_ready:#channel',
-      );
+      expect(eventEmitter).toHaveBeenCalledWith('multiplayer_channel_all_players_ready', {
+        channel: '#channel',
+      });
+      expect(eventEmitter).toHaveBeenCalledWith('multiplayer_channel_all_players_ready:#channel');
     });
 
     it('should also emit multiplayer_channel_closed event if sender is BanchoBot and received message is a multiplayer match closing notice', () => {
-      const packetParts = [
-        'BanchoBot!server@localhost.dev PRIVMSG #channel',
-        'Closed the match',
-      ];
+      const packetParts = ['BanchoBot!server@localhost.dev PRIVMSG #channel', 'Closed the match'];
       const command = new IrcCommandPrivateMessage(banchoClient, packetParts);
       const eventEmitter = vi.spyOn(banchoClient, 'emit');
 
@@ -103,9 +89,7 @@ describe('IrcCommandPrivateMessage', () => {
       expect(eventEmitter).toHaveBeenCalledWith('multiplayer_channel_closed', {
         channel: '#channel',
       });
-      expect(eventEmitter).toHaveBeenCalledWith(
-        'multiplayer_channel_closed:#channel',
-      );
+      expect(eventEmitter).toHaveBeenCalledWith('multiplayer_channel_closed:#channel');
     });
 
     it('should also emit multiplayer_channel_host_changed event if sender is BanchoBot and received message containing new match host', () => {
@@ -119,34 +103,27 @@ describe('IrcCommandPrivateMessage', () => {
       command.handleCommand();
 
       expect(eventEmitter).toHaveBeenCalledTimes(4);
-      expect(eventEmitter).toHaveBeenCalledWith(
-        'multiplayer_channel_host_changed',
-        { channel: '#channel', newHost: 'player1' },
-      );
-      expect(eventEmitter).toHaveBeenCalledWith(
-        'multiplayer_channel_host_changed:#channel',
-        { newHost: 'player1' },
-      );
+      expect(eventEmitter).toHaveBeenCalledWith('multiplayer_channel_host_changed', {
+        channel: '#channel',
+        newHost: 'player1',
+      });
+      expect(eventEmitter).toHaveBeenCalledWith('multiplayer_channel_host_changed:#channel', {
+        newHost: 'player1',
+      });
     });
 
     it('should also emit multiplayer_channel_host_cleared event if sender is BanchoBot and received message indicating host has been cleared', () => {
-      const packetParts = [
-        'BanchoBot!server@localhost.dev PRIVMSG #channel',
-        'Cleared match host',
-      ];
+      const packetParts = ['BanchoBot!server@localhost.dev PRIVMSG #channel', 'Cleared match host'];
       const command = new IrcCommandPrivateMessage(banchoClient, packetParts);
       const eventEmitter = vi.spyOn(banchoClient, 'emit');
 
       command.handleCommand();
 
       expect(eventEmitter).toHaveBeenCalledTimes(4);
-      expect(eventEmitter).toHaveBeenCalledWith(
-        'multiplayer_channel_host_cleared',
-        { channel: '#channel' },
-      );
-      expect(eventEmitter).toHaveBeenCalledWith(
-        'multiplayer_channel_host_cleared:#channel',
-      );
+      expect(eventEmitter).toHaveBeenCalledWith('multiplayer_channel_host_cleared', {
+        channel: '#channel',
+      });
+      expect(eventEmitter).toHaveBeenCalledWith('multiplayer_channel_host_cleared:#channel');
     });
 
     it('should also emit multiplayer_channel_information_conditions event if sender is BanchoBot and received message containing match conditions', () => {
@@ -160,14 +137,11 @@ describe('IrcCommandPrivateMessage', () => {
       command.handleCommand();
 
       expect(eventEmitter).toHaveBeenCalledTimes(4);
-      expect(eventEmitter).toHaveBeenCalledWith(
-        'multiplayer_channel_information_conditions',
-        {
-          channel: '#channel',
-          teamMode: 'HeadToHead',
-          winCondition: 'ScoreV2',
-        },
-      );
+      expect(eventEmitter).toHaveBeenCalledWith('multiplayer_channel_information_conditions', {
+        channel: '#channel',
+        teamMode: 'HeadToHead',
+        winCondition: 'ScoreV2',
+      });
       expect(eventEmitter).toHaveBeenCalledWith(
         'multiplayer_channel_information_conditions:#channel',
         { teamMode: 'HeadToHead', winCondition: 'ScoreV2' },
@@ -262,14 +236,11 @@ describe('IrcCommandPrivateMessage', () => {
       command.handleCommand();
 
       expect(eventEmitter).toHaveBeenCalledTimes(4);
-      expect(eventEmitter).toHaveBeenCalledWith(
-        'multiplayer_channel_information_identity',
-        {
-          channel: '#mp_123456',
-          name: 'match name',
-          historyUrl: 'https://osu.ppy.sh/mp/123456',
-        },
-      );
+      expect(eventEmitter).toHaveBeenCalledWith('multiplayer_channel_information_identity', {
+        channel: '#mp_123456',
+        name: 'match name',
+        historyUrl: 'https://osu.ppy.sh/mp/123456',
+      });
       expect(eventEmitter).toHaveBeenCalledWith(
         'multiplayer_channel_information_identity:#mp_123456',
         { name: 'match name', historyUrl: 'https://osu.ppy.sh/mp/123456' },
@@ -287,14 +258,11 @@ describe('IrcCommandPrivateMessage', () => {
       command.handleCommand();
 
       expect(eventEmitter).toHaveBeenCalledTimes(4);
-      expect(eventEmitter).toHaveBeenCalledWith(
-        'multiplayer_channel_information_identity',
-        {
-          channel: '#channel',
-          name: 'match name',
-          historyUrl: 'https://osu.ppy.sh/mp/123456',
-        },
-      );
+      expect(eventEmitter).toHaveBeenCalledWith('multiplayer_channel_information_identity', {
+        channel: '#channel',
+        name: 'match name',
+        historyUrl: 'https://osu.ppy.sh/mp/123456',
+      });
       expect(eventEmitter).toHaveBeenCalledWith(
         'multiplayer_channel_information_identity:#channel',
         { name: 'match name', historyUrl: 'https://osu.ppy.sh/mp/123456' },
@@ -302,20 +270,17 @@ describe('IrcCommandPrivateMessage', () => {
     });
 
     it('should also emit multiplayer_channel_information_player_count event if sender is BanchoBot and received message containing player count', () => {
-      const packetParts = [
-        'BanchoBot!server@localhost.dev PRIVMSG #channel',
-        'Players: 6',
-      ];
+      const packetParts = ['BanchoBot!server@localhost.dev PRIVMSG #channel', 'Players: 6'];
       const command = new IrcCommandPrivateMessage(banchoClient, packetParts);
       const eventEmitter = vi.spyOn(banchoClient, 'emit');
 
       command.handleCommand();
 
       expect(eventEmitter).toHaveBeenCalledTimes(4);
-      expect(eventEmitter).toHaveBeenCalledWith(
-        'multiplayer_channel_information_player_count',
-        { channel: '#channel', playerCount: 6 },
-      );
+      expect(eventEmitter).toHaveBeenCalledWith('multiplayer_channel_information_player_count', {
+        channel: '#channel',
+        playerCount: 6,
+      });
       expect(eventEmitter).toHaveBeenCalledWith(
         'multiplayer_channel_information_player_count:#channel',
         { playerCount: 6 },
@@ -333,29 +298,23 @@ describe('IrcCommandPrivateMessage', () => {
       command.handleCommand();
 
       expect(eventEmitter).toHaveBeenCalledTimes(4);
-      expect(eventEmitter).toHaveBeenCalledWith(
-        'multiplayer_channel_information_slot',
-        {
-          channel: '#channel',
-          gameUserId: 123_456,
-          isHost: true,
-          isReady: false,
-          slotNumber: 5,
-          user: 'player1',
-          modifications: ['Hidden'],
-        },
-      );
-      expect(eventEmitter).toHaveBeenCalledWith(
-        'multiplayer_channel_information_slot:#channel',
-        {
-          gameUserId: 123_456,
-          isHost: true,
-          isReady: false,
-          slotNumber: 5,
-          user: 'player1',
-          modifications: ['Hidden'],
-        },
-      );
+      expect(eventEmitter).toHaveBeenCalledWith('multiplayer_channel_information_slot', {
+        channel: '#channel',
+        gameUserId: 123_456,
+        isHost: true,
+        isReady: false,
+        slotNumber: 5,
+        user: 'player1',
+        modifications: ['Hidden'],
+      });
+      expect(eventEmitter).toHaveBeenCalledWith('multiplayer_channel_information_slot:#channel', {
+        gameUserId: 123_456,
+        isHost: true,
+        isReady: false,
+        slotNumber: 5,
+        user: 'player1',
+        modifications: ['Hidden'],
+      });
     });
 
     it('should also emit multiplayer_channel_name_updated event if sender is BanchoBot and received message containing updated match name', () => {
@@ -369,14 +328,13 @@ describe('IrcCommandPrivateMessage', () => {
       command.handleCommand();
 
       expect(eventEmitter).toHaveBeenCalledTimes(4);
-      expect(eventEmitter).toHaveBeenCalledWith(
-        'multiplayer_channel_name_updated',
-        { channel: '#channel', name: 'New match name' },
-      );
-      expect(eventEmitter).toHaveBeenCalledWith(
-        'multiplayer_channel_name_updated:#channel',
-        { name: 'New match name' },
-      );
+      expect(eventEmitter).toHaveBeenCalledWith('multiplayer_channel_name_updated', {
+        channel: '#channel',
+        name: 'New match name',
+      });
+      expect(eventEmitter).toHaveBeenCalledWith('multiplayer_channel_name_updated:#channel', {
+        name: 'New match name',
+      });
     });
 
     it('should also emit multiplayer_player_joined_slot event if sender is BanchoBot and received message containing player joined slot', () => {
@@ -390,14 +348,15 @@ describe('IrcCommandPrivateMessage', () => {
       command.handleCommand();
 
       expect(eventEmitter).toHaveBeenCalledTimes(4);
-      expect(eventEmitter).toHaveBeenCalledWith(
-        'multiplayer_player_joined_slot',
-        { channel: '#channel', user: 'player1', slotNumber: 1 },
-      );
-      expect(eventEmitter).toHaveBeenCalledWith(
-        'multiplayer_player_joined_slot:#channel',
-        { user: 'player1', slotNumber: 1 },
-      );
+      expect(eventEmitter).toHaveBeenCalledWith('multiplayer_player_joined_slot', {
+        channel: '#channel',
+        user: 'player1',
+        slotNumber: 1,
+      });
+      expect(eventEmitter).toHaveBeenCalledWith('multiplayer_player_joined_slot:#channel', {
+        user: 'player1',
+        slotNumber: 1,
+      });
     });
 
     it('should also emit multiplayer_player_left_room event if sender is BanchoBot and received message containing player left room', () => {
@@ -411,14 +370,13 @@ describe('IrcCommandPrivateMessage', () => {
       command.handleCommand();
 
       expect(eventEmitter).toHaveBeenCalledTimes(4);
-      expect(eventEmitter).toHaveBeenCalledWith(
-        'multiplayer_player_left_room',
-        { channel: '#channel', user: 'player1' },
-      );
-      expect(eventEmitter).toHaveBeenCalledWith(
-        'multiplayer_player_left_room:#channel',
-        { user: 'player1' },
-      );
+      expect(eventEmitter).toHaveBeenCalledWith('multiplayer_player_left_room', {
+        channel: '#channel',
+        user: 'player1',
+      });
+      expect(eventEmitter).toHaveBeenCalledWith('multiplayer_player_left_room:#channel', {
+        user: 'player1',
+      });
     });
 
     it('should also emit multiplayer_player_moved_slot event if sender is BanchoBot and received message containing player moved slot', () => {
@@ -432,17 +390,15 @@ describe('IrcCommandPrivateMessage', () => {
       command.handleCommand();
 
       expect(eventEmitter).toHaveBeenCalledTimes(4);
-      expect(eventEmitter).toHaveBeenCalledWith(
-        'multiplayer_player_moved_slot',
-        { channel: '#channel', user: 'player1', slotNumber: 3 },
-      );
-      expect(eventEmitter).toHaveBeenCalledWith(
-        'multiplayer_player_moved_slot:#channel',
-        {
-          user: 'player1',
-          slotNumber: 3,
-        },
-      );
+      expect(eventEmitter).toHaveBeenCalledWith('multiplayer_player_moved_slot', {
+        channel: '#channel',
+        user: 'player1',
+        slotNumber: 3,
+      });
+      expect(eventEmitter).toHaveBeenCalledWith('multiplayer_player_moved_slot:#channel', {
+        user: 'player1',
+        slotNumber: 3,
+      });
     });
 
     it('should also emit user_already_in_channel event if sender is BanchoBot and received message is indicating that the user is already in the channel', () => {
@@ -474,16 +430,11 @@ describe('IrcCommandPrivateMessage', () => {
         channel: '#channel',
         user: 'username',
       });
-      expect(eventEmitter).toHaveBeenCalledWith(
-        'user_invited_to_channel:#channel:username',
-      );
+      expect(eventEmitter).toHaveBeenCalledWith('user_invited_to_channel:#channel:username');
     });
 
     it('should also emit user_not_found event if sender is BanchoBot and received message is a user not found notice', () => {
-      const packetParts = [
-        'BanchoBot!server@localhost.dev PRIVMSG #channel',
-        'User not found',
-      ];
+      const packetParts = ['BanchoBot!server@localhost.dev PRIVMSG #channel', 'User not found'];
       const command = new IrcCommandPrivateMessage(banchoClient, packetParts);
       const eventEmitter = vi.spyOn(banchoClient, 'emit');
 
