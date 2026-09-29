@@ -10,6 +10,7 @@ RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
 FROM install-dependencies AS install-local-packages
 WORKDIR /osu-tournament-manager/
 COPY packages/tsconfig.json ./packages/
+COPY packages/config-formatter ./packages/config-formatter/
 COPY packages/shared ./packages/shared/
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
 

@@ -1,0 +1,18 @@
+{
+  "devDependencies": {
+    "oxfmt": "0.70.0"
+  },
+  "imports": {
+    "#src/*": "./src/*"
+  },
+  "main": "dist/src/configFormatter.export.js",
+  "name": "@packages/config-formatter",
+  "private": true,
+  "scripts": {
+    "build": "tsc && tsc-alias",
+    "dev": "nodemon --config nodemon.json",
+    "type-check": "tsc --noEmit"
+  },
+  "type": "module",
+  "types": "dist/src/configFormatter.export.d.ts"
+}

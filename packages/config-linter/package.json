@@ -1,26 +1,20 @@
 {
-  "dependencies": {
-    "@packages/shared": "workspace:*"
-  },
   "devDependencies": {
     "@packages/config-formatter": "workspace:*",
-    "@packages/config-linter": "workspace:*",
     "oxfmt": "0.70.0",
     "oxlint": "1.85.0"
   },
   "imports": {
     "#src/*": "./src/*"
   },
-  "main": "dist/src/osuSdk.export.js",
-  "name": "@packages/osu-sdk",
+  "main": "dist/src/configLinter.export.js",
+  "name": "@packages/config-linter",
   "private": true,
   "scripts": {
     "build": "tsc && tsc-alias",
     "dev": "nodemon --config nodemon.json",
-    "format": "oxfmt",
-    "lint": "oxlint",
     "type-check": "tsc --noEmit"
   },
   "type": "module",
-  "types": "dist/src/osuSdk.export.d.ts"
+  "types": "dist/src/configLinter.export.d.ts"
 }

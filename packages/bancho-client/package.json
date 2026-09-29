@@ -3,6 +3,10 @@
     "@packages/shared": "workspace:*"
   },
   "devDependencies": {
+    "@packages/config-formatter": "workspace:*",
+    "@packages/config-linter": "workspace:*",
+    "oxfmt": "0.70.0",
+    "oxlint": "1.85.0",
     "vitest": "4.0.18"
   },
   "imports": {
@@ -14,6 +18,8 @@
   "scripts": {
     "build": "tsc && tsc-alias",
     "dev": "nodemon --config nodemon.json",
+    "format": "oxfmt",
+    "lint": "oxlint",
     "test:unit": "vitest --silent --config vitest.config.unit.ts",
     "type-check": "tsc --noEmit"
   },

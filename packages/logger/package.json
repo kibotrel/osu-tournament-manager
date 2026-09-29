@@ -5,7 +5,12 @@
     "winston": "3.19.0",
     "winston-transport": "4.9.0"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "@packages/config-formatter": "workspace:*",
+    "@packages/config-linter": "workspace:*",
+    "oxfmt": "0.70.0",
+    "oxlint": "1.85.0"
+  },
   "imports": {
     "#src/*": "./src/*"
   },
@@ -15,6 +20,8 @@
   "scripts": {
     "build": "tsc && tsc-alias",
     "dev": "nodemon --config nodemon.json",
+    "format": "oxfmt",
+    "lint": "oxlint",
     "type-check": "tsc --noEmit"
   },
   "type": "module",

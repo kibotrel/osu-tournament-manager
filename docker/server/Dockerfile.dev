@@ -12,6 +12,7 @@ WORKDIR /osu-tournament-manager/
 COPY packages/tsconfig.json ./packages/
 COPY packages/api-specification ./packages/api-specification/
 COPY packages/bancho-client ./packages/bancho-client/
+COPY packages/config-formatter ./packages/config-formatter/
 COPY packages/logger ./packages/logger/
 COPY packages/osu-sdk ./packages/osu-sdk/
 COPY packages/shared ./packages/shared/
