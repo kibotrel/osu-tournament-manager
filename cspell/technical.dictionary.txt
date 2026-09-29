@@ -14,6 +14,8 @@ keybinds
 Logform
 lokalise
 nguyenngoclong
+njsproj
+ntvs
 open-code
 opencode
 oxfmt
