@@ -1,9 +1,7 @@
 {
   "compilerOptions": {
     "outDir": "./dist",
-    "paths": {
-      "#src/*": ["./src/*"]
-    },
+    "paths": { "#src/*": ["./src/*"] },
     "removeComments": false,
     "types": ["node"]
   },

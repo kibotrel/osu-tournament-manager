@@ -6,4 +6,5 @@ export const nodeConfiguration: OxlintConfig = {
   options: {},
   overrides: [{ files: ['ox{fmt,lint}.config.ts'], rules: { 'import/no-default-export': 'off' } }],
   plugins: ['eslint', 'import', 'promise', 'typescript', 'unicorn', 'vitest'],
+  rules: { 'vitest/valid-expect': ['error', { maxArgs: 2 }] },
 };

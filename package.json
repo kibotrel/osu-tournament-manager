@@ -8,6 +8,8 @@
     "globals": "17.2.0",
     "husky": "9.1.7",
     "nodemon": "3.1.11",
+    "oxfmt": "0.70.0",
+    "oxlint": "1.85.0",
     "tsc-alias": "1.8.16",
     "typescript": "6.0.3",
     "vitest": "4.0.18"
@@ -15,6 +17,8 @@
   "name": "osu-tournament-manager",
   "packageManager": "pnpm@12.6.0",
   "scripts": {
+    "format": "pnpm --filter=@packages/* format",
+    "lint": "pnpm --filter=@packages/* lint",
     "prepare": "pnpm husky && pnpm --filter=@packages/* build",
     "spellcheck": "cspell --config cspell.json --no-progress --no-summary --no-show-suggestions --no-must-find-files --gitignore ./",
     "test": "vitest --silent",

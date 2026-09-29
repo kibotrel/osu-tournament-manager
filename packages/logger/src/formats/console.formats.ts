@@ -72,13 +72,13 @@ const formatAdditionalData = (options: FormatAdditionalDataParameters) => {
 };
 
 export const consoleSerializeAndPrint = printf((data) => {
-  const { timestamp, level, message } = data;
+  const { timestamp: logTimestamp, level, message } = data;
   const splat = Array.isArray(data[Symbol.for('splat')])
     ? (data[Symbol.for('splat')] as LogMetadata[])
     : [];
   const metadata = splat.at(0) || {};
   const { error, ...rest }: LogMetadata = metadata;
-  const formattedTimestamp = `[${chalk.magenta(timestamp)}]`;
+  const formattedTimestamp = `[${chalk.magenta(logTimestamp)}]`;
   const logParts: string[] = [`${formattedTimestamp} ${level}: ${message}`];
 
   if (error) {

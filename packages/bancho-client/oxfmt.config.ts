@@ -1,5 +1,5 @@
-import { defineConfig } from "oxfmt";
+import { defineConfig } from 'oxfmt';
 
-import { nodeConfiguration } from "@packages/config-formatter";
+import { nodeConfiguration } from '@packages/config-formatter';
 
 export default defineConfig(nodeConfiguration);
