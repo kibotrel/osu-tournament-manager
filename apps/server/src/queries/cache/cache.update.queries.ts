@@ -7,9 +7,7 @@ import type {
 } from '#src/@types/cache/cache.types.js';
 import { cache } from '#src/dependencies/cache.dependency.js';
 
-export const addToListInCacheByKeyQuery = async (
-  options: AddToCacheOptions<CacheListKey>,
-) => {
+export const addToListInCacheByKeyQuery = async (options: AddToCacheOptions<CacheListKey>) => {
   const { key, value, expiryInSeconds } = options;
 
   if (expiryInSeconds) {
@@ -19,9 +17,7 @@ export const addToListInCacheByKeyQuery = async (
   }
 };
 
-export const addToSetInCacheByKeyQuery = async (
-  options: AddToCacheOptions<CacheSetKey>,
-) => {
+export const addToSetInCacheByKeyQuery = async (options: AddToCacheOptions<CacheSetKey>) => {
   const { expiryInSeconds, key, value } = options;
 
   if (expiryInSeconds) {
@@ -31,9 +27,7 @@ export const addToSetInCacheByKeyQuery = async (
   }
 };
 
-export const removeFromListInCacheByKeyQuery = async (
-  options: AddToCacheOptions<CacheListKey>,
-) => {
+export const removeFromListInCacheByKeyQuery = async (options: AddToCacheOptions<CacheListKey>) => {
   const { expiryInSeconds, key, value } = options;
 
   if (expiryInSeconds) {
@@ -43,9 +37,7 @@ export const removeFromListInCacheByKeyQuery = async (
   }
 };
 
-export const removeFromSetInCacheByKeyQuery = async (
-  options: AddToCacheOptions<CacheSetKey>,
-) => {
+export const removeFromSetInCacheByKeyQuery = async (options: AddToCacheOptions<CacheSetKey>) => {
   const { expiryInSeconds, key, value } = options;
 
   if (expiryInSeconds) {
@@ -55,9 +47,7 @@ export const removeFromSetInCacheByKeyQuery = async (
   }
 };
 
-export const setStringInCacheByKeyQuery = async (
-  options: AddToCacheOptions<CacheStringKey>,
-) => {
+export const setStringInCacheByKeyQuery = async (options: AddToCacheOptions<CacheStringKey>) => {
   const { expiryInSeconds, key, value } = options;
 
   if (expiryInSeconds) {

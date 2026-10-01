@@ -1,6 +1,7 @@
-import { HttpUnauthorizedError } from '@packages/shared';
 import type { Request, Response } from 'express';
 import { afterEach, describe, expect, it, vi } from 'vitest';
+
+import { HttpUnauthorizedError } from '@packages/shared';
 
 import {
   expressNextFunctionMock,
@@ -11,9 +12,7 @@ import {
 import { isAuthenticatedMiddleware } from './session.middleware.js';
 
 vi.mock('#src/dependencies/cache.dependency.js', () => {
-  return {
-    cache: {},
-  };
+  return { cache: {} };
 });
 
 vi.mock('express-session', () => {

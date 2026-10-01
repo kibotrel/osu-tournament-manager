@@ -1,5 +1,6 @@
-import { OsuGameMode } from '@packages/shared';
 import { pgSchema } from 'drizzle-orm/pg-core';
+
+import { OsuGameMode } from '@packages/shared';
 
 export const mappoolsSchema = pgSchema('mappools');
 

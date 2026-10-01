@@ -9,10 +9,7 @@ const { isProductionMode } = environmentConfig;
 export const logHttpRequestMiddleware: RequestHandler = (request, _, next) => {
   const isHealthCheck = request.url === '/api/v1/public/health';
 
-  if (
-    isHealthCheck ||
-    (isProductionMode && silentHttpEndpoints.has(request.url))
-  ) {
+  if (isHealthCheck || (isProductionMode && silentHttpEndpoints.has(request.url))) {
     return next();
   }
 

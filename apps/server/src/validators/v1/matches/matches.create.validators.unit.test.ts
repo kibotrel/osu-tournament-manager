@@ -145,9 +145,7 @@ describe('createMatchValidators', () => {
       }
 
       const errors = validationResult(request);
-      const { name } = matchedData<{
-        name: string;
-      }>(request);
+      const { name } = matchedData<{ name: string }>(request);
 
       expect(errors.isEmpty()).toBe(true);
       expect(name).toBe('test name');
@@ -162,9 +160,7 @@ describe('createMatchValidators', () => {
       }
 
       const errors = validationResult(request);
-      const { name } = matchedData<{
-        name: string;
-      }>(request);
+      const { name } = matchedData<{ name: string }>(request);
 
       expect(errors.isEmpty()).toBe(true);
       expect(name).toBe('&lt;b&gt;test&lt;&#x2F;b&gt;');

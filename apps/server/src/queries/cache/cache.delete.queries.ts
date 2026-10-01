@@ -1,7 +1,4 @@
-import type {
-  CacheListKey,
-  CacheStringKey,
-} from '#src/@types/cache/cache.types.js';
+import type { CacheListKey, CacheStringKey } from '#src/@types/cache/cache.types.js';
 import { cache } from '#src/dependencies/cache.dependency.js';
 
 export const deleteListInCacheByKeyQuery = async (key: CacheListKey) => {

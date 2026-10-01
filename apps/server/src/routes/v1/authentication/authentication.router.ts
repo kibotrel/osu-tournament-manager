@@ -11,12 +11,7 @@ const authenticationRouter: Router = Router({
   mergeParams: true,
 });
 
-authenticationRouter.post(
-  '/login',
-  loginValidators(),
-  validateRequestMiddleware,
-  loginController,
-);
+authenticationRouter.post('/login', loginValidators(), validateRequestMiddleware, loginController);
 authenticationRouter.get('/logout', logoutController);
 
 export { authenticationRouter };

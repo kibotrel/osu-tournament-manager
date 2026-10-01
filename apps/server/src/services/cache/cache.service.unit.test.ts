@@ -1,5 +1,6 @@
-import type { BanchoLobbyState } from '@packages/shared';
 import { describe, expect, it, vi } from 'vitest';
+
+import type { BanchoLobbyState } from '@packages/shared';
 
 import {
   deleteListInCacheByKeyQuery,
@@ -59,9 +60,7 @@ describe('addMatchMessageToCacheService', () => {
   it('should call addToListInCacheByKeyQuery with correct parameters', async () => {
     const channel = 'test-channel';
     const message = 'test-message';
-    const addToListInCacheByKeyQueryMock = vi.mocked(
-      addToListInCacheByKeyQuery,
-    );
+    const addToListInCacheByKeyQueryMock = vi.mocked(addToListInCacheByKeyQuery);
 
     await addMatchMessageToCacheService({ channel, message });
 
@@ -90,30 +89,22 @@ describe('addMatchToCachedSetService', () => {
 describe('deleteMatchChatHistoryFromCacheService', () => {
   it('should call deleteListInCacheByKeyQuery with correct parameters', async () => {
     const channel = 'test-channel';
-    const deleteListInCacheByKeyQueryMock = vi.mocked(
-      deleteListInCacheByKeyQuery,
-    );
+    const deleteListInCacheByKeyQueryMock = vi.mocked(deleteListInCacheByKeyQuery);
 
     await deleteMatchChatHistoryFromCacheService(channel);
 
-    expect(deleteListInCacheByKeyQueryMock).toHaveBeenCalledWith(
-      `match-messages:${channel}`,
-    );
+    expect(deleteListInCacheByKeyQueryMock).toHaveBeenCalledWith(`match-messages:${channel}`);
   });
 });
 
 describe('deleteMatchStateFromCacheService', () => {
   it('should call deleteStringInCacheByKeyQuery with correct parameters', async () => {
     const channel = 'test-channel';
-    const deleteStringInCacheByKeyQueryMock = vi.mocked(
-      deleteStringInCacheByKeyQuery,
-    );
+    const deleteStringInCacheByKeyQueryMock = vi.mocked(deleteStringInCacheByKeyQuery);
 
     await deleteMatchStateFromCacheService(channel);
 
-    expect(deleteStringInCacheByKeyQueryMock).toHaveBeenCalledWith(
-      `match-state:${channel}`,
-    );
+    expect(deleteStringInCacheByKeyQueryMock).toHaveBeenCalledWith(`match-state:${channel}`);
   });
 });
 
@@ -130,39 +121,29 @@ describe('getAllOngoingMatchesFromCacheService', () => {
 describe('getMatchChatHistoryFromCacheService', () => {
   it('should call getListFromCacheByKeyQuery with correct parameters', async () => {
     const channel = 'test-channel';
-    const getListFromCacheByKeyQueryMock = vi.mocked(
-      getListFromCacheByKeyQuery,
-    );
+    const getListFromCacheByKeyQueryMock = vi.mocked(getListFromCacheByKeyQuery);
 
     await getMatchChatHistoryFromCacheService(channel);
 
-    expect(getListFromCacheByKeyQueryMock).toHaveBeenCalledWith(
-      `match-messages:${channel}`,
-    );
+    expect(getListFromCacheByKeyQueryMock).toHaveBeenCalledWith(`match-messages:${channel}`);
   });
 });
 
 describe('getMatchStateFromCacheService', () => {
   it('should call getStringFromCacheByKeyQuery with correct parameters', async () => {
     const channel = 'test-channel';
-    const getStringFromCacheByKeyQueryMock = vi.mocked(
-      getStringFromCacheByKeyQuery,
-    );
+    const getStringFromCacheByKeyQueryMock = vi.mocked(getStringFromCacheByKeyQuery);
 
     await getMatchStateFromCacheService(channel);
 
-    expect(getStringFromCacheByKeyQueryMock).toHaveBeenCalledWith(
-      `match-state:${channel}`,
-    );
+    expect(getStringFromCacheByKeyQueryMock).toHaveBeenCalledWith(`match-state:${channel}`);
   });
 });
 
 describe('removeMatchFromCachedSetService', () => {
   it('should call removeFromSetInCacheByKeyQuery with correct parameters', async () => {
     const channel = 'test-channel';
-    const removeFromSetInCacheByKeyQueryMock = vi.mocked(
-      removeFromSetInCacheByKeyQuery,
-    );
+    const removeFromSetInCacheByKeyQueryMock = vi.mocked(removeFromSetInCacheByKeyQuery);
 
     await removeMatchFromCachedSetService(channel);
 
@@ -176,14 +157,8 @@ describe('removeMatchFromCachedSetService', () => {
 describe('setMatchStateInCacheService', () => {
   it('should call setStringInCacheByKeyQuery with correct parameters', async () => {
     const channel = 'test-channel';
-    const state: BanchoLobbyState = {
-      globalModifications: [],
-      playerCount: 0,
-      slots: [],
-    };
-    const setStringInCacheByKeyQueryMock = vi.mocked(
-      setStringInCacheByKeyQuery,
-    );
+    const state: BanchoLobbyState = { globalModifications: [], playerCount: 0, slots: [] };
+    const setStringInCacheByKeyQueryMock = vi.mocked(setStringInCacheByKeyQuery);
 
     await setMatchStateInCacheService({ channel: 'test-channel', state });
 

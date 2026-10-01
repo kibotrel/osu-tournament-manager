@@ -6,9 +6,7 @@ import { fileURLToPath } from 'node:url';
 import journal from '../../migrations/meta/_journal.json' with { type: 'json' };
 
 const fileName = process.argv.at(2);
-const migrationsDirectory = fileURLToPath(
-  new URL('../../migrations', import.meta.url),
-);
+const migrationsDirectory = fileURLToPath(new URL('../../migrations', import.meta.url));
 
 if (!fileName) {
   process.exit(0);

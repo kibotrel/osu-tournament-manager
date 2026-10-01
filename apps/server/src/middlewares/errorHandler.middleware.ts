@@ -26,9 +26,7 @@ export const isHttpError = (input: unknown): input is HttpError => {
   return input instanceof Error;
 };
 
-export const isExpressOpenApiValidatorMethodNotAllowedError = (
-  input: unknown,
-) => {
+export const isExpressOpenApiValidatorMethodNotAllowedError = (input: unknown) => {
   return input instanceof MethodNotAllowed;
 };
 
@@ -105,10 +103,7 @@ export const errorMiddleware: ErrorRequestHandler<never, ErrorReport> = async (
   // @ts-expect-error check comment above.
   next,
 ) => {
-  response.setHeader(
-    HttpHeader.ContentType,
-    HttpContentType.ApplicationProblemJson,
-  );
+  response.setHeader(HttpHeader.ContentType, HttpContentType.ApplicationProblemJson);
 
   const { error, mustLog } = normalizeError({
     error: rawError,
@@ -124,11 +119,7 @@ export const errorMiddleware: ErrorRequestHandler<never, ErrorReport> = async (
     });
   }
 
-  const errorReport = new HttpErrorReport({
-    request,
-    allowedHttpMethodsOnResource,
-    error,
-  });
+  const errorReport = new HttpErrorReport({ request, allowedHttpMethodsOnResource, error });
 
   if (errorReport.status === HttpStatusCode.MethodNotAllowed) {
     response.setHeader(HttpHeader.Allow, errorReport.getAllowedMethods());

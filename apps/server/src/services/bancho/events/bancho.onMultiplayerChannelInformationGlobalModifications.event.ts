@@ -22,13 +22,9 @@ export const onMultiplayerChannelInformationGlobalModificationsEvent = async ({
   channel: string;
   modifications: OsuBeatmapModification[];
 }) => {
-  logger.silly(`[IRC] channel ${channel} global modifications updated`, {
-    modifications,
-  });
+  logger.silly(`[IRC] channel ${channel} global modifications updated`, { modifications });
 
-  const filteredOutModifications = new Set([
-    OsuBeatmapModification.FreeModification,
-  ]);
+  const filteredOutModifications = new Set([OsuBeatmapModification.FreeModification]);
 
   if (modifications.includes(OsuBeatmapModification.Nightcore)) {
     filteredOutModifications.add(OsuBeatmapModification.DoubleTime);
@@ -44,10 +40,7 @@ export const onMultiplayerChannelInformationGlobalModificationsEvent = async ({
     globalModifications: sanitizedModifications,
   };
 
-  await setMatchStateInCacheService({
-    channel: channelId,
-    state: newMatchState,
-  });
+  await setMatchStateInCacheService({ channel: channelId, state: newMatchState });
 
   const payload: WebSocketMessage<WebSocketMatchLobbyState> = {
     message: newMatchState,
@@ -55,8 +48,8 @@ export const onMultiplayerChannelInformationGlobalModificationsEvent = async ({
     topic: `${WebSocketChannel.Matches}:${channelId}:${WebSocketChannelMatchesEvent.LobbyState}`,
   };
 
-  webSocketServer.broadcastMessageToSubscribers(
-    Buffer.from(JSON.stringify(payload)),
-    { isBinary: false, isBanchoMessage: true },
-  );
+  webSocketServer.broadcastMessageToSubscribers(Buffer.from(JSON.stringify(payload)), {
+    isBinary: false,
+    isBanchoMessage: true,
+  });
 };

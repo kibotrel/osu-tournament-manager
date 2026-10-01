@@ -1,8 +1,8 @@
 import type { InferInsertModel, InferSelectModel } from 'drizzle-orm';
 import { integer, serial, timestamp } from 'drizzle-orm/pg-core';
 
-import { teamsTable } from '#src/schemas/tournaments/tournaments.teams.table.js';
 import { tournamentsSchema } from '#src/schemas/tournaments/tournaments.schema.js';
+import { teamsTable } from '#src/schemas/tournaments/tournaments.teams.table.js';
 import { tournamentsTable } from '#src/schemas/tournaments/tournaments.tournaments.table.js';
 import { usersTable } from '#src/schemas/users/users.users.table.js';
 

@@ -23,10 +23,7 @@ export const onChannelMessageEvent = async ({
     return;
   }
 
-  logger.silly(`[IRC] New message in ${channel}`, {
-    content: message,
-    user,
-  });
+  logger.silly(`[IRC] New message in ${channel}`, { content: message, user });
 
   const gameMatchId = gameMatchIdFromBanchoChannel(channel);
   const payload: WebSocketMessage<WebSocketMatchMessage> = {
@@ -36,12 +33,6 @@ export const onChannelMessageEvent = async ({
   };
   const buffer = Buffer.from(JSON.stringify(payload));
 
-  await addMatchMessageToCacheService({
-    channel: gameMatchId,
-    message: buffer.toString(),
-  });
-  webSocketServer.broadcastMessageToSubscribers(buffer, {
-    isBinary: false,
-    isBanchoMessage: true,
-  });
+  await addMatchMessageToCacheService({ channel: gameMatchId, message: buffer.toString() });
+  webSocketServer.broadcastMessageToSubscribers(buffer, { isBinary: false, isBanchoMessage: true });
 };
