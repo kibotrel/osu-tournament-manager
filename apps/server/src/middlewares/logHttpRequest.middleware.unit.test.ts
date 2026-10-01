@@ -11,17 +11,11 @@ import {
 import { logHttpRequestMiddleware } from './logHttpRequest.middleware.js';
 
 vi.mock('#src/dependencies/logger.dependency.js', () => {
-  return {
-    logger: {
-      http: vi.fn(),
-    },
-  };
+  return { logger: { http: vi.fn() } };
 });
 
 vi.mock('#src/configs/environment.config.js', () => {
-  return {
-    environmentConfig: { isProductionMode: true },
-  };
+  return { environmentConfig: { isProductionMode: true } };
 });
 
 describe('logHttpRequestMiddleware', () => {
@@ -40,9 +34,7 @@ describe('logHttpRequestMiddleware', () => {
 
     logHttpRequestMiddleware(request, response, next);
 
-    expect(logger.http).toHaveBeenCalledWith('GET /api/v1/test', {
-      requestId: 'test-request-id',
-    });
+    expect(logger.http).toHaveBeenCalledWith('GET /api/v1/test', { requestId: 'test-request-id' });
     expect(next).toHaveBeenCalled();
   });
 

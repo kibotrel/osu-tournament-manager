@@ -37,29 +37,15 @@ describe('exponentialBackoffDelay', () => {
   });
 
   it('should throw an error if attempt is negative', () => {
-    try {
-      exponentialBackoffDelay({ attempt: -1 });
-    } catch (error) {
-      expect(error).toBeInstanceOf(Error);
-      expect(error).toEqual(
-        expect.objectContaining({
-          message: 'Attempt must be a positive integer',
-        }),
-      );
-    }
+    expect(() => exponentialBackoffDelay({ attempt: -1 })).toThrowError(
+      'Attempt must be a positive integer',
+    );
   });
 
   it('should throw an error if attempt is not an integer', () => {
-    try {
-      exponentialBackoffDelay({ attempt: 2.7 });
-    } catch (error) {
-      expect(error).toBeInstanceOf(Error);
-      expect(error).toEqual(
-        expect.objectContaining({
-          message: 'Attempt must be a positive integer',
-        }),
-      );
-    }
+    expect(() => exponentialBackoffDelay({ attempt: 2.7 })).toThrowError(
+      'Attempt must be a positive integer',
+    );
   });
 });
 

@@ -29,10 +29,7 @@ export class HttpRequest<PayloadType extends object = NothingRecord> {
     endpoint: string,
   ): Promise<HttpResponse<ResponseType>> {
     const url = this.setRequestQueryParams(endpoint);
-    const response = await fetch(url, {
-      headers: this.httpHeaders,
-      method: HttpMethod.Delete,
-    });
+    const response = await fetch(url, { headers: this.httpHeaders, method: HttpMethod.Delete });
     const data = await this.readResponse<ResponseType>(response);
 
     return { data, isOk: response.ok, status: response.status };
@@ -42,18 +39,13 @@ export class HttpRequest<PayloadType extends object = NothingRecord> {
     endpoint: string,
   ): Promise<HttpResponse<ResponseType>> {
     const url = this.setRequestQueryParams(endpoint);
-    const response = await fetch(url, {
-      headers: this.httpHeaders,
-      method: HttpMethod.Get,
-    });
+    const response = await fetch(url, { headers: this.httpHeaders, method: HttpMethod.Get });
     const data = await this.readResponse<ResponseType>(response);
 
     return { data, isOk: response.ok, status: response.status };
   }
 
-  public isPayloadEmpty(
-    payload: PayloadType | NothingRecord,
-  ): payload is NothingRecord {
+  public isPayloadEmpty(payload: PayloadType | NothingRecord): payload is NothingRecord {
     return Object.keys(payload).length === 0;
   }
 
@@ -108,10 +100,8 @@ export class HttpRequest<PayloadType extends object = NothingRecord> {
   /**
    * Internal method to safely parse the response from the fetch API.
    */
-  private readResponse<ResponseType = UnknownRecord>(
-    response: Response,
-  ): Promise<ResponseType> {
-    return response.json().catch(() => {
+  private readResponse<ResponseType = UnknownRecord>(response: Response): Promise<ResponseType> {
+    return (response.json() as Promise<ResponseType>).catch(() => {
       return {} as ResponseType;
     });
   }

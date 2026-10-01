@@ -1,6 +1,7 @@
+import { describe, expect, it, vi } from 'vitest';
+
 import type { BanchoLobbyState } from '@packages/shared';
 import { BanchoTeamMode, BanchoWinCondition } from '@packages/shared';
-import { describe, expect, it, vi } from 'vitest';
 
 import { setMatchStateInCacheService } from '#src/services/cache/cache.service.js';
 import { getMatchStateService } from '#src/services/matches/matches.service.js';
@@ -10,13 +11,7 @@ import { onMultiplayerChannelInformationConditionsEvent } from './bancho.onMulti
 
 vi.mock('#src/dependencies/logger.dependency.js', () => {
   return {
-    logger: {
-      debug: vi.fn(),
-      error: vi.fn(),
-      info: vi.fn(),
-      silly: vi.fn(),
-      warn: vi.fn(),
-    },
+    logger: { debug: vi.fn(), error: vi.fn(), info: vi.fn(), silly: vi.fn(), warn: vi.fn() },
   };
 });
 
@@ -29,37 +24,19 @@ vi.mock('#src/services/matches/matches.service.js', () => {
 });
 
 vi.mock('#src/websocketServer.js', () => {
-  return {
-    webSocketServer: {
-      broadcastMessageToSubscribers: vi.fn(),
-    },
-  };
+  return { webSocketServer: { broadcastMessageToSubscribers: vi.fn() } };
 });
 
 const mockOldMatchState: BanchoLobbyState = {
   playerCount: 1,
-  slots: [
-    {
-      isHost: true,
-      isReady: false,
-      player: 'player1',
-      selectedModifications: [],
-    },
-  ],
+  slots: [{ isHost: true, isReady: false, player: 'player1', selectedModifications: [] }],
   globalModifications: [],
   teamMode: BanchoTeamMode.HeadToHead,
   winCondition: BanchoWinCondition.ScoreV2,
 };
 const newMatchState: BanchoLobbyState = {
   playerCount: 1,
-  slots: [
-    {
-      isHost: true,
-      isReady: false,
-      player: 'player1',
-      selectedModifications: [],
-    },
-  ],
+  slots: [{ isHost: true, isReady: false, player: 'player1', selectedModifications: [] }],
   globalModifications: [],
   teamMode: BanchoTeamMode.TeamVs,
   winCondition: BanchoWinCondition.Accuracy,
@@ -67,9 +44,7 @@ const newMatchState: BanchoLobbyState = {
 
 describe('onMultiplayerChannelInformationConditionsEvent', () => {
   it('should update match state in cache', async () => {
-    const setMatchStateInCacheServiceMock = vi.mocked(
-      setMatchStateInCacheService,
-    );
+    const setMatchStateInCacheServiceMock = vi.mocked(setMatchStateInCacheService);
     const getMatchStateServiceMock = vi.mocked(getMatchStateService);
 
     getMatchStateServiceMock.mockResolvedValueOnce(mockOldMatchState);
@@ -88,9 +63,7 @@ describe('onMultiplayerChannelInformationConditionsEvent', () => {
   });
 
   it('should broadcast updated match state to websocket subscribers', async () => {
-    const webSocketServerMock = vi.mocked(
-      webSocketServer.broadcastMessageToSubscribers,
-    );
+    const webSocketServerMock = vi.mocked(webSocketServer.broadcastMessageToSubscribers);
 
     await onMultiplayerChannelInformationConditionsEvent({
       channel: '#mp_1',

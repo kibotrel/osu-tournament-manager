@@ -1,10 +1,7 @@
 import type { ErrorReport } from '#src/shared.export.js';
 
 export const isBinaryObject = (object: unknown): object is Blob => {
-  return (
-    typeof object === 'object' &&
-    Object.prototype.toString.call(object) === '[object Blob]'
-  );
+  return typeof object === 'object' && Object.prototype.toString.call(object) === '[object Blob]';
 };
 
 export const isErrorReport = (input: unknown): input is ErrorReport => {

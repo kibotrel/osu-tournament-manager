@@ -1,8 +1,4 @@
-import type {
-  BanchoTeamMode,
-  BanchoWinCondition,
-  OsuBeatmapModification,
-} from '@packages/shared';
+import type { BanchoTeamMode, BanchoWinCondition, OsuBeatmapModification } from '@packages/shared';
 
 import { BanchoClientEvent } from '#src/banchoClient.export.js';
 import type { BanchoClient } from '#src/classes/ircClient.class.js';
@@ -54,32 +50,23 @@ export class IrcCommandPrivateMessage implements IrcCommand {
       },
       {
         pattern: new RegExp(BanchoBotCommonMessage.RoomIdentification),
-        handler:
-          this.handleMultiplayerChannelInformationIdentityEvent.bind(this),
+        handler: this.handleMultiplayerChannelInformationIdentityEvent.bind(this),
       },
       {
         pattern: new RegExp(BanchoBotCommonMessage.CurrentlyPlaying),
-        handler:
-          this.handleMultiplayerChannelInformationCurrentlyPlayingEvent.bind(
-            this,
-          ),
+        handler: this.handleMultiplayerChannelInformationCurrentlyPlayingEvent.bind(this),
       },
       {
         pattern: new RegExp(BanchoBotCommonMessage.MatchConditions),
-        handler:
-          this.handleMultiplayerChannelInformationConditionsEvent.bind(this),
+        handler: this.handleMultiplayerChannelInformationConditionsEvent.bind(this),
       },
       {
         pattern: new RegExp(BanchoBotCommonMessage.GlobalActiveModifications),
-        handler:
-          this.handleMultiplayerChannelInformationGlobalModificationsEvent.bind(
-            this,
-          ),
+        handler: this.handleMultiplayerChannelInformationGlobalModificationsEvent.bind(this),
       },
       {
         pattern: new RegExp(BanchoBotCommonMessage.PlayerCount),
-        handler:
-          this.handleMultiplayerChannelInformationPlayerCountEvent.bind(this),
+        handler: this.handleMultiplayerChannelInformationPlayerCountEvent.bind(this),
       },
       {
         pattern: new RegExp(BanchoBotCommonMessage.MatchSlot),
@@ -131,20 +118,13 @@ export class IrcCommandPrivateMessage implements IrcCommand {
   private handleMultiplayerChannelAllPlayersReadyEvent(payload: Payload) {
     const { channel } = payload;
 
-    this.banchoClient.emit(
-      BanchoClientEvent.MultiplayerChannelAllPlayersReady,
-      { channel },
-    );
-    this.banchoClient.emit(
-      `${BanchoClientEvent.MultiplayerChannelAllPlayersReady}:${channel}`,
-    );
+    this.banchoClient.emit(BanchoClientEvent.MultiplayerChannelAllPlayersReady, { channel });
+    this.banchoClient.emit(`${BanchoClientEvent.MultiplayerChannelAllPlayersReady}:${channel}`);
   }
 
   private handleMultiplayerChannelChangedBeatmap(payload: Payload) {
     const { channel, message } = payload;
-    const match = new RegExp(BanchoBotCommonMessage.ChangedBeatmap).exec(
-      message,
-    );
+    const match = new RegExp(BanchoBotCommonMessage.ChangedBeatmap).exec(message);
 
     if (!match) {
       return;
@@ -153,10 +133,10 @@ export class IrcCommandPrivateMessage implements IrcCommand {
     const { beatmap, url } = match.groups!;
     const data = { beatmap, url };
 
-    this.banchoClient.emit(
-      BanchoClientEvent.MultiplayerChannelInformationCurrentlyPlaying,
-      { ...data, channel },
-    );
+    this.banchoClient.emit(BanchoClientEvent.MultiplayerChannelInformationCurrentlyPlaying, {
+      ...data,
+      channel,
+    });
     this.banchoClient.emit(
       `${BanchoClientEvent.MultiplayerChannelInformationCurrentlyPlaying}:${channel}`,
       data,
@@ -166,19 +146,13 @@ export class IrcCommandPrivateMessage implements IrcCommand {
   private handleMultiplayerChannelClosedEvent(payload: Payload) {
     const { channel } = payload;
 
-    this.banchoClient.emit(BanchoClientEvent.MultiplayerChannelClosed, {
-      channel,
-    });
-    this.banchoClient.emit(
-      `${BanchoClientEvent.MultiplayerChannelClosed}:${channel}`,
-    );
+    this.banchoClient.emit(BanchoClientEvent.MultiplayerChannelClosed, { channel });
+    this.banchoClient.emit(`${BanchoClientEvent.MultiplayerChannelClosed}:${channel}`);
   }
 
   private handleMultiplayerChannelCreation(payload: Payload) {
     const { message } = payload;
-    const match = new RegExp(BanchoBotCommonMessage.MatchCreation).exec(
-      message,
-    );
+    const match = new RegExp(BanchoBotCommonMessage.MatchCreation).exec(message);
 
     if (!match) {
       return;
@@ -188,10 +162,10 @@ export class IrcCommandPrivateMessage implements IrcCommand {
     const data = { historyUrl, name };
     const channel = `#mp_${historyUrl.split('/').at(-1)!}`;
 
-    this.banchoClient.emit(
-      BanchoClientEvent.MultiplayerChannelInformationIdentity,
-      { ...data, channel },
-    );
+    this.banchoClient.emit(BanchoClientEvent.MultiplayerChannelInformationIdentity, {
+      ...data,
+      channel,
+    });
     this.banchoClient.emit(
       `${BanchoClientEvent.MultiplayerChannelInformationIdentity}:${channel}`,
       data,
@@ -209,32 +183,20 @@ export class IrcCommandPrivateMessage implements IrcCommand {
     const { user } = match.groups!;
     const data = { newHost: user };
 
-    this.banchoClient.emit(BanchoClientEvent.MultiplayerChannelHostChanged, {
-      ...data,
-      channel,
-    });
-    this.banchoClient.emit(
-      `${BanchoClientEvent.MultiplayerChannelHostChanged}:${channel}`,
-      data,
-    );
+    this.banchoClient.emit(BanchoClientEvent.MultiplayerChannelHostChanged, { ...data, channel });
+    this.banchoClient.emit(`${BanchoClientEvent.MultiplayerChannelHostChanged}:${channel}`, data);
   }
 
   private handleMultiplayerChannelHostClearedEvent(payload: Payload) {
     const { channel } = payload;
 
-    this.banchoClient.emit(BanchoClientEvent.MultiplayerChannelHostCleared, {
-      channel,
-    });
-    this.banchoClient.emit(
-      `${BanchoClientEvent.MultiplayerChannelHostCleared}:${channel}`,
-    );
+    this.banchoClient.emit(BanchoClientEvent.MultiplayerChannelHostCleared, { channel });
+    this.banchoClient.emit(`${BanchoClientEvent.MultiplayerChannelHostCleared}:${channel}`);
   }
 
   private handleMultiplayerChannelInformationConditionsEvent(payload: Payload) {
     const { channel, message } = payload;
-    const match = new RegExp(BanchoBotCommonMessage.MatchConditions).exec(
-      message,
-    );
+    const match = new RegExp(BanchoBotCommonMessage.MatchConditions).exec(message);
 
     if (!match) {
       return;
@@ -246,23 +208,19 @@ export class IrcCommandPrivateMessage implements IrcCommand {
       winCondition: winCondition as BanchoWinCondition,
     };
 
-    this.banchoClient.emit(
-      BanchoClientEvent.MultiplayerChannelInformationConditions,
-      { ...data, channel },
-    );
+    this.banchoClient.emit(BanchoClientEvent.MultiplayerChannelInformationConditions, {
+      ...data,
+      channel,
+    });
     this.banchoClient.emit(
       `${BanchoClientEvent.MultiplayerChannelInformationConditions}:${channel}`,
       data,
     );
   }
 
-  private handleMultiplayerChannelInformationCurrentlyPlayingEvent(
-    payload: Payload,
-  ) {
+  private handleMultiplayerChannelInformationCurrentlyPlayingEvent(payload: Payload) {
     const { channel, message } = payload;
-    const match = new RegExp(BanchoBotCommonMessage.CurrentlyPlaying).exec(
-      message,
-    );
+    const match = new RegExp(BanchoBotCommonMessage.CurrentlyPlaying).exec(message);
 
     if (!match) {
       return;
@@ -271,23 +229,19 @@ export class IrcCommandPrivateMessage implements IrcCommand {
     const { beatmap, url } = match.groups!;
     const data = { beatmap, url };
 
-    this.banchoClient.emit(
-      BanchoClientEvent.MultiplayerChannelInformationCurrentlyPlaying,
-      { ...data, channel },
-    );
+    this.banchoClient.emit(BanchoClientEvent.MultiplayerChannelInformationCurrentlyPlaying, {
+      ...data,
+      channel,
+    });
     this.banchoClient.emit(
       `${BanchoClientEvent.MultiplayerChannelInformationCurrentlyPlaying}:${channel}`,
       data,
     );
   }
 
-  private handleMultiplayerChannelInformationGlobalModificationsEvent(
-    payload: Payload,
-  ) {
+  private handleMultiplayerChannelInformationGlobalModificationsEvent(payload: Payload) {
     const { channel, message } = payload;
-    const match = new RegExp(
-      BanchoBotCommonMessage.GlobalActiveModifications,
-    ).exec(message);
+    const match = new RegExp(BanchoBotCommonMessage.GlobalActiveModifications).exec(message);
 
     if (!match) {
       return;
@@ -295,15 +249,13 @@ export class IrcCommandPrivateMessage implements IrcCommand {
 
     const { modifications } = match.groups!;
     const data = {
-      modifications: modifications
-        .split(', ')
-        .filter(Boolean) as OsuBeatmapModification[],
+      modifications: modifications.split(', ').filter(Boolean) as OsuBeatmapModification[],
     };
 
-    this.banchoClient.emit(
-      BanchoClientEvent.MultiplayerChannelInformationGlobalModifications,
-      { ...data, channel },
-    );
+    this.banchoClient.emit(BanchoClientEvent.MultiplayerChannelInformationGlobalModifications, {
+      ...data,
+      channel,
+    });
     this.banchoClient.emit(
       `${BanchoClientEvent.MultiplayerChannelInformationGlobalModifications}:${channel}`,
       data,
@@ -312,9 +264,7 @@ export class IrcCommandPrivateMessage implements IrcCommand {
 
   private handleMultiplayerChannelInformationIdentityEvent(payload: Payload) {
     const { channel, message } = payload;
-    const match = new RegExp(BanchoBotCommonMessage.RoomIdentification).exec(
-      message,
-    );
+    const match = new RegExp(BanchoBotCommonMessage.RoomIdentification).exec(message);
 
     if (!match) {
       return;
@@ -323,19 +273,17 @@ export class IrcCommandPrivateMessage implements IrcCommand {
     const { historyUrl, name } = match.groups!;
     const data = { historyUrl, name };
 
-    this.banchoClient.emit(
-      BanchoClientEvent.MultiplayerChannelInformationIdentity,
-      { ...data, channel },
-    );
+    this.banchoClient.emit(BanchoClientEvent.MultiplayerChannelInformationIdentity, {
+      ...data,
+      channel,
+    });
     this.banchoClient.emit(
       `${BanchoClientEvent.MultiplayerChannelInformationIdentity}:${channel}`,
       data,
     );
   }
 
-  private handleMultiplayerChannelInformationPlayerCountEvent(
-    payload: Payload,
-  ) {
+  private handleMultiplayerChannelInformationPlayerCountEvent(payload: Payload) {
     const { channel, message } = payload;
     const match = new RegExp(BanchoBotCommonMessage.PlayerCount).exec(message);
 
@@ -346,10 +294,10 @@ export class IrcCommandPrivateMessage implements IrcCommand {
     const { playerCount } = match.groups!;
     const data = { playerCount: Number(playerCount) };
 
-    this.banchoClient.emit(
-      BanchoClientEvent.MultiplayerChannelInformationPlayerCount,
-      { ...data, channel },
-    );
+    this.banchoClient.emit(BanchoClientEvent.MultiplayerChannelInformationPlayerCount, {
+      ...data,
+      channel,
+    });
     this.banchoClient.emit(
       `${BanchoClientEvent.MultiplayerChannelInformationPlayerCount}:${channel}`,
       data,
@@ -369,13 +317,7 @@ export class IrcCommandPrivateMessage implements IrcCommand {
       return;
     }
 
-    const {
-      attributes = '',
-      gameUserId,
-      slotNumber,
-      status,
-      user,
-    } = match.groups!;
+    const { attributes = '', gameUserId, slotNumber, status, user } = match.groups!;
     const modifications = attributes
       .slice(attributes.lastIndexOf('/') + 1)
       .trim()
@@ -393,10 +335,10 @@ export class IrcCommandPrivateMessage implements IrcCommand {
       modifications: modifications as OsuBeatmapModification[],
     };
 
-    this.banchoClient.emit(
-      BanchoClientEvent.MultiplayerChannelInformationSlot,
-      { ...data, channel },
-    );
+    this.banchoClient.emit(BanchoClientEvent.MultiplayerChannelInformationSlot, {
+      ...data,
+      channel,
+    });
     this.banchoClient.emit(
       `${BanchoClientEvent.MultiplayerChannelInformationSlot}:${channel}`,
       data,
@@ -405,9 +347,7 @@ export class IrcCommandPrivateMessage implements IrcCommand {
 
   private handleMultiplayerChannelNameUpdated(payload: Payload) {
     const { channel, message } = payload;
-    const match = new RegExp(BanchoBotCommonMessage.RoomNameUpdated).exec(
-      message,
-    );
+    const match = new RegExp(BanchoBotCommonMessage.RoomNameUpdated).exec(message);
 
     if (!match) {
       return;
@@ -416,21 +356,13 @@ export class IrcCommandPrivateMessage implements IrcCommand {
     const { name } = match.groups!;
     const data = { name };
 
-    this.banchoClient.emit(BanchoClientEvent.MultiplayerChannelNameUpdated, {
-      ...data,
-      channel,
-    });
-    this.banchoClient.emit(
-      `${BanchoClientEvent.MultiplayerChannelNameUpdated}:${channel}`,
-      data,
-    );
+    this.banchoClient.emit(BanchoClientEvent.MultiplayerChannelNameUpdated, { ...data, channel });
+    this.banchoClient.emit(`${BanchoClientEvent.MultiplayerChannelNameUpdated}:${channel}`, data);
   }
 
   private handleMultiplayerPlayerJoinedSlotEvent(payload: Payload) {
     const { channel, message } = payload;
-    const match = new RegExp(BanchoBotCommonMessage.UserJoinedSlot).exec(
-      message,
-    );
+    const match = new RegExp(BanchoBotCommonMessage.UserJoinedSlot).exec(message);
 
     if (!match) {
       return;
@@ -439,14 +371,8 @@ export class IrcCommandPrivateMessage implements IrcCommand {
     const { user, slotNumber } = match.groups!;
     const data = { user, slotNumber: Number(slotNumber) };
 
-    this.banchoClient.emit(BanchoClientEvent.MultiplayerPlayerJoinedSlot, {
-      ...data,
-      channel,
-    });
-    this.banchoClient.emit(
-      `${BanchoClientEvent.MultiplayerPlayerJoinedSlot}:${channel}`,
-      data,
-    );
+    this.banchoClient.emit(BanchoClientEvent.MultiplayerPlayerJoinedSlot, { ...data, channel });
+    this.banchoClient.emit(`${BanchoClientEvent.MultiplayerPlayerJoinedSlot}:${channel}`, data);
   }
 
   private handleMultiplayerPayerLeftRoomEvent(payload: Payload) {
@@ -460,21 +386,13 @@ export class IrcCommandPrivateMessage implements IrcCommand {
     const { user } = match.groups!;
     const data = { user };
 
-    this.banchoClient.emit(BanchoClientEvent.MultiplayerPayerLeftRoom, {
-      ...data,
-      channel,
-    });
-    this.banchoClient.emit(
-      `${BanchoClientEvent.MultiplayerPayerLeftRoom}:${channel}`,
-      data,
-    );
+    this.banchoClient.emit(BanchoClientEvent.MultiplayerPayerLeftRoom, { ...data, channel });
+    this.banchoClient.emit(`${BanchoClientEvent.MultiplayerPayerLeftRoom}:${channel}`, data);
   }
 
   private handleMultiplayerPlayerMovedSlotEvent(payload: Payload) {
     const { channel, message } = payload;
-    const match = new RegExp(BanchoBotCommonMessage.UserMovedSlot).exec(
-      message,
-    );
+    const match = new RegExp(BanchoBotCommonMessage.UserMovedSlot).exec(message);
 
     if (!match) {
       return;
@@ -483,14 +401,8 @@ export class IrcCommandPrivateMessage implements IrcCommand {
     const { user, slotNumber } = match.groups!;
     const data = { user, slotNumber: Number(slotNumber) };
 
-    this.banchoClient.emit(BanchoClientEvent.MultiplayerPlayerMovedSlot, {
-      ...data,
-      channel,
-    });
-    this.banchoClient.emit(
-      `${BanchoClientEvent.MultiplayerPlayerMovedSlot}:${channel}`,
-      data,
-    );
+    this.banchoClient.emit(BanchoClientEvent.MultiplayerPlayerMovedSlot, { ...data, channel });
+    this.banchoClient.emit(`${BanchoClientEvent.MultiplayerPlayerMovedSlot}:${channel}`, data);
   }
 
   private handleUserAlreadyInChannelEvent() {
@@ -499,9 +411,7 @@ export class IrcCommandPrivateMessage implements IrcCommand {
 
   private handleUserInvitedToChannelEvent(payload: Payload) {
     const { channel, message } = payload;
-    const match = new RegExp(BanchoBotCommonMessage.InvitedUserToChannel).exec(
-      message,
-    );
+    const match = new RegExp(BanchoBotCommonMessage.InvitedUserToChannel).exec(message);
 
     if (!match) {
       return;
@@ -509,13 +419,8 @@ export class IrcCommandPrivateMessage implements IrcCommand {
 
     const { user } = match.groups!;
 
-    this.banchoClient.emit(BanchoClientEvent.UserInvitedToChannel, {
-      channel,
-      user,
-    });
-    this.banchoClient.emit(
-      `${BanchoClientEvent.UserInvitedToChannel}:${channel}:${user}`,
-    );
+    this.banchoClient.emit(BanchoClientEvent.UserInvitedToChannel, { channel, user });
+    this.banchoClient.emit(`${BanchoClientEvent.UserInvitedToChannel}:${channel}:${user}`);
   }
 
   private handleUserNotFoundEvent() {
@@ -537,12 +442,12 @@ export class IrcCommandPrivateMessage implements IrcCommand {
 
     this.banchoClient.emit(BanchoClientEvent.ChannelMessage, {
       channel,
-      /* eslint-disable-next-line no-control-regex, unicorn/no-hex-escape */
+      /* oxlint-disable-next-line no-control-regex */
       message: message.replace(/\x01$/, ''),
       user,
     });
     this.banchoClient.emit(`${BanchoClientEvent.ChannelMessage}:${channel}`, {
-      /* eslint-disable-next-line no-control-regex, unicorn/no-hex-escape */
+      /* oxlint-disable-next-line no-control-regex */
       message: message.replace(/\x01$/, ''),
       user,
     });

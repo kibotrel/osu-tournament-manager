@@ -21,18 +21,13 @@ export const onMultiplayerChannelInformationPlayerCountEvent = async ({
   channel: string;
   playerCount: number;
 }) => {
-  logger.silly(`[IRC] channel ${channel} player count updated`, {
-    playerCount,
-  });
+  logger.silly(`[IRC] channel ${channel} player count updated`, { playerCount });
 
   const channelId = gameMatchIdFromBanchoChannel(channel);
   const oldMatchState = await getMatchStateService(channelId);
   const newMatchState: BanchoLobbyState = { ...oldMatchState, playerCount };
 
-  await setMatchStateInCacheService({
-    channel: channelId,
-    state: newMatchState,
-  });
+  await setMatchStateInCacheService({ channel: channelId, state: newMatchState });
 
   const payload: WebSocketMessage<WebSocketMatchLobbyState> = {
     message: newMatchState,
@@ -40,8 +35,8 @@ export const onMultiplayerChannelInformationPlayerCountEvent = async ({
     topic: `${WebSocketChannel.Matches}:${channelId}:${WebSocketChannelMatchesEvent.LobbyState}`,
   };
 
-  webSocketServer.broadcastMessageToSubscribers(
-    Buffer.from(JSON.stringify(payload)),
-    { isBinary: false, isBanchoMessage: true },
-  );
+  webSocketServer.broadcastMessageToSubscribers(Buffer.from(JSON.stringify(payload)), {
+    isBinary: false,
+    isBanchoMessage: true,
+  });
 };

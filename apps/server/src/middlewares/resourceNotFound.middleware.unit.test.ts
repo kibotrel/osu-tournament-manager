@@ -1,6 +1,7 @@
-import { HttpContentType, HttpHeader, HttpStatusCode } from '@packages/shared';
 import type { Request, Response } from 'express';
 import { afterEach, describe, expect, it, vi } from 'vitest';
+
+import { HttpContentType, HttpHeader, HttpStatusCode } from '@packages/shared';
 
 import { logger } from '#src/dependencies/logger.dependency.js';
 import {
@@ -12,17 +13,11 @@ import {
 import { resourceNotFoundMiddleware } from './resourceNotFound.middleware.js';
 
 vi.mock('#src/dependencies/logger.dependency.js', () => {
-  return {
-    logger: {
-      error: vi.fn(),
-    },
-  };
+  return { logger: { error: vi.fn() } };
 });
 
 vi.mock('#src/configs/environment.config.js', () => {
-  return {
-    environmentConfig: { isProductionMode: true },
-  };
+  return { environmentConfig: { isProductionMode: true } };
 });
 
 describe('resourceNotFoundMiddleware', () => {

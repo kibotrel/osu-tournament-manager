@@ -1,4 +1,5 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
+import type { ErrorRequestHandler } from 'express';
+import { error as ExpressError } from 'express-openapi-validator';
 
 import type { ErrorReport, HttpError } from '@packages/shared';
 import {
@@ -11,8 +12,6 @@ import {
   HttpStatusCode,
   HttpStatusMessage,
 } from '@packages/shared';
-import type { ErrorRequestHandler } from 'express';
-import { error } from 'express-openapi-validator';
 
 import { environmentConfig } from '#src/configs/environment.config.js';
 import { CacheListTopic } from '#src/constants/cache.constants.js';
@@ -20,15 +19,13 @@ import { allowedHttpMethodsOnResource } from '#src/constants/http.constants.js';
 import { logger } from '#src/dependencies/logger.dependency.js';
 import { deleteListInCacheByKeyQuery } from '#src/queries/cache/cache.delete.queries.js';
 
-const { NotFound, MethodNotAllowed } = error;
+const { NotFound, MethodNotAllowed } = ExpressError;
 
 export const isHttpError = (input: unknown): input is HttpError => {
   return input instanceof Error;
 };
 
-export const isExpressOpenApiValidatorMethodNotAllowedError = (
-  input: unknown,
-) => {
+export const isExpressOpenApiValidatorMethodNotAllowedError = (input: unknown) => {
   return input instanceof MethodNotAllowed;
 };
 
@@ -102,13 +99,9 @@ export const errorMiddleware: ErrorRequestHandler<never, ErrorReport> = async (
   rawError,
   request,
   response,
-  // @ts-expect-error check comment above.
-  next,
+  _next,
 ) => {
-  response.setHeader(
-    HttpHeader.ContentType,
-    HttpContentType.ApplicationProblemJson,
-  );
+  response.setHeader(HttpHeader.ContentType, HttpContentType.ApplicationProblemJson);
 
   const { error, mustLog } = normalizeError({
     error: rawError,
@@ -124,11 +117,7 @@ export const errorMiddleware: ErrorRequestHandler<never, ErrorReport> = async (
     });
   }
 
-  const errorReport = new HttpErrorReport({
-    request,
-    allowedHttpMethodsOnResource,
-    error,
-  });
+  const errorReport = new HttpErrorReport({ request, allowedHttpMethodsOnResource, error });
 
   if (errorReport.status === HttpStatusCode.MethodNotAllowed) {
     response.setHeader(HttpHeader.Allow, errorReport.getAllowedMethods());

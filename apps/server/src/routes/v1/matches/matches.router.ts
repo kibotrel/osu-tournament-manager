@@ -13,19 +13,10 @@ import { getMatchValidators } from '#src/validators/v1/matches/matches.get.valid
 import { getMatchChatHistoryValidators } from '#src/validators/v1/matches/matches.getChatHistory.validators.js';
 import { getMatchStateValidators } from '#src/validators/v1/matches/matches.getState.validators.js';
 
-const matchesRouter: Router = Router({
-  caseSensitive: true,
-  strict: true,
-  mergeParams: true,
-});
+const matchesRouter: Router = Router({ caseSensitive: true, strict: true, mergeParams: true });
 
 matchesRouter.use(isAuthenticatedMiddleware);
-matchesRouter.post(
-  '/',
-  createMatchValidators(),
-  validateRequestMiddleware,
-  createMatchController,
-);
+matchesRouter.post('/', createMatchValidators(), validateRequestMiddleware, createMatchController);
 matchesRouter.get(
   '/:gameMatchId/chat-history',
   getMatchChatHistoryValidators(),

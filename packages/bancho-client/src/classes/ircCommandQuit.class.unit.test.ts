@@ -28,9 +28,7 @@ describe('IrcCommandQuit', () => {
       command.handleCommand();
 
       expect(eventEmitter).toHaveBeenCalledOnce();
-      expect(eventEmitter).toHaveBeenCalledWith('user_disconnected', {
-        user: 'username',
-      });
+      expect(eventEmitter).toHaveBeenCalledWith('user_disconnected', { user: 'username' });
     });
   });
 });

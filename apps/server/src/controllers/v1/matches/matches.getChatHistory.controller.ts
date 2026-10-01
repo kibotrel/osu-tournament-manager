@@ -1,11 +1,12 @@
+import type { RequestHandler } from 'express';
+import { matchedData } from 'express-validator';
+
 import type {
   GetMatchChatHistoryRequestParameters,
   GetMatchChatHistoryResponseBody,
   GetMatchRequestParameters,
 } from '@packages/shared';
 import { HttpStatusCode } from '@packages/shared';
-import type { RequestHandler } from 'express';
-import { matchedData } from 'express-validator';
 
 import { getMatchChatHistoryService } from '#src/services/matches/matches.service.js';
 

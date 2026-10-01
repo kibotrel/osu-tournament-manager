@@ -6,28 +6,17 @@ import { onBotConnectedEvent } from './bancho.onBotConnected.event.js';
 
 vi.mock('#src/dependencies/logger.dependency.js', () => {
   return {
-    logger: {
-      debug: vi.fn(),
-      error: vi.fn(),
-      info: vi.fn(),
-      silly: vi.fn(),
-      warn: vi.fn(),
-    },
+    logger: { debug: vi.fn(), error: vi.fn(), info: vi.fn(), silly: vi.fn(), warn: vi.fn() },
   };
 });
 
 vi.mock('#src/services/bancho/bancho.multiplayer.service.js', () => {
-  return {
-    joinAllOngoingMatchesService: vi.fn(),
-    openMultiplayerChannelService: vi.fn(),
-  };
+  return { joinAllOngoingMatchesService: vi.fn(), openMultiplayerChannelService: vi.fn() };
 });
 
 describe('onBotConnectedEvent', () => {
   it('should join all on-going matches', async () => {
-    const joinAllOngoingMatchesServiceMock = vi.mocked(
-      joinAllOngoingMatchesService,
-    );
+    const joinAllOngoingMatchesServiceMock = vi.mocked(joinAllOngoingMatchesService);
 
     await onBotConnectedEvent();
 

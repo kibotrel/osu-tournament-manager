@@ -19,30 +19,15 @@
           "notNull": true,
           "default": "now()"
         },
-        "endsAt": {
-          "name": "endsAt",
-          "type": "timestamp",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "id": {
-          "name": "id",
-          "type": "serial",
-          "primaryKey": true,
-          "notNull": true
-        },
+        "endsAt": { "name": "endsAt", "type": "timestamp", "primaryKey": false, "notNull": false },
+        "id": { "name": "id", "type": "serial", "primaryKey": true, "notNull": true },
         "includesQualifierStage": {
           "name": "includesQualifierStage",
           "type": "boolean",
           "primaryKey": false,
           "notNull": true
         },
-        "name": {
-          "name": "name",
-          "type": "varchar(256)",
-          "primaryKey": false,
-          "notNull": true
-        },
+        "name": { "name": "name", "type": "varchar(256)", "primaryKey": false, "notNull": true },
         "scoreMode": {
           "name": "scoreMode",
           "type": "scoreMode",
@@ -99,18 +84,8 @@
           "primaryKey": false,
           "notNull": true
         },
-        "id": {
-          "name": "id",
-          "type": "serial",
-          "primaryKey": true,
-          "notNull": true
-        },
-        "name": {
-          "name": "name",
-          "type": "varchar",
-          "primaryKey": false,
-          "notNull": true
-        },
+        "id": { "name": "id", "type": "serial", "primaryKey": true, "notNull": true },
+        "name": { "name": "name", "type": "varchar", "primaryKey": false, "notNull": true },
         "updatedAt": {
           "name": "updatedAt",
           "type": "timestamp",
@@ -125,9 +100,7 @@
       "uniqueConstraints": {
         "users_gameUserId_unique": {
           "name": "users_gameUserId_unique",
-          "columns": [
-            "gameUserId"
-          ],
+          "columns": ["gameUserId"],
           "nullsNotDistinct": false
         }
       }
@@ -137,33 +110,16 @@
     "tournaments.scoreMode": {
       "name": "scoreMode",
       "schema": "tournaments",
-      "values": [
-        "accuracy",
-        "combo",
-        "score",
-        "scoreV2"
-      ]
+      "values": ["accuracy", "combo", "score", "scoreV2"]
     },
     "tournaments.teamMode": {
       "name": "teamMode",
       "schema": "tournaments",
-      "values": [
-        "headToHead",
-        "tagCoOp",
-        "tagTeamVs",
-        "teamVs"
-      ]
+      "values": ["headToHead", "tagCoOp", "tagTeamVs", "teamVs"]
     }
   },
-  "schemas": {
-    "tournaments": "tournaments",
-    "users": "users"
-  },
-  "_meta": {
-    "schemas": {},
-    "tables": {},
-    "columns": {}
-  },
+  "schemas": { "tournaments": "tournaments", "users": "users" },
+  "_meta": { "schemas": {}, "tables": {}, "columns": {} },
   "id": "065d7c87-90c0-49ff-bdb8-25d16e9d3a2d",
   "prevId": "4aed17e7-7494-4369-9af9-88cf7baea426"
 }

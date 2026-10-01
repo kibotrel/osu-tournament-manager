@@ -39,20 +39,14 @@ describe('isSocketReady', () => {
   });
 
   it('should return false if socket is not writable', () => {
-    expect(
-      isSocketReady(IrcClientState.Connected, new Socket().destroy()),
-    ).toBe(false);
+    expect(isSocketReady(IrcClientState.Connected, new Socket().destroy())).toBe(false);
   });
 
   it('should return false if socket is writable and given state is disconnected', () => {
-    expect(isSocketReady(IrcClientState.Disconnected, new Socket())).toBe(
-      false,
-    );
+    expect(isSocketReady(IrcClientState.Disconnected, new Socket())).toBe(false);
   });
 
   it('should return false if socket is writable and given state is disconnecting', () => {
-    expect(isSocketReady(IrcClientState.Disconnecting, new Socket())).toBe(
-      false,
-    );
+    expect(isSocketReady(IrcClientState.Disconnecting, new Socket())).toBe(false);
   });
 });

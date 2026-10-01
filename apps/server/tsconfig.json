@@ -1,18 +1,10 @@
 {
   "compilerOptions": {
     "allowJs": true,
-    "baseUrl": ".",
-    "moduleResolution": "NodeNext",
     "outDir": "./dist",
-    "paths": {
-      "#src/*": ["./src/*"]
-    },
+    "paths": { "#src/*": ["./src/*"] },
     "types": ["express", "express-session", "pg", "swagger-ui-express", "ws"]
   },
   "extends": "../tsconfig.json",
-  "include": [
-    "./src/**/*.ts",
-    "./src/**/*.json",
-    "./migrations/meta/_journal.json"
-  ]
+  "include": ["./src/**/*.ts", "./src/**/*.json", "./migrations/meta/_journal.json"]
 }

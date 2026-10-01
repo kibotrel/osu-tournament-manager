@@ -8,10 +8,7 @@ describe('IrcCommandChannelNotFound', () => {
     clientCredentials: { username: 'username', password: 'password' },
     serverInformation: { host: 'localhost.dev', port: 6667 },
   });
-  const packetParts = [
-    'localhost.dev 403 username #unknown',
-    'No such channel',
-  ];
+  const packetParts = ['localhost.dev 403 username #unknown', 'No such channel'];
 
   describe('constructor', () => {
     it('should create an instance of IrcCommandChannelNotFound', () => {
@@ -31,9 +28,7 @@ describe('IrcCommandChannelNotFound', () => {
       command.handleCommand();
 
       expect(eventEmitter).toHaveBeenCalledTimes(2);
-      expect(eventEmitter).toHaveBeenCalledWith('channel_not_found', {
-        channel: '#unknown',
-      });
+      expect(eventEmitter).toHaveBeenCalledWith('channel_not_found', { channel: '#unknown' });
       expect(eventEmitter).toHaveBeenCalledWith('channel_not_found:#unknown');
     });
   });

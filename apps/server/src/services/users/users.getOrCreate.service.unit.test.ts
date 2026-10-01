@@ -1,5 +1,6 @@
-import type { OsuGetMeQueryResponseBody } from '@packages/osu-sdk';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
+
+import type { OsuGetMeQueryResponseBody } from '@packages/osu-sdk';
 
 import { createUserQuery } from '#src/queries/users/users.create.queries.js';
 import { getUserByGameUserIdQuery } from '#src/queries/users/users.get.queries.js';
@@ -8,15 +9,11 @@ import type { SelectUser } from '#src/schemas/users/users.users.table.js';
 import { getOrCreateUserService } from './users.getOrCreate.service.js';
 
 vi.mock('#src/queries/users/users.get.queries.js', () => {
-  return {
-    getUserByGameUserIdQuery: vi.fn(),
-  };
+  return { getUserByGameUserIdQuery: vi.fn() };
 });
 
 vi.mock('#src/queries/users/users.create.queries.js', () => {
-  return {
-    createUserQuery: vi.fn(),
-  };
+  return { createUserQuery: vi.fn() };
 });
 
 describe('getOrCreateUserService', () => {

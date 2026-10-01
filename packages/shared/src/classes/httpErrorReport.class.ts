@@ -1,10 +1,7 @@
 import type { Request } from 'express';
 
 import type { HttpError } from '#src/classes/httpError.class.js';
-import {
-  HttpStatusCode,
-  HttpStatusCodesToMessagesMapping,
-} from '#src/constants/http.constants.js';
+import { HttpStatusCode, HttpStatusCodesToMessagesMapping } from '#src/constants/http.constants.js';
 
 export type ErrorReport = Omit<
   HttpErrorReport,
@@ -13,10 +10,7 @@ export type ErrorReport = Omit<
 
 export interface HttpErrorReportOptions {
   request: Request;
-  allowedHttpMethodsOnResource?: Record<
-    string,
-    Array<'DELETE' | 'GET' | 'PATCH' | 'POST' | 'PUT'>
-  >;
+  allowedHttpMethodsOnResource?: Record<string, Array<'DELETE' | 'GET' | 'PATCH' | 'POST' | 'PUT'>>;
   error: HttpError;
 }
 
@@ -49,13 +43,9 @@ export class HttpErrorReport {
     this.title = HttpStatusCodesToMessagesMapping[this.status];
 
     if (
-      ![
-        HttpStatusCode.InternalServerError,
-        HttpStatusCode.MethodNotAllowed,
-      ].includes(this.status)
+      ![HttpStatusCode.InternalServerError, HttpStatusCode.MethodNotAllowed].includes(this.status)
     ) {
-      const isResourceDiscoveryRelatedError =
-        error.message?.startsWith('Resource at') === true;
+      const isResourceDiscoveryRelatedError = error.message?.startsWith('Resource at') === true;
 
       this.errors = isResourceDiscoveryRelatedError ? undefined : error.errors;
       this.detail = isResourceDiscoveryRelatedError ? undefined : error.message;

@@ -2,6 +2,10 @@ import type { UUID } from 'node:crypto';
 import { randomUUID } from 'node:crypto';
 import type { Server } from 'node:http';
 
+import type { Request, Response } from 'express';
+import type { RawData, WebSocket } from 'ws';
+import { WebSocketServer as WSS } from 'ws';
+
 import type { WebSocketMatchMessage, WebSocketMessage } from '@packages/shared';
 import {
   HttpInternalServerError,
@@ -13,9 +17,6 @@ import {
   WebSocketEvent,
   banchoChannelFromGameMatchId,
 } from '@packages/shared';
-import type { Request, Response } from 'express';
-import type { RawData, WebSocket } from 'ws';
-import { WebSocketServer as WSS } from 'ws';
 
 import { environmentConfig } from '#src/configs/environment.config.js';
 import { HttpEvent } from '#src/constants/http.constants.js';
@@ -100,10 +101,7 @@ export class WebSocketServer {
     }
   }
 
-  public broadcastMessageToSubscribers(
-    message: RawData,
-    options: BroadcastMessageOptions,
-  ) {
+  public broadcastMessageToSubscribers(message: RawData, options: BroadcastMessageOptions) {
     const { isBinary, isBanchoMessage } = options;
     const { topic }: WebSocketMessage = JSON.parse(message.toString());
     const [channel, threadId, event] = topic.split(':');
@@ -112,8 +110,8 @@ export class WebSocketServer {
 
     if (isChannelWideMessage) {
       const anyThreadInChannel = new RegExp(`^${channel}:.+:${event}$`);
-      const topics = [...this.topicsSubscribers.keys()].filter((topic) => {
-        return anyThreadInChannel.test(topic);
+      const topics = [...this.topicsSubscribers.keys()].filter((topicsSubscriber) => {
+        return anyThreadInChannel.test(topicsSubscriber);
       });
 
       threadsToBroadcastTo.push(...topics);
@@ -135,18 +133,10 @@ export class WebSocketServer {
 
     const uniqueWebSocketIds = new Set<UUID>(allSubscriptions);
 
-    if (
-      !isBanchoMessage &&
-      event === WebSocketChannelMatchesEvent.ChatMessages
-    ) {
-      const chatMessage: WebSocketMessage<WebSocketMatchMessage> = JSON.parse(
-        message.toString(),
-      );
+    if (!isBanchoMessage && event === WebSocketChannelMatchesEvent.ChatMessages) {
+      const chatMessage: WebSocketMessage<WebSocketMatchMessage> = JSON.parse(message.toString());
 
-      addMatchMessageToCacheService({
-        channel: threadId,
-        message: message.toString(),
-      });
+      addMatchMessageToCacheService({ channel: threadId, message: message.toString() });
 
       banchoClient.sendPrivateMessage(chatMessage.message.content, {
         recipient: banchoChannelFromGameMatchId(Number(threadId)),
@@ -170,10 +160,7 @@ export class WebSocketServer {
   public async close() {
     await this.webSocketServer.close(() => {
       for (const client of this.webSocketClients.values()) {
-        client.close(
-          WebSocketClosureCode.GoingAway,
-          WebSocketClosureReason.ServerShutdown,
-        );
+        client.close(WebSocketClosureCode.GoingAway, WebSocketClosureReason.ServerShutdown);
       }
     });
   }
@@ -189,10 +176,7 @@ export class WebSocketServer {
       const webSocket = this.webSocketClients.get(subscriberId);
 
       if (webSocket) {
-        webSocket.close(
-          WebSocketClosureCode.Normal,
-          WebSocketClosureReason.FinishedCommunicating,
-        );
+        webSocket.close(WebSocketClosureCode.Normal, WebSocketClosureReason.FinishedCommunicating);
       }
     }
   }
@@ -232,30 +216,16 @@ export class WebSocketServer {
           return socket.destroy();
         }
 
-        this.webSocketServer.handleUpgrade(
-          request,
-          socket,
-          head,
-          (webSocket) => {
-            socket.removeListener(
-              WebSocketEvent.Error,
-              this.logWebSocketPreUpgradeError,
-            );
-            this.webSocketServer.emit(
-              WebSocketEvent.Connection,
-              webSocket,
-              request,
-            );
-          },
-        );
+        this.webSocketServer.handleUpgrade(request, socket, head, (webSocket) => {
+          socket.removeListener(WebSocketEvent.Error, this.logWebSocketPreUpgradeError);
+          this.webSocketServer.emit(WebSocketEvent.Connection, webSocket, request);
+        });
       });
     });
   }
 
   private handleWebSocketCloseEvent(webSocket: ExtendedWebSocket) {
-    logger.debug('[WS] Closed connection', {
-      websocketId: webSocket.id,
-    });
+    logger.debug('[WS] Closed connection', { websocketId: webSocket.id });
 
     this.webSocketClients.delete(webSocket.id);
 
@@ -270,16 +240,12 @@ export class WebSocketServer {
     isBinary: boolean,
   ) {
     if (isBinary && (message as Buffer)[0] === this.pongPayload) {
-      /* eslint-disable-next-line no-param-reassign */
       webSocket.isAlive = true;
 
       return;
     }
 
-    this.broadcastMessageToSubscribers(message, {
-      isBinary,
-      isBanchoMessage: false,
-    });
+    this.broadcastMessageToSubscribers(message, { isBinary, isBanchoMessage: false });
   }
 
   private handleWebSocketServerCloseEvent() {
@@ -293,10 +259,7 @@ export class WebSocketServer {
       const subscription = this.extractConnectionIntents(request.url!);
       const extendedWebSocket = this.injectCustomWebSocketProperties(webSocket);
 
-      logger.debug('[WS] New open connection', {
-        websocketId: extendedWebSocket.id,
-        subscription,
-      });
+      logger.debug('[WS] New open connection', { websocketId: extendedWebSocket.id, subscription });
 
       this.cacheWebSocketClient(extendedWebSocket);
       this.addTopicsSubscription(extendedWebSocket, subscription);
@@ -327,10 +290,7 @@ export class WebSocketServer {
     return extendedWebSocket;
   }
 
-  private logWebSocketPostUpgradeError(
-    webSocket: ExtendedWebSocket,
-    error: Error,
-  ) {
+  private logWebSocketPostUpgradeError(webSocket: ExtendedWebSocket, error: Error) {
     const internalServerError = new HttpInternalServerError({
       message: 'Error occurred while processing websocket message',
       cause: error,
@@ -348,9 +308,7 @@ export class WebSocketServer {
       cause: error,
     });
 
-    logger.error(internalServerError.message, {
-      error: internalServerError,
-    });
+    logger.error(internalServerError.message, { error: internalServerError });
   }
 
   /**

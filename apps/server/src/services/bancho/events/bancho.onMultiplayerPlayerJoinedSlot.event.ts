@@ -31,16 +31,10 @@ export const onMultiplayerPlayerJoinedSlotEvent = async ({
   const newMatchState: BanchoLobbyState = {
     ...oldMatchState,
     playerCount: oldMatchState.playerCount + 1,
-    slots: oldMatchState.slots.toSpliced(slotNumber - 1, 1, {
-      ...baseSlot,
-      player: user,
-    }),
+    slots: oldMatchState.slots.toSpliced(slotNumber - 1, 1, { ...baseSlot, player: user }),
   };
 
-  await setMatchStateInCacheService({
-    channel: channelId,
-    state: newMatchState,
-  });
+  await setMatchStateInCacheService({ channel: channelId, state: newMatchState });
 
   const payload: WebSocketMessage<WebSocketMatchLobbyState> = {
     message: newMatchState,
@@ -48,8 +42,8 @@ export const onMultiplayerPlayerJoinedSlotEvent = async ({
     topic: `${WebSocketChannel.Matches}:${channelId}:${WebSocketChannelMatchesEvent.LobbyState}`,
   };
 
-  webSocketServer.broadcastMessageToSubscribers(
-    Buffer.from(JSON.stringify(payload)),
-    { isBinary: false, isBanchoMessage: true },
-  );
+  webSocketServer.broadcastMessageToSubscribers(Buffer.from(JSON.stringify(payload)), {
+    isBinary: false,
+    isBanchoMessage: true,
+  });
 };

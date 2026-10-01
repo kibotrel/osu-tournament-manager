@@ -33,13 +33,7 @@ export const osuGetMeQuery = async (
   const response = await getRequest<
     InternalOsuGetMeQueryRequestQuery,
     InternalOsuGetMeQueryResponseBody
-  >({
-    baseUrl: BASE_URL,
-    endpoint: '/me',
-    payload: {},
-    token,
-    apiVersion: 'v2',
-  });
+  >({ baseUrl: BASE_URL, endpoint: '/me', payload: {}, token, apiVersion: 'v2' });
 
   if (!response.isOk) {
     throw new HttpError({

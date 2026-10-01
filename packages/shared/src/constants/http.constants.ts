@@ -320,7 +320,6 @@ export const HttpStatusCodesToMessagesMapping: {
   [HttpStatusCode.ServiceUnavailable]: HttpStatusMessage.ServiceUnavailable,
   [HttpStatusCode.TooManyRequests]: HttpStatusMessage.TooManyRequests,
   [HttpStatusCode.Unauthorized]: HttpStatusMessage.Unauthorized,
-  [HttpStatusCode.UnavailableForLegalReasons]:
-    HttpStatusMessage.UnavailableForLegalReasons,
+  [HttpStatusCode.UnavailableForLegalReasons]: HttpStatusMessage.UnavailableForLegalReasons,
   [HttpStatusCode.UnprocessableContent]: HttpStatusMessage.UnprocessableContent,
 };
