@@ -152,14 +152,9 @@ describe('getMatchService', () => {
 
     getMatchByGameMatchIdQueryMock.mockResolvedValueOnce(null);
 
-    try {
-      await getMatchService(id);
-    } catch (error) {
-      expect(error).toBeInstanceOf(HttpNotFoundError);
-      expect(error).toEqual(
-        expect.objectContaining({ message: 'matchNotFound' }),
-      );
-    }
+    await expect(getMatchService(id)).rejects.toThrow(
+      new HttpNotFoundError({ message: 'matchNotFound', metadata: { gameMatchId: 1 } }),
+    );
 
     expect(getMatchByGameMatchIdQuery).toHaveBeenCalledWith(id, {
       columnsFilter: ['endsAt', 'gameMatchId', 'name'],
@@ -310,18 +305,13 @@ describe('openMatchService', () => {
 
     openMultiplayerChannelServiceMock.mockRejectedValueOnce(errorToThrow);
 
-    try {
-      await openMatchService(name);
-    } catch (error) {
-      expect(error).toBeInstanceOf(HttpInternalServerError);
-      expect(error).toEqual(
-        expect.objectContaining({
-          cause: errorToThrow,
-          message: 'matchChannelCreationFailed',
-          metadata: { name },
-        }),
-      );
-    }
+    await expect(openMatchService(name)).rejects.toThrow(
+      new HttpInternalServerError({
+        cause: errorToThrow,
+        message: 'matchChannelCreationFailed',
+        metadata: { name },
+      }),
+    );
 
     expect(openMultiplayerChannelService).toHaveBeenCalledWith(name);
     expect(createMatchQuery).not.toHaveBeenCalled();
@@ -343,18 +333,13 @@ describe('openMatchService', () => {
     openMultiplayerChannelServiceMock.mockResolvedValueOnce({ gameMatchId });
     createMatchQueryMock.mockRejectedValueOnce(errorToThrow);
 
-    try {
-      await openMatchService(name);
-    } catch (error) {
-      expect(error).toBeInstanceOf(HttpInternalServerError);
-      expect(error).toEqual(
-        expect.objectContaining({
-          cause: errorToThrow,
-          message: 'matchCreationFailed',
-          metadata: { name, gameMatchId },
-        }),
-      );
-    }
+    await expect(openMatchService(name)).rejects.toThrow(
+      new HttpInternalServerError({
+        cause: errorToThrow,
+        message: 'matchCreationFailed',
+        metadata: { name, gameMatchId },
+      }),
+    );
 
     expect(openMultiplayerChannelService).toHaveBeenCalledWith(name);
     expect(createMatchQuery).toHaveBeenCalledWith({
