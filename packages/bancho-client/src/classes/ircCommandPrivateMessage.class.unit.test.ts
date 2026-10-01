@@ -18,7 +18,6 @@ describe('IrcCommandPrivateMessage', () => {
       expect(command).toHaveProperty('banchoClient', banchoClient);
       expect(command).toHaveProperty('packetParts', packetParts);
       expect(command).toHaveProperty('banchoBotEvents', expect.any(Array));
-      // eslint-disable-next-line dot-notation
       expect(command['banchoBotEvents'].length).toBe(20);
     });
   });

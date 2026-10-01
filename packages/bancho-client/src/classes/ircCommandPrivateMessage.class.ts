@@ -442,12 +442,12 @@ export class IrcCommandPrivateMessage implements IrcCommand {
 
     this.banchoClient.emit(BanchoClientEvent.ChannelMessage, {
       channel,
-      /* eslint-disable-next-line no-control-regex, unicorn/no-hex-escape */
+      /* oxlint-disable-next-line no-control-regex */
       message: message.replace(/\x01$/, ''),
       user,
     });
     this.banchoClient.emit(`${BanchoClientEvent.ChannelMessage}:${channel}`, {
-      /* eslint-disable-next-line no-control-regex, unicorn/no-hex-escape */
+      /* oxlint-disable-next-line no-control-regex */
       message: message.replace(/\x01$/, ''),
       user,
     });

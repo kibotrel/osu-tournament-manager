@@ -99,8 +99,7 @@ export const errorMiddleware: ErrorRequestHandler<never, ErrorReport> = async (
   rawError,
   request,
   response,
-  // @ts-expect-error check comment above.
-  next,
+  _next,
 ) => {
   response.setHeader(HttpHeader.ContentType, HttpContentType.ApplicationProblemJson);
 

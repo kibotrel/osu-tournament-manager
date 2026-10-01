@@ -1,4 +1,3 @@
-/* eslint-disable unicorn/prefer-ternary */
 import type {
   AddToCacheOptions,
   CacheListKey,

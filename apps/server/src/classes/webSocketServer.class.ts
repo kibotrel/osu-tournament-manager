@@ -240,7 +240,6 @@ export class WebSocketServer {
     isBinary: boolean,
   ) {
     if (isBinary && (message as Buffer)[0] === this.pongPayload) {
-      /* eslint-disable-next-line no-param-reassign */
       webSocket.isAlive = true;
 
       return;

@@ -1,5 +1,3 @@
-/* eslint no-param-reassign: ["error", { "props": false }] */
-
 import { randomUUID } from 'node:crypto';
 
 import type { RequestHandler } from 'express';
