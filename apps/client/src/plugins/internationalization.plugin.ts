@@ -1,4 +1,4 @@
-import internationalization from 'i18next';
+import { init } from 'i18next';
 
 import en from '#src/locales/en.json';
 import fr from '#src/locales/fr.json';
@@ -17,7 +17,7 @@ export const resources: Record<SupportedLanguage, Record<Namespace, Record<strin
   fr: { translation: fr },
 } as const;
 
-internationalization.init({
+init({
   debug: import.meta.env.DEV,
   fallbackLng: false,
   interpolation: { escapeValue: false },
