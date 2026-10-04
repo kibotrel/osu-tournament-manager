@@ -103,7 +103,7 @@ jobs:
 
   detect-changes:
     name: Detect changes
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
 
     outputs:
       apps-client: ${{ steps.filter.outputs.apps-client }}
@@ -206,7 +206,7 @@ jobs:
 
   spellcheck:
     name: Spell check
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
 
     steps:
       - name: Checkout repository
