@@ -1,3 +1,4 @@
+// oxlint-disable-next-line import/no-unassigned-import
 import 'pinia';
 import type { App } from 'vue';
 
