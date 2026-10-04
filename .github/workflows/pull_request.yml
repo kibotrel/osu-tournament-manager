@@ -116,11 +116,11 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4.2.2
+        uses: actions/checkout@v7.0.1
 
       - name: Detect changed folders
         id: filter
-        uses: dorny/paths-filter@v3.0.2
+        uses: dorny/paths-filter@v4.0.3
         with:
           filters: |
             apps-client:
@@ -210,10 +210,10 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4.2.2
+        uses: actions/checkout@v7.0.1
 
       - name: Install pnpm v12.6.0
-        uses: pnpm/action-setup@v4.1.0
+        uses: actions/checkout@v6.1.0
         with:
           version: 12.6.0
 
@@ -222,14 +222,14 @@ jobs:
         run: echo "STORE_PATH=$(pnpm store path)" >> "$GITHUB_OUTPUT"
 
       - name: Use pnpm cache
-        uses: actions/cache@v4.2.3
+        uses: actions/cache@v6.1.0
         with:
           path: ${{ steps.pnpm-store-path.outputs.STORE_PATH }}
           key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
 
 
       - name: Install node v26.10.0
-        uses: actions/setup-node@v4.4.0
+        uses: actions/setup-node@v7.0.0
         with:
           cache: pnpm
           node-version: 26.10.0
