@@ -43,7 +43,7 @@
         </div>
         <div
           v-else
-          class="border-primary-2 flex h-full items-center justify-center rounded-md border-2 border-dashed p-4"
+          class="flex h-full items-center justify-center rounded-md border-2 border-dashed border-primary-2 p-4"
         >
           <BaseBody class="text-primary-2 italic">{{
             $t('global.common.workInProgress')

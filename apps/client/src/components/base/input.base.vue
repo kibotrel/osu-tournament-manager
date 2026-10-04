@@ -105,7 +105,7 @@ input:focus-visible:not(.ghost) {
 }
 
 input:disabled {
-  @apply border-primary-3 bg-primary-3 text-primary-2 cursor-not-allowed;
+  @apply cursor-not-allowed border-primary-3 bg-primary-3 text-primary-2;
 }
 
 input[type='number'] {

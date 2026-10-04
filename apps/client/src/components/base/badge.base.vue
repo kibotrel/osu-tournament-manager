@@ -48,7 +48,7 @@ withDefaults(defineProps<Properties>(), {
 @reference '#src/assets/styles/index.css';
 
 .badge {
-  @apply text-primary-1 flex items-center justify-center rounded-full border-2;
+  @apply flex items-center justify-center rounded-full border-2 text-primary-1;
 }
 
 .badge--base {
@@ -56,7 +56,7 @@ withDefaults(defineProps<Properties>(), {
 }
 
 .badge--green {
-  @apply bg-faded-green border-green-500;
+  @apply border-green-500 bg-faded-green;
 }
 
 .badge--primary {
@@ -64,7 +64,7 @@ withDefaults(defineProps<Properties>(), {
 }
 
 .badge--red {
-  @apply bg-faded-red border-red-400;
+  @apply border-red-400 bg-faded-red;
 }
 
 .badge--secondary {
@@ -76,6 +76,6 @@ withDefaults(defineProps<Properties>(), {
 }
 
 .badge--yellow {
-  @apply bg-faded-yellow border-yellow-400;
+  @apply border-yellow-400 bg-faded-yellow;
 }
 </style>

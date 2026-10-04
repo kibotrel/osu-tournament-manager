@@ -52,7 +52,7 @@ usePopUpBehavior({
 @reference '#src/assets/styles/index.css';
 
 .modal {
-  @apply bg-primary-4 border-primary-3 relative w-3/4 rounded-md border-2 p-4;
+  @apply relative w-3/4 rounded-md border-2 border-primary-3 bg-primary-4 p-4;
   @apply sm:w-2/3 md:w-1/2 lg:w-1/3;
 }
 .modal-backdrop {
@@ -71,7 +71,7 @@ usePopUpBehavior({
 }
 
 .x-mark {
-  @apply text-primary-1 hover:text-primary-1/90 active:text-primary-1/80 absolute right-0 mr-4 h-6 ring-0 outline-none hover:cursor-pointer;
+  @apply absolute right-0 mr-4 h-6 text-primary-1 ring-0 outline-none hover:cursor-pointer hover:text-primary-1/90 active:text-primary-1/80;
 }
 
 .x-mark:focus-visible {

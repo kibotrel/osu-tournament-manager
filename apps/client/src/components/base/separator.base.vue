@@ -16,7 +16,7 @@ withDefaults(defineProps<Properties>(), { variant: 'primary' });
 @reference '#src/assets/styles/index.css';
 
 hr {
-  @apply border-primary-3 border-b;
+  @apply border-b border-primary-3;
 }
 
 .dashed {

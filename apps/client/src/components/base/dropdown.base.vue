@@ -94,18 +94,18 @@ const selectItem = (item: DropdownItem) => {
 @reference '#src/assets/styles/index.css';
 
 .dropdown-menu {
-  @apply bg-primary-4 border-primary-3 absolute top-full z-100 mt-2 rounded-md border-2 whitespace-nowrap;
+  @apply absolute top-full z-100 mt-2 rounded-md border-2 border-primary-3 bg-primary-4 whitespace-nowrap;
 }
 
 .dropdown-item {
-  @apply text-primary-1 cursor-pointer px-4 py-2 ring-0 outline-none;
+  @apply cursor-pointer px-4 py-2 text-primary-1 ring-0 outline-none;
   @apply hover:bg-primary-3;
   @apply focus-visible:ring-2 focus-visible:ring-yellow-400 focus-visible:outline-hidden;
   @apply first:rounded-t-sm last:rounded-b-sm;
 }
 
 .dropdown-trigger {
-  @apply text-primary-1 h-6 w-6 cursor-pointer rounded-md ring-0 outline-none;
+  @apply h-6 w-6 cursor-pointer rounded-md text-primary-1 ring-0 outline-none;
   @apply hover:text-primary-2;
   @apply focus-visible:ring-2 focus-visible:ring-yellow-400 focus-visible:outline-hidden;
 }

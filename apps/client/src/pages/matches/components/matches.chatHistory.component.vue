@@ -1,6 +1,6 @@
 <template>
   <div
-    class="border-primary-3 mx-auto mt-4 w-[calc(100%-32px)] rounded-md border-2 md:w-4/5 lg:w-2/3 2xl:w-1/2"
+    class="mx-auto mt-4 w-[calc(100%-32px)] rounded-md border-2 border-primary-3 md:w-4/5 lg:w-2/3 2xl:w-1/2"
   >
     <div ref="chatHistoryDiv" class="chat-history-container" tabindex="-1" @scroll="onScroll">
       <div v-if="isLoading" class="align-center flex h-full flex-col items-center justify-center">
@@ -17,7 +17,7 @@
             <BaseBody is-inline :class="['font-bold!', usernameColorByRole(entry.message.author)]">
               {{ entry.message.author }}
             </BaseBody>
-            <BaseCaption class="text-primary-2 ml-2" is-inline>
+            <BaseCaption class="ml-2 text-primary-2" is-inline>
               {{ new Date(entry.timestamp).toLocaleTimeString() }}
             </BaseCaption>
           </div>
@@ -33,7 +33,7 @@
         </div>
       </div>
     </div>
-    <div class="border-primary-3 flex flex-row items-center border-t-2">
+    <div class="flex flex-row items-center border-t-2 border-primary-3">
       <BaseInput
         id="message-input"
         v-model="refereeMessage.content"
@@ -48,8 +48,8 @@
           :class="[
             'h-6 w-6',
             !isSocketReady || !refereeMessage.content
-              ? 'text-primary-2 cursor-not-allowed'
-              : 'hover:text-primary-1/80 cursor-pointer',
+              ? 'cursor-not-allowed text-primary-2'
+              : 'cursor-pointer hover:text-primary-1/80',
           ]"
         />
       </div>

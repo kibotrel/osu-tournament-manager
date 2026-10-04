@@ -89,7 +89,7 @@ usePopUpBehavior({
 }
 
 .drawer {
-  @apply bg-primary-4 border-primary-3 fixed z-10 flex flex-col rounded-md border-2;
+  @apply fixed z-10 flex flex-col rounded-md border-2 border-primary-3 bg-primary-4;
 }
 
 .right {
@@ -102,7 +102,7 @@ usePopUpBehavior({
 }
 
 .action-icon {
-  @apply text-primary-2 hover:text-primary-2/80 active:text-primary-2/60 h-6 w-6 ring-0 outline-none hover:cursor-pointer;
+  @apply h-6 w-6 text-primary-2 ring-0 outline-none hover:cursor-pointer hover:text-primary-2/80 active:text-primary-2/60;
 }
 
 .action-icon:focus-visible {
