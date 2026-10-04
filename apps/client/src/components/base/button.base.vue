@@ -21,13 +21,7 @@ import LoadingIcon from '#src/components/icons/loading.icon.vue';
 
 import BaseBody from './body.base.vue';
 
-export type ButtonVariant =
-  | 'danger'
-  | 'ghost'
-  | 'primary'
-  | 'secondary'
-  | 'success'
-  | 'warning';
+export type ButtonVariant = 'danger' | 'ghost' | 'primary' | 'secondary' | 'success' | 'warning';
 
 interface Properties {
   id: string;

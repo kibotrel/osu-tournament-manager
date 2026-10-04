@@ -1,13 +1,7 @@
 <template>
-  <BaseModal
-    id="close-match-modal"
-    :is-modal-open
-    @close:modal="emit('close:modal')"
-  >
+  <BaseModal id="close-match-modal" :is-modal-open @close:modal="emit('close:modal')">
     <template #header>
-      <BaseHeadline class="mb-4">{{
-        $t('pages.match.modals.endMatch.title')
-      }}</BaseHeadline>
+      <BaseHeadline class="mb-4">{{ $t('pages.match.modals.endMatch.title') }}</BaseHeadline>
     </template>
     <template #body>
       <div class="space-y-2">

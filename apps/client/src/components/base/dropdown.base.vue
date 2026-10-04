@@ -12,10 +12,7 @@
         v-show="isOpen"
         ref="dropdown"
         class="dropdown-menu"
-        :class="{
-          'right-0 origin-top-right': alignRight,
-          'left-0 origin-top-left': !alignRight,
-        }"
+        :class="{ 'right-0 origin-top-right': alignRight, 'left-0 origin-top-left': !alignRight }"
       >
         <div
           v-for="item in items"
@@ -27,11 +24,7 @@
           @mousedown="selectItem(item)"
         >
           <div class="flex items-center gap-2">
-            <BaseIcon
-              v-if="item.icon"
-              class="size-5 shrink-0"
-              :name="item.icon"
-            />
+            <BaseIcon v-if="item.icon" class="size-5 shrink-0" :name="item.icon" />
             <BaseCountryFlag
               v-else-if="item.countryCode"
               class="h-5 w-5 shrink-0"
@@ -68,9 +61,7 @@ interface Properties {
   items: DropdownItem[];
 }
 
-withDefaults(defineProps<Properties>(), {
-  dropdownIcon: 'ellipsisVertical',
-});
+withDefaults(defineProps<Properties>(), { dropdownIcon: 'ellipsisVertical' });
 
 const dropdown = useTemplateRef<HTMLDivElement>('dropdown');
 const wrapper = useTemplateRef<HTMLDivElement>('wrapper');

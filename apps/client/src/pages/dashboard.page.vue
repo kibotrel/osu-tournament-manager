@@ -2,18 +2,12 @@
   <div>
     <div class="m-4 flex flex-row items-center gap-2">
       <p>
-        {{ $t('pages.login.title') }} {{ user.name }} ({{ user.gameUserId }}).
-        Login:
+        {{ $t('pages.login.title') }} {{ user.name }} ({{ user.gameUserId }}). Login:
         {{ user.isLoggedIn }}
       </p>
     </div>
     <div class="m-4 flex flex-row items-center gap-2">
-      <BaseButton
-        id="logout-button"
-        class="w-24"
-        :is-loading="isPending"
-        @mousedown="logout"
-      >
+      <BaseButton id="logout-button" class="w-24" :is-loading="isPending" @mousedown="logout">
         Logout
       </BaseButton>
       <BaseDropdown dropdown-icon="language" :items="languageDropdownItems" />

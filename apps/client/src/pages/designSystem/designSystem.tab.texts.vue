@@ -31,16 +31,9 @@
       </div>
     </div>
     <div class="space-y-2">
-      <BaseHeadline variant="title">{{
-        $t('pages.designSystem.words.icon')
-      }}</BaseHeadline>
+      <BaseHeadline variant="title">{{ $t('pages.designSystem.words.icon') }}</BaseHeadline>
       <div class="flex flex-row space-x-2">
-        <BaseIcon
-          v-for="icon in icons"
-          :key="icon"
-          :name="icon"
-          class="h-6 w-6"
-        />
+        <BaseIcon v-for="icon in icons" :key="icon" :name="icon" class="h-6 w-6" />
       </div>
     </div>
   </div>

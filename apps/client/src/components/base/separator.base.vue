@@ -9,9 +9,7 @@ interface Properties {
   variant?: SeparatorVariant;
 }
 
-withDefaults(defineProps<Properties>(), {
-  variant: 'primary',
-});
+withDefaults(defineProps<Properties>(), { variant: 'primary' });
 </script>
 
 <style scoped>

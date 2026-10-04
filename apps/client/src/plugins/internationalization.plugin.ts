@@ -12,10 +12,7 @@ export type Namespace = (typeof namespaces)[number];
 export const supportedLanguages = ['en', 'fr'] as const;
 export type SupportedLanguage = (typeof supportedLanguages)[number];
 
-export const resources: Record<
-  SupportedLanguage,
-  Record<Namespace, Record<string, unknown>>
-> = {
+export const resources: Record<SupportedLanguage, Record<Namespace, Record<string, unknown>>> = {
   en: { translation: en },
   fr: { translation: fr },
 } as const;

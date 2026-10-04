@@ -46,9 +46,7 @@
             @keydown.enter="isDropdownOpenWithFlag = true"
             @mousedown="isDropdownOpenWithFlag = true"
           />
-          <BaseBody>{{
-            $t('pages.designSystem.tabs.layout.words.flag')
-          }}</BaseBody>
+          <BaseBody>{{ $t('pages.designSystem.tabs.layout.words.flag') }}</BaseBody>
         </div>
         <div class="flex items-center space-x-2">
           <BaseDropdown
@@ -103,32 +101,16 @@
         <BaseButton
           id="show-toast"
           class="w-32"
-          @keydown.enter="
-            newToast.error(
-              $t('pages.designSystem.tabs.layout.toasts.errorMessage'),
-            )
-          "
-          @mousedown="
-            newToast.error(
-              $t('pages.designSystem.tabs.layout.toasts.errorMessage'),
-            )
-          "
+          @keydown.enter="newToast.error($t('pages.designSystem.tabs.layout.toasts.errorMessage'))"
+          @mousedown="newToast.error($t('pages.designSystem.tabs.layout.toasts.errorMessage'))"
         >
           {{ $t('global.words.error') }}
         </BaseButton>
         <BaseButton
           id="show-toast"
           class="w-32"
-          @keydown.enter="
-            newToast.info(
-              $t('pages.designSystem.tabs.layout.toasts.infoMessage'),
-            )
-          "
-          @mousedown="
-            newToast.info(
-              $t('pages.designSystem.tabs.layout.toasts.infoMessage'),
-            )
-          "
+          @keydown.enter="newToast.info($t('pages.designSystem.tabs.layout.toasts.infoMessage'))"
+          @mousedown="newToast.info($t('pages.designSystem.tabs.layout.toasts.infoMessage'))"
         >
           {{ $t('global.words.info') }}
         </BaseButton>
@@ -136,15 +118,9 @@
           id="show-toast"
           class="w-32"
           @keydown.enter="
-            newToast.success(
-              $t('pages.designSystem.tabs.layout.toasts.successMessage'),
-            )
+            newToast.success($t('pages.designSystem.tabs.layout.toasts.successMessage'))
           "
-          @mousedown="
-            newToast.success(
-              $t('pages.designSystem.tabs.layout.toasts.successMessage'),
-            )
-          "
+          @mousedown="newToast.success($t('pages.designSystem.tabs.layout.toasts.successMessage'))"
         >
           {{ $t('global.words.success') }}
         </BaseButton>
@@ -152,26 +128,16 @@
           id="show-toast"
           class="w-32"
           @keydown.enter="
-            newToast.warning(
-              $t('pages.designSystem.tabs.layout.toasts.warningMessage'),
-            )
+            newToast.warning($t('pages.designSystem.tabs.layout.toasts.warningMessage'))
           "
-          @mousedown="
-            newToast.warning(
-              $t('pages.designSystem.tabs.layout.toasts.warningMessage'),
-            )
-          "
+          @mousedown="newToast.warning($t('pages.designSystem.tabs.layout.toasts.warningMessage'))"
         >
           {{ $t('global.words.warning') }}
         </BaseButton>
       </div>
     </div>
   </div>
-  <BaseModal
-    id="base-modal"
-    :is-modal-open="isModalOpen"
-    @close:modal="isModalOpen = false"
-  >
+  <BaseModal id="base-modal" :is-modal-open="isModalOpen" @close:modal="isModalOpen = false">
     <template #header>
       <h1 class="mb-4 font-semibold tracking-tight">
         {{ $t('pages.designSystem.tabs.layout.words.title') }}
@@ -370,20 +336,8 @@ const baseTabList: Tab[] = [
   { label: t('pages.designSystem.tabs.layout.words.tab'), value: 'tab3' },
 ];
 const tabsWithIconList: Tab[] = [
-  {
-    icon: 'cubeTransparent',
-    label: t('pages.designSystem.tabs.layout.words.tab'),
-    value: 'tab1',
-  },
-  {
-    icon: 'cubeTransparent',
-    label: t('pages.designSystem.tabs.layout.words.tab'),
-    value: 'tab2',
-  },
-  {
-    icon: 'cubeTransparent',
-    label: t('pages.designSystem.tabs.layout.words.tab'),
-    value: 'tab3',
-  },
+  { icon: 'cubeTransparent', label: t('pages.designSystem.tabs.layout.words.tab'), value: 'tab1' },
+  { icon: 'cubeTransparent', label: t('pages.designSystem.tabs.layout.words.tab'), value: 'tab2' },
+  { icon: 'cubeTransparent', label: t('pages.designSystem.tabs.layout.words.tab'), value: 'tab3' },
 ];
 </script>

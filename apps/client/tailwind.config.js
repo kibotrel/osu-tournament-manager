@@ -7,8 +7,6 @@ export default {
     './src/pages/**/*.{html,vue,js,ts}',
     './index.html',
   ],
-  theme: {
-    extend: customTheme,
-  },
+  theme: { extend: customTheme },
   plugins: [],
 };

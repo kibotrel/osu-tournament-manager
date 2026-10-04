@@ -17,16 +17,15 @@
     </svg>
     <component
       :is="modificationComponent()"
-      :class="[
-        'col-start-1 row-start-1 h-8 w-8',
-        getModificationForegroundColor(),
-      ]"
+      :class="['col-start-1 row-start-1 h-8 w-8', getModificationForegroundColor()]"
       :mod
     />
   </div>
 </template>
 
 <script setup lang="ts">
+import { defineAsyncComponent, defineComponent, h } from 'vue';
+
 import type { OsuBeatmapModification } from '@packages/shared';
 import {
   OsuBeatmapModificationAcronym,
@@ -35,22 +34,19 @@ import {
   isOsuBeatmapModificationManiaSpecific,
   isOsuBeatmapModificationStandardSpecific,
 } from '@packages/shared';
-import { defineAsyncComponent, defineComponent, h } from 'vue';
 
-const properties = defineProps<{
-  mod: OsuBeatmapModification;
-}>();
+const properties = defineProps<{ mod: OsuBeatmapModification }>();
+
 const FallbackComponent = defineComponent({
   name: 'FallbackModification',
   props: { mod: { type: String, required: true } },
-  setup: (properties) => {
+  setup: (fallbackProperties) => {
     return () => {
       return h(
         'div',
         { class: 'flex items-center justify-center text-sm text-semibold' },
-        OsuBeatmapModificationAcronym[
-          properties.mod as OsuBeatmapModification
-        ] ?? properties.mod,
+        OsuBeatmapModificationAcronym[fallbackProperties.mod as OsuBeatmapModification] ??
+          fallbackProperties.mod,
       );
     };
   },
@@ -90,8 +86,7 @@ const modificationComponent = () => {
     loadingComponent: FallbackComponent,
     loader: () => {
       // eslint-disable-next-line unicorn/prevent-abbreviations
-      const modName =
-        properties.mod.charAt(0).toLowerCase() + properties.mod.slice(1);
+      const modName = properties.mod.charAt(0).toLowerCase() + properties.mod.slice(1);
 
       return import(`#src/components/mods/${modName}.mod.vue`);
     },

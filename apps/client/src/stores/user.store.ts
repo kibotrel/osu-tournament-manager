@@ -11,12 +11,7 @@ export interface UserState {
 export const useUserStore = defineStore(
   'user',
   () => {
-    const defaultState = {
-      avatarUrl: '',
-      gameUserId: 0,
-      isLoggedIn: false,
-      name: '',
-    };
+    const defaultState = { avatarUrl: '', gameUserId: 0, isLoggedIn: false, name: '' };
     const user = reactive<UserState>({ ...defaultState });
 
     const resetUser = () => {

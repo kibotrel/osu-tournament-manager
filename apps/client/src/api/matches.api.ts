@@ -1,3 +1,8 @@
+import { useMutation, useQuery } from '@tanstack/vue-query';
+import { useTranslation } from 'i18next-vue';
+import { inject } from 'vue';
+import type { Router } from 'vue-router';
+
 import type {
   CloseMatchResponseBody,
   CloseMatchResponseData,
@@ -13,10 +18,6 @@ import type {
   NothingRecord,
 } from '@packages/shared';
 import { getRequest, postRequest } from '@packages/shared';
-import { useMutation, useQuery } from '@tanstack/vue-query';
-import { useTranslation } from 'i18next-vue';
-import { inject } from 'vue';
-import type { Router } from 'vue-router';
 
 import { BASE_URL } from '#src/api/api.constants.js';
 import { useToasterStore } from '#src/stores/toaster.store.js';
@@ -38,10 +39,7 @@ const closeMatchRequest = async (gameMatchId: number | string) => {
 };
 
 const createMatchRequest = async (name: string) => {
-  const response = await postRequest<
-    CreateMatchRequestBody,
-    CreateMatchResponseBody
-  >({
+  const response = await postRequest<CreateMatchRequestBody, CreateMatchResponseBody>({
     baseUrl: BASE_URL,
     endpoint: '/matches',
     payload: { name },
@@ -69,10 +67,7 @@ const getMatchRequest = async (gameMatchId: number | string) => {
 };
 
 const getMatchChatHistoryRequest = async (gameMatchId: number | string) => {
-  const response = await getRequest<
-    NothingRecord,
-    GetMatchChatHistoryResponseBody
-  >({
+  const response = await getRequest<NothingRecord, GetMatchChatHistoryResponseBody>({
     baseUrl: BASE_URL,
     endpoint: `/matches/${gameMatchId}/chat-history`,
     payload: {},
@@ -112,10 +107,9 @@ export const useCloseMatchRequest = () => {
       return await closeMatchRequest(gameMatchId);
     },
     onError: (error) => {
-      const { errorName, translationKey } = extractApiErrorMessageKeyFromError(
-        error,
-        { namespace: 'matches.close' },
-      );
+      const { errorName, translationKey } = extractApiErrorMessageKeyFromError(error, {
+        namespace: 'matches.close',
+      });
 
       if (errorName === 'matchAlreadyClosed') {
         newToast.info(t(translationKey));

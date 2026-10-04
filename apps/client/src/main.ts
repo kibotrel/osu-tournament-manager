@@ -1,3 +1,4 @@
+// oxlint-disable import/no-unassigned-import
 import { VueQueryPlugin } from '@tanstack/vue-query';
 import InternationalizationVuePlugin from 'i18next-vue';
 import { createPinia } from 'pinia';
@@ -15,6 +16,7 @@ import '@fontsource/geist-sans/800.css';
 import '@fontsource/geist-sans/900.css';
 
 import App from '#src/app.vue';
+
 import '#src/assets/styles/index.css';
 import router from '#src/router/index.js';
 
@@ -31,9 +33,7 @@ app.use(router);
 app.use(VueRouterPlugin);
 app.use(VueQueryPlugin, {
   enableDevtoolsV6Plugin: true,
-  queryClientConfig: {
-    defaultOptions: { queries: { refetchOnWindowFocus: false } },
-  },
+  queryClientConfig: { defaultOptions: { queries: { refetchOnWindowFocus: false } } },
 });
 pinia.use(PiniaRouterPlugin);
 pinia.use(createPersistedState());

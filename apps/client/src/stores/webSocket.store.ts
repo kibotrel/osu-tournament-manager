@@ -1,3 +1,8 @@
+import { useTranslation } from 'i18next-vue';
+import { defineStore } from 'pinia';
+import type { UnwrapRef } from 'vue';
+import { ref } from 'vue';
+
 import type {
   WebSocketChannel,
   WebSocketChannelMatchesEvent,
@@ -14,10 +19,6 @@ import {
   isBinaryObject,
   sleep,
 } from '@packages/shared';
-import { useTranslation } from 'i18next-vue';
-import { defineStore } from 'pinia';
-import type { UnwrapRef } from 'vue';
-import { ref } from 'vue';
 
 import { BASE_WEBSOCKET_URL } from '#src/api/api.constants.js';
 import type { ExtendedWebSocket } from '#src/types/webSockets.types.js';
@@ -28,9 +29,7 @@ interface WebSocketChannelEventsMap {
   [WebSocketChannel.Matches]: WebSocketChannelMatchesEvent;
 }
 
-interface WebSocketStoreOptions<
-  Channel extends keyof WebSocketChannelEventsMap,
-> {
+interface WebSocketStoreOptions<Channel extends keyof WebSocketChannelEventsMap> {
   channel: Channel;
   events: Array<WebSocketChannelEventsMap[Channel]>;
   keepHistory?: boolean;
@@ -75,16 +74,10 @@ export const defineWebsocketStore = <
 
     const connect = () => {
       if (socket.value) {
-        socket.value.close(
-          WebSocketClosureCode.Normal,
-          WebSocketClosureReason.Reconnecting,
-        );
+        socket.value.close(WebSocketClosureCode.Normal, WebSocketClosureReason.Reconnecting);
       }
 
-      const endpoint = formatList(urnParts, {
-        removeEmpty: true,
-        separator: '/',
-      });
+      const endpoint = formatList(urnParts, { removeEmpty: true, separator: '/' });
       const webSocketUrl = new URL(endpoint, BASE_WEBSOCKET_URL);
 
       webSocketUrl.searchParams.append('events', events.join(','));
@@ -101,10 +94,7 @@ export const defineWebsocketStore = <
         return;
       }
 
-      socket.value.close(
-        WebSocketClosureCode.Normal,
-        WebSocketClosureReason.FinishedCommunicating,
-      );
+      socket.value.close(WebSocketClosureCode.Normal, WebSocketClosureReason.FinishedCommunicating);
     };
 
     const onCloseEvent = async (event: CloseEvent) => {
@@ -113,10 +103,9 @@ export const defineWebsocketStore = <
       socket.value = undefined;
 
       if (
-        [
-          WebSocketClosureReason.NotResponding,
-          WebSocketClosureReason.ServerShutdown,
-        ].includes(event.reason as WebSocketClosureReason)
+        [WebSocketClosureReason.NotResponding, WebSocketClosureReason.ServerShutdown].includes(
+          event.reason as WebSocketClosureReason,
+        )
       ) {
         newToast.warning(t('toasts.stores.websocket.connectionLost'));
         isRetryingConnection.value = true;
@@ -168,10 +157,7 @@ export const defineWebsocketStore = <
       isSocketReady.value = true;
     };
 
-    const sendMessage = (
-      message: MessageType,
-      event: WebSocketChannelEventsMap[ChannelType],
-    ) => {
+    const sendMessage = (message: MessageType, event: WebSocketChannelEventsMap[ChannelType]) => {
       if (!socket.value) {
         return;
       }
@@ -193,29 +179,16 @@ export const defineWebsocketStore = <
       clearTimeout(socket.value.pongTimeout);
 
       socket.value.pongTimeout = setTimeout(() => {
-        socket.value?.close(
-          WebSocketClosureCode.ServerIssue,
-          WebSocketClosureReason.NotResponding,
-        );
+        socket.value?.close(WebSocketClosureCode.ServerIssue, WebSocketClosureReason.NotResponding);
       }, WEBSOCKET_PONG_TIMEOUT);
 
       socket.value.send(new Uint8Array([WEBSOCKET_PONG_PAYLOAD]));
     };
 
-    const setHistory = (
-      newHistory: Array<WebSocketMessage<UnwrapRef<MessageType>>>,
-    ) => {
+    const setHistory = (newHistory: Array<WebSocketMessage<UnwrapRef<MessageType>>>) => {
       history.value.splice(0, history.value.length, ...newHistory);
     };
 
-    return {
-      connect,
-      disconnect,
-      history,
-      isSocketReady,
-      lastMessage,
-      sendMessage,
-      setHistory,
-    };
+    return { connect, disconnect, history, isSocketReady, lastMessage, sendMessage, setHistory };
   });
 };

@@ -3,12 +3,7 @@
     <BaseHeadline variant="hero">
       {{ $t('pages.designSystem.title') }}
     </BaseHeadline>
-    <BaseTabList
-      id="design-system-page-tab-list"
-      v-model="tab"
-      class="my-4"
-      :tabs
-    />
+    <BaseTabList id="design-system-page-tab-list" v-model="tab" class="my-4" :tabs />
     <div v-if="tab === 'texts'">
       <DesignSystemTexts />
     </div>
@@ -52,15 +47,7 @@ const tabs: Tab[] = [
     label: t('pages.designSystem.words.interaction'),
     value: 'Interactions',
   },
-  {
-    icon: 'rectangleGroup',
-    label: t('pages.designSystem.words.layout'),
-    value: 'layout',
-  },
-  {
-    icon: 'cubeTransparent',
-    label: t('pages.designSystem.words.component'),
-    value: 'components',
-  },
+  { icon: 'rectangleGroup', label: t('pages.designSystem.words.layout'), value: 'layout' },
+  { icon: 'cubeTransparent', label: t('pages.designSystem.words.component'), value: 'components' },
 ];
 </script>

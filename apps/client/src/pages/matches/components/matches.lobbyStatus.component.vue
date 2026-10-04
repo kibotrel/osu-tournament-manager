@@ -1,8 +1,6 @@
 <template>
   <div class="flex min-h-0 flex-col">
-    <div
-      class="border-primary-3 mx-4 flex min-h-0 flex-col rounded-md border-2"
-    >
+    <div class="border-primary-3 mx-4 flex min-h-0 flex-col rounded-md border-2">
       <div class="border-primary-3 shrink-0 border-b-2 px-4 py-2">
         <div class="flex items-center justify-between">
           <BaseBody variant="base" class="text-primary-2">
@@ -112,10 +110,11 @@
 </template>
 
 <script setup lang="ts">
-import type { WebSocketMatchMessage } from '@packages/shared';
-import { BanchoCommand, WebSocketChannelMatchesEvent } from '@packages/shared';
 import { useTranslation } from 'i18next-vue';
 import { storeToRefs } from 'pinia';
+
+import type { WebSocketMatchMessage } from '@packages/shared';
+import { BanchoCommand, WebSocketChannelMatchesEvent } from '@packages/shared';
 
 import BaseBadge from '#src/components/base/badge.base.vue';
 import BaseBody from '#src/components/base/body.base.vue';
@@ -129,10 +128,7 @@ import { useMatchStore } from '#src/stores/match.store.js';
 import { useUserStore } from '#src/stores/user.store.js';
 
 interface Properties {
-  sendBanchoMessage: (
-    message: WebSocketMatchMessage,
-    event: WebSocketChannelMatchesEvent,
-  ) => void;
+  sendBanchoMessage: (message: WebSocketMatchMessage, event: WebSocketChannelMatchesEvent) => void;
 }
 
 const { t } = useTranslation();
@@ -151,15 +147,10 @@ const quickActionsForPlayer = (player: string): DropdownItem[] => {
   return [
     {
       id: 'transfer-host',
-      label: t(
-        'pages.match.drawer.tabs.matchLobbyStatus.dropdown.transferHost',
-      ),
+      label: t('pages.match.drawer.tabs.matchLobbyStatus.dropdown.transferHost'),
       onSelect: () => {
         properties.sendBanchoMessage(
-          {
-            author: user.name,
-            content: `${BanchoCommand.TransferHost} ${player}`,
-          },
+          { author: user.name, content: `${BanchoCommand.TransferHost} ${player}` },
           WebSocketChannelMatchesEvent.ChatMessages,
         );
       },
@@ -169,10 +160,7 @@ const quickActionsForPlayer = (player: string): DropdownItem[] => {
       label: t('pages.match.drawer.tabs.matchLobbyStatus.dropdown.kick'),
       onSelect: () => {
         properties.sendBanchoMessage(
-          {
-            author: user.name,
-            content: `${BanchoCommand.KickPlayer} ${player}`,
-          },
+          { author: user.name, content: `${BanchoCommand.KickPlayer} ${player}` },
           WebSocketChannelMatchesEvent.ChatMessages,
         );
       },

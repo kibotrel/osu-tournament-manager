@@ -34,9 +34,7 @@ export type IconName =
   | 'xCircle'
   | 'xMark';
 
-const properties = defineProps<{
-  name: IconName;
-}>();
+const properties = defineProps<{ name: IconName }>();
 
 const svgComponent = () => {
   return defineAsyncComponent(() => {

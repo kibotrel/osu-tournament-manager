@@ -8,9 +8,7 @@
         <BaseIcon
           class="action-icon"
           tabindex="0"
-          :name="
-            variant === 'right' ? 'chevronDoubleRight' : 'chevronDoubleDown'
-          "
+          :name="variant === 'right' ? 'chevronDoubleRight' : 'chevronDoubleDown'"
           @keydown.enter="emit('close:drawer')"
           @mousedown="emit('close:drawer')"
         />
