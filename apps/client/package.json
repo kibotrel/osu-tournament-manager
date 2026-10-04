@@ -1,4 +1,18 @@
 {
+  "name": "@apps/client",
+  "private": true,
+  "type": "module",
+  "imports": {
+    "#src/*": "./src/*"
+  },
+  "scripts": {
+    "build": "vite build",
+    "dev": "vite --host",
+    "format": "oxfmt",
+    "lint": "oxlint",
+    "preview": "vite preview",
+    "type-check": "vue-tsc --noEmit"
+  },
   "dependencies": {
     "@discordapp/twemoji": "16.0.1",
     "@fontsource/geist-sans": "5.1.0",
@@ -15,22 +29,14 @@
     "vue-router": "5.0.1"
   },
   "devDependencies": {
+    "@packages/config-formatter": "workspace:*",
+    "@packages/config-linter": "workspace:*",
     "@vitejs/plugin-vue": "6.0.3",
+    "oxfmt": "0.70.0",
+    "oxlint": "1.85.0",
     "vite": "7.3.1",
     "vite-plugin-static-copy": "3.2.0",
     "vite-plugin-vue-devtools": "8.0.5",
     "vue-tsc": "3.3.11"
-  },
-  "imports": {
-    "#src/*": "./src/*"
-  },
-  "name": "@apps/client",
-  "private": true,
-  "scripts": {
-    "build": "vite build",
-    "dev": "vite --host",
-    "preview": "vite preview",
-    "type-check": "vue-tsc --noEmit"
-  },
-  "type": "module"
+  }
 }

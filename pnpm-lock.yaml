@@ -248,9 +248,21 @@ importers:
         specifier: 5.0.1
         version: 5.0.1(@vue/compiler-sfc@3.5.43)(pinia@3.0.4(typescript@6.0.3)(vue@3.5.27(typescript@6.0.3)))(vue@3.5.27(typescript@6.0.3))
     devDependencies:
+      '@packages/config-formatter':
+        specifier: workspace:*
+        version: link:../../packages/config-formatter
+      '@packages/config-linter':
+        specifier: workspace:*
+        version: link:../../packages/config-linter
       '@vitejs/plugin-vue':
         specifier: 6.0.3
         version: 6.0.3(vite@7.3.1(@types/node@22.13.10)(jiti@2.7.0)(lightningcss@1.30.2)(tsx@4.19.1)(yaml@2.9.1))(vue@3.5.27(typescript@6.0.3))
+      oxfmt:
+        specifier: 0.70.0
+        version: 0.70.0
+      oxlint:
+        specifier: 1.85.0
+        version: 1.85.0
       vite:
         specifier: 7.3.1
         version: 7.3.1(@types/node@22.13.10)(jiti@2.7.0)(lightningcss@1.30.2)(tsx@4.19.1)(yaml@2.9.1)
