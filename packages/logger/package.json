@@ -23,7 +23,7 @@
   "devDependencies": {
     "@packages/config-formatter": "workspace:*",
     "@packages/config-linter": "workspace:*",
-    "oxfmt": "0.70.0",
-    "oxlint": "1.85.0"
+    "oxfmt": "0.71.0",
+    "oxlint": "1.86.0"
   }
 }

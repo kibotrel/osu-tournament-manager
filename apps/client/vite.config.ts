@@ -22,7 +22,7 @@ export default defineConfig({
               .map((hex) => String.fromCharCode(parseInt(hex, 16) - 0x1f1e6 + 65))
               .join('');
 
-            return `${countryCode}.svg`;
+            return { name: `${countryCode}.svg`, stripBase: true };
           },
           src: 'node_modules/@discordapp/twemoji/dist/svg/1f1??-1f1??.svg',
         },

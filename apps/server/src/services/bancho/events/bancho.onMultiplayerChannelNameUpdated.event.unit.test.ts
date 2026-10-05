@@ -57,6 +57,9 @@ describe('onMultiplayerChannelNameUpdatedEvent', () => {
 
   it('should broadcast updated match state to websocket subscribers', async () => {
     const webSocketServerMock = vi.mocked(webSocketServer.broadcastMessageToSubscribers);
+    const getMatchStateServiceMock = vi.mocked(getMatchStateService);
+
+    getMatchStateServiceMock.mockResolvedValueOnce(mockOldMatchState);
 
     await onMultiplayerChannelNameUpdatedEvent({ channel: '#mp_1', name: 'New match name' });
 
