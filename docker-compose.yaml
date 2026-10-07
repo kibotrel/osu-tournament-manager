@@ -190,7 +190,7 @@ services:
       redis:
         condition: service_healthy
     healthcheck:
-      interval: 250ms
+      interval: 1s
       retries: 25
       test: ["CMD", "pnpm", "healthcheck"]
       timeout: 1s
