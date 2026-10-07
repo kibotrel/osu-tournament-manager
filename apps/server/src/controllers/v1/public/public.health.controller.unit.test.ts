@@ -1,5 +1,6 @@
-import { HttpStatusCode } from '@packages/shared';
 import { describe, expect, it } from 'vitest';
+
+import { HttpStatusCode } from '@packages/shared';
 
 import {
   expressNextFunctionMock,

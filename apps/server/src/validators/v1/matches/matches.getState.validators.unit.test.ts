@@ -36,8 +36,7 @@ describe('getMatchStateValidators', () => {
           value: 'abc',
           msg: {
             message: 'gameMatchId must be a positive integer string',
-            errorCode:
-              'validator.getMatchStateParametersValidator.gameMatchId.integer',
+            errorCode: 'validator.getMatchStateParametersValidator.gameMatchId.integer',
           },
           path: 'gameMatchId',
           location: 'params',
@@ -63,8 +62,7 @@ describe('getMatchStateValidators', () => {
           value: undefined,
           msg: {
             message: 'gameMatchId is required',
-            errorCode:
-              'validator.getMatchStateParametersValidator.gameMatchId.required',
+            errorCode: 'validator.getMatchStateParametersValidator.gameMatchId.required',
           },
           path: 'gameMatchId',
           location: 'params',
@@ -74,8 +72,7 @@ describe('getMatchStateValidators', () => {
           value: undefined,
           msg: {
             message: 'gameMatchId must be a positive integer string',
-            errorCode:
-              'validator.getMatchStateParametersValidator.gameMatchId.integer',
+            errorCode: 'validator.getMatchStateParametersValidator.gameMatchId.integer',
           },
           path: 'gameMatchId',
           location: 'params',
@@ -85,8 +82,7 @@ describe('getMatchStateValidators', () => {
           value: undefined,
           msg: {
             message: 'gameMatchId cannot be empty',
-            errorCode:
-              'validator.getMatchStateParametersValidator.gameMatchId.empty',
+            errorCode: 'validator.getMatchStateParametersValidator.gameMatchId.empty',
           },
           path: 'gameMatchId',
           location: 'params',
@@ -112,8 +108,7 @@ describe('getMatchStateValidators', () => {
           value: '',
           msg: {
             message: 'gameMatchId must be a positive integer string',
-            errorCode:
-              'validator.getMatchStateParametersValidator.gameMatchId.integer',
+            errorCode: 'validator.getMatchStateParametersValidator.gameMatchId.integer',
           },
           path: 'gameMatchId',
           location: 'params',
@@ -123,8 +118,7 @@ describe('getMatchStateValidators', () => {
           value: '',
           msg: {
             message: 'gameMatchId cannot be empty',
-            errorCode:
-              'validator.getMatchStateParametersValidator.gameMatchId.empty',
+            errorCode: 'validator.getMatchStateParametersValidator.gameMatchId.empty',
           },
           path: 'gameMatchId',
           location: 'params',
@@ -150,8 +144,7 @@ describe('getMatchStateValidators', () => {
           value: '-5',
           msg: {
             message: 'gameMatchId must be a positive integer string',
-            errorCode:
-              'validator.getMatchStateParametersValidator.gameMatchId.integer',
+            errorCode: 'validator.getMatchStateParametersValidator.gameMatchId.integer',
           },
           path: 'gameMatchId',
           location: 'params',
@@ -175,8 +168,7 @@ describe('getMatchStateValidators', () => {
         {
           location: 'params',
           msg: {
-            errorCode:
-              'validator.getMatchStateParametersValidator.gameMatchId.integer',
+            errorCode: 'validator.getMatchStateParametersValidator.gameMatchId.integer',
             message: 'gameMatchId must be a positive integer string',
           },
           path: 'gameMatchId',

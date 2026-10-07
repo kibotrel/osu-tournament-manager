@@ -1,11 +1,8 @@
-import type { OsuPostOauthTokenQueryResponseBody } from '@packages/osu-sdk';
-import {
-  HttpStatusCode,
-  type LoginRequestBody,
-  type LoginResponseBody,
-} from '@packages/shared';
 import { matchedData } from 'express-validator';
 import { describe, expect, it, vi } from 'vitest';
+
+import type { OsuPostOauthTokenQueryResponseBody } from '@packages/osu-sdk';
+import { HttpStatusCode, type LoginRequestBody, type LoginResponseBody } from '@packages/shared';
 
 import type { SelectUser } from '#src/schemas/users/users.users.table.js';
 import { loginWithOsuService } from '#src/services/authentication/authentication.loginWithOsu.service.js';
@@ -25,25 +22,15 @@ vi.mock('express-validator', () => {
   };
 });
 
-vi.mock(
-  '#src/services/authentication/authentication.loginWithOsu.service.js',
-  () => {
-    return {
-      loginWithOsuService: vi.fn(),
-    };
-  },
-);
+vi.mock('#src/services/authentication/authentication.loginWithOsu.service.js', () => {
+  return { loginWithOsuService: vi.fn() };
+});
 
 describe('loginController', () => {
   it('should respond with status 200 for existing users', async () => {
     const loginWithOsuServiceMock = vi.mocked(loginWithOsuService);
     const next = expressNextFunctionMock();
-    const request = expressRequestMock<
-      never,
-      LoginResponseBody,
-      LoginRequestBody,
-      never
-    >();
+    const request = expressRequestMock<never, LoginResponseBody, LoginRequestBody, never>();
 
     request.body = { authenticationCode: 'test-auth-code' };
 
@@ -69,9 +56,7 @@ describe('loginController', () => {
     await loginController(request, response, next);
 
     expect(matchedData).toHaveBeenCalledWith(request);
-    expect(loginWithOsuService).toHaveBeenCalledWith(
-      request.body.authenticationCode,
-    );
+    expect(loginWithOsuService).toHaveBeenCalledWith(request.body.authenticationCode);
     expect(response.status).toHaveBeenCalledWith(HttpStatusCode.Ok);
     expect(response.json).toHaveBeenCalledWith({
       avatarUrl: user.avatarUrl,
@@ -84,12 +69,7 @@ describe('loginController', () => {
   it('should respond with status 201 for new users', async () => {
     const loginWithOsuServiceMock = vi.mocked(loginWithOsuService);
     const next = expressNextFunctionMock();
-    const request = expressRequestMock<
-      never,
-      LoginResponseBody,
-      LoginRequestBody,
-      never
-    >();
+    const request = expressRequestMock<never, LoginResponseBody, LoginRequestBody, never>();
 
     request.body = { authenticationCode: 'test-auth-code' };
 
@@ -115,9 +95,7 @@ describe('loginController', () => {
     await loginController(request, response, next);
 
     expect(matchedData).toHaveBeenCalledWith(request);
-    expect(loginWithOsuService).toHaveBeenCalledWith(
-      request.body.authenticationCode,
-    );
+    expect(loginWithOsuService).toHaveBeenCalledWith(request.body.authenticationCode);
     expect(response.status).toHaveBeenCalledWith(HttpStatusCode.Created);
     expect(response.json).toHaveBeenCalledWith({
       avatarUrl: user.avatarUrl,
@@ -130,12 +108,7 @@ describe('loginController', () => {
   it('should call next with an error if loginWithOsuService fails', async () => {
     const loginWithOsuServiceMock = vi.mocked(loginWithOsuService);
     const next = expressNextFunctionMock();
-    const request = expressRequestMock<
-      never,
-      LoginResponseBody,
-      LoginRequestBody,
-      never
-    >();
+    const request = expressRequestMock<never, LoginResponseBody, LoginRequestBody, never>();
 
     request.body = { authenticationCode: 'test-auth-code' };
 
@@ -148,9 +121,7 @@ describe('loginController', () => {
     await loginController(request, response, next);
 
     expect(matchedData).toHaveBeenCalledWith(request);
-    expect(loginWithOsuService).toHaveBeenCalledWith(
-      request.body.authenticationCode,
-    );
+    expect(loginWithOsuService).toHaveBeenCalledWith(request.body.authenticationCode);
     expect(response.status).not.toHaveBeenCalled();
     expect(response.json).not.toHaveBeenCalled();
     expect(next).toHaveBeenCalledWith(error);

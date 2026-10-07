@@ -3,10 +3,7 @@
  */
 export const formatList = (
   elements: string[],
-  options?: {
-    separator?: string;
-    removeEmpty?: boolean;
-  },
+  options?: { separator?: string; removeEmpty?: boolean },
 ) => {
   const { removeEmpty = false, separator = ',' } = options ?? {};
   const filteredElements = removeEmpty ? elements.filter(Boolean) : elements;

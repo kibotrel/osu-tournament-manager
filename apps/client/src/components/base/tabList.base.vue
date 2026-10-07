@@ -56,7 +56,7 @@ const selectTab = (value: string) => {
 }
 
 .tab-list {
-  @apply border-primary-3 flex w-max min-w-full flex-row items-center border-b-2;
+  @apply flex w-max min-w-full flex-row items-center border-b-2 border-primary-3;
 }
 
 .tab {
@@ -68,7 +68,7 @@ const selectTab = (value: string) => {
 }
 
 .not-selected {
-  @apply text-primary-2 cursor-pointer;
+  @apply cursor-pointer text-primary-2;
 }
 
 .not-selected:hover {

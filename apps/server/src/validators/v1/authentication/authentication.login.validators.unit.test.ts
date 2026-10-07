@@ -59,8 +59,7 @@ describe('loginValidators', () => {
         {
           location: 'body',
           msg: {
-            errorCode:
-              'validator.loginBodyValidator.authenticationCode.required',
+            errorCode: 'validator.loginBodyValidator.authenticationCode.required',
             message: 'authenticationCode is required',
           },
           path: 'authenticationCode',
@@ -121,18 +120,14 @@ describe('loginValidators', () => {
       }
 
       const errors = validationResult(request);
-      const { authenticationCode } = matchedData<{
-        authenticationCode: string;
-      }>(request);
+      const { authenticationCode } = matchedData<{ authenticationCode: string }>(request);
 
       expect(errors.isEmpty()).toBe(true);
       expect(authenticationCode).toBe('abc123');
     });
 
     it('should escape value', async () => {
-      const request = {
-        body: { authenticationCode: '<b>test</b>' },
-      };
+      const request = { body: { authenticationCode: '<b>test</b>' } };
       const validators = loginValidators();
 
       for (const validator of validators) {
@@ -140,9 +135,7 @@ describe('loginValidators', () => {
       }
 
       const errors = validationResult(request);
-      const { authenticationCode } = matchedData<{
-        authenticationCode: string;
-      }>(request);
+      const { authenticationCode } = matchedData<{ authenticationCode: string }>(request);
 
       expect(errors.isEmpty()).toBe(true);
       expect(authenticationCode).toBe('&lt;b&gt;test&lt;&#x2F;b&gt;');

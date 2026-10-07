@@ -1,10 +1,11 @@
+import type { RequestHandler } from 'express';
+import { matchedData } from 'express-validator';
+
 import {
   type CloseMatchRequestParameters,
   type CloseMatchResponseBody,
   HttpStatusCode,
 } from '@packages/shared';
-import type { RequestHandler } from 'express';
-import { matchedData } from 'express-validator';
 
 import { closeMatchService } from '#src/services/matches/matches.service.js';
 

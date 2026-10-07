@@ -1,14 +1,9 @@
 import type { InferInsertModel, InferSelectModel } from 'drizzle-orm';
-import {
-  doublePrecision,
-  integer,
-  serial,
-  timestamp,
-} from 'drizzle-orm/pg-core';
+import { doublePrecision, integer, serial, timestamp } from 'drizzle-orm/pg-core';
 
 import { picksTable } from '#src/schemas/mappools/mappools.picks.table.js';
-import { matchesSchema } from '#src/schemas/matches/matches.schema.js';
 import { matchesTable } from '#src/schemas/matches/matches.matches.table.js';
+import { matchesSchema } from '#src/schemas/matches/matches.schema.js';
 import { playersTable } from '#src/schemas/tournaments/tournaments.players.table.js';
 import { teamsTable } from '#src/schemas/tournaments/tournaments.teams.table.js';
 

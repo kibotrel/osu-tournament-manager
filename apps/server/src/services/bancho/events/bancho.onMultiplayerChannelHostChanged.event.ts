@@ -40,10 +40,7 @@ export const onMultiplayerChannelHostChangedEvent = async ({
     }),
   };
 
-  await setMatchStateInCacheService({
-    channel: channelId,
-    state: newMatchState,
-  });
+  await setMatchStateInCacheService({ channel: channelId, state: newMatchState });
 
   const payload: WebSocketMessage<WebSocketMatchLobbyState> = {
     message: newMatchState,
@@ -51,8 +48,8 @@ export const onMultiplayerChannelHostChangedEvent = async ({
     topic: `${WebSocketChannel.Matches}:${channelId}:${WebSocketChannelMatchesEvent.LobbyState}`,
   };
 
-  webSocketServer.broadcastMessageToSubscribers(
-    Buffer.from(JSON.stringify(payload)),
-    { isBinary: false, isBanchoMessage: true },
-  );
+  webSocketServer.broadcastMessageToSubscribers(Buffer.from(JSON.stringify(payload)), {
+    isBinary: false,
+    isBanchoMessage: true,
+  });
 };

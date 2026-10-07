@@ -1,5 +1,6 @@
-import { LogLevel } from '@packages/logger';
 import { pgSchema } from 'drizzle-orm/pg-core';
+
+import { LogLevel } from '@packages/logger';
 
 export const analyticsSchema = pgSchema('analytics');
 

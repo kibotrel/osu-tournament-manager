@@ -13,11 +13,7 @@ import {
 } from '#src/services/cache/cache.service.js';
 import { webSocketServer } from '#src/websocketServer.js';
 
-export const onMultiplayerChannelClosedEvent = async ({
-  channel,
-}: {
-  channel: string;
-}) => {
+export const onMultiplayerChannelClosedEvent = async ({ channel }: { channel: string }) => {
   logger.debug(`[IRC] channel ${channel} closed`);
 
   const channelId = gameMatchIdFromBanchoChannel(channel);

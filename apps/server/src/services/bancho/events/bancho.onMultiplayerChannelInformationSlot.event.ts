@@ -32,16 +32,13 @@ export const onMultiplayerChannelInformationSlotEvent = async ({
   slotNumber: number;
   user: string;
 }) => {
-  logger.silly(
-    `[IRC] channel ${channel} slot ${slotNumber} information updated`,
-    {
-      gameUserId,
-      isHost,
-      isReady,
-      modifications,
-      user,
-    },
-  );
+  logger.silly(`[IRC] channel ${channel} slot ${slotNumber} information updated`, {
+    gameUserId,
+    isHost,
+    isReady,
+    modifications,
+    user,
+  });
 
   const channelId = gameMatchIdFromBanchoChannel(channel);
   const oldMatchState = await getMatchStateService(channelId);
@@ -55,10 +52,7 @@ export const onMultiplayerChannelInformationSlotEvent = async ({
     }),
   };
 
-  await setMatchStateInCacheService({
-    channel: channelId,
-    state: newMatchState,
-  });
+  await setMatchStateInCacheService({ channel: channelId, state: newMatchState });
 
   const payload: WebSocketMessage<WebSocketMatchLobbyState> = {
     message: newMatchState,
@@ -66,8 +60,8 @@ export const onMultiplayerChannelInformationSlotEvent = async ({
     topic: `${WebSocketChannel.Matches}:${channelId}:${WebSocketChannelMatchesEvent.LobbyState}`,
   };
 
-  webSocketServer.broadcastMessageToSubscribers(
-    Buffer.from(JSON.stringify(payload)),
-    { isBinary: false, isBanchoMessage: true },
-  );
+  webSocketServer.broadcastMessageToSubscribers(Buffer.from(JSON.stringify(payload)), {
+    isBinary: false,
+    isBanchoMessage: true,
+  });
 };

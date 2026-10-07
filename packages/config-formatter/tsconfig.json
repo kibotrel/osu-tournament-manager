@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "outDir": "./dist",
+    "paths": {
+      "#src/*": ["./src/*"]
+    },
+    "removeComments": false
+  },
+  "extends": "../tsconfig.json",
+  "include": ["./src/**/*.ts"]
+}

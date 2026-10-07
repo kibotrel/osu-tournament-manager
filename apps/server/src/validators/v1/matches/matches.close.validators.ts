@@ -7,14 +7,12 @@ const closeMatchParametersValidator = (): ValidationChain[] => {
       .exists()
       .withMessage({
         message: 'gameMatchId is required',
-        errorCode:
-          'validator.closeMatchParametersValidator.gameMatchId.required',
+        errorCode: 'validator.closeMatchParametersValidator.gameMatchId.required',
       })
       .isInt({ allow_leading_zeroes: false, min: 1 })
       .withMessage({
         message: 'gameMatchId must be a positive integer string',
-        errorCode:
-          'validator.closeMatchParametersValidator.gameMatchId.integer',
+        errorCode: 'validator.closeMatchParametersValidator.gameMatchId.integer',
       })
       .notEmpty()
       .withMessage({

@@ -1,3 +1,7 @@
+import type { Response } from 'express';
+import { MethodNotAllowed, NotFound } from 'express-openapi-validator/dist/openapi.validator.js';
+import { afterEach, describe, expect, it, vi } from 'vitest';
+
 import {
   type ErrorReport,
   HttpContentType,
@@ -7,12 +11,6 @@ import {
   HttpStatusCode,
   HttpStatusMessage,
 } from '@packages/shared';
-import type { Response } from 'express';
-import {
-  MethodNotAllowed,
-  NotFound,
-} from 'express-openapi-validator/dist/openapi.validator.js';
-import { afterEach, describe, expect, it, vi } from 'vitest';
 
 import { logger } from '#src/dependencies/logger.dependency.js';
 import { deleteListInCacheByKeyQuery } from '#src/queries/cache/cache.delete.queries.js';
@@ -25,23 +23,15 @@ import {
 import { errorMiddleware } from './errorHandler.middleware.js';
 
 vi.mock('#src/dependencies/logger.dependency.js', () => {
-  return {
-    logger: {
-      error: vi.fn(),
-    },
-  };
+  return { logger: { error: vi.fn() } };
 });
 
 vi.mock('#src/configs/environment.config.js', () => {
-  return {
-    environmentConfig: { isProductionMode: true },
-  };
+  return { environmentConfig: { isProductionMode: true } };
 });
 
 vi.mock('#src/queries/cache/cache.delete.queries.js', () => {
-  return {
-    deleteListInCacheByKeyQuery: vi.fn(),
-  };
+  return { deleteListInCacheByKeyQuery: vi.fn() };
 });
 
 describe('errorMiddleware', () => {
@@ -50,9 +40,7 @@ describe('errorMiddleware', () => {
   });
 
   it('should return status code 400 if error is instance of Error along with error report', async () => {
-    const deleteListInCacheByKeyQueryMock = vi.mocked(
-      deleteListInCacheByKeyQuery,
-    );
+    const deleteListInCacheByKeyQueryMock = vi.mocked(deleteListInCacheByKeyQuery);
 
     deleteListInCacheByKeyQueryMock.mockResolvedValueOnce([]);
 
@@ -65,10 +53,7 @@ describe('errorMiddleware', () => {
     request.method = 'GET';
     request.url = '/api/v1/test';
 
-    Object.defineProperty(request, 'path', {
-      value: request.url,
-      writable: false,
-    });
+    Object.defineProperty(request, 'path', { value: request.url, writable: false });
 
     await errorMiddleware(error, request, response, next);
 
@@ -94,9 +79,7 @@ describe('errorMiddleware', () => {
   });
 
   it('should return the relative status code if error is instance of HttpError along with error report', async () => {
-    const deleteListInCacheByKeyQueryMock = vi.mocked(
-      deleteListInCacheByKeyQuery,
-    );
+    const deleteListInCacheByKeyQueryMock = vi.mocked(deleteListInCacheByKeyQuery);
 
     deleteListInCacheByKeyQueryMock.mockResolvedValueOnce([]);
 
@@ -109,10 +92,7 @@ describe('errorMiddleware', () => {
     request.method = 'GET';
     request.url = '/api/v1/test';
 
-    Object.defineProperty(request, 'path', {
-      value: request.url,
-      writable: false,
-    });
+    Object.defineProperty(request, 'path', { value: request.url, writable: false });
 
     await errorMiddleware(error, request, response, next);
 
@@ -133,9 +113,7 @@ describe('errorMiddleware', () => {
   });
 
   it('should return status 404 if instance of express-open-api-validator/NotFound and convert it to an usable error report', async () => {
-    const deleteListInCacheByKeyQueryMock = vi.mocked(
-      deleteListInCacheByKeyQuery,
-    );
+    const deleteListInCacheByKeyQueryMock = vi.mocked(deleteListInCacheByKeyQuery);
 
     deleteListInCacheByKeyQueryMock.mockResolvedValueOnce([]);
 
@@ -148,10 +126,7 @@ describe('errorMiddleware', () => {
     request.method = 'GET';
     request.url = '/api/v1/test';
 
-    Object.defineProperty(request, 'path', {
-      value: request.url,
-      writable: false,
-    });
+    Object.defineProperty(request, 'path', { value: request.url, writable: false });
 
     await errorMiddleware(error, request, response, next);
 
@@ -168,9 +143,7 @@ describe('errorMiddleware', () => {
   });
 
   it('should return status 405 if instance of express-open-api-validator/MethodNotAllowed and convert it to an usable error report and add Allow header to response', async () => {
-    const deleteListInCacheByKeyQueryMock = vi.mocked(
-      deleteListInCacheByKeyQuery,
-    );
+    const deleteListInCacheByKeyQueryMock = vi.mocked(deleteListInCacheByKeyQuery);
 
     deleteListInCacheByKeyQueryMock.mockResolvedValueOnce([]);
 
@@ -183,22 +156,14 @@ describe('errorMiddleware', () => {
     request.method = 'POST';
     request.url = '/api/v1/public/health';
 
-    Object.defineProperty(request, 'path', {
-      value: request.url,
-      writable: false,
-    });
+    Object.defineProperty(request, 'path', { value: request.url, writable: false });
 
     await errorMiddleware(error, request, response, next);
 
     expect(response.setHeader).toHaveBeenCalledTimes(3);
-    expect(response.setHeader).toHaveBeenCalledWith(
-      HttpHeader.Allow,
-      HttpMethod.Get,
-    );
+    expect(response.setHeader).toHaveBeenCalledWith(HttpHeader.Allow, HttpMethod.Get);
     expect(logger.error).not.toHaveBeenCalled();
-    expect(response.status).toHaveBeenCalledWith(
-      HttpStatusCode.MethodNotAllowed,
-    );
+    expect(response.status).toHaveBeenCalledWith(HttpStatusCode.MethodNotAllowed);
     expect(response.json).toHaveBeenCalledWith({
       detail: undefined,
       errors: undefined,
@@ -209,9 +174,7 @@ describe('errorMiddleware', () => {
   });
 
   it('should return status 500 if error is not recognized', async () => {
-    const deleteListInCacheByKeyQueryMock = vi.mocked(
-      deleteListInCacheByKeyQuery,
-    );
+    const deleteListInCacheByKeyQueryMock = vi.mocked(deleteListInCacheByKeyQuery);
 
     deleteListInCacheByKeyQueryMock.mockResolvedValueOnce([]);
 
@@ -224,17 +187,12 @@ describe('errorMiddleware', () => {
     request.method = 'GET';
     request.url = '/api/v1/test';
 
-    Object.defineProperty(request, 'path', {
-      value: request.url,
-      writable: false,
-    });
+    Object.defineProperty(request, 'path', { value: request.url, writable: false });
 
     await errorMiddleware(error, request, response, next);
 
     expect(response.setHeader).toHaveBeenCalledTimes(2);
-    expect(response.status).toHaveBeenCalledWith(
-      HttpStatusCode.InternalServerError,
-    );
+    expect(response.status).toHaveBeenCalledWith(HttpStatusCode.InternalServerError);
     expect(response.json).toHaveBeenCalledWith({
       errors: undefined,
       instance: request.path,

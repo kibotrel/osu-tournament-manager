@@ -59,8 +59,7 @@ export const osuPostOauthTokenQuery = async (
 
   if (!response.isOk) {
     throw new HttpError({
-      message:
-        '[osu!api] Failed to exchange authentication code for bearer token',
+      message: '[osu!api] Failed to exchange authentication code for bearer token',
       status: response.status,
       metadata: response.data as unknown as Record<string, unknown>,
     });

@@ -31,18 +31,10 @@
         {{ $t('pages.designSystem.tabs.component.words.modification') }}
       </BaseHeadline>
       <div class="flex flex-row items-center space-x-2">
-        <BaseModification
-          v-for="mod in increaseDifficultyMods"
-          :key="mod"
-          :mod
-        />
+        <BaseModification v-for="mod in increaseDifficultyMods" :key="mod" :mod />
       </div>
       <div class="flex flex-row items-center space-x-2">
-        <BaseModification
-          v-for="mod in decreaseDifficultyMods"
-          :key="mod"
-          :mod
-        />
+        <BaseModification v-for="mod in decreaseDifficultyMods" :key="mod" :mod />
       </div>
       <div class="flex flex-row items-center space-x-2">
         <BaseModification v-for="mod in maniaMods" :key="mod" :mod />
@@ -73,10 +65,7 @@
 <script setup lang="ts">
 import { OsuBeatmapModification } from '@packages/shared';
 
-import type {
-  BadgeColor,
-  BadgeVariant,
-} from '#src/components/base/badge.base.vue';
+import type { BadgeColor, BadgeVariant } from '#src/components/base/badge.base.vue';
 import BaseBadge from '#src/components/base/badge.base.vue';
 import BaseCountryFlag from '#src/components/base/countryFlag.base.vue';
 import BaseHeadline from '#src/components/base/headline.base.vue';

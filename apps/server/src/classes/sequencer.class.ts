@@ -52,10 +52,9 @@ export class Sequencer {
       try {
         await task();
       } catch (error) {
-        this.logger.error(
-          `[Queue] Error processing task ${name} for queue ${queueId}`,
-          { error: error as HttpError },
-        );
+        this.logger.error(`[Queue] Error processing task ${name} for queue ${queueId}`, {
+          error: error as HttpError,
+        });
       }
     }
 

@@ -52,10 +52,7 @@ banchoClient.on(BanchoClientEvent.BotConnected, onBotConnectedEvent);
 banchoClient.on(BanchoClientEvent.BotDisconnected, onBotDisconnectedEvent);
 banchoClient.on(BanchoClientEvent.BotJoinedChannel, onBotJoinedChannelEvent);
 banchoClient.on(BanchoClientEvent.ChannelMessage, onChannelMessageEvent);
-banchoClient.on(
-  BanchoClientEvent.ConcurrentMatchLimitReached,
-  onConcurrentMatchLimitReachedEvent,
-);
+banchoClient.on(BanchoClientEvent.ConcurrentMatchLimitReached, onConcurrentMatchLimitReachedEvent);
 banchoClient.on(
   BanchoClientEvent.MultiplayerChannelAllPlayersReady,
   enqueueChannelEvent(onMultiplayerChannelAllPlayersReadyEvent),

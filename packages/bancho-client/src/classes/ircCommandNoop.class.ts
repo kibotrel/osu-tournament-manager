@@ -7,11 +7,7 @@ export class IrcCommandNoop implements IrcCommand {
   public readonly command: IrcKeyword;
   public readonly packetParts: string[];
 
-  constructor(
-    banchoClient: BanchoClient,
-    command: IrcKeyword,
-    packetParts: string[],
-  ) {
+  constructor(banchoClient: BanchoClient, command: IrcKeyword, packetParts: string[]) {
     this.banchoClient = banchoClient;
     this.command = command;
     this.packetParts = packetParts;

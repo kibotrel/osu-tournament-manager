@@ -1,3 +1,10 @@
 packages:
   - 'apps/*'
   - 'packages/*'
+allowBuilds:
+  '@scarf/scarf': true
+  core-js: true
+  esbuild: true
+  protobufjs: true
+  unrs-resolver: true
+  vue-demi: true

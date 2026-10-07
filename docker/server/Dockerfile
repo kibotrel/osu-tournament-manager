@@ -1,5 +1,5 @@
-FROM node:22.22.0-slim  AS base-image
-ARG PNPM_VERSION=9.15.4
+FROM node:26.10.0-slim AS base-image
+ARG PNPM_VERSION=12.6.0
 RUN npm --global install pnpm@${PNPM_VERSION}
 
 FROM base-image AS install-dependencies
@@ -12,9 +12,9 @@ WORKDIR /osu-tournament-manager/
 COPY packages/tsconfig.json ./packages/
 COPY packages/api-specification ./packages/api-specification/
 COPY packages/bancho-client ./packages/bancho-client/
+COPY packages/config-formatter ./packages/config-formatter/
 COPY packages/logger ./packages/logger/
 COPY packages/osu-sdk ./packages/osu-sdk/
-COPY packages/prettier-config ./packages/prettier-config/
 COPY packages/shared ./packages/shared/
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
 

@@ -61,9 +61,7 @@ describe('HttpErrorReport', () => {
 
     it('should not expose errors and detail for status code 404 if related to resource discovery', () => {
       const errorReport = new HttpErrorReport({
-        error: new HttpNotFoundError({
-          message: 'Resource at /resource/1 not found',
-        }),
+        error: new HttpNotFoundError({ message: 'Resource at /resource/1 not found' }),
         request: { path: '/resource/1' } as Request,
       });
 
@@ -106,9 +104,7 @@ describe('HttpErrorReport', () => {
       const errorReport = new HttpErrorReport({
         error: new HttpError({ message: 'test message', status: 400 }),
         request: { path: '/resource/1' } as Request,
-        allowedHttpMethodsOnResource: {
-          '/resource/x': ['GET', 'POST'],
-        },
+        allowedHttpMethodsOnResource: { '/resource/x': ['GET', 'POST'] },
       });
 
       expect(errorReport.getAllowedMethods()).toBe('GET, POST');

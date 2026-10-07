@@ -15,10 +15,7 @@ export default defineConfig({
     user: process.env.POSTGRES_USER || '',
   },
   dialect: 'postgresql',
-  migrations: {
-    schema: 'drizzle',
-    table: 'migrations',
-  },
+  migrations: { schema: 'drizzle', table: 'migrations' },
   out: './migrations',
   schema: './dist/src/schemas/*',
 });

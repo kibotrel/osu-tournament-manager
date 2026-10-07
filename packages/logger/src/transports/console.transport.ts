@@ -1,9 +1,6 @@
 import { format, transports } from 'winston';
 
-import {
-  baseConsoleFormat,
-  consoleSerializeAndPrint,
-} from '#src/formats/console.formats.js';
+import { baseConsoleFormat, consoleSerializeAndPrint } from '#src/formats/console.formats.js';
 
 const { combine } = format;
 

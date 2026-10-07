@@ -14,13 +14,7 @@ export interface RequestConfiguration<PayloadType> {
 const createGenericRequest = <PayloadType extends object = NothingRecord>(
   configuration: RequestConfiguration<PayloadType>,
 ) => {
-  const {
-    baseApiEndpoint = 'api',
-    baseUrl,
-    payload,
-    token,
-    apiVersion = 'v1',
-  } = configuration;
+  const { baseApiEndpoint = 'api', baseUrl, payload, token, apiVersion = 'v1' } = configuration;
   const request = new HttpRequest<PayloadType>()
     .setBaseUrl(baseUrl)
     .setBaseApiEndpoint(baseApiEndpoint)

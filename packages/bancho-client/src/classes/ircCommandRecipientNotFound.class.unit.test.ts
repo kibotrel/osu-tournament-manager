@@ -12,10 +12,7 @@ describe('IrcCommandRecipientNotFound', () => {
 
   describe('constructor', () => {
     it('should create an instance of IrcCommandRecipientNotFound', () => {
-      const command = new IrcCommandRecipientNotFound(
-        banchoClient,
-        packetParts,
-      );
+      const command = new IrcCommandRecipientNotFound(banchoClient, packetParts);
 
       expect(command).toBeInstanceOf(IrcCommandRecipientNotFound);
       expect(command).toHaveProperty('banchoClient', banchoClient);
@@ -25,21 +22,14 @@ describe('IrcCommandRecipientNotFound', () => {
 
   describe('handleCommand', () => {
     it('should emit recipient_not_found event with the corresponding recipient', () => {
-      const command = new IrcCommandRecipientNotFound(
-        banchoClient,
-        packetParts,
-      );
+      const command = new IrcCommandRecipientNotFound(banchoClient, packetParts);
       const eventEmitter = vi.spyOn(banchoClient, 'emit');
 
       command.handleCommand();
 
       expect(eventEmitter).toHaveBeenCalledTimes(2);
-      expect(eventEmitter).toHaveBeenCalledWith('recipient_not_found', {
-        recipient: 'username2',
-      });
-      expect(eventEmitter).toHaveBeenCalledWith(
-        'recipient_not_found:username2',
-      );
+      expect(eventEmitter).toHaveBeenCalledWith('recipient_not_found', { recipient: 'username2' });
+      expect(eventEmitter).toHaveBeenCalledWith('recipient_not_found:username2');
     });
   });
 });

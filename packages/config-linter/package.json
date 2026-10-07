@@ -1,0 +1,20 @@
+{
+  "devDependencies": {
+    "@packages/config-formatter": "workspace:*",
+    "oxfmt": "0.71.0",
+    "oxlint": "1.86.0"
+  },
+  "imports": {
+    "#src/*": "./src/*"
+  },
+  "main": "dist/src/configLinter.export.js",
+  "name": "@packages/config-linter",
+  "private": true,
+  "scripts": {
+    "build": "tsc && tsc-alias",
+    "dev": "nodemon --config nodemon.json",
+    "type-check": "tsc --noEmit"
+  },
+  "type": "module",
+  "types": "dist/src/configLinter.export.d.ts"
+}

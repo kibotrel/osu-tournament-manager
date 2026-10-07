@@ -1,9 +1,7 @@
 <template>
   <div class="flex min-h-0 flex-col">
-    <div
-      class="border-primary-3 mx-4 flex min-h-0 flex-col rounded-md border-2"
-    >
-      <div class="border-primary-3 shrink-0 border-b-2 px-4 py-2">
+    <div class="mx-4 flex min-h-0 flex-col rounded-md border-2 border-primary-3">
+      <div class="shrink-0 border-b-2 border-primary-3 px-4 py-2">
         <div class="flex items-center justify-between">
           <BaseBody variant="base" class="text-primary-2">
             {{
@@ -21,7 +19,7 @@
           >
             <template #default> {{ $t('global.words.refresh') }} </template>
             <template #icon>
-              <ArrowPathIcon class="text-primary-4 h-6 w-6" />
+              <ArrowPathIcon class="h-6 w-6 text-primary-4" />
             </template>
           </BaseButton>
         </div>
@@ -30,7 +28,7 @@
         <div v-for="(slot, slotIndex) in match.slots" :key="slotIndex">
           <div
             :class="[
-              'border-primary-4 grid grid-cols-[0.5rem_1fr_auto_auto] items-center gap-x-2 sm:grid-cols-[0.5rem_1fr_1fr_5rem_2em] sm:gap-2',
+              'grid grid-cols-[0.5rem_1fr_auto_auto] items-center gap-x-2 border-primary-4 sm:grid-cols-[0.5rem_1fr_1fr_5rem_2em] sm:gap-2',
               {
                 'border-b-2': slotIndex < match.slots.length - 1,
                 'border-t-2': slotIndex > 0,
@@ -112,10 +110,11 @@
 </template>
 
 <script setup lang="ts">
-import type { WebSocketMatchMessage } from '@packages/shared';
-import { BanchoCommand, WebSocketChannelMatchesEvent } from '@packages/shared';
 import { useTranslation } from 'i18next-vue';
 import { storeToRefs } from 'pinia';
+
+import type { WebSocketMatchMessage } from '@packages/shared';
+import { BanchoCommand, WebSocketChannelMatchesEvent } from '@packages/shared';
 
 import BaseBadge from '#src/components/base/badge.base.vue';
 import BaseBody from '#src/components/base/body.base.vue';
@@ -129,10 +128,7 @@ import { useMatchStore } from '#src/stores/match.store.js';
 import { useUserStore } from '#src/stores/user.store.js';
 
 interface Properties {
-  sendBanchoMessage: (
-    message: WebSocketMatchMessage,
-    event: WebSocketChannelMatchesEvent,
-  ) => void;
+  sendBanchoMessage: (message: WebSocketMatchMessage, event: WebSocketChannelMatchesEvent) => void;
 }
 
 const { t } = useTranslation();
@@ -151,15 +147,10 @@ const quickActionsForPlayer = (player: string): DropdownItem[] => {
   return [
     {
       id: 'transfer-host',
-      label: t(
-        'pages.match.drawer.tabs.matchLobbyStatus.dropdown.transferHost',
-      ),
+      label: t('pages.match.drawer.tabs.matchLobbyStatus.dropdown.transferHost'),
       onSelect: () => {
         properties.sendBanchoMessage(
-          {
-            author: user.name,
-            content: `${BanchoCommand.TransferHost} ${player}`,
-          },
+          { author: user.name, content: `${BanchoCommand.TransferHost} ${player}` },
           WebSocketChannelMatchesEvent.ChatMessages,
         );
       },
@@ -169,10 +160,7 @@ const quickActionsForPlayer = (player: string): DropdownItem[] => {
       label: t('pages.match.drawer.tabs.matchLobbyStatus.dropdown.kick'),
       onSelect: () => {
         properties.sendBanchoMessage(
-          {
-            author: user.name,
-            content: `${BanchoCommand.KickPlayer} ${player}`,
-          },
+          { author: user.name, content: `${BanchoCommand.KickPlayer} ${player}` },
           WebSocketChannelMatchesEvent.ChatMessages,
         );
       },

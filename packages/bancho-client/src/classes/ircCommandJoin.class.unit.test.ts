@@ -32,10 +32,9 @@ describe('IrcCommandJoin', () => {
         channel: '#channel',
         user: 'username',
       });
-      expect(eventEmitter).toHaveBeenCalledWith(
-        'user_joined_channel:#channel',
-        { user: 'username' },
-      );
+      expect(eventEmitter).toHaveBeenCalledWith('user_joined_channel:#channel', {
+        user: 'username',
+      });
     });
   });
 });

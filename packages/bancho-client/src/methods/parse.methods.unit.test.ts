@@ -12,11 +12,7 @@ import { IrcCommandPrivateMessage } from '#src/classes/ircCommandPrivateMessage.
 import { IrcCommandQuit } from '#src/classes/ircCommandQuit.class.js';
 import { IrcCommandRecipientNotFound } from '#src/classes/ircCommandRecipientNotFound.class.js';
 import { IrcCommandWelcome } from '#src/classes/ircCommandWelcome.class.js';
-import {
-  parseIrcMessage,
-  parseIrcUsername,
-  parseOsuUsername,
-} from '#src/methods/parse.methods.js';
+import { parseIrcMessage, parseIrcUsername, parseOsuUsername } from '#src/methods/parse.methods.js';
 
 describe('parseIrcMessage', () => {
   const banchoClient = new BanchoClient({
@@ -25,59 +21,40 @@ describe('parseIrcMessage', () => {
   });
 
   it('should return an instance of IrcCommandPing for ping messages type message', () => {
-    expect(parseIrcMessage(banchoClient, 'PING localhost.dev')).toBeInstanceOf(
-      IrcCommandPing,
-    );
+    expect(parseIrcMessage(banchoClient, 'PING localhost.dev')).toBeInstanceOf(IrcCommandPing);
   });
 
   it('should return undefined if no command is provided type message', () => {
-    expect(
-      parseIrcMessage(banchoClient, ':test!server@localhost.dev'),
-    ).toBeUndefined();
+    expect(parseIrcMessage(banchoClient, ':test!server@localhost.dev')).toBeUndefined();
   });
 
   it('should return undefined if the command is ChannelTopicUpdatedAt type message', () => {
     expect(
-      parseIrcMessage(
-        banchoClient,
-        ':localhost.dev 333 #channel test!server@localhost.dev 0',
-      ),
+      parseIrcMessage(banchoClient, ':localhost.dev 333 #channel test!server@localhost.dev 0'),
     ).toBeUndefined();
   });
 
   it('should return undefined if the command is EndOfNameList type message', () => {
     expect(
-      parseIrcMessage(
-        banchoClient,
-        ':localhost.dev 366 username #channel :End of /NAMES list.',
-      ),
+      parseIrcMessage(banchoClient, ':localhost.dev 366 username #channel :End of /NAMES list.'),
     ).toBeUndefined();
   });
 
   it('should return undefined if the command is MessageOfTheDayBegin type message', () => {
-    expect(
-      parseIrcMessage(banchoClient, ':localhost.dev 375 username :-'),
-    ).toBeUndefined();
+    expect(parseIrcMessage(banchoClient, ':localhost.dev 375 username :-')).toBeUndefined();
   });
 
   it('should return undefined if the command is MessageOfTheDayBody type message', () => {
-    expect(
-      parseIrcMessage(banchoClient, ':localhost.dev 372 username :-'),
-    ).toBeUndefined();
+    expect(parseIrcMessage(banchoClient, ':localhost.dev 372 username :-')).toBeUndefined();
   });
 
   it('should return undefined if the command is MessageOfTheDayEnd type message', () => {
-    expect(
-      parseIrcMessage(banchoClient, ':localhost.dev 376 username :-'),
-    ).toBeUndefined();
+    expect(parseIrcMessage(banchoClient, ':localhost.dev 376 username :-')).toBeUndefined();
   });
 
   it('should return undefined if the command is Mode type message', () => {
     expect(
-      parseIrcMessage(
-        banchoClient,
-        ':test!server@localhost.dev MODE #channel +v username',
-      ),
+      parseIrcMessage(banchoClient, ':test!server@localhost.dev MODE #channel +v username'),
     ).toBeUndefined();
   });
 
@@ -92,19 +69,13 @@ describe('parseIrcMessage', () => {
 
   it('should return an instance of IrcCommandChannelTopic for ChannelTopic type message', () => {
     expect(
-      parseIrcMessage(
-        banchoClient,
-        ':localhost.dev 332 username #channel :Channel topic',
-      ),
+      parseIrcMessage(banchoClient, ':localhost.dev 332 username #channel :Channel topic'),
     ).toBeInstanceOf(IrcCommandChannelTopic);
   });
 
   it('should return an instance of IrcCommandJoin for Join type message', () => {
     expect(
-      parseIrcMessage(
-        banchoClient,
-        ':username!server@localhost.dev JOIN :#channel',
-      ),
+      parseIrcMessage(banchoClient, ':username!server@localhost.dev JOIN :#channel'),
     ).toBeInstanceOf(IrcCommandJoin);
   });
 
@@ -128,10 +99,7 @@ describe('parseIrcMessage', () => {
 
   it('should return an instance of IrcCommandPart for Part type message', () => {
     expect(
-      parseIrcMessage(
-        banchoClient,
-        ':username!server@localhost.dev PART :#channel',
-      ),
+      parseIrcMessage(banchoClient, ':username!server@localhost.dev PART :#channel'),
     ).toBeInstanceOf(IrcCommandPart);
   });
 
@@ -146,26 +114,20 @@ describe('parseIrcMessage', () => {
 
   it('should return an instance of IrcCommandQuit for Quit type message', () => {
     expect(
-      parseIrcMessage(
-        banchoClient,
-        ':username!server@localhost.dev QUIT :quit',
-      ),
+      parseIrcMessage(banchoClient, ':username!server@localhost.dev QUIT :quit'),
     ).toBeInstanceOf(IrcCommandQuit);
   });
 
   it('should return an instance of IrcCommandRecipientNotFound for RecipientNotFound type message', () => {
     expect(
-      parseIrcMessage(
-        banchoClient,
-        ':localhost.dev 401 username1 username2 :No such nick',
-      ),
+      parseIrcMessage(banchoClient, ':localhost.dev 401 username1 username2 :No such nick'),
     ).toBeInstanceOf(IrcCommandRecipientNotFound);
   });
 
   it('should return an instance of IrcCommandWelcome for Welcome type message', () => {
-    expect(
-      parseIrcMessage(banchoClient, ':localhost.dev 001 username :Welcome'),
-    ).toBeInstanceOf(IrcCommandWelcome);
+    expect(parseIrcMessage(banchoClient, ':localhost.dev 001 username :Welcome')).toBeInstanceOf(
+      IrcCommandWelcome,
+    );
   });
 
   it('should correctly handle messages with colons in it', () => {
@@ -175,9 +137,7 @@ describe('parseIrcMessage', () => {
     );
 
     expect(command).toBeInstanceOf(IrcCommandPrivateMessage);
-    expect((command as IrcCommandPrivateMessage).packetParts.at(-1)).toBe(
-      'message :: content',
-    );
+    expect((command as IrcCommandPrivateMessage).packetParts.at(-1)).toBe('message :: content');
   });
 });
 

@@ -1,5 +1,6 @@
-import { HttpStatusCode, type LogoutResponseBody } from '@packages/shared';
 import { describe, expect, it } from 'vitest';
+
+import { HttpStatusCode, type LogoutResponseBody } from '@packages/shared';
 
 import {
   expressNextFunctionMock,

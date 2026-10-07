@@ -20,9 +20,7 @@ const isTopElement = (element: Readonly<ShallowRef<HTMLElement | null>>) => {
 const trapFocus = async (target: HTMLElement) => {
   await nextTick();
 
-  const focusableElements = target.querySelectorAll<HTMLElement>(
-    focusableSelectors.join(','),
-  );
+  const focusableElements = target.querySelectorAll<HTMLElement>(focusableSelectors.join(','));
 
   focusableElements[0]?.focus();
 };

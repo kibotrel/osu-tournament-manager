@@ -13,18 +13,8 @@
           "notNull": true,
           "default": "now()"
         },
-        "id": {
-          "name": "id",
-          "type": "serial",
-          "primaryKey": true,
-          "notNull": true
-        },
-        "name": {
-          "name": "name",
-          "type": "varchar(128)",
-          "primaryKey": false,
-          "notNull": true
-        },
+        "id": { "name": "id", "type": "serial", "primaryKey": true, "notNull": true },
+        "name": { "name": "name", "type": "varchar(128)", "primaryKey": false, "notNull": true },
         "tournamentId": {
           "name": "tournamentId",
           "type": "integer",
@@ -44,14 +34,10 @@
         "mappools_tournamentId_tournaments_id_fk": {
           "name": "mappools_tournamentId_tournaments_id_fk",
           "tableFrom": "mappools",
-          "columnsFrom": [
-            "tournamentId"
-          ],
+          "columnsFrom": ["tournamentId"],
           "tableTo": "tournaments",
           "schemaTo": "tournaments",
-          "columnsTo": [
-            "id"
-          ],
+          "columnsTo": ["id"],
           "onUpdate": "no action",
           "onDelete": "cascade"
         }
@@ -70,12 +56,7 @@
           "notNull": true,
           "default": "now()"
         },
-        "id": {
-          "name": "id",
-          "type": "serial",
-          "primaryKey": true,
-          "notNull": true
-        },
+        "id": { "name": "id", "type": "serial", "primaryKey": true, "notNull": true },
         "tournamentId": {
           "name": "tournamentId",
           "type": "integer",
@@ -95,54 +76,37 @@
           "notNull": true,
           "default": "now()"
         },
-        "userId": {
-          "name": "userId",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true
-        }
+        "userId": { "name": "userId", "type": "integer", "primaryKey": false, "notNull": true }
       },
       "indexes": {},
       "foreignKeys": {
         "players_tournamentId_tournaments_id_fk": {
           "name": "players_tournamentId_tournaments_id_fk",
           "tableFrom": "players",
-          "columnsFrom": [
-            "tournamentId"
-          ],
+          "columnsFrom": ["tournamentId"],
           "tableTo": "tournaments",
           "schemaTo": "tournaments",
-          "columnsTo": [
-            "id"
-          ],
+          "columnsTo": ["id"],
           "onUpdate": "no action",
           "onDelete": "cascade"
         },
         "players_tournamentTeamId_teams_id_fk": {
           "name": "players_tournamentTeamId_teams_id_fk",
           "tableFrom": "players",
-          "columnsFrom": [
-            "tournamentTeamId"
-          ],
+          "columnsFrom": ["tournamentTeamId"],
           "tableTo": "teams",
           "schemaTo": "tournaments",
-          "columnsTo": [
-            "id"
-          ],
+          "columnsTo": ["id"],
           "onUpdate": "no action",
           "onDelete": "cascade"
         },
         "players_userId_users_id_fk": {
           "name": "players_userId_users_id_fk",
           "tableFrom": "players",
-          "columnsFrom": [
-            "userId"
-          ],
+          "columnsFrom": ["userId"],
           "tableTo": "users",
           "schemaTo": "users",
-          "columnsTo": [
-            "id"
-          ],
+          "columnsTo": ["id"],
           "onUpdate": "no action",
           "onDelete": "restrict"
         }
@@ -161,12 +125,7 @@
           "notNull": true,
           "default": "now()"
         },
-        "id": {
-          "name": "id",
-          "type": "serial",
-          "primaryKey": true,
-          "notNull": true
-        },
+        "id": { "name": "id", "type": "serial", "primaryKey": true, "notNull": true },
         "permissionsBitfield": {
           "name": "permissionsBitfield",
           "type": "smallint",
@@ -186,40 +145,27 @@
           "notNull": true,
           "default": "now()"
         },
-        "userId": {
-          "name": "userId",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true
-        }
+        "userId": { "name": "userId", "type": "integer", "primaryKey": false, "notNull": true }
       },
       "indexes": {},
       "foreignKeys": {
         "staffs_tournamentId_tournaments_id_fk": {
           "name": "staffs_tournamentId_tournaments_id_fk",
           "tableFrom": "staffs",
-          "columnsFrom": [
-            "tournamentId"
-          ],
+          "columnsFrom": ["tournamentId"],
           "tableTo": "tournaments",
           "schemaTo": "tournaments",
-          "columnsTo": [
-            "id"
-          ],
+          "columnsTo": ["id"],
           "onUpdate": "no action",
           "onDelete": "cascade"
         },
         "staffs_userId_users_id_fk": {
           "name": "staffs_userId_users_id_fk",
           "tableFrom": "staffs",
-          "columnsFrom": [
-            "userId"
-          ],
+          "columnsFrom": ["userId"],
           "tableTo": "users",
           "schemaTo": "users",
-          "columnsTo": [
-            "id"
-          ],
+          "columnsTo": ["id"],
           "onUpdate": "no action",
           "onDelete": "restrict"
         }
@@ -238,18 +184,8 @@
           "notNull": true,
           "default": "now()"
         },
-        "id": {
-          "name": "id",
-          "type": "serial",
-          "primaryKey": true,
-          "notNull": true
-        },
-        "name": {
-          "name": "name",
-          "type": "varchar(32)",
-          "primaryKey": false,
-          "notNull": true
-        },
+        "id": { "name": "id", "type": "serial", "primaryKey": true, "notNull": true },
+        "name": { "name": "name", "type": "varchar(32)", "primaryKey": false, "notNull": true },
         "tournamentId": {
           "name": "tournamentId",
           "type": "integer",
@@ -269,14 +205,10 @@
         "teams_tournamentId_tournaments_id_fk": {
           "name": "teams_tournamentId_tournaments_id_fk",
           "tableFrom": "teams",
-          "columnsFrom": [
-            "tournamentId"
-          ],
+          "columnsFrom": ["tournamentId"],
           "tableTo": "tournaments",
           "schemaTo": "tournaments",
-          "columnsTo": [
-            "id"
-          ],
+          "columnsTo": ["id"],
           "onUpdate": "no action",
           "onDelete": "cascade"
         }
@@ -301,30 +233,15 @@
           "notNull": true,
           "default": "now()"
         },
-        "endsAt": {
-          "name": "endsAt",
-          "type": "timestamp",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "id": {
-          "name": "id",
-          "type": "serial",
-          "primaryKey": true,
-          "notNull": true
-        },
+        "endsAt": { "name": "endsAt", "type": "timestamp", "primaryKey": false, "notNull": false },
+        "id": { "name": "id", "type": "serial", "primaryKey": true, "notNull": true },
         "includesQualifierStage": {
           "name": "includesQualifierStage",
           "type": "boolean",
           "primaryKey": false,
           "notNull": true
         },
-        "name": {
-          "name": "name",
-          "type": "varchar(256)",
-          "primaryKey": false,
-          "notNull": true
-        },
+        "name": { "name": "name", "type": "varchar(256)", "primaryKey": false, "notNull": true },
         "scoreMode": {
           "name": "scoreMode",
           "type": "scoreMode",
@@ -381,18 +298,8 @@
           "primaryKey": false,
           "notNull": true
         },
-        "id": {
-          "name": "id",
-          "type": "serial",
-          "primaryKey": true,
-          "notNull": true
-        },
-        "name": {
-          "name": "name",
-          "type": "varchar",
-          "primaryKey": false,
-          "notNull": true
-        },
+        "id": { "name": "id", "type": "serial", "primaryKey": true, "notNull": true },
+        "name": { "name": "name", "type": "varchar", "primaryKey": false, "notNull": true },
         "updatedAt": {
           "name": "updatedAt",
           "type": "timestamp",
@@ -407,9 +314,7 @@
       "uniqueConstraints": {
         "users_gameUserId_unique": {
           "name": "users_gameUserId_unique",
-          "columns": [
-            "gameUserId"
-          ],
+          "columns": ["gameUserId"],
           "nullsNotDistinct": false
         }
       }
@@ -419,44 +324,21 @@
     "mappools.gameMode": {
       "name": "gameMode",
       "schema": "mappools",
-      "values": [
-        "catch",
-        "mania",
-        "standard",
-        "taiko"
-      ]
+      "values": ["catch", "mania", "standard", "taiko"]
     },
     "tournaments.scoreMode": {
       "name": "scoreMode",
       "schema": "tournaments",
-      "values": [
-        "accuracy",
-        "combo",
-        "score",
-        "scoreV2"
-      ]
+      "values": ["accuracy", "combo", "score", "scoreV2"]
     },
     "tournaments.teamMode": {
       "name": "teamMode",
       "schema": "tournaments",
-      "values": [
-        "headToHead",
-        "tagCoOp",
-        "tagTeamVs",
-        "teamVs"
-      ]
+      "values": ["headToHead", "tagCoOp", "tagTeamVs", "teamVs"]
     }
   },
-  "schemas": {
-    "mappools": "mappools",
-    "tournaments": "tournaments",
-    "users": "users"
-  },
-  "_meta": {
-    "schemas": {},
-    "tables": {},
-    "columns": {}
-  },
+  "schemas": { "mappools": "mappools", "tournaments": "tournaments", "users": "users" },
+  "_meta": { "schemas": {}, "tables": {}, "columns": {} },
   "id": "20108e5a-e9ba-4bfe-bda9-1f55e0d761af",
   "prevId": "a5e18881-3b26-4762-a312-5b2fc9e1aa06"
 }

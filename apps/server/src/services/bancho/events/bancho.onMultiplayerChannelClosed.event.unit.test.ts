@@ -34,15 +34,11 @@ describe('onMultiplayerChannelClosedEvent', () => {
   it('should delete all match data from cache', async () => {
     const spyPromiseAll = vi.spyOn(Promise, 'all');
 
-    await onMultiplayerChannelClosedEvent({
-      channel: '#mp_1',
-    });
+    await onMultiplayerChannelClosedEvent({ channel: '#mp_1' });
 
     expect(deleteMatchChatHistoryFromCacheService).toHaveBeenCalledWith(1);
     expect(deleteMatchStateFromCacheService).toHaveBeenCalledWith(1);
-    expect(patchMatchByGameMatchIdQuery).toHaveBeenCalledWith(1, {
-      endsAt: expect.any(Date),
-    });
+    expect(patchMatchByGameMatchIdQuery).toHaveBeenCalledWith(1, { endsAt: expect.any(Date) });
     expect(removeMatchFromCachedSetService).toHaveBeenCalledWith('#mp_1');
     expect(webSocketServer.disconnectAllTopicSubscribers).toHaveBeenCalledWith(
       'matches:1:chat-messages',

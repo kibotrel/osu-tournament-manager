@@ -1,10 +1,8 @@
-import type {
-  GetMatchStateRequestParameters,
-  GetMatchStateResponseBody,
-} from '@packages/shared';
-import { HttpStatusCode } from '@packages/shared';
 import { matchedData } from 'express-validator';
 import { describe, expect, it, vi } from 'vitest';
+
+import type { GetMatchStateRequestParameters, GetMatchStateResponseBody } from '@packages/shared';
+import { HttpStatusCode } from '@packages/shared';
 
 import { getMatchStateService } from '#src/services/matches/matches.service.js';
 import {
@@ -24,19 +22,14 @@ vi.mock('express-validator', () => {
 });
 
 vi.mock('#src/services/matches/matches.service.js', () => {
-  return {
-    getMatchStateService: vi.fn(),
-  };
+  return { getMatchStateService: vi.fn() };
 });
 
 describe('getMatchStateController', () => {
   it('should respond with status 200 and match state data', async () => {
     const getMatchStateServiceMock = vi.mocked(getMatchStateService);
     const next = expressNextFunctionMock();
-    const request = expressRequestMock<
-      GetMatchStateRequestParameters,
-      GetMatchStateResponseBody
-    >();
+    const request = expressRequestMock<GetMatchStateRequestParameters, GetMatchStateResponseBody>();
     const response = expressResponseMock<GetMatchStateResponseBody>();
     const state = {
       globalModifications: [],
@@ -51,9 +44,7 @@ describe('getMatchStateController', () => {
     await getMatchStateController(request, response, next);
 
     expect(matchedData).toHaveBeenCalledWith(request);
-    expect(getMatchStateServiceMock).toHaveBeenCalledWith(
-      request.params.gameMatchId,
-    );
+    expect(getMatchStateServiceMock).toHaveBeenCalledWith(request.params.gameMatchId);
     expect(response.status).toHaveBeenCalledWith(HttpStatusCode.Ok);
     expect(response.json).toHaveBeenCalledWith({ state });
     expect(next).not.toHaveBeenCalled();
@@ -62,10 +53,7 @@ describe('getMatchStateController', () => {
   it('should call next with error if getMatchStateService fails', async () => {
     const getMatchStateServiceMock = vi.mocked(getMatchStateService);
     const next = expressNextFunctionMock();
-    const request = expressRequestMock<
-      GetMatchStateRequestParameters,
-      GetMatchStateResponseBody
-    >();
+    const request = expressRequestMock<GetMatchStateRequestParameters, GetMatchStateResponseBody>();
     const response = expressResponseMock<GetMatchStateResponseBody>();
     const error = new Error('Test error');
 
@@ -75,9 +63,7 @@ describe('getMatchStateController', () => {
     await getMatchStateController(request, response, next);
 
     expect(matchedData).toHaveBeenCalledWith(request);
-    expect(getMatchStateServiceMock).toHaveBeenCalledWith(
-      request.params.gameMatchId,
-    );
+    expect(getMatchStateServiceMock).toHaveBeenCalledWith(request.params.gameMatchId);
     expect(response.status).not.toHaveBeenCalled();
     expect(response.json).not.toHaveBeenCalled();
     expect(next).toHaveBeenCalledWith(error);

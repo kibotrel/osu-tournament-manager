@@ -1,5 +1,6 @@
-import { BanchoTeamMode, BanchoWinCondition } from '@packages/shared';
 import { pgSchema } from 'drizzle-orm/pg-core';
+
+import { BanchoTeamMode, BanchoWinCondition } from '@packages/shared';
 
 export const tournamentsSchema = pgSchema('tournaments');
 

@@ -23,9 +23,7 @@ export const onMultiplayerChannelInformationCurrentlyPlayingEvent = async ({
   channel: string;
   url: string;
 }) => {
-  logger.silly(
-    `[IRC] channel ${channel} is currently playing ${beatmap} (${url})`,
-  );
+  logger.silly(`[IRC] channel ${channel} is currently playing ${beatmap} (${url})`);
 
   const channelId = gameMatchIdFromBanchoChannel(channel);
   const oldMatchState = await getMatchStateService(channelId);
@@ -34,10 +32,7 @@ export const onMultiplayerChannelInformationCurrentlyPlayingEvent = async ({
     activeBeatmap: { name: beatmap, url },
   };
 
-  await setMatchStateInCacheService({
-    channel: channelId,
-    state: newMatchState,
-  });
+  await setMatchStateInCacheService({ channel: channelId, state: newMatchState });
 
   const payload: WebSocketMessage<WebSocketMatchLobbyState> = {
     message: newMatchState,
@@ -45,8 +40,8 @@ export const onMultiplayerChannelInformationCurrentlyPlayingEvent = async ({
     topic: `${WebSocketChannel.Matches}:${channelId}:${WebSocketChannelMatchesEvent.LobbyState}`,
   };
 
-  webSocketServer.broadcastMessageToSubscribers(
-    Buffer.from(JSON.stringify(payload)),
-    { isBinary: false, isBanchoMessage: true },
-  );
+  webSocketServer.broadcastMessageToSubscribers(Buffer.from(JSON.stringify(payload)), {
+    isBinary: false,
+    isBanchoMessage: true,
+  });
 };

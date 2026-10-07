@@ -7,20 +7,17 @@ const getMatchChatHistoryParametersValidator = (): ValidationChain[] => {
       .exists()
       .withMessage({
         message: 'gameMatchId is required',
-        errorCode:
-          'validator.getMatchChatHistoryParametersValidator.gameMatchId.required',
+        errorCode: 'validator.getMatchChatHistoryParametersValidator.gameMatchId.required',
       })
       .isInt({ allow_leading_zeroes: false, min: 1 })
       .withMessage({
         message: 'gameMatchId must be a positive integer string',
-        errorCode:
-          'validator.getMatchChatHistoryParametersValidator.gameMatchId.integer',
+        errorCode: 'validator.getMatchChatHistoryParametersValidator.gameMatchId.integer',
       })
       .notEmpty()
       .withMessage({
         message: 'gameMatchId cannot be empty',
-        errorCode:
-          'validator.getMatchChatHistoryParametersValidator.gameMatchId.empty',
+        errorCode: 'validator.getMatchChatHistoryParametersValidator.gameMatchId.empty',
       })
       .escape()
       .trim(),

@@ -1,3 +1,6 @@
+import { matchedData } from 'express-validator';
+import { describe, expect, it, vi } from 'vitest';
+
 import type {
   GetMatchChatHistoryRequestParameters,
   GetMatchChatHistoryResponseBody,
@@ -5,8 +8,6 @@ import type {
   WebSocketMessage,
 } from '@packages/shared';
 import { HttpStatusCode } from '@packages/shared';
-import { matchedData } from 'express-validator';
-import { describe, expect, it, vi } from 'vitest';
 
 import { getMatchChatHistoryService } from '#src/services/matches/matches.service.js';
 import {
@@ -26,16 +27,12 @@ vi.mock('express-validator', () => {
 });
 
 vi.mock('#src/services/matches/matches.service.js', () => {
-  return {
-    getMatchChatHistoryService: vi.fn(),
-  };
+  return { getMatchChatHistoryService: vi.fn() };
 });
 
 describe('getMatchChatHistoryController', () => {
   it('should respond with status 200 and chat history data', async () => {
-    const getMatchChatHistoryServiceMock = vi.mocked(
-      getMatchChatHistoryService,
-    );
+    const getMatchChatHistoryServiceMock = vi.mocked(getMatchChatHistoryService);
     const next = expressNextFunctionMock();
     const request = expressRequestMock<
       GetMatchChatHistoryRequestParameters,
@@ -61,18 +58,14 @@ describe('getMatchChatHistoryController', () => {
     await getMatchChatHistoryController(request, response, next);
 
     expect(matchedData).toHaveBeenCalledWith(request);
-    expect(getMatchChatHistoryServiceMock).toHaveBeenCalledWith(
-      request.params.gameMatchId,
-    );
+    expect(getMatchChatHistoryServiceMock).toHaveBeenCalledWith(request.params.gameMatchId);
     expect(response.status).toHaveBeenCalledWith(HttpStatusCode.Ok);
     expect(response.json).toHaveBeenCalledWith({ history: chatHistory });
     expect(next).not.toHaveBeenCalled();
   });
 
   it('should call next with error if getMatchChatHistoryService fails', async () => {
-    const getMatchChatHistoryServiceMock = vi.mocked(
-      getMatchChatHistoryService,
-    );
+    const getMatchChatHistoryServiceMock = vi.mocked(getMatchChatHistoryService);
     const next = expressNextFunctionMock();
     const request = expressRequestMock<
       GetMatchChatHistoryRequestParameters,
@@ -87,9 +80,7 @@ describe('getMatchChatHistoryController', () => {
     await getMatchChatHistoryController(request, response, next);
 
     expect(matchedData).toHaveBeenCalledWith(request);
-    expect(getMatchChatHistoryServiceMock).toHaveBeenCalledWith(
-      request.params.gameMatchId,
-    );
+    expect(getMatchChatHistoryServiceMock).toHaveBeenCalledWith(request.params.gameMatchId);
     expect(response.status).not.toHaveBeenCalled();
     expect(response.json).not.toHaveBeenCalled();
     expect(next).toHaveBeenCalledWith(error);

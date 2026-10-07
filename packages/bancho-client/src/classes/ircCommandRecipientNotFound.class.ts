@@ -15,8 +15,6 @@ export class IrcCommandRecipientNotFound implements IrcCommand {
     const recipient = this.packetParts.at(0)!.split(' ').at(3)!;
 
     this.banchoClient.emit(BanchoClientEvent.RecipientNotFound, { recipient });
-    this.banchoClient.emit(
-      `${BanchoClientEvent.RecipientNotFound}:${recipient}`,
-    );
+    this.banchoClient.emit(`${BanchoClientEvent.RecipientNotFound}:${recipient}`);
   }
 }

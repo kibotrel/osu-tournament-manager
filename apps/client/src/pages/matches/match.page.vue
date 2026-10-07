@@ -1,26 +1,16 @@
 <template>
-  <div
-    v-if="isMatchLoading"
-    class="fixed inset-0 flex items-center justify-center"
-  >
+  <div v-if="isMatchLoading" class="fixed inset-0 flex items-center justify-center">
     <LoadingIcon />
   </div>
-  <div
-    v-else-if="!match || match.endsAt"
-    class="flex min-h-screen items-center justify-center"
-  >
+  <div v-else-if="!match || match.endsAt" class="flex min-h-screen items-center justify-center">
     <BaseBody>{{ $t('pages.match.errors.notFound') }}</BaseBody>
   </div>
   <div v-else>
     <div class="mx-4 my-4 flex justify-center">
-      <BaseHeadline>{{
-        $t('pages.match.title', { id: match.gameMatchId })
-      }}</BaseHeadline>
+      <BaseHeadline>{{ $t('pages.match.title', { id: match.gameMatchId }) }}</BaseHeadline>
     </div>
     <MatchChatHistory />
-    <div
-      class="align-center m-4 flex flex-col items-center justify-center gap-4 sm:flex-row"
-    >
+    <div class="align-center m-4 flex flex-col items-center justify-center gap-4 sm:flex-row">
       <BaseButton
         id="start-match-point-button"
         class="w-48"
@@ -64,16 +54,13 @@
   </div>
 </template>
 <script setup lang="ts">
-import type { WebSocketMatchMessage } from '@packages/shared';
-import {
-  BanchoCommand,
-  WebSocketChannel,
-  WebSocketChannelMatchesEvent,
-} from '@packages/shared';
 import { useTranslation } from 'i18next-vue';
 import { inject, nextTick, ref, watch } from 'vue';
 import type { Router } from 'vue-router';
 import { useRoute } from 'vue-router';
+
+import type { WebSocketMatchMessage } from '@packages/shared';
+import { BanchoCommand, WebSocketChannel, WebSocketChannelMatchesEvent } from '@packages/shared';
 
 import { extractApiErrorMessageKeyFromError } from '#src/api/api.methods.js';
 import { useGetMatchRequest } from '#src/api/matches.api.js';
@@ -94,16 +81,9 @@ const router = inject<Router>('$router');
 const matchId = Number(route.params.gameMatchId);
 const isModalOpen = ref(false);
 const isMatchInformationDrawerOpen = ref(false);
-const {
-  data: match,
-  error,
-  isLoading: isMatchLoading,
-} = useGetMatchRequest(matchId);
+const { data: match, error, isLoading: isMatchLoading } = useGetMatchRequest(matchId);
 const { user } = useUserStore();
-const useWebSocketStore = defineWebsocketStore<
-  WebSocketMatchMessage,
-  WebSocketChannel.Matches
->({
+const useWebSocketStore = defineWebsocketStore<WebSocketMatchMessage, WebSocketChannel.Matches>({
   channel: WebSocketChannel.Matches,
   events: [WebSocketChannelMatchesEvent.ChatMessages],
   threadId: matchId.toString(),

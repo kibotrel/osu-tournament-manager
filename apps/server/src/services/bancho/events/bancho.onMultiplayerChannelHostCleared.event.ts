@@ -14,11 +14,7 @@ import { setMatchStateInCacheService } from '#src/services/cache/cache.service.j
 import { getMatchStateService } from '#src/services/matches/matches.service.js';
 import { webSocketServer } from '#src/websocketServer.js';
 
-export const onMultiplayerChannelHostClearedEvent = async ({
-  channel,
-}: {
-  channel: string;
-}) => {
+export const onMultiplayerChannelHostClearedEvent = async ({ channel }: { channel: string }) => {
   logger.silly(`[IRC] Host cleared in channel ${channel}`);
 
   const channelId = gameMatchIdFromBanchoChannel(channel);
@@ -34,10 +30,7 @@ export const onMultiplayerChannelHostClearedEvent = async ({
     }),
   };
 
-  await setMatchStateInCacheService({
-    channel: channelId,
-    state: newMatchState,
-  });
+  await setMatchStateInCacheService({ channel: channelId, state: newMatchState });
 
   const payload: WebSocketMessage<WebSocketMatchLobbyState> = {
     message: newMatchState,
@@ -45,8 +38,8 @@ export const onMultiplayerChannelHostClearedEvent = async ({
     topic: `${WebSocketChannel.Matches}:${channelId}:${WebSocketChannelMatchesEvent.LobbyState}`,
   };
 
-  webSocketServer.broadcastMessageToSubscribers(
-    Buffer.from(JSON.stringify(payload)),
-    { isBinary: false, isBanchoMessage: true },
-  );
+  webSocketServer.broadcastMessageToSubscribers(Buffer.from(JSON.stringify(payload)), {
+    isBinary: false,
+    isBanchoMessage: true,
+  });
 };

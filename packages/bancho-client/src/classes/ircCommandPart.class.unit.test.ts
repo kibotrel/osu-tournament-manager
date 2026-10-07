@@ -8,10 +8,10 @@ describe('IrcCommandPart', () => {
     clientCredentials: { username: 'bot', password: 'password' },
     serverInformation: { host: 'localhost.dev', port: 6667 },
   });
-  const packetParts = ['username!server@localhost.dev PART', '#channel'];
 
   describe('constructor', () => {
     it('should create an instance of IrcCommandPart', () => {
+      const packetParts = ['username!server@localhost.dev PART', '#channel'];
       const command = new IrcCommandPart(banchoClient, packetParts);
 
       expect(command).toBeInstanceOf(IrcCommandPart);
@@ -26,6 +26,7 @@ describe('IrcCommandPart', () => {
     });
 
     it('should emit user_left_channel event with the channel and user', () => {
+      const packetParts = ['username!server@localhost.dev PART', '#channel'];
       const command = new IrcCommandPart(banchoClient, packetParts);
       const eventEmitter = vi.spyOn(banchoClient, 'emit');
 
@@ -36,9 +37,7 @@ describe('IrcCommandPart', () => {
         channel: '#channel',
         user: 'username',
       });
-      expect(eventEmitter).toHaveBeenCalledWith('user_left_channel:#channel', {
-        user: 'username',
-      });
+      expect(eventEmitter).toHaveBeenCalledWith('user_left_channel:#channel', { user: 'username' });
     });
 
     it('should emit multiplayer_channel_closed as well if user is this client user', () => {
@@ -53,15 +52,11 @@ describe('IrcCommandPart', () => {
         channel: '#channel',
         user: 'bot',
       });
-      expect(eventEmitter).toHaveBeenCalledWith('user_left_channel:#channel', {
-        user: 'bot',
-      });
+      expect(eventEmitter).toHaveBeenCalledWith('user_left_channel:#channel', { user: 'bot' });
       expect(eventEmitter).toHaveBeenCalledWith('multiplayer_channel_closed', {
         channel: '#channel',
       });
-      expect(eventEmitter).toHaveBeenCalledWith(
-        'multiplayer_channel_closed:#channel',
-      );
+      expect(eventEmitter).toHaveBeenCalledWith('multiplayer_channel_closed:#channel');
     });
   });
 });

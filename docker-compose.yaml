@@ -87,7 +87,31 @@ services:
     restart: always
     volumes:
       - ./packages/bancho-client:/osu-tournament-manager/packages/bancho-client
+      - ./packages/config-formatter/dist:/osu-tournament-manager/packages/bancho-client/node_modules/@packages/config-formatter/dist
+      - ./packages/config-linter/dist:/osu-tournament-manager/packages/bancho-client/node_modules/@packages/config-linter/dist
       - ./packages/shared/dist:/osu-tournament-manager/packages/bancho-client/node_modules/@packages/shared/dist
+
+  package-config-formatter-builder:
+    container_name: package-config-formatter-builder
+    build:
+      args:
+        PACKAGE: packages/config-formatter
+      context: .
+      dockerfile: ./docker/packages-builder/Dockerfile.dev
+    restart: always
+    volumes:
+      - ./packages/config-formatter:/osu-tournament-manager/packages/config-formatter
+
+  package-config-linter-builder:
+    container_name: package-config-linter-builder
+    build:
+      args:
+        PACKAGE: packages/config-linter
+      context: .
+      dockerfile: ./docker/packages-builder/Dockerfile.dev
+    restart: always
+    volumes:
+      - ./packages/config-linter:/osu-tournament-manager/packages/config-linter
 
   package-logger-builder:
     container_name: package-logger-builder
@@ -99,6 +123,8 @@ services:
     restart: always
     volumes:
       - ./packages/logger:/osu-tournament-manager/packages/logger
+      - ./packages/config-formatter/dist:/osu-tournament-manager/packages/logger/node_modules/@packages/config-formatter/dist
+      - ./packages/config-linter/dist:/osu-tournament-manager/packages/logger/node_modules/@packages/config-linter/dist
       - ./packages/shared/dist:/osu-tournament-manager/packages/logger/node_modules/@packages/shared/dist
 
   package-osu-sdk-builder:
@@ -111,6 +137,8 @@ services:
     restart: always
     volumes:
       - ./packages/osu-sdk:/osu-tournament-manager/packages/osu-sdk
+      - ./packages/config-formatter/dist:/osu-tournament-manager/packages/osu-sdk/node_modules/@packages/config-formatter/dist
+      - ./packages/config-linter/dist:/osu-tournament-manager/packages/osu-sdk/node_modules/@packages/config-linter/dist
       - ./packages/shared/dist:/osu-tournament-manager/packages/osu-sdk/node_modules/@packages/shared/dist
 
   package-shared-builder:
@@ -162,7 +190,7 @@ services:
       redis:
         condition: service_healthy
     healthcheck:
-      interval: 250ms
+      interval: 1s
       retries: 25
       test: ["CMD", "pnpm", "healthcheck"]
       timeout: 1s

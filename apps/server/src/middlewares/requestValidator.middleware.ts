@@ -1,7 +1,8 @@
-import { HttpBadRequestError } from '@packages/shared';
 import type { RequestHandler } from 'express';
 import type { Result } from 'express-validator';
 import { validationResult } from 'express-validator';
+
+import { HttpBadRequestError } from '@packages/shared';
 
 /**
  * This processing is done to make input validation errors consistent
@@ -22,11 +23,7 @@ const formatValidationErrors = (errors: Result) => {
   });
 };
 
-export const validateRequestMiddleware: RequestHandler = (
-  request,
-  _response,
-  next,
-) => {
+export const validateRequestMiddleware: RequestHandler = (request, _response, next) => {
   const validationErrors = validationResult(request);
 
   if (validationErrors.isEmpty()) {
@@ -35,10 +32,5 @@ export const validateRequestMiddleware: RequestHandler = (
 
   const errors = formatValidationErrors(validationErrors);
 
-  return next(
-    new HttpBadRequestError({
-      message: 'inputValidationFailed',
-      errors,
-    }),
-  );
+  return next(new HttpBadRequestError({ message: 'inputValidationFailed', errors }));
 };

@@ -88,12 +88,7 @@
       <rect fill="currentColor" height="84" width="120" />
     </clipPath>
     <clipPath id="clip1_18898_7941">
-      <rect
-        fill="currentColor"
-        height="120"
-        transform="translate(0 -18)"
-        width="120"
-      />
+      <rect fill="currentColor" height="120" transform="translate(0 -18)" width="120" />
     </clipPath>
   </svg>
 </template>

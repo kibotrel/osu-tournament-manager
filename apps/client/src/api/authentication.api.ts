@@ -1,3 +1,8 @@
+import { useMutation } from '@tanstack/vue-query';
+import { useTranslation } from 'i18next-vue';
+import { inject } from 'vue';
+import type { Router } from 'vue-router';
+
 import type {
   LoginRequestBody,
   LoginResponseBody,
@@ -6,10 +11,6 @@ import type {
   LogoutResponseBody,
 } from '@packages/shared';
 import { getRequest, postRequest } from '@packages/shared';
-import { useMutation } from '@tanstack/vue-query';
-import { useTranslation } from 'i18next-vue';
-import { inject } from 'vue';
-import type { Router } from 'vue-router';
 
 import { BASE_URL } from '#src/api/api.constants.js';
 import { useToasterStore } from '#src/stores/toaster.store.js';

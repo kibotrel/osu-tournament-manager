@@ -1,8 +1,4 @@
-import type {
-  HttpError,
-  WebSocketMatchMessage,
-  WebSocketMessage,
-} from '@packages/shared';
+import type { HttpError, WebSocketMatchMessage, WebSocketMessage } from '@packages/shared';
 import {
   HttpInternalServerError,
   HttpNotFoundError,
@@ -28,10 +24,7 @@ export const closeMatchService = async (gameMatchId: number) => {
   });
 
   if (!match) {
-    throw new HttpNotFoundError({
-      message: 'matchNotFound',
-      metadata: { gameMatchId },
-    });
+    throw new HttpNotFoundError({ message: 'matchNotFound', metadata: { gameMatchId } });
   }
 
   if (match.endsAt) {
@@ -43,9 +36,7 @@ export const closeMatchService = async (gameMatchId: number) => {
   try {
     await banchoClient.closeMultiplayerChannel(channel);
   } catch (error) {
-    logger.warn(`Failed to close channel #mp-${gameMatchId}`, {
-      error: error as HttpError,
-    });
+    logger.warn(`Failed to close channel #mp-${gameMatchId}`, { error: error as HttpError });
   }
 
   // TODO: implement detection about wether or nor the match was actually played, cancelled, forfeited etc.
@@ -58,18 +49,13 @@ export const getMatchService = async (gameMatchId: number) => {
   });
 
   if (!match) {
-    throw new HttpNotFoundError({
-      message: 'matchNotFound',
-      metadata: { gameMatchId },
-    });
+    throw new HttpNotFoundError({ message: 'matchNotFound', metadata: { gameMatchId } });
   }
 
   return match;
 };
 
-export const getMatchChatHistoryService = async (
-  gameMatchId: number | string,
-) => {
+export const getMatchChatHistoryService = async (gameMatchId: number | string) => {
   const cacheHistory = await getMatchChatHistoryFromCacheService(gameMatchId);
 
   return cacheHistory.map<WebSocketMessage<WebSocketMatchMessage>>((entry) => {
@@ -108,8 +94,7 @@ export const openMatchService = async (name: string) => {
       tournamentId: 1,
     });
   } catch (error) {
-    const usableError =
-      error instanceof Error ? error : new Error(String(error));
+    const usableError = error instanceof Error ? error : new Error(String(error));
 
     if (!matchId) {
       throw new HttpInternalServerError({

@@ -25,23 +25,13 @@ export const onMultiplayerChannelInformationConditionsEvent = async ({
   teamMode: BanchoTeamMode;
   winCondition: BanchoWinCondition;
 }) => {
-  logger.silly(`[IRC] channel ${channel} conditions updated`, {
-    teamMode,
-    winCondition,
-  });
+  logger.silly(`[IRC] channel ${channel} conditions updated`, { teamMode, winCondition });
 
   const channelId = gameMatchIdFromBanchoChannel(channel);
   const oldMatchState = await getMatchStateService(channelId);
-  const newMatchState: BanchoLobbyState = {
-    ...oldMatchState,
-    teamMode,
-    winCondition,
-  };
+  const newMatchState: BanchoLobbyState = { ...oldMatchState, teamMode, winCondition };
 
-  await setMatchStateInCacheService({
-    channel: channelId,
-    state: newMatchState,
-  });
+  await setMatchStateInCacheService({ channel: channelId, state: newMatchState });
 
   const payload: WebSocketMessage<WebSocketMatchLobbyState> = {
     message: newMatchState,
@@ -49,8 +39,8 @@ export const onMultiplayerChannelInformationConditionsEvent = async ({
     topic: `${WebSocketChannel.Matches}:${channelId}:${WebSocketChannelMatchesEvent.LobbyState}`,
   };
 
-  webSocketServer.broadcastMessageToSubscribers(
-    Buffer.from(JSON.stringify(payload)),
-    { isBinary: false, isBanchoMessage: true },
-  );
+  webSocketServer.broadcastMessageToSubscribers(Buffer.from(JSON.stringify(payload)), {
+    isBinary: false,
+    isBanchoMessage: true,
+  });
 };

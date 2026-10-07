@@ -1,11 +1,8 @@
 import type { InferInsertModel, InferSelectModel } from 'drizzle-orm';
 import { integer, serial, timestamp, varchar } from 'drizzle-orm/pg-core';
 
-import {
-  gameModeEnum,
-  mappoolsSchema,
-} from '#src/schemas/mappools/mappools.schema.js';
 import { mappoolsTable } from '#src/schemas/mappools/mappools.mappools.table.js';
+import { gameModeEnum, mappoolsSchema } from '#src/schemas/mappools/mappools.schema.js';
 import { tournamentsTable } from '#src/schemas/tournaments/tournaments.tournaments.table.js';
 
 export const picksTable = mappoolsSchema.table('picks', {

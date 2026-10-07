@@ -17,8 +17,7 @@ export const extractApiErrorMessageKeyFromError = (
   }
 
   const errorName =
-    errorData.title.charAt(0).toLowerCase() +
-    errorData.title.slice(1).replaceAll(/\s/g, '');
+    errorData.title.charAt(0).toLowerCase() + errorData.title.slice(1).replaceAll(/\s/g, '');
 
   return {
     errorName,

@@ -1,3 +1,5 @@
+import { afterEach, describe, expect, it, vi } from 'vitest';
+
 import type { WebSocketMatchMessage, WebSocketMessage } from '@packages/shared';
 import * as shared from '@packages/shared';
 import {
@@ -5,7 +7,6 @@ import {
   HttpNotFoundError,
   HttpUnprocessableContentError,
 } from '@packages/shared';
-import { afterEach, describe, expect, it, vi } from 'vitest';
 
 import { banchoClient } from '#src/dependencies/ircClient.dependency.js';
 import { createMatchQuery } from '#src/queries/matches/matches.create.queries.js';
@@ -69,13 +70,8 @@ describe('closeMatchService', () => {
 
   it('should close bancho channel and update match in database if not already closed', async () => {
     const id = 1;
-    const getMatchByGameMatchIdQueryMock = vi.mocked(
-      getMatchByGameMatchIdQuery,
-    );
-    const banchoChannelFromGameMatchIdSpy = vi.spyOn(
-      shared,
-      'banchoChannelFromGameMatchId',
-    );
+    const getMatchByGameMatchIdQueryMock = vi.mocked(getMatchByGameMatchIdQuery);
+    const banchoChannelFromGameMatchIdSpy = vi.spyOn(shared, 'banchoChannelFromGameMatchId');
     const match = { gameMatchId: 123_456, id, endsAt: null };
 
     getMatchByGameMatchIdQueryMock.mockResolvedValueOnce(match as SelectMatch);
@@ -85,33 +81,21 @@ describe('closeMatchService', () => {
     expect(getMatchByGameMatchIdQuery).toHaveBeenCalledWith(id, {
       columnsFilter: ['endsAt', 'gameMatchId', 'gameMatchId', 'id'],
     });
-    expect(banchoChannelFromGameMatchIdSpy).toHaveBeenCalledWith(
-      match.gameMatchId,
-    );
-    expect(banchoClient.closeMultiplayerChannel).toHaveBeenCalledWith(
-      `#mp_${match.gameMatchId}`,
-    );
+    expect(banchoChannelFromGameMatchIdSpy).toHaveBeenCalledWith(match.gameMatchId);
+    expect(banchoClient.closeMultiplayerChannel).toHaveBeenCalledWith(`#mp_${match.gameMatchId}`);
     expect(status).toBe('closed');
   });
 
   it('should throw HttpNotFoundError if match does not exist', async () => {
     const id = 1;
     const getMatchByIdQueryMock = vi.mocked(getMatchByIdQuery);
-    const banchoChannelFromGameMatchIdSpy = vi.spyOn(
-      shared,
-      'banchoChannelFromGameMatchId',
-    );
+    const banchoChannelFromGameMatchIdSpy = vi.spyOn(shared, 'banchoChannelFromGameMatchId');
 
     getMatchByIdQueryMock.mockResolvedValueOnce(null);
 
-    try {
-      await closeMatchService(id);
-    } catch (error) {
-      expect(error).toBeInstanceOf(HttpNotFoundError);
-      expect(error).toEqual(
-        expect.objectContaining({ message: 'matchNotFound' }),
-      );
-    }
+    await expect(closeMatchService(id)).rejects.toThrow(
+      new HttpNotFoundError({ message: 'matchNotFound', metadata: { gameMatchId: 1 } }),
+    );
 
     expect(getMatchByGameMatchIdQuery).toHaveBeenCalledWith(id, {
       columnsFilter: ['endsAt', 'gameMatchId', 'gameMatchId', 'id'],
@@ -123,25 +107,15 @@ describe('closeMatchService', () => {
 
   it('should throw HttpUnprocessableContentError if match already closed', async () => {
     const id = 1;
-    const getMatchByGameMatchIdQueryMock = vi.mocked(
-      getMatchByGameMatchIdQuery,
-    );
-    const banchoChannelFromGameMatchIdSpy = vi.spyOn(
-      shared,
-      'banchoChannelFromGameMatchId',
-    );
+    const getMatchByGameMatchIdQueryMock = vi.mocked(getMatchByGameMatchIdQuery);
+    const banchoChannelFromGameMatchIdSpy = vi.spyOn(shared, 'banchoChannelFromGameMatchId');
     const match = { gameMatchId: 123_456, id, endsAt: new Date() };
 
     getMatchByGameMatchIdQueryMock.mockResolvedValueOnce(match as SelectMatch);
 
-    try {
-      await closeMatchService(id);
-    } catch (error) {
-      expect(error).toBeInstanceOf(HttpUnprocessableContentError);
-      expect(error).toEqual(
-        expect.objectContaining({ message: 'matchAlreadyClosed' }),
-      );
-    }
+    await expect(closeMatchService(id)).rejects.toThrow(
+      new HttpUnprocessableContentError({ message: 'matchAlreadyClosed' }),
+    );
 
     expect(getMatchByGameMatchIdQuery).toHaveBeenCalledWith(id, {
       columnsFilter: ['endsAt', 'gameMatchId', 'gameMatchId', 'id'],
@@ -159,14 +133,8 @@ describe('getMatchService', () => {
 
   it('should return match if found', async () => {
     const id = 1;
-    const getMatchByGameMatchIdQueryMock = vi.mocked(
-      getMatchByGameMatchIdQuery,
-    );
-    const match = {
-      endsAt: null,
-      id,
-      name: 'Test Match',
-    };
+    const getMatchByGameMatchIdQueryMock = vi.mocked(getMatchByGameMatchIdQuery);
+    const match = { endsAt: null, id, name: 'Test Match' };
 
     getMatchByGameMatchIdQueryMock.mockResolvedValueOnce(match as SelectMatch);
 
@@ -180,20 +148,13 @@ describe('getMatchService', () => {
 
   it('should throw HttpNotFoundError if match not found', async () => {
     const id = 1;
-    const getMatchByGameMatchIdQueryMock = vi.mocked(
-      getMatchByGameMatchIdQuery,
-    );
+    const getMatchByGameMatchIdQueryMock = vi.mocked(getMatchByGameMatchIdQuery);
 
     getMatchByGameMatchIdQueryMock.mockResolvedValueOnce(null);
 
-    try {
-      await getMatchService(id);
-    } catch (error) {
-      expect(error).toBeInstanceOf(HttpNotFoundError);
-      expect(error).toEqual(
-        expect.objectContaining({ message: 'matchNotFound' }),
-      );
-    }
+    await expect(getMatchService(id)).rejects.toThrow(
+      new HttpNotFoundError({ message: 'matchNotFound', metadata: { gameMatchId: 1 } }),
+    );
 
     expect(getMatchByGameMatchIdQuery).toHaveBeenCalledWith(id, {
       columnsFilter: ['endsAt', 'gameMatchId', 'name'],
@@ -210,17 +171,12 @@ describe('getMatchChatHistoryService', () => {
     const gameMatchId = 123_456;
     const chatHistory: Array<WebSocketMessage<WebSocketMatchMessage>> = [
       {
-        message: {
-          author: 'user',
-          content: 'Hello',
-        },
+        message: { author: 'user', content: 'Hello' },
         timestamp: Date.now(),
         topic: `matches:${gameMatchId}:chat-messages`,
       },
     ];
-    const getMatchChatHistoryFromCacheServiceMock = vi.mocked(
-      getMatchChatHistoryFromCacheService,
-    );
+    const getMatchChatHistoryFromCacheServiceMock = vi.mocked(getMatchChatHistoryFromCacheService);
 
     getMatchChatHistoryFromCacheServiceMock.mockResolvedValueOnce(
       chatHistory.map((item) => {
@@ -230,9 +186,7 @@ describe('getMatchChatHistoryService', () => {
 
     const result = await getMatchChatHistoryService(gameMatchId);
 
-    expect(getMatchChatHistoryFromCacheService).toHaveBeenCalledWith(
-      gameMatchId,
-    );
+    expect(getMatchChatHistoryFromCacheService).toHaveBeenCalledWith(gameMatchId);
     expect(Array.isArray(result)).toBe(true);
     expect(result).toHaveLength(1);
     expect(result).toEqual(chatHistory);
@@ -240,17 +194,13 @@ describe('getMatchChatHistoryService', () => {
 
   it('should return an empty array if no chat message is found', async () => {
     const gameMatchId = 123_456;
-    const getMatchChatHistoryFromCacheServiceMock = vi.mocked(
-      getMatchChatHistoryFromCacheService,
-    );
+    const getMatchChatHistoryFromCacheServiceMock = vi.mocked(getMatchChatHistoryFromCacheService);
 
     getMatchChatHistoryFromCacheServiceMock.mockResolvedValueOnce([]);
 
     const result = await getMatchChatHistoryService(gameMatchId);
 
-    expect(getMatchChatHistoryFromCacheService).toHaveBeenCalledWith(
-      gameMatchId,
-    );
+    expect(getMatchChatHistoryFromCacheService).toHaveBeenCalledWith(gameMatchId);
     expect(Array.isArray(result)).toBe(true);
     expect(result).toHaveLength(0);
   });
@@ -263,23 +213,11 @@ describe('getMatchStateService', () => {
       globalModifications: [],
       playerCount: 2,
       slots: [
-        {
-          isHost: true,
-          isReady: true,
-          player: 'player1',
-          selectedModifications: [],
-        },
-        {
-          isHost: false,
-          isReady: false,
-          player: 'player2',
-          selectedModifications: [],
-        },
+        { isHost: true, isReady: true, player: 'player1', selectedModifications: [] },
+        { isHost: false, isReady: false, player: 'player2', selectedModifications: [] },
       ],
     };
-    const getMatchStateFromCacheServiceMock = vi.mocked(
-      getMatchStateFromCacheService,
-    );
+    const getMatchStateFromCacheServiceMock = vi.mocked(getMatchStateFromCacheService);
 
     getMatchStateFromCacheServiceMock.mockResolvedValueOnce(cachedState);
 
@@ -291,9 +229,7 @@ describe('getMatchStateService', () => {
 
   it('should return base match state if no state found in cache', async () => {
     const gameMatchId = 1;
-    const getMatchStateFromCacheServiceMock = vi.mocked(
-      getMatchStateFromCacheService,
-    );
+    const getMatchStateFromCacheServiceMock = vi.mocked(getMatchStateFromCacheService);
 
     getMatchStateFromCacheServiceMock.mockResolvedValueOnce(null);
 
@@ -304,12 +240,7 @@ describe('getMatchStateService', () => {
       globalModifications: [],
       playerCount: 0,
       slots: Array.from({ length: 16 }, () => {
-        return {
-          isHost: false,
-          isReady: false,
-          player: null,
-          selectedModifications: [],
-        };
+        return { isHost: false, isReady: false, player: null, selectedModifications: [] };
       }),
     });
   });
@@ -323,14 +254,9 @@ describe('openMatchService', () => {
   it('should open multiplayer channel on bancho and register match in database', async () => {
     const name = 'Test Match';
     const gameMatchId = 123_456;
-    const openMultiplayerChannelServiceMock = vi.mocked(
-      openMultiplayerChannelService,
-    );
+    const openMultiplayerChannelServiceMock = vi.mocked(openMultiplayerChannelService);
     const createMatchQueryMock = vi.mocked(createMatchQuery);
-    const banchoChannelFromGameMatchIdSpy = vi.spyOn(
-      shared,
-      'banchoChannelFromGameMatchId',
-    );
+    const banchoChannelFromGameMatchIdSpy = vi.spyOn(shared, 'banchoChannelFromGameMatchId');
     const promiseAllSpy = vi.spyOn(Promise, 'all');
     const match = {
       bansPerTeam: 0,
@@ -372,30 +298,20 @@ describe('openMatchService', () => {
 
   it('should throw HttpInternalServerError if opening multiplayer channel on bancho fails', async () => {
     const name = 'Test Match';
-    const openMultiplayerChannelServiceMock = vi.mocked(
-      openMultiplayerChannelService,
-    );
-    const banchoChannelFromGameMatchIdSpy = vi.spyOn(
-      shared,
-      'banchoChannelFromGameMatchId',
-    );
+    const openMultiplayerChannelServiceMock = vi.mocked(openMultiplayerChannelService);
+    const banchoChannelFromGameMatchIdSpy = vi.spyOn(shared, 'banchoChannelFromGameMatchId');
     const promiseAllSpy = vi.spyOn(Promise, 'all');
     const errorToThrow = new Error('matchChannelCreationFailed');
 
     openMultiplayerChannelServiceMock.mockRejectedValueOnce(errorToThrow);
 
-    try {
-      await openMatchService(name);
-    } catch (error) {
-      expect(error).toBeInstanceOf(HttpInternalServerError);
-      expect(error).toEqual(
-        expect.objectContaining({
-          cause: errorToThrow,
-          message: 'matchChannelCreationFailed',
-          metadata: { name },
-        }),
-      );
-    }
+    await expect(openMatchService(name)).rejects.toThrow(
+      new HttpInternalServerError({
+        cause: errorToThrow,
+        message: 'matchChannelCreationFailed',
+        metadata: { name },
+      }),
+    );
 
     expect(openMultiplayerChannelService).toHaveBeenCalledWith(name);
     expect(createMatchQuery).not.toHaveBeenCalled();
@@ -408,32 +324,22 @@ describe('openMatchService', () => {
   it('should close bancho channel and remove it from cache before throwing HttpInternalServerError if registering match in database fails', async () => {
     const name = 'Test Match';
     const gameMatchId = 123_456;
-    const openMultiplayerChannelServiceMock = vi.mocked(
-      openMultiplayerChannelService,
-    );
+    const openMultiplayerChannelServiceMock = vi.mocked(openMultiplayerChannelService);
     const createMatchQueryMock = vi.mocked(createMatchQuery);
-    const banchoChannelFromGameMatchIdSpy = vi.spyOn(
-      shared,
-      'banchoChannelFromGameMatchId',
-    );
+    const banchoChannelFromGameMatchIdSpy = vi.spyOn(shared, 'banchoChannelFromGameMatchId');
     const promiseAllSpy = vi.spyOn(Promise, 'all');
     const errorToThrow = new Error('matchCreationFailed');
 
     openMultiplayerChannelServiceMock.mockResolvedValueOnce({ gameMatchId });
     createMatchQueryMock.mockRejectedValueOnce(errorToThrow);
 
-    try {
-      await openMatchService(name);
-    } catch (error) {
-      expect(error).toBeInstanceOf(HttpInternalServerError);
-      expect(error).toEqual(
-        expect.objectContaining({
-          cause: errorToThrow,
-          message: 'matchCreationFailed',
-          metadata: { name, gameMatchId },
-        }),
-      );
-    }
+    await expect(openMatchService(name)).rejects.toThrow(
+      new HttpInternalServerError({
+        cause: errorToThrow,
+        message: 'matchCreationFailed',
+        metadata: { name, gameMatchId },
+      }),
+    );
 
     expect(openMultiplayerChannelService).toHaveBeenCalledWith(name);
     expect(createMatchQuery).toHaveBeenCalledWith({
@@ -448,12 +354,8 @@ describe('openMatchService', () => {
       tournamentId: 1,
     });
     expect(banchoChannelFromGameMatchIdSpy).toHaveBeenCalledWith(gameMatchId);
-    expect(banchoClient.closeMultiplayerChannel).toHaveBeenCalledWith(
-      `#mp_${gameMatchId}`,
-    );
-    expect(removeMatchFromCachedSetService).toHaveBeenCalledWith(
-      `#mp_${gameMatchId}`,
-    );
+    expect(banchoClient.closeMultiplayerChannel).toHaveBeenCalledWith(`#mp_${gameMatchId}`);
+    expect(removeMatchFromCachedSetService).toHaveBeenCalledWith(`#mp_${gameMatchId}`);
     expect(promiseAllSpy).toHaveBeenCalled();
     expect(promiseAllSpy.mock.calls?.at(0)?.at(0)).toHaveLength(2);
   });

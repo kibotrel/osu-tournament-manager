@@ -33,14 +33,8 @@ describe('IrcCommandFactory', () => {
     const commandFactory = new IrcCommandFactory(banchoClient);
 
     it('should return an instance of IrcCommandChannelTopic if command is 332', () => {
-      const packetParts = [
-        'localhost.dev 332 username #channel',
-        'Channel topic',
-      ];
-      const command = commandFactory.createCommandHandler(
-        '332' as IrcKeyword,
-        packetParts,
-      );
+      const packetParts = ['localhost.dev 332 username #channel', 'Channel topic'];
+      const command = commandFactory.createCommandHandler('332' as IrcKeyword, packetParts);
 
       expect(command).toBeInstanceOf(IrcCommandChannelTopic);
       expect(command).toHaveProperty('banchoClient', banchoClient);
@@ -48,14 +42,8 @@ describe('IrcCommandFactory', () => {
     });
 
     it('should return an instance of IrcCommandChannelNotFound if command is 403', () => {
-      const packetParts = [
-        'localhost.dev 403 username #unknown',
-        'No such channel',
-      ];
-      const command = commandFactory.createCommandHandler(
-        '403' as IrcKeyword,
-        packetParts,
-      );
+      const packetParts = ['localhost.dev 403 username #unknown', 'No such channel'];
+      const command = commandFactory.createCommandHandler('403' as IrcKeyword, packetParts);
 
       expect(command).toBeInstanceOf(IrcCommandChannelNotFound);
       expect(command).toHaveProperty('banchoClient', banchoClient);
@@ -64,10 +52,7 @@ describe('IrcCommandFactory', () => {
 
     it('should return an instance of IrcCommandJoin if command is JOIN', () => {
       const packetParts = ['username!server@localhost.dev JOIN', '#channel'];
-      const command = commandFactory.createCommandHandler(
-        'JOIN' as IrcKeyword,
-        packetParts,
-      );
+      const command = commandFactory.createCommandHandler('JOIN' as IrcKeyword, packetParts);
 
       expect(command).toBeInstanceOf(IrcCommandJoin);
       expect(command).toHaveProperty('banchoClient', banchoClient);
@@ -79,10 +64,7 @@ describe('IrcCommandFactory', () => {
         'localhost.dev 353 username = #channel',
         'username1 username2 username3',
       ];
-      const command = commandFactory.createCommandHandler(
-        '353' as IrcKeyword,
-        packetParts,
-      );
+      const command = commandFactory.createCommandHandler('353' as IrcKeyword, packetParts);
 
       expect(command).toBeInstanceOf(IrcCommandNameListBody);
       expect(command).toHaveProperty('banchoClient', banchoClient);
@@ -91,10 +73,7 @@ describe('IrcCommandFactory', () => {
 
     it('should return an instance of IrcCommandPart if command is PART', () => {
       const packetParts = ['username!server@localhost.dev PART', '#channel'];
-      const command = commandFactory.createCommandHandler(
-        'PART' as IrcKeyword,
-        packetParts,
-      );
+      const command = commandFactory.createCommandHandler('PART' as IrcKeyword, packetParts);
 
       expect(command).toBeInstanceOf(IrcCommandPart);
       expect(command).toHaveProperty('banchoClient', banchoClient);
@@ -102,14 +81,8 @@ describe('IrcCommandFactory', () => {
     });
 
     it('should return an instance of IrcCommandPrivateMessage if command is PRIVMSG', () => {
-      const packetParts = [
-        'username!server@localhost.dev PRIVMSG #channel',
-        'message content',
-      ];
-      const command = commandFactory.createCommandHandler(
-        'PRIVMSG' as IrcKeyword,
-        packetParts,
-      );
+      const packetParts = ['username!server@localhost.dev PRIVMSG #channel', 'message content'];
+      const command = commandFactory.createCommandHandler('PRIVMSG' as IrcKeyword, packetParts);
 
       expect(command).toBeInstanceOf(IrcCommandPrivateMessage);
       expect(command).toHaveProperty('banchoClient', banchoClient);
@@ -118,10 +91,7 @@ describe('IrcCommandFactory', () => {
 
     it('should return an instance of IrcCommandQuit if command is QUIT', () => {
       const packetParts = ['username!server@localhost.dev QUIT', 'quit'];
-      const command = commandFactory.createCommandHandler(
-        'QUIT' as IrcKeyword,
-        packetParts,
-      );
+      const command = commandFactory.createCommandHandler('QUIT' as IrcKeyword, packetParts);
 
       expect(command).toBeInstanceOf(IrcCommandQuit);
       expect(command).toHaveProperty('banchoClient', banchoClient);
@@ -129,14 +99,8 @@ describe('IrcCommandFactory', () => {
     });
 
     it('should return an instance of IrcCommandRecipientNotFound if command is 401', () => {
-      const packetParts = [
-        'localhost.dev 401 username1 username2',
-        'No such nick',
-      ];
-      const command = commandFactory.createCommandHandler(
-        '401' as IrcKeyword,
-        packetParts,
-      );
+      const packetParts = ['localhost.dev 401 username1 username2', 'No such nick'];
+      const command = commandFactory.createCommandHandler('401' as IrcKeyword, packetParts);
 
       expect(command).toBeInstanceOf(IrcCommandRecipientNotFound);
       expect(command).toHaveProperty('banchoClient', banchoClient);
@@ -145,10 +109,7 @@ describe('IrcCommandFactory', () => {
 
     it('should return an instance of IrcCommandWelcome if command is 001', () => {
       const packetParts = ['localhost.dev 001 username', 'Welcome'];
-      const command = commandFactory.createCommandHandler(
-        '001' as IrcKeyword,
-        packetParts,
-      );
+      const command = commandFactory.createCommandHandler('001' as IrcKeyword, packetParts);
 
       expect(command).toBeInstanceOf(IrcCommandWelcome);
       expect(command).toHaveProperty('banchoClient', banchoClient);

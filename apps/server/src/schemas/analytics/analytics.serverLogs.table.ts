@@ -1,10 +1,7 @@
 import type { InferInsertModel, InferSelectModel } from 'drizzle-orm';
 import { json, serial, text, timestamp, uuid } from 'drizzle-orm/pg-core';
 
-import {
-  analyticsSchema,
-  logLevelEnum,
-} from '#src/schemas/analytics/analytics.schema.js';
+import { analyticsSchema, logLevelEnum } from '#src/schemas/analytics/analytics.schema.js';
 
 export interface ServerLogMetadata {}
 

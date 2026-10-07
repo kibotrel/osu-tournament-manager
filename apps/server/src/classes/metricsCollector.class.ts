@@ -28,12 +28,7 @@ export class MetricsCollector {
   public startTracking(options: { description?: string; name: string }) {
     const { description = null, name } = options;
 
-    this.metrics.set(name, {
-      description,
-      endTime: 0,
-      name,
-      startTime: performance.now(),
-    });
+    this.metrics.set(name, { description, endTime: 0, name, startTime: performance.now() });
   }
 
   public async stopTracking(name: string) {
@@ -52,9 +47,7 @@ export class MetricsCollector {
     const { description, endTime, name, startTime } = metric;
     const duration = endTime - startTime;
     const baseData = `${name}; dur=${duration}`;
-    const serializedData = description
-      ? `${baseData}; desc="${description}"`
-      : baseData;
+    const serializedData = description ? `${baseData}; desc="${description}"` : baseData;
 
     await addToListInCacheByKeyQuery({
       key: `${CacheListTopic.ServerMetrics}:${this.requestId}`,

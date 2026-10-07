@@ -129,11 +129,11 @@ const emit = defineEmits(['close:toast']);
 }
 
 .toast-icon-container {
-  @apply text-primary-1 flex;
+  @apply flex text-primary-1;
 }
 
 .toast-icon-container--right {
-  @apply bg-primary-4 text-primary-1 z-1000 cursor-pointer rounded-tr-sm py-2 pr-2;
+  @apply z-1000 cursor-pointer rounded-tr-sm bg-primary-4 py-2 pr-2 text-primary-1;
 
   &.toast-icon-container--error {
     @apply bg-faded-red;
@@ -169,7 +169,7 @@ const emit = defineEmits(['close:toast']);
 }
 
 .toast-icon-container--warning {
-  @apply text-primary-4 bg-yellow-500;
+  @apply bg-yellow-500 text-primary-4;
 }
 
 @keyframes shrink-width {

@@ -1,7 +1,7 @@
 <template>
   <div class="flex min-h-screen items-center justify-center">
     <div
-      class="border-primary-3 ] w-[calc(100%-32px)] rounded-md border-2 p-8 text-center sm:w-2/3 lg:w-1/2 xl:w-2/5 2xl:w-1/3"
+      class="] w-[calc(100%-32px)] rounded-md border-2 border-primary-3 p-8 text-center sm:w-2/3 lg:w-1/2 xl:w-2/5 2xl:w-1/3"
     >
       <BaseHeadline class="mb-2" variant="hero">
         {{ $t('pages.login.title') }}
@@ -18,7 +18,7 @@
       >
         <template #default> {{ $t('pages.login.buttons.login') }} </template>
         <template #icon>
-          <IdentificationIcon class="text-primary-4 h-6 w-6" />
+          <IdentificationIcon class="h-6 w-6 text-primary-4" />
         </template>
       </BaseButton>
     </div>

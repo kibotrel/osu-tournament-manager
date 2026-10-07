@@ -67,9 +67,7 @@ describe('HttpRequest', () => {
 
       request.setHttpHeader(HttpHeader.Accept, 'application/json');
 
-      expect(request.httpHeaders.get(HttpHeader.Accept)).toBe(
-        'application/json',
-      );
+      expect(request.httpHeaders.get(HttpHeader.Accept)).toBe('application/json');
     });
   });
 

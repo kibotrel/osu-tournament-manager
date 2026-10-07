@@ -30,9 +30,7 @@ interface Properties {
   strokeWidth?: string;
 }
 
-withDefaults(defineProps<Properties>(), {
-  strokeWidth: '3px',
-});
+withDefaults(defineProps<Properties>(), { strokeWidth: '3px' });
 </script>
 
 <style scoped>

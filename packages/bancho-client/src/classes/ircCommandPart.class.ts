@@ -17,21 +17,12 @@ export class IrcCommandPart implements IrcCommand {
     const channel = this.packetParts.at(1)!;
     const user = parseIrcUsername(username.split('!').at(0)!);
 
-    this.banchoClient.emit(BanchoClientEvent.UserLeftChannel, {
-      channel,
-      user,
-    });
-    this.banchoClient.emit(`${BanchoClientEvent.UserLeftChannel}:${channel}`, {
-      user,
-    });
+    this.banchoClient.emit(BanchoClientEvent.UserLeftChannel, { channel, user });
+    this.banchoClient.emit(`${BanchoClientEvent.UserLeftChannel}:${channel}`, { user });
 
     if (user === this.banchoClient.username) {
-      this.banchoClient.emit(BanchoClientEvent.MultiplayerChannelClosed, {
-        channel,
-      });
-      this.banchoClient.emit(
-        `${BanchoClientEvent.MultiplayerChannelClosed}:${channel}`,
-      );
+      this.banchoClient.emit(BanchoClientEvent.MultiplayerChannelClosed, { channel });
+      this.banchoClient.emit(`${BanchoClientEvent.MultiplayerChannelClosed}:${channel}`);
     }
   }
 }

@@ -1,10 +1,8 @@
-import {
-  internalApiSpecification,
-  publicApiSpecification,
-} from '@packages/api-specification';
 import type { RequestHandler } from 'express';
 import { SwaggerTheme, SwaggerThemeNameEnum } from 'swagger-themes';
 import swaggerUi from 'swagger-ui-express';
+
+import { internalApiSpecification, publicApiSpecification } from '@packages/api-specification';
 
 import { environmentConfig } from '#src/configs/environment.config.js';
 
@@ -18,7 +16,6 @@ if (!environmentConfig.isDevelopmentMode) {
   server.variables.environment.enum.shift();
 }
 
-export const apiDocumentation: RequestHandler = swaggerUi.setup(
-  apiSpecification,
-  { customCss: new SwaggerTheme().getBuffer(SwaggerThemeNameEnum.DARK) },
-);
+export const apiDocumentation: RequestHandler = swaggerUi.setup(apiSpecification, {
+  customCss: new SwaggerTheme().getBuffer(SwaggerThemeNameEnum.DARK),
+});

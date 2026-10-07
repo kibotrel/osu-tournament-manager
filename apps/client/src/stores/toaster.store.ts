@@ -1,6 +1,7 @@
-import { Time } from '@packages/shared';
 import { defineStore } from 'pinia';
 import { reactive } from 'vue';
+
+import { Time } from '@packages/shared';
 
 import type { ToastVariant } from '#src/components/base/toast.base.vue';
 
@@ -18,9 +19,7 @@ export const useToasterStore = defineStore(
   () => {
     const toasts = reactive<ToasterState>([]);
 
-    const createToast = (
-      toast: Omit<Toast, 'duration' | 'id' | 'timestamp'>,
-    ) => {
+    const createToast = (toast: Omit<Toast, 'duration' | 'id' | 'timestamp'>) => {
       const lastToast = toasts.at(-1);
       const timestamp = Date.now();
 
@@ -39,8 +38,7 @@ export const useToasterStore = defineStore(
 
       const id = `toast-${timestamp}`;
       const wordCount = toast.message.split(' ').length;
-      const duration =
-        3 * Time.Second + Math.round((wordCount / 150) * Time.Minute);
+      const duration = 3 * Time.Second + Math.round((wordCount / 150) * Time.Minute);
 
       toasts.push({ ...toast, duration, id, timestamp });
     };

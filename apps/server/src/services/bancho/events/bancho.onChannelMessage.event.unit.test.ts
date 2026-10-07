@@ -1,6 +1,7 @@
+import { afterEach, describe, expect, it, vi } from 'vitest';
+
 import { BanchoPublicChannel } from '@packages/bancho-client';
 import type { WebSocketMatchMessage, WebSocketMessage } from '@packages/shared';
-import { afterEach, describe, expect, it, vi } from 'vitest';
 
 import { addMatchMessageToCacheService } from '#src/services/cache/cache.service.js';
 import { webSocketServer } from '#src/websocketServer.js';
@@ -9,13 +10,7 @@ import { onChannelMessageEvent } from './bancho.onChannelMessage.event.js';
 
 vi.mock('#src/dependencies/logger.dependency.js', () => {
   return {
-    logger: {
-      debug: vi.fn(),
-      error: vi.fn(),
-      info: vi.fn(),
-      silly: vi.fn(),
-      warn: vi.fn(),
-    },
+    logger: { debug: vi.fn(), error: vi.fn(), info: vi.fn(), silly: vi.fn(), warn: vi.fn() },
   };
 });
 
@@ -41,11 +36,7 @@ describe('onChannelMessageEvent', () => {
   it('should add the message to the corresponding match history in cache', async () => {
     vi.spyOn(Date, 'now').mockReturnValueOnce(1);
 
-    await onChannelMessageEvent({
-      channel: '#mp_1',
-      message: 'test message',
-      user: 'user',
-    });
+    await onChannelMessageEvent({ channel: '#mp_1', message: 'test message', user: 'user' });
 
     expect(addMatchMessageToCacheService).toHaveBeenCalledWith({
       channel: 1,
@@ -54,20 +45,14 @@ describe('onChannelMessageEvent', () => {
   });
 
   it('should broadcast the message to websocket subscribers', async () => {
-    const webSocketServerMock = vi.mocked(
-      webSocketServer.broadcastMessageToSubscribers,
-    );
+    const webSocketServerMock = vi.mocked(webSocketServer.broadcastMessageToSubscribers);
 
-    await onChannelMessageEvent({
-      channel: '#mp_2',
-      message: 'test message',
-      user: 'user',
+    await onChannelMessageEvent({ channel: '#mp_2', message: 'test message', user: 'user' });
+
+    expect(webSocketServer.broadcastMessageToSubscribers).toHaveBeenCalledWith(expect.any(Buffer), {
+      isBinary: false,
+      isBanchoMessage: true,
     });
-
-    expect(webSocketServer.broadcastMessageToSubscribers).toHaveBeenCalledWith(
-      expect.any(Buffer),
-      { isBinary: false, isBanchoMessage: true },
-    );
 
     const payload = JSON.parse(webSocketServerMock.mock.calls[0][0].toString());
 
@@ -79,9 +64,7 @@ describe('onChannelMessageEvent', () => {
   });
 
   it('should not do anything if channel lobby', async () => {
-    const addMatchMessageToCacheServiceMock = vi.mocked(
-      addMatchMessageToCacheService,
-    );
+    const addMatchMessageToCacheServiceMock = vi.mocked(addMatchMessageToCacheService);
 
     await onChannelMessageEvent({
       channel: BanchoPublicChannel.Lobby,
@@ -93,9 +76,7 @@ describe('onChannelMessageEvent', () => {
   });
 
   it('should not do anything for direct message channel', async () => {
-    const addMatchMessageToCacheServiceMock = vi.mocked(
-      addMatchMessageToCacheService,
-    );
+    const addMatchMessageToCacheServiceMock = vi.mocked(addMatchMessageToCacheService);
 
     await onChannelMessageEvent({
       channel: 'direct_message',

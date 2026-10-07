@@ -9,16 +9,14 @@ interface Properties {
   variant?: SeparatorVariant;
 }
 
-withDefaults(defineProps<Properties>(), {
-  variant: 'primary',
-});
+withDefaults(defineProps<Properties>(), { variant: 'primary' });
 </script>
 
 <style scoped>
 @reference '#src/assets/styles/index.css';
 
 hr {
-  @apply border-primary-3 border-b;
+  @apply border-b border-primary-3;
 }
 
 .dashed {

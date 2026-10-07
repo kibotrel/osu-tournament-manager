@@ -28,9 +28,7 @@ describe('IrcCommandChannelTopic', () => {
       command.handleCommand();
 
       expect(eventEmitter).toHaveBeenCalledTimes(2);
-      expect(eventEmitter).toHaveBeenCalledWith('bot_joined_channel', {
-        channel: '#channel',
-      });
+      expect(eventEmitter).toHaveBeenCalledWith('bot_joined_channel', { channel: '#channel' });
       expect(eventEmitter).toHaveBeenCalledWith('bot_joined_channel:#channel');
     });
   });
