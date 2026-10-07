@@ -25,21 +25,9 @@
         v-model="tab"
         class="mx-4 mt-8 md:mx-8"
         :tabs="[
-          {
-            label: $t('pages.match.drawer.tabs.names.status'),
-            value: 'status',
-            icon: 'signal',
-          },
-          {
-            label: $t('pages.match.drawer.tabs.names.settings'),
-            value: 'settings',
-            icon: 'gear',
-          },
-          {
-            label: $t('pages.match.drawer.tabs.names.timeline'),
-            value: 'timeline',
-            icon: 'clock',
-          },
+          { label: $t('pages.match.drawer.tabs.names.status'), value: 'status', icon: 'signal' },
+          { label: $t('pages.match.drawer.tabs.names.settings'), value: 'settings', icon: 'gear' },
+          { label: $t('pages.match.drawer.tabs.names.timeline'), value: 'timeline', icon: 'clock' },
           {
             label: $t('pages.match.drawer.tabs.names.commands'),
             value: 'commands',
@@ -55,7 +43,7 @@
         </div>
         <div
           v-else
-          class="border-primary-2 flex h-full items-center justify-center rounded-md border-2 border-dashed p-4"
+          class="flex h-full items-center justify-center rounded-md border-2 border-dashed border-primary-2 p-4"
         >
           <BaseBody class="text-primary-2 italic">{{
             $t('global.common.workInProgress')
@@ -67,17 +55,12 @@
 </template>
 
 <script setup lang="ts">
-import type {
-  WebSocketMatchLobbyState,
-  WebSocketMatchMessage,
-} from '@packages/shared';
-import {
-  WebSocketChannel,
-  WebSocketChannelMatchesEvent,
-} from '@packages/shared';
 import { storeToRefs } from 'pinia';
 import { ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
+
+import type { WebSocketMatchLobbyState, WebSocketMatchMessage } from '@packages/shared';
+import { WebSocketChannel, WebSocketChannelMatchesEvent } from '@packages/shared';
 
 import { useGetMatchStateRequest } from '#src/api/matches.api.js';
 import BaseBody from '#src/components/base/body.base.vue';
@@ -95,10 +78,7 @@ type Tab = 'commands' | 'settings' | 'status' | 'timeline';
 
 interface Properties {
   isDrawerOpen: boolean;
-  sendBanchoMessage: (
-    message: WebSocketMatchMessage,
-    event: WebSocketChannelMatchesEvent,
-  ) => void;
+  sendBanchoMessage: (message: WebSocketMatchMessage, event: WebSocketChannelMatchesEvent) => void;
 }
 
 const route = useRoute();
@@ -106,10 +86,7 @@ const matchId = Number(route.params.gameMatchId);
 const { data: lobbyState } = useGetMatchStateRequest(matchId);
 const { match } = storeToRefs(useMatchStore());
 const { setMatch } = useMatchStore();
-const useWebSocketStore = defineWebsocketStore<
-  WebSocketMatchLobbyState,
-  WebSocketChannel.Matches
->({
+const useWebSocketStore = defineWebsocketStore<WebSocketMatchLobbyState, WebSocketChannel.Matches>({
   channel: WebSocketChannel.Matches,
   events: [WebSocketChannelMatchesEvent.LobbyState],
   keepHistory: false,

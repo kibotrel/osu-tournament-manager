@@ -18,10 +18,7 @@ describe('isOsuBeatmapModificationDifficultyDecrease', () => {
     ];
 
     for (const modification of validModifications) {
-      expect(
-        isOsuBeatmapModificationDifficultyDecrease(modification),
-        modification,
-      ).toBe(true);
+      expect(isOsuBeatmapModificationDifficultyDecrease(modification), modification).toBe(true);
     }
   });
 
@@ -54,10 +51,7 @@ describe('isOsuBeatmapModificationDifficultyDecrease', () => {
     ];
 
     for (const modification of invalidModifications) {
-      expect(
-        isOsuBeatmapModificationDifficultyDecrease(modification),
-        modification,
-      ).toBe(false);
+      expect(isOsuBeatmapModificationDifficultyDecrease(modification), modification).toBe(false);
     }
   });
 });
@@ -76,10 +70,7 @@ describe('isOsuBeatmapModificationDifficultyIncrease', () => {
     ];
 
     for (const modification of validModifications) {
-      expect(
-        isOsuBeatmapModificationDifficultyIncrease(modification),
-        modification,
-      ).toBe(true);
+      expect(isOsuBeatmapModificationDifficultyIncrease(modification), modification).toBe(true);
     }
   });
 
@@ -107,10 +98,7 @@ describe('isOsuBeatmapModificationDifficultyIncrease', () => {
     ];
 
     for (const modification of invalidModifications) {
-      expect(
-        isOsuBeatmapModificationDifficultyIncrease(modification),
-        modification,
-      ).toBe(false);
+      expect(isOsuBeatmapModificationDifficultyIncrease(modification), modification).toBe(false);
     }
   });
 });
@@ -132,10 +120,7 @@ describe('isOsuBeatmapModificationManiaSpecific', () => {
     ];
 
     for (const modification of validModifications) {
-      expect(
-        isOsuBeatmapModificationManiaSpecific(modification),
-        modification,
-      ).toBe(true);
+      expect(isOsuBeatmapModificationManiaSpecific(modification), modification).toBe(true);
     }
   });
 
@@ -160,10 +145,7 @@ describe('isOsuBeatmapModificationManiaSpecific', () => {
     ];
 
     for (const modification of invalidModifications) {
-      expect(
-        isOsuBeatmapModificationManiaSpecific(modification),
-        modification,
-      ).toBe(false);
+      expect(isOsuBeatmapModificationManiaSpecific(modification), modification).toBe(false);
     }
   });
 });
@@ -177,10 +159,7 @@ describe('isOsuBeatmapModificationStandardSpecific', () => {
     ];
 
     for (const modification of validModifications) {
-      expect(
-        isOsuBeatmapModificationStandardSpecific(modification),
-        modification,
-      ).toBe(true);
+      expect(isOsuBeatmapModificationStandardSpecific(modification), modification).toBe(true);
     }
   });
 
@@ -213,10 +192,7 @@ describe('isOsuBeatmapModificationStandardSpecific', () => {
     ];
 
     for (const modification of invalidModifications) {
-      expect(
-        isOsuBeatmapModificationStandardSpecific(modification),
-        modification,
-      ).toBe(false);
+      expect(isOsuBeatmapModificationStandardSpecific(modification), modification).toBe(false);
     }
   });
 });

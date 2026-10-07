@@ -25,18 +25,8 @@
           "primaryKey": false,
           "notNull": true
         },
-        "id": {
-          "name": "id",
-          "type": "serial",
-          "primaryKey": true,
-          "notNull": true
-        },
-        "name": {
-          "name": "name",
-          "type": "varchar",
-          "primaryKey": false,
-          "notNull": true
-        },
+        "id": { "name": "id", "type": "serial", "primaryKey": true, "notNull": true },
+        "name": { "name": "name", "type": "varchar", "primaryKey": false, "notNull": true },
         "updatedAt": {
           "name": "updatedAt",
           "type": "timestamp",
@@ -51,23 +41,15 @@
       "uniqueConstraints": {
         "users_gameUserId_unique": {
           "name": "users_gameUserId_unique",
-          "columns": [
-            "gameUserId"
-          ],
+          "columns": ["gameUserId"],
           "nullsNotDistinct": false
         }
       }
     }
   },
   "enums": {},
-  "schemas": {
-    "users": "users"
-  },
-  "_meta": {
-    "schemas": {},
-    "tables": {},
-    "columns": {}
-  },
+  "schemas": { "users": "users" },
+  "_meta": { "schemas": {}, "tables": {}, "columns": {} },
   "id": "4aed17e7-7494-4369-9af9-88cf7baea426",
   "prevId": "00000000-0000-0000-0000-000000000000"
 }

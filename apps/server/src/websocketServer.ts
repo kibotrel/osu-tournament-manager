@@ -1,7 +1,4 @@
-import {
-  WEBSOCKET_PING_INTERVAL,
-  WEBSOCKET_PONG_PAYLOAD,
-} from '@packages/shared';
+import { WEBSOCKET_PING_INTERVAL, WEBSOCKET_PONG_PAYLOAD } from '@packages/shared';
 
 import { WebSocketServer } from '#src/classes/webSocketServer.class.js';
 

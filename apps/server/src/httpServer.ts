@@ -1,9 +1,6 @@
 import type { Server } from 'node:http';
 
-import {
-  BanchoClientEvent,
-  BanchoPublicChannel,
-} from '@packages/bancho-client';
+import { BanchoClientEvent, BanchoPublicChannel } from '@packages/bancho-client';
 
 import { createExpressApplication } from '#src/application.js';
 import type { WebSocketServer } from '#src/classes/webSocketServer.class.js';
@@ -13,10 +10,7 @@ import { postgresClient } from '#src/dependencies/database.dependency.js';
 import { banchoClient } from '#src/dependencies/ircClient.dependency.js';
 import { logger } from '#src/dependencies/logger.dependency.js';
 
-export const gracefulShutdown = async (
-  httpServer: Server,
-  webSocketServer: WebSocketServer,
-) => {
+export const gracefulShutdown = async (httpServer: Server, webSocketServer: WebSocketServer) => {
   await webSocketServer.close();
   await banchoClient.removeAllListeners(BanchoClientEvent.BotDisconnected);
 

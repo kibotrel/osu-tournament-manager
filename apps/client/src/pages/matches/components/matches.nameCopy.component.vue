@@ -1,9 +1,5 @@
 <template>
-  <BaseBody
-    is-inline
-    :class="isSupported ? 'copy' : ''"
-    @mousedown="copy(matchName)"
-  >
+  <BaseBody is-inline :class="isSupported ? 'copy' : ''" @mousedown="copy(matchName)">
     {{ matchName }}
   </BaseBody>
 </template>
@@ -18,9 +14,7 @@ interface Properties {
 }
 
 const properties = defineProps<Properties>();
-const { copy, isSupported } = useClipboard({
-  source: properties.matchName,
-});
+const { copy, isSupported } = useClipboard({ source: properties.matchName });
 </script>
 
 <style scoped>

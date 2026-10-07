@@ -1,13 +1,5 @@
 import type { InferInsertModel, InferSelectModel } from 'drizzle-orm';
-import {
-  boolean,
-  index,
-  integer,
-  serial,
-  smallint,
-  timestamp,
-  varchar,
-} from 'drizzle-orm/pg-core';
+import { boolean, index, integer, serial, smallint, timestamp, varchar } from 'drizzle-orm/pg-core';
 
 import { mappoolsTable } from '#src/schemas/mappools/mappools.mappools.table.js';
 import { matchesSchema } from '#src/schemas/matches/matches.schema.js';

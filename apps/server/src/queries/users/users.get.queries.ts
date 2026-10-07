@@ -28,7 +28,5 @@ export const getUserByGameUserIdQuery = async <
     return null;
   }
 
-  return user as Columns extends []
-    ? SelectUser | null
-    : Pick<SelectUser, Columns[number]> | null;
+  return user as Columns extends [] ? SelectUser | null : Pick<SelectUser, Columns[number]> | null;
 };

@@ -1,12 +1,7 @@
 {
   "global": {
-    "common": {
-      "workInProgress": "En construction ..."
-    },
-    "languages": {
-      "english": "Anglais",
-      "french": "Français"
-    },
+    "common": { "workInProgress": "En construction ..." },
+    "languages": { "english": "Anglais", "french": "Français" },
     "words": {
       "bottom": "Bas",
       "button": "Bouton",
@@ -29,11 +24,7 @@
   },
   "pages": {
     "createMatch": {
-      "form": {
-        "name": {
-          "placeholder": "Équipe1 VS Équipe2"
-        }
-      },
+      "form": { "name": { "placeholder": "Équipe 1 VS Équipe 2" } },
       "title": "Nouveau match"
     },
     "designSystem": {
@@ -90,11 +81,7 @@
         },
         "text": {
           "pangram": "Buvez de ce whisky que le patron juge fameux",
-          "words": {
-            "body": "Corps",
-            "caption": "Légende",
-            "headline": "Titre"
-          }
+          "words": { "body": "Corps", "caption": "Légende", "headline": "Titre" }
         }
       },
       "title": "Système de Design",
@@ -111,21 +98,15 @@
       }
     },
     "login": {
-      "buttons": {
-        "login": "Connexion"
-      },
-      "howToAccess": "Pour accéder à cette application Web, veuillez vous connecter avec votre compte osu!",
+      "buttons": { "login": "Connexion" },
+      "howToAccess": "Pour accéder à cette application web, veuillez vous connecter avec votre compte osu!",
       "title": "Bienvenue"
     },
     "match": {
-      "buttons": {
-        "terminateMatch": "Clore le match"
-      },
+      "buttons": { "terminateMatch": "Clore le match" },
       "components": {
         "matchChatHistory": {
-          "input": {
-            "placeholder": "Tapper votre message ..."
-          },
+          "input": { "placeholder": "Tapper votre message ..." },
           "noMessagePlaceholder": "Aucun message pour le moment ..."
         }
       },
@@ -133,11 +114,8 @@
         "linkToOfficialHistory": "Page officielle du match",
         "tabs": {
           "matchLobbyStatus": {
-            "dropdown": {
-              "kick": "Exclure",
-              "transferHost": "Transférer l'hôte"
-            },
-            "playerCount": "{{playerCount}} / 16 Joueurs"
+            "dropdown": { "kick": "Exclure", "transferHost": "Transférer l'hôte" },
+            "playerCount": "{{playerCount}} / 16 Joueurs"
           },
           "names": {
             "commands": "Commandes",
@@ -147,9 +125,7 @@
           }
         }
       },
-      "errors": {
-        "notFound": "Match introuvable"
-      },
+      "errors": { "notFound": "Match introuvable" },
       "modals": {
         "endMatch": {
           "body": "Vous êtes sur le point de clore \"{matchName}\". Cette action est irréversible. Veuillez saisir le nom exact du match pour confirmer",
@@ -183,9 +159,7 @@
           "matchAlreadyClosed": "Match déjà terminé, l'action a été ignorée.",
           "matchNotFound": "Match introuvable, ne peut être terminé."
         },
-        "get": {
-          "matchNotFound": "Match introuvable."
-        }
+        "get": { "matchNotFound": "Match introuvable." }
       }
     },
     "stores": {

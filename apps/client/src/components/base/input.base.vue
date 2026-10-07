@@ -2,23 +2,13 @@
   <div v-bind="$attrs" :class="[$attrs.class, 'min-w-0']">
     <label
       v-if="label"
-      :class="[
-        'mb-1 block text-sm',
-        !isDisabled && errorMessage ? 'error' : '',
-      ]"
+      :class="['mb-1 block text-sm', !isDisabled && errorMessage ? 'error' : '']"
       :for="id"
     >
       <BaseBody class="font-semibold!" is-inline variant="small">
         {{ label }}
       </BaseBody>
-      <BaseBody
-        v-if="isRequired"
-        class="text-red-400"
-        is-inline
-        variant="small"
-      >
-        *
-      </BaseBody>
+      <BaseBody v-if="isRequired" class="text-red-400" is-inline variant="small"> * </BaseBody>
     </label>
     <input
       v-if="type === 'number'"
@@ -115,7 +105,7 @@ input:focus-visible:not(.ghost) {
 }
 
 input:disabled {
-  @apply border-primary-3 bg-primary-3 text-primary-2 cursor-not-allowed;
+  @apply cursor-not-allowed border-primary-3 bg-primary-3 text-primary-2;
 }
 
 input[type='number'] {

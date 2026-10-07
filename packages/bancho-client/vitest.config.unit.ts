@@ -1,8 +1,5 @@
 import { defineConfig } from 'vitest/config';
 
 export default defineConfig({
-  test: {
-    include: ['src/**/*.unit.test.ts'],
-    name: 'packages:bancho-client:unit',
-  },
+  test: { include: ['src/**/*.unit.test.ts'], name: 'packages:bancho-client:unit' },
 });

@@ -19,42 +19,24 @@ export default defineConfig({
           rename: (fileName) => {
             const countryCode = fileName
               .split('-')
-              .map((hex) =>
-                String.fromCharCode(parseInt(hex, 16) - 0x1f1e6 + 65),
-              )
+              .map((hex) => String.fromCharCode(parseInt(hex, 16) - 0x1f1e6 + 65))
               .join('');
 
-            return `${countryCode}.svg`;
+            return { name: `${countryCode}.svg`, stripBase: true };
           },
           src: 'node_modules/@discordapp/twemoji/dist/svg/1f1??-1f1??.svg',
         },
       ],
     }),
   ],
-  preview: {
-    host: '192.168.1.100',
-    port: 8080,
-    strictPort: true,
-  },
-  resolve: {
-    alias: {
-      '#src': path.resolve(fileURLToPath(new URL('src/', import.meta.url))),
-    },
-  },
+  preview: { host: '192.168.1.100', port: 8080, strictPort: true },
+  resolve: { alias: { '#src': path.resolve(fileURLToPath(new URL('src/', import.meta.url))) } },
 
   server: {
-    hmr: {
-      clientPort: 443,
-      host: 'dev.osu-tournament-manager.app',
-      protocol: 'wss',
-    },
+    hmr: { clientPort: 443, host: 'dev.osu-tournament-manager.app', protocol: 'wss' },
     host: '0.0.0.0',
     port: 8080,
     strictPort: true,
-    watch: {
-      usePolling: true,
-      interval: 100,
-      ignored: ['!**/node_modules/@packages/**'],
-    },
+    watch: { usePolling: true, interval: 100, ignored: ['!**/node_modules/@packages/**'] },
   },
 });

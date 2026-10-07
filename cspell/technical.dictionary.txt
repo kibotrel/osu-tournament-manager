@@ -14,8 +14,12 @@ keybinds
 Logform
 lokalise
 nguyenngoclong
+njsproj
+ntvs
 open-code
 opencode
+oxfmt
+oxlint
 persistedstate
 postgres
 postgresql
@@ -29,6 +33,7 @@ smallint
 sonarjs
 todoread
 todowrite
+unrs
 varchar
 vueuse
 webfetch

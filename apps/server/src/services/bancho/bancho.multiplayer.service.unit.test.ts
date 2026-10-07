@@ -12,27 +12,17 @@ import {
 } from './bancho.multiplayer.service.js';
 
 vi.mock('#src/dependencies/ircClient.dependency.js', () => {
-  return {
-    banchoClient: {
-      createMultiplayerChannel: vi.fn(),
-      joinChannel: vi.fn(),
-    },
-  };
+  return { banchoClient: { createMultiplayerChannel: vi.fn(), joinChannel: vi.fn() } };
 });
 
 vi.mock('#src/services/cache/cache.service.js', () => {
-  return {
-    addMatchToCachedSetService: vi.fn(),
-    getAllOngoingMatchesFromCacheService: vi.fn(),
-  };
+  return { addMatchToCachedSetService: vi.fn(), getAllOngoingMatchesFromCacheService: vi.fn() };
 });
 
 describe('openMultiplayerChannelService', () => {
   it('should open a multiplayer channel on bancho and add it to the cache', async () => {
     const name = 'testMatch';
-    const createMultiplayerChannelMock = vi.mocked(
-      banchoClient.createMultiplayerChannel,
-    );
+    const createMultiplayerChannelMock = vi.mocked(banchoClient.createMultiplayerChannel);
     const banchoChannel = '#mp_123456';
 
     createMultiplayerChannelMock.mockResolvedValueOnce(banchoChannel);
@@ -57,16 +47,12 @@ describe('joinAllOngoingMatchesService', () => {
     );
     const spyPromiseAll = vi.spyOn(Promise, 'all');
 
-    getAllOngoingMatchesFromCacheServiceMock.mockResolvedValueOnce(
-      ongoingMatches,
-    );
+    getAllOngoingMatchesFromCacheServiceMock.mockResolvedValueOnce(ongoingMatches);
 
     await joinAllOngoingMatchesService();
 
     expect(getAllOngoingMatchesFromCacheService).toHaveBeenCalled();
-    expect(banchoClient.joinChannel).toHaveBeenCalledTimes(
-      ongoingMatches.length,
-    );
+    expect(banchoClient.joinChannel).toHaveBeenCalledTimes(ongoingMatches.length);
 
     for (const channel of ongoingMatches) {
       expect(banchoClient.joinChannel).toHaveBeenCalledWith(channel);

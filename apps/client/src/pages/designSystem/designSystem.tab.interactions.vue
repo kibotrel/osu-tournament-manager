@@ -8,28 +8,14 @@
         <BaseButton id="button-primary" class="w-32" variant="primary">
           {{ $t('pages.designSystem.words.primary') }}
         </BaseButton>
-        <BaseButton
-          id="button-primary-with-icon"
-          class="w-32"
-          variant="primary"
-        >
+        <BaseButton id="button-primary-with-icon" class="w-32" variant="primary">
           {{ $t('pages.designSystem.words.icon') }}
           <template #icon>
             <BaseIcon name="cubeTransparent" />
           </template>
         </BaseButton>
-        <BaseButton
-          id="button-loading"
-          class="w-32"
-          is-loading
-          variant="primary"
-        />
-        <BaseButton
-          id="button-disabled"
-          class="w-32"
-          is-disabled
-          variant="primary"
-        >
+        <BaseButton id="button-loading" class="w-32" is-loading variant="primary" />
+        <BaseButton id="button-disabled" class="w-32" is-disabled variant="primary">
           {{ $t('pages.designSystem.tabs.interaction.words.disabled') }}
         </BaseButton>
       </div>
@@ -74,18 +60,14 @@
           v-model="disabledStringInputValue"
           is-disabled
           :label="$t('pages.designSystem.tabs.interaction.words.label')"
-          :placeholder="
-            $t('pages.designSystem.tabs.interaction.words.disabled')
-          "
+          :placeholder="$t('pages.designSystem.tabs.interaction.words.disabled')"
         />
       </div>
       <div class="mt-4 flex flex-row space-x-2">
         <BaseInput
           id="error-input"
           v-model="stringErrorValue"
-          :error-message="
-            $t('pages.designSystem.tabs.interaction.words.errorMessage')
-          "
+          :error-message="$t('pages.designSystem.tabs.interaction.words.errorMessage')"
           :placeholder="$t('pages.designSystem.tabs.interaction.words.error')"
           :label="$t('pages.designSystem.tabs.interaction.words.label')"
         />
@@ -93,9 +75,7 @@
           id="required-input"
           v-model="stringInputValue"
           is-required
-          :placeholder="
-            $t('pages.designSystem.tabs.interaction.words.required')
-          "
+          :placeholder="$t('pages.designSystem.tabs.interaction.words.required')"
           :label="$t('pages.designSystem.tabs.interaction.words.label')"
         />
         <BaseInput
@@ -128,8 +108,6 @@ import BaseInput from '#src/components/base/input.base.vue';
 const { t } = useTranslation();
 const disabledStringInputValue = ref('');
 const numberInputValue = ref('');
-const stringErrorValue = ref(
-  t('pages.designSystem.tabs.interaction.words.wrongInput'),
-);
+const stringErrorValue = ref(t('pages.designSystem.tabs.interaction.words.wrongInput'));
 const stringInputValue = ref('');
 </script>

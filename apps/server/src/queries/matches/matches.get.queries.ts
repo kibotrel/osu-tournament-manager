@@ -2,14 +2,9 @@ import { eq, getTableColumns } from 'drizzle-orm';
 import type { SelectedFields } from 'drizzle-orm/pg-core';
 
 import { database } from '#src/dependencies/database.dependency.js';
-import {
-  type SelectMatch,
-  matchesTable,
-} from '#src/schemas/matches/matches.matches.table.js';
+import { type SelectMatch, matchesTable } from '#src/schemas/matches/matches.matches.table.js';
 
-export const getMatchByIdQuery = async <
-  Columns extends ReadonlyArray<keyof SelectMatch> = [],
->(
+export const getMatchByIdQuery = async <Columns extends ReadonlyArray<keyof SelectMatch> = []>(
   id: number,
   options: { columnsFilter?: Columns } = {},
 ) => {

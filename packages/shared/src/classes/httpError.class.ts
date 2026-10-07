@@ -33,13 +33,7 @@ export class HttpBadRequestError extends HttpError {
   constructor(options: Omit<HttpErrorOptions, 'status'>) {
     const { cause, errors, message, metadata } = options;
 
-    super({
-      cause,
-      errors,
-      message,
-      metadata,
-      status: HttpStatusCode.BadRequest,
-    });
+    super({ cause, errors, message, metadata, status: HttpStatusCode.BadRequest });
 
     this.name = this.constructor.name;
   }
@@ -49,13 +43,7 @@ export class HttpForbiddenError extends HttpError {
   constructor(options: Omit<HttpErrorOptions, 'status'>) {
     const { cause, errors, message, metadata } = options;
 
-    super({
-      cause,
-      errors,
-      message,
-      metadata,
-      status: HttpStatusCode.Forbidden,
-    });
+    super({ cause, errors, message, metadata, status: HttpStatusCode.Forbidden });
 
     this.name = this.constructor.name;
   }
@@ -65,13 +53,7 @@ export class HttpInternalServerError extends HttpError {
   constructor(options: Omit<HttpErrorOptions, 'status'>) {
     const { cause, errors, message, metadata } = options;
 
-    super({
-      cause,
-      errors,
-      message,
-      metadata,
-      status: HttpStatusCode.InternalServerError,
-    });
+    super({ cause, errors, message, metadata, status: HttpStatusCode.InternalServerError });
 
     this.name = this.constructor.name;
   }
@@ -81,13 +63,7 @@ export class HttpLockedError extends HttpError {
   constructor(options: Omit<HttpErrorOptions, 'status'>) {
     const { cause, errors, message, metadata } = options;
 
-    super({
-      cause,
-      errors,
-      message,
-      metadata,
-      status: HttpStatusCode.Locked,
-    });
+    super({ cause, errors, message, metadata, status: HttpStatusCode.Locked });
 
     this.name = this.constructor.name;
   }
@@ -97,13 +73,7 @@ export class HttpMethodNotAllowedError extends HttpError {
   constructor(options: Omit<HttpErrorOptions, 'status'>) {
     const { cause, errors, message, metadata } = options;
 
-    super({
-      cause,
-      errors,
-      message,
-      metadata,
-      status: HttpStatusCode.MethodNotAllowed,
-    });
+    super({ cause, errors, message, metadata, status: HttpStatusCode.MethodNotAllowed });
 
     this.name = this.constructor.name;
   }
@@ -113,13 +83,7 @@ export class HttpNotFoundError extends HttpError {
   constructor(options: Omit<HttpErrorOptions, 'status'>) {
     const { cause, errors, message, metadata } = options;
 
-    super({
-      cause,
-      errors,
-      message,
-      metadata,
-      status: HttpStatusCode.NotFound,
-    });
+    super({ cause, errors, message, metadata, status: HttpStatusCode.NotFound });
 
     this.name = this.constructor.name;
   }
@@ -129,13 +93,7 @@ export class HttpRangeNotSatisfiableError extends HttpError {
   constructor(options: Omit<HttpErrorOptions, 'status'>) {
     const { cause, errors, message, metadata } = options;
 
-    super({
-      cause,
-      errors,
-      message,
-      metadata,
-      status: HttpStatusCode.RangeNotSatisfiable,
-    });
+    super({ cause, errors, message, metadata, status: HttpStatusCode.RangeNotSatisfiable });
 
     this.name = this.constructor.name;
   }
@@ -145,13 +103,7 @@ export class HttpServiceUnavailableError extends HttpError {
   constructor(options: Omit<HttpErrorOptions, 'status'>) {
     const { cause, errors, message, metadata } = options;
 
-    super({
-      cause,
-      errors,
-      message,
-      metadata,
-      status: HttpStatusCode.ServiceUnavailable,
-    });
+    super({ cause, errors, message, metadata, status: HttpStatusCode.ServiceUnavailable });
 
     this.name = this.constructor.name;
   }
@@ -161,13 +113,7 @@ export class HttpTooManyRequestsError extends HttpError {
   constructor(options: Omit<HttpErrorOptions, 'status'>) {
     const { cause, errors, message, metadata } = options;
 
-    super({
-      cause,
-      errors,
-      message,
-      metadata,
-      status: HttpStatusCode.TooManyRequests,
-    });
+    super({ cause, errors, message, metadata, status: HttpStatusCode.TooManyRequests });
 
     this.name = this.constructor.name;
   }
@@ -177,13 +123,7 @@ export class HttpUnauthorizedError extends HttpError {
   constructor(options: Omit<HttpErrorOptions, 'status'>) {
     const { cause, errors, message, metadata } = options;
 
-    super({
-      cause,
-      errors,
-      message,
-      metadata,
-      status: HttpStatusCode.Unauthorized,
-    });
+    super({ cause, errors, message, metadata, status: HttpStatusCode.Unauthorized });
 
     this.name = this.constructor.name;
   }
@@ -193,13 +133,7 @@ export class HttpUnavailableForLegalReasonsError extends HttpError {
   constructor(options: Omit<HttpErrorOptions, 'status'>) {
     const { cause, errors, message, metadata } = options;
 
-    super({
-      cause,
-      errors,
-      message,
-      metadata,
-      status: HttpStatusCode.UnavailableForLegalReasons,
-    });
+    super({ cause, errors, message, metadata, status: HttpStatusCode.UnavailableForLegalReasons });
 
     this.name = this.constructor.name;
   }
@@ -209,13 +143,7 @@ export class HttpUnprocessableContentError extends HttpError {
   constructor(options: Omit<HttpErrorOptions, 'status'>) {
     const { cause, errors, message, metadata } = options;
 
-    super({
-      cause,
-      errors,
-      message,
-      metadata,
-      status: HttpStatusCode.UnprocessableContent,
-    });
+    super({ cause, errors, message, metadata, status: HttpStatusCode.UnprocessableContent });
 
     this.name = this.constructor.name;
   }

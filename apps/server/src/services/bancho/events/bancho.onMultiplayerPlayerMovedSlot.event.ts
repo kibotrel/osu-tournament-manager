@@ -24,9 +24,7 @@ export const onMultiplayerPlayerMovedSlotEvent = async ({
   slotNumber: number;
   user: string;
 }) => {
-  logger.silly(
-    `[IRC] ${user} moved to slot ${slotNumber} in channel ${channel}`,
-  );
+  logger.silly(`[IRC] ${user} moved to slot ${slotNumber} in channel ${channel}`);
 
   const channelId = gameMatchIdFromBanchoChannel(channel);
   const oldMatchState = await getMatchStateService(channelId);
@@ -57,10 +55,7 @@ export const onMultiplayerPlayerMovedSlotEvent = async ({
     }),
   };
 
-  await setMatchStateInCacheService({
-    channel: channelId,
-    state: newMatchState,
-  });
+  await setMatchStateInCacheService({ channel: channelId, state: newMatchState });
 
   const payload: WebSocketMessage<WebSocketMatchLobbyState> = {
     message: newMatchState,
@@ -68,8 +63,8 @@ export const onMultiplayerPlayerMovedSlotEvent = async ({
     topic: `${WebSocketChannel.Matches}:${channelId}:${WebSocketChannelMatchesEvent.LobbyState}`,
   };
 
-  webSocketServer.broadcastMessageToSubscribers(
-    Buffer.from(JSON.stringify(payload)),
-    { isBinary: false, isBanchoMessage: true },
-  );
+  webSocketServer.broadcastMessageToSubscribers(Buffer.from(JSON.stringify(payload)), {
+    isBinary: false,
+    isBanchoMessage: true,
+  });
 };

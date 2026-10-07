@@ -22,14 +22,12 @@ describe('IrcCommandPing', () => {
     it('should send back a PONG message to the server', async () => {
       const command = new IrcCommandPing(banchoClient);
 
-      command.banchoClient.sendIrcMessage = vi.fn();
+      command.banchoClient.sendIrcMessage = vi.fn<(message: string) => Promise<void>>();
 
       await command.handleCommand();
 
       expect(command.banchoClient.sendIrcMessage).toHaveBeenCalledOnce();
-      expect(command.banchoClient.sendIrcMessage).toHaveBeenCalledWith(
-        `PONG localhost.dev`,
-      );
+      expect(command.banchoClient.sendIrcMessage).toHaveBeenCalledWith(`PONG localhost.dev`);
     });
   });
 });

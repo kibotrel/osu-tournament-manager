@@ -1,6 +1,7 @@
-import { HttpHeader } from '@packages/shared';
 import type { Request, Response } from 'express';
 import { describe, expect, it, vi } from 'vitest';
+
+import { HttpHeader } from '@packages/shared';
 
 import {
   expressNextFunctionMock,
@@ -11,9 +12,7 @@ import {
 import { setRequestIdMiddleware } from './requestIdentity.middleware.js';
 
 vi.mock('node:crypto', () => {
-  return {
-    randomUUID: vi.fn().mockReturnValue('test-unique-id'),
-  };
+  return { randomUUID: vi.fn().mockReturnValue('test-unique-id') };
 });
 
 describe('setRequestIdMiddleware', () => {
@@ -25,9 +24,6 @@ describe('setRequestIdMiddleware', () => {
     setRequestIdMiddleware(request, response, next);
 
     expect(request.id).toEqual('test-unique-id');
-    expect(response.setHeader).toHaveBeenCalledWith(
-      HttpHeader.RequestId,
-      'test-unique-id',
-    );
+    expect(response.setHeader).toHaveBeenCalledWith(HttpHeader.RequestId, 'test-unique-id');
   });
 });

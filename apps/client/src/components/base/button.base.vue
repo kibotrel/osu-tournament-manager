@@ -21,13 +21,7 @@ import LoadingIcon from '#src/components/icons/loading.icon.vue';
 
 import BaseBody from './body.base.vue';
 
-export type ButtonVariant =
-  | 'danger'
-  | 'ghost'
-  | 'primary'
-  | 'secondary'
-  | 'success'
-  | 'warning';
+export type ButtonVariant = 'danger' | 'ghost' | 'primary' | 'secondary' | 'success' | 'warning';
 
 interface Properties {
   id: string;
@@ -53,7 +47,7 @@ button {
 }
 
 button:disabled {
-  @apply bg-primary-2 text-primary-4 cursor-not-allowed;
+  @apply cursor-not-allowed bg-primary-2 text-primary-4;
   @apply hover:bg-primary-2 hover:text-primary-4;
 }
 
@@ -62,38 +56,38 @@ button:focus-visible {
 }
 
 .danger {
-  @apply text-primary-1 cursor-pointer bg-red-500;
-  @apply hover:text-primary-1/90 hover:bg-red-500/90;
-  @apply active:text-primary-1/80 active:bg-red-500/80;
+  @apply cursor-pointer bg-red-500 text-primary-1;
+  @apply hover:bg-red-500/90 hover:text-primary-1/90;
+  @apply active:bg-red-500/80 active:text-primary-1/80;
 }
 
 .ghost {
-  @apply text-primary-1 cursor-pointer bg-transparent;
+  @apply cursor-pointer bg-transparent text-primary-1;
   @apply hover:text-primary-1/90;
   @apply active:text-primary-1/80;
 }
 
 .primary {
-  @apply bg-primary-1 text-primary-4 cursor-pointer;
+  @apply cursor-pointer bg-primary-1 text-primary-4;
   @apply hover:bg-primary-1/90 hover:text-primary-4/90;
   @apply active:bg-primary-1/80 active:text-primary-4/80;
 }
 
 .secondary {
-  @apply bg-primary-3 text-primary-1 cursor-pointer;
+  @apply cursor-pointer bg-primary-3 text-primary-1;
   @apply hover:bg-primary-3/90 hover:text-primary-1/90;
   @apply active:bg-primary-3/80 active:text-primary-1/80;
 }
 
 .success {
-  @apply text-primary-1 cursor-pointer bg-green-500;
-  @apply hover:text-primary-1/90 hover:bg-green-500/90;
-  @apply active:text-primary-1/80 active:bg-green-500/80;
+  @apply cursor-pointer bg-green-500 text-primary-1;
+  @apply hover:bg-green-500/90 hover:text-primary-1/90;
+  @apply active:bg-green-500/80 active:text-primary-1/80;
 }
 
 .warning {
-  @apply text-primary-4 cursor-pointer bg-yellow-400;
-  @apply hover:text-primary-4/90 hover:bg-yellow-400/90;
-  @apply active:text-primary-4/80 active:bg-yellow-400/80;
+  @apply cursor-pointer bg-yellow-400 text-primary-4;
+  @apply hover:bg-yellow-400/90 hover:text-primary-4/90;
+  @apply active:bg-yellow-400/80 active:text-primary-4/80;
 }
 </style>

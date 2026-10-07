@@ -1,12 +1,7 @@
 {
   "global": {
-    "common": {
-      "workInProgress": "Work in progress..."
-    },
-    "languages": {
-      "english": "English",
-      "french": "French"
-    },
+    "common": { "workInProgress": "Work in progress..." },
+    "languages": { "english": "English", "french": "French" },
     "words": {
       "bottom": "Bottom",
       "button": "Button",
@@ -29,11 +24,7 @@
   },
   "pages": {
     "createMatch": {
-      "form": {
-        "name": {
-          "placeholder": "Team1 vs Team2"
-        }
-      },
+      "form": { "name": { "placeholder": "Team 1 vs Team 2" } },
       "title": "New match"
     },
     "designSystem": {
@@ -90,11 +81,7 @@
         },
         "text": {
           "pangram": "The five boxing wizards jump quickly",
-          "words": {
-            "body": "Body",
-            "caption": "Caption",
-            "headline": "Headline"
-          }
+          "words": { "body": "Body", "caption": "Caption", "headline": "Headline" }
         }
       },
       "title": "Design System",
@@ -111,21 +98,15 @@
       }
     },
     "login": {
-      "buttons": {
-        "login": "Login"
-      },
+      "buttons": { "login": "Login" },
       "howToAccess": "To get access to this webapp, please login with your osu! account",
       "title": "Welcome"
     },
     "match": {
-      "buttons": {
-        "terminateMatch": "End match"
-      },
+      "buttons": { "terminateMatch": "End match" },
       "components": {
         "matchChatHistory": {
-          "input": {
-            "placeholder": "Type your message..."
-          },
+          "input": { "placeholder": "Type your message..." },
           "noMessagePlaceholder": "No message yet..."
         }
       },
@@ -133,11 +114,8 @@
         "linkToOfficialHistory": "Official match page",
         "tabs": {
           "matchLobbyStatus": {
-            "dropdown": {
-              "kick": "Kick",
-              "transferHost": "Transfer host"
-            },
-            "playerCount": "{{playerCount}} / 16 Players"
+            "dropdown": { "kick": "Kick", "transferHost": "Transfer host" },
+            "playerCount": "{{playerCount}} / 16 Players"
           },
           "names": {
             "commands": "Commands",
@@ -147,9 +125,7 @@
           }
         }
       },
-      "errors": {
-        "notFound": "Match not found"
-      },
+      "errors": { "notFound": "Match not found" },
       "modals": {
         "endMatch": {
           "body": "You are about to close \"{matchName}\". This action cannot be undone. Please type the exact match name to confirm",
@@ -183,9 +159,7 @@
           "matchAlreadyClosed": "Match already closed, action was ignored.",
           "matchNotFound": "Match not found, cannot close it."
         },
-        "get": {
-          "matchNotFound": "Match not found."
-        }
+        "get": { "matchNotFound": "Match not found." }
       }
     },
     "stores": {

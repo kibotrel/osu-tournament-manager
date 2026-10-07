@@ -1,4 +1,19 @@
 {
+  "name": "@packages/logger",
+  "private": true,
+  "type": "module",
+  "main": "dist/src/logger.export.js",
+  "types": "dist/src/logger.export.d.ts",
+  "imports": {
+    "#src/*": "./src/*"
+  },
+  "scripts": {
+    "build": "tsc && tsc-alias",
+    "dev": "nodemon --config nodemon.json",
+    "format": "oxfmt",
+    "lint": "oxlint",
+    "type-check": "tsc --noEmit"
+  },
   "dependencies": {
     "@packages/shared": "workspace:*",
     "chalk": "5.6.2",
@@ -6,21 +21,9 @@
     "winston-transport": "4.9.0"
   },
   "devDependencies": {
-    "@packages/prettier-config": "workspace:*"
-  },
-  "imports": {
-    "#src/*": "./src/*"
-  },
-  "main": "dist/src/logger.export.js",
-  "name": "@packages/logger",
-  "private": true,
-  "scripts": {
-    "build": "tsc && tsc-alias",
-    "dev": "nodemon --config nodemon.json",
-    "format": "prettier --write src/**/*.ts",
-    "lint": "eslint src/**/*.ts",
-    "type-check": "tsc --noEmit"
-  },
-  "type": "module",
-  "types": "dist/src/logger.export.d.ts"
+    "@packages/config-formatter": "workspace:*",
+    "@packages/config-linter": "workspace:*",
+    "oxfmt": "0.71.0",
+    "oxlint": "1.86.0"
+  }
 }

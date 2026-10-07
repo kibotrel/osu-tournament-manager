@@ -1,3 +1,4 @@
+// oxlint-disable-next-line import/no-unassigned-import
 import 'pinia';
 import type { PiniaPluginContext } from 'pinia';
 import { markRaw } from 'vue';

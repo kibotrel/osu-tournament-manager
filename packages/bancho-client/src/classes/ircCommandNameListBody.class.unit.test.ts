@@ -8,10 +8,7 @@ describe('IrcCommandNameListBody', () => {
     clientCredentials: { username: 'username', password: 'password' },
     serverInformation: { host: 'localhost.dev', port: 6667 },
   });
-  const packetParts = [
-    'localhost.dev 353 username = #channel',
-    'username1 username2 username3',
-  ];
+  const packetParts = ['localhost.dev 353 username = #channel', 'username1 username2 username3'];
 
   describe('constructor', () => {
     it('should create an instance of IrcCommandNameListBody', () => {
