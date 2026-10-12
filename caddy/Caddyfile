@@ -2,7 +2,7 @@
 	admin :2019
 }
 
-dev.osu-tournament-manager.app {
+{$DOMAIN} {
   @appWebSockets {
 		path /api/websockets/*
 		header Connection *Upgrade*
